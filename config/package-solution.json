@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "gdc-dev-ops-automation-client-side-solution",
+    "id": "22b26582-4ad7-4166-8450-a7b7471c5614",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Azure DevOps",
+        "scope": "user_impersonation"
+      },
+      {
+        "resource": "Windows Azure Active Directory",
+        "scope": "User.Read"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read.All"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/gdc-dev-ops-automation.sppkg"
+  }
+}

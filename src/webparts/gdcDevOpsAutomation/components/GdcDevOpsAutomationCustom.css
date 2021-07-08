@@ -1,0 +1,55 @@
+/* react quill toolbar */
+.ql-editor {
+    min-height: 100px;
+  }
+
+  .ql-container.ql-snow {
+    border: 1px solid black !important;
+    border-top : 0px !important;
+  }
+
+  .ql-toolbar.ql-snow {
+    border: 1px solid black !important;
+}
+
+/* react quill toolbar end */
+
+  .gdcAddButton {
+    float: right;
+    top: 28px;
+  }
+
+  .gdcColumn6 {
+    min-height: 80px !important;
+  }
+
+  .gdcColumn12 {
+    min-height: 192px !important;
+  }
+
+  .gdcerror {
+    color: rgb(164, 38, 44);
+  }
+
+  .gdcStar {
+    color: rgb(164, 38, 44);
+  }
+
+  .gdcPaddingBottom15 {
+    padding-bottom: 15px;
+  }
+
+  .gdcDisplayNone {
+    display: none;
+  }
+
+  .gdcBorder {
+    /* border: 1px solid black;
+    min-height: 400px; */
+  }
+
+
+/* 
+  #spCommandBar {
+    display: none;
+  } */
