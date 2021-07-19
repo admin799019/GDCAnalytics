@@ -20,7 +20,7 @@ export class DevOpsService implements IDevOpsService {
     public async getProjects1(): Promise<any> {
 
         await this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.get(`https://dev.azure.com/Veena0200/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
+            client.get(`https://dev.azure.com/onegdcanalyticsdev/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
                 .then((response: HttpClientResponse) => {
                     console.log(["Try1", response]);
                     return response.json();
@@ -30,7 +30,23 @@ export class DevOpsService implements IDevOpsService {
                 });
         });
     }
+    public  getLatestVer(id): Promise<any> {
+        console.log(id);
+        return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
+          this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+                client.get("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/"+id+"/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
+                    .then((response: HttpClientResponse) => {
+                        console.log(["TryLates1version", response]);
+                        return response.json();
+                    })
+                    .then((datar: any): void => {
+                        console.log(["Try1Latestversion", datar]);
+                        resolve(datar)
+                    });
+            });
+        });
 
+    }
     public addfeature(data): Promise<any> {
         // const body: string = JSON.stringify([
         //     {
@@ -51,7 +67,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/Veena0200/test%20proj/_apis/wit/workItems/$L1 Objective?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         console.log(["Try1", response]);
                         return response.json();
@@ -78,7 +94,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch("https://dev.azure.com/Veena0200/test%20proj/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -99,7 +115,7 @@ export class DevOpsService implements IDevOpsService {
 
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/Veena0200/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post("https://dev.azure.com/onegdcanalyticsdev/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
 
                         return response.json();

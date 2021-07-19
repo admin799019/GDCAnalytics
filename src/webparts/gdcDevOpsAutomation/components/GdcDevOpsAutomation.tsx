@@ -51,6 +51,8 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
+// var 
+// DescriptionData="";
 const Area = {
   "title": "Analytics Area",
   "type": "SingleSelectInput",
@@ -59,7 +61,7 @@ const Area = {
   "className": "fields",
   "helperText": "",
   "options": [
-    { "key": "GEP Analytics", "text": "GEP Analytics" },
+    { "key": "Channel Analytics", "text": "Channel Analytics" },
     { "key": "GDC Business Intelligence", "text": "GDC Business Intelligence" },
     { "key": "Data Services", "text": "Data Services" }
   ],
@@ -100,6 +102,7 @@ export interface IDevOpsState {
   formSuccessMessage: string;
   showMessage: boolean;
   showAddButton: boolean;
+  DescriptionData : string;
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
@@ -110,6 +113,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.state = {
       projects: [],
       text: "",
+      DescriptionData : "",
       elements: [
         { id: 'Request Title' },
         { id: 'Analytics Area' },
@@ -137,6 +141,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
+    this.props.devOpsService.getLatestVer(44).then((data)=>{console.log(data)})
     this.props.devOpsService.FilterWorkItems();
   }
 
@@ -228,6 +233,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async submitForm(addorupdate: string) {
+    console.log(this.state.formFields);
     var parentFieldsRequiredHasValues: boolean = true;
     var subFields;
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
@@ -240,19 +246,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       });
     }
     var APIData = _.cloneDeep(this.state.formData);
+    console.log(APIData,"246")
     var mlt: string;
     var formFields = _.cloneDeep(this.state.formFields);
     this.appendAPI(formFields, APIData).then(async (dataReturned) => {
       if (dataReturned.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
+        console.log(APIData);
+        // APIData.push({
+        //   "op": "add",
+        //   "path": "/fields/System.AreaPath",
+        //   "from": null,
+        //   "value": `Operational Framework\\` + Area.value
+        // });
+        //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
           "op": "add",
-          "path": "/fields/System.AreaPath",
+          "path": "/fields/System.Description",
           "from": null,
-          "value": `test proj\\` + Area.value
+          "value": this.state.DescriptionData
         });
-        //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
-
+        console.log(APIData,"APIDTATA");
         await this.props.devOpsService.addfeature(APIData).then(data => {
           Area.value = "";
           this.setState({
@@ -272,7 +286,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public async appendAPI(Fields, APIData) {
+  public async appendAPI(Fields: MetaDataType[], APIData) {
+    console.log(Fields,APIData)
     var requiredHasValues: boolean = true;
     var subFields;
     var mlt: string;
@@ -282,6 +297,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         mlt = await this.onUpdateClick(field.value);
         field.value = mlt;
       }
+
+   
+      if(field.devopsName == "System.Description"){
+        var tempstr="";
+        tempstr.concat(field.title);
+        tempstr.concat("<p><br></p>");
+        tempstr.concat(field.value);
+        console.log(tempstr,"sstrs")
+        this.setState({DescriptionData:tempstr});
+        console.log(this.state.DescriptionData,"dd",tempstr)
+      }
+      // else if(field.devopsName=="System.AreaPath")
+      // {
+      //   APIData.push({
+      //     "op": "add",
+      //     "path": "/fields/" + field.devopsName,
+      //     "from": null,
+      //     "value": field.value
+      //   });
+      // }
+      else {
       //var DevOpsTitle = MetaDataMpping.filter(f => f.FormTitle == field.title)[0].DevOpsName;
       APIData.push({
         "op": "add",
@@ -289,6 +325,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "from": null,
         "value": field.value
       });
+    }
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -314,9 +351,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-    Area.value = option.text;
+    Area.value = option.key;
     this.props.spService.getFormMetadata(option.text).then((data) => {
       var jsonData = JSON.parse(data.JSON);
+      console.log(jsonData,"jsonn");
       this.setState({
         formFields: jsonData,
         showMessage: false,
@@ -331,6 +369,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public render(): JSX.Element {
     return (
       <div className="ms-Grid gdcBorder">
+        dev env
         <div className="ms-Grid-row">
           {this.state.showMessage
             ? <MessageBar

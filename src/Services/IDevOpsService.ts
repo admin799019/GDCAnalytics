@@ -5,4 +5,5 @@ export interface IDevOpsService {
     uploadImage(base64content, fileName): Promise<any>;
     FilterWorkItems(): Promise<any>;
     SearchWorkItems(): Promise<any>;
+    getLatestVer(id):Promise<any>;
 }
