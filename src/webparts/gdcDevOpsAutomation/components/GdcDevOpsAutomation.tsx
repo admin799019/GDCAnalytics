@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
-import { Dropdown } from '@fluentui/react/lib/Dropdown';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
@@ -16,6 +16,7 @@ import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
+import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/FilePicker';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -53,7 +54,8 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
-var DescriptionData = "";
+var base64file1;
+var defvaldd: any = [];
 const Area = {
   "title": "Analytics Area",
   "type": "SingleSelectInput",
@@ -104,11 +106,14 @@ export interface IDevOpsState {
   formSuccessMessage: string;
   showMessage: boolean;
   showAddButton: boolean;
+  multiSelectedKeys: string[];
+  filePickerResult: IFilePickerResult[];
   // DescriptionData: string;
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
-  requiredHasValues : boolean = true;
+  requiredHasValues: boolean = true;
+  DescriptionData = "";
   public constructor(props) {
     super(props);
 
@@ -126,7 +131,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       formFields: metaData,
       formSuccessMessage: "",
       showMessage: false,
-      showAddButton: false
+      showAddButton: false,
+      multiSelectedKeys: [],
+      filePickerResult: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -145,7 +152,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-    // this.props.devOpsService.getLatestVer(44).then((data) => { console.log(data); });
+    this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
 
@@ -222,7 +229,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       }
     });
     return Promise.all(fields).then(d => {
-      console.log("rich text",fields);
+      console.log("rich text", fields);
       return fields;
     });
   }
@@ -258,7 +265,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async submitForm(addorupdate: string) {
-    DescriptionData = "";
+    this.DescriptionData = "";
     var parentFieldsRequiredHasValues: boolean = true;
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
@@ -277,6 +284,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       var dataReturned = this.appendAPI(_.cloneDeep(updatedformFields), APIData);
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
+        console.log(dataReturned);
         // APIData.push({
         //   "op": "add",
         //   "path": "/fields/System.AreaPath",
@@ -288,7 +296,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "op": "add",
           "path": "/fields/System.Description",
           "from": null,
-          "value": DescriptionData
+          "value": this.DescriptionData
         });
         this.props.devOpsService.addfeature(APIData).then(data => {
           Area.value = "";
@@ -298,7 +306,25 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             showMessage: true,
             showAddButton: false
           });
+          // var attach=[]
+          // console.log(this.state.filePickerResult)
+          //           if(this.state.filePickerResult!=null){
+          //            attach.push({
+          //             "op": "add",
+          //             "path": "/relations/-",
+          //             "value": {
+          //               "rel": "Hyperlink",
+          //               "url": this.state.filePickerResult
+          //             }
+          //           });
+          //           console.log("hello from attachments")
+          //           this.props.devOpsService.addAttachment(attach,data.id).then((data)=>
+          //           console.log(data));
+          //         }
+
+
         });
+
       }
       else {
         stateCopy = dataReturned.Fields;
@@ -309,6 +335,56 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
+
+
+  // private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+  //   this.setState({ filePickerResult: filePickerResult });
+  //   if (filePickerResult && filePickerResult.length > 0) {
+  //     console.log("hellofrom picker saving")
+  //     for (var i = 0; i < filePickerResult.length; i++) {
+  //       const item = filePickerResult[i];
+
+  //       const fileResultContent = await item.downloadFileContent();
+  //       const base64file: any = await this.convertBase64(fileResultContent);
+  //       console.log(base64file, "hellobase64");
+  //       base64file1 = base64file.substring(base64file.indexOf('base64,') + 7);
+  //       //  console.log(fileResultContent);
+  //       const blob = new Blob([base64file1], { type: "image/png" });
+  //   this.props.devOpsService.uploadImage(blob, "image.png").then((data)=>{
+  //     console.log(data);
+  //     this.setState({filePickerResult:data})
+  //   })
+  //     }
+  //   }
+  // }
+  // public convertBase64 = (file) => {
+  //   console.log("hellofromconverter");
+  //   return new Promise((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+  //     fileReader.onload = () => {
+  //       resolve(fileReader.result);
+  //     };
+  //     fileReader.onerror = (error) => {
+  //       reject(error);
+  //     }
+  //   })
+  // }
+  public onMultiSelectChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
+    console.log("multi", item);
+    if (item) {
+      console.log(item.key);
+      var x: any = this.state.multiSelectedKeys;
+      x.push(item.key);
+      this.setState({
+        multiSelectedKeys:
+          item.selected ? x : this.state.multiSelectedKeys.filter(key => key !== item.key),
+      });
+    }
+    console.log(this.state.multiSelectedKeys)
+    this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
+  }
+
   public appendAPI(Fields: MetaDataType[], APIData) {
     var requiredHasValues: boolean = true;
     var subFields;
@@ -317,7 +393,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
         tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
-        DescriptionData = DescriptionData.concat(tempDesc);
+        this.DescriptionData = this.DescriptionData.concat(tempDesc);
+
       }
       // else if(field.devopsName=="System.AreaPath")
       // {
@@ -433,6 +510,26 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             </div>
           </div>
         </Panel>
+
+        <div className="ms-Grid-row">
+          {
+            this.state.formFields.map((ele) => {
+              return this.renderFields(ele);
+            })
+          }
+          {/* <FilePicker
+            bingAPIKey="<BING API KEY>"
+            buttonLabel={"Please attach a file"}
+            buttonClassName={styles.button}
+            
+            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
+            buttonIcon="Upload"
+            onSave={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }), this._onFilePickerSave(this.state.filePickerResult) }}
+            onChange={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }) }}
+            context={this.props.context}
+            
+          /> */}
+        </div>
       </div>
     );
   }
@@ -453,6 +550,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           </React.Fragment>
         );
+
       case "SingleSelectInput":
         return (
           <React.Fragment>
@@ -543,6 +641,29 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <ReactQuill style={{ minHeight: 100 }} onChange={(data) => this.handleChange(data, ele.title)} />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
+        );
+      case "MultiSelectInput":
+        return (
+          <React.Fragment>
+            <div className={ele.className + " gdcColumn6"}>
+
+              <Dropdown
+                placeholder="Select multi option"
+                label={ele.label}
+                multiSelect
+                options={ele.options}
+                onChange={this.onMultiSelectChange}
+                required={ele.required}
+                defaultSelectedKeys={this.state.multiSelectedKeys}
+
+              />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
+            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+              : null
+            }
+          </React.Fragment>
         );
       case "PeoplePickerInput":
         return (

@@ -12,7 +12,7 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =[
     {
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
@@ -364,7 +364,8 @@ const ChannelAnalyticsMetaData = [
         "errorMessage": "",
         "devopsName": "System.Description"
     }
-];
+]
+;
 
 const AnalyticsmetaData = [
     {

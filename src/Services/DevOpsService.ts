@@ -56,6 +56,7 @@ export class DevOpsService implements IDevOpsService {
         //         "value": data
         //     }
         // ]);
+        console.log(data);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
@@ -80,7 +81,28 @@ export class DevOpsService implements IDevOpsService {
         });
 
     }
+    public addAttachment(data,id): any {
+        const body: string = JSON.stringify(data);
+        console.log(body);
+        const requestHeaders: Headers = new Headers();
+        requestHeaders.append('Content-type', 'application/json-patch+json');
+        //requestHeaders.append('method', 'PATCH');
 
+        const httpClientOptions: IHttpClientOptions = {
+            body: body,
+            headers: requestHeaders,
+            method: 'PATCH'
+        };
+        this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+            client.fetch("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workitems/"+id+"?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                .then((response: HttpClientResponse) => {
+                    return response.json();
+                })
+                .then((projects: any): void => {
+                    console.log(["update Try", projects]);
+                });
+        });
+    }
     public updatefeature(data): any {
         const body: string = JSON.stringify(data);
 
