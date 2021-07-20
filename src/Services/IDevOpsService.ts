@@ -6,4 +6,5 @@ export interface IDevOpsService {
     FilterWorkItems(): Promise<any>;
     SearchWorkItems(): Promise<any>;
     getLatestVer(id):Promise<any>;
+    addAttachment(data,id): any;
 }
