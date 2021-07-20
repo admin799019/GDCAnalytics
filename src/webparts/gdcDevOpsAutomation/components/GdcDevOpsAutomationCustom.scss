@@ -1,3 +1,6 @@
+@import '~office-ui-fabric-react/dist/sass/_References.scss';
+
+
 /* react quill toolbar */
 .ql-editor {
     min-height: 100px;
@@ -21,6 +24,9 @@
 
   .gdcColumn6 {
     min-height: 80px !important;
+
+    @include ms-Grid-col;
+    @include ms-sm6;
   }
 
   .gdcColumn12 {

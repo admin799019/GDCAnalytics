@@ -446,6 +446,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
+  public onFileUpload(e) {
+    
+  }
+
   public getCascadingFieldValue(fieldName) {
     var value = "";
     this.state.formFields.map(f => {
@@ -510,25 +514,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             </div>
           </div>
         </Panel>
-
         <div className="ms-Grid-row">
           {
             this.state.formFields.map((ele) => {
               return this.renderFields(ele);
             })
           }
-          {/* <FilePicker
-            bingAPIKey="<BING API KEY>"
-            buttonLabel={"Please attach a file"}
-            buttonClassName={styles.button}
-            
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
-            buttonIcon="Upload"
-            onSave={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }), this._onFilePickerSave(this.state.filePickerResult) }}
-            onChange={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }) }}
-            context={this.props.context}
-            
-          /> */}
         </div>
       </div>
     );
@@ -554,7 +545,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "SingleSelectInput":
         return (
           <React.Fragment>
-            <div className={ele.className + " gdcColumn6"}>
+            <div className={ele.className + " abc " + styles.gdcColumn6}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
@@ -685,6 +676,25 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
         );
+      case "FilePickerInput":
+        return (
+          // <FilePicker
+          //   bingAPIKey="<BING API KEY>"
+          //   buttonLabel={"Please attach a file"}
+          //   buttonClassName={styles.button}
+
+          //   accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
+          //   buttonIcon="Upload"
+          //   onSave={(filePickerResult: IFilePickerResult[]) => {
+          //     this.setState({ filePickerResult })
+          //     // this._onFilePickerSave(this.state.filePickerResult);
+          //   }}
+          //   onChange={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }) }}
+          //   context={this.props.context}
+
+          // />
+          <input type="file" onChange={e => this.onFileUpload(e)}></input>
+        )
     }
   }
 }

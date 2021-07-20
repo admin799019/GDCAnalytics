@@ -42,6 +42,11 @@
     min-height: 192px !important;
   }
 
+  .gdcColumn6 {
+    @include ms-Grid-col;
+    @include ms-sm6;
+  }
+
   .button {
     // Our button
     text-decoration: none;

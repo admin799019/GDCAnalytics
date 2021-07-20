@@ -12,12 +12,12 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData =[
+const ChannelAnalyticsMetaData = [
     {
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
         "label": "What area of Channel Analytics is your request for?",
-        "className": "ms-Grid-col ms-sm12",
+        "className": "ms-Grid-col ms-sm6 ms-lg6 ms-xxl4 ms-xl6 ms-md6",
         "options": [
             {
                 "key": "Operational Framework\\Channel Analytics\\Demand Response",
@@ -199,9 +199,9 @@ const ChannelAnalyticsMetaData =[
     },
     {
         "title": "What type of request is this?",
-        "type": "SingleSelectInput",
+        "type": "RadioButtonInput",
         "label": "What type of request is this?",
-        "className": "ms-Grid-col ms-sm6",
+        "className": "ms-Grid-col ms-sm6 ms-lg4 ms-xl4 ms-md6",
         "options": [
             {
                 "key": "Ask an Expert",
@@ -363,9 +363,18 @@ const ChannelAnalyticsMetaData =[
         "required": false,
         "errorMessage": "",
         "devopsName": "System.Description"
+    },
+    {
+        "title": "Please provide attachments or screenshots to support your request",
+        "type": "FileInput",
+        "label": "Please provide attachments or screenshots to support your request",
+        "className": "ms-Grid-col ms-sm12",
+        "value": "",
+        "required": false,
+        "errorMessage": "",
+        "devopsName": "Attachments"
     }
-]
-;
+];
 
 const AnalyticsmetaData = [
     {
