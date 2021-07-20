@@ -12,7 +12,7 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =[
     {
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
@@ -75,7 +75,7 @@ const ChannelAnalyticsMetaData = [
                                 "text": "BizApps"
                             },
                             {
-                                "key": "M365 Commercial",
+                                "key": "Commercial",
                                 "text": "Commercial"
                             }
                         ],
@@ -158,32 +158,32 @@ const ChannelAnalyticsMetaData = [
                             {
                                 "key": "M365_All",
                                 "text": "M365_All",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "M365_ODB",
                                 "text": "M365_ODB",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "M365_Teams",
                                 "text": "M365_Teams",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Onb_Usage",
                                 "text": "Comm_Onb_Usage",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Trial",
                                 "text": "Comm_Trial",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Renewal",
                                 "text": "Comm_Renewal",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             }
                         ],
                         "className": "ms-Grid-col ms-sm6",
@@ -364,7 +364,8 @@ const ChannelAnalyticsMetaData = [
         "errorMessage": "",
         "devopsName": "System.Description"
     }
-];
+]
+;
 
 const AnalyticsmetaData = [
     {
