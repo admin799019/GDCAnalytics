@@ -40,9 +40,8 @@ interface MetaDataType {
   errorMessage: string;
   devopsName: string;
   showError: boolean;
-  //displayOptions?: any;
-  displayField: boolean;
   subFields: Array<subFieldsObjectType>;
+  cascadingField: string;
 }
 
 interface subFieldsObjectType {
@@ -51,8 +50,7 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
-// var 
-// DescriptionData="";
+var DescriptionData = "";
 const Area = {
   "title": "Analytics Area",
   "type": "SingleSelectInput",
@@ -67,7 +65,7 @@ const Area = {
   ],
   "value": ""
 };
-//virendra validating check in 
+
 const stackTokens: IStackTokens = {
   childrenGap: 2,
   maxWidth: 300,
@@ -102,7 +100,7 @@ export interface IDevOpsState {
   formSuccessMessage: string;
   showMessage: boolean;
   showAddButton: boolean;
-  DescriptionData : string;
+  // DescriptionData: string;
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
@@ -113,7 +111,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.state = {
       projects: [],
       text: "",
-      DescriptionData : "",
+      // DescriptionData: "",
       elements: [
         { id: 'Request Title' },
         { id: 'Analytics Area' },
@@ -134,6 +132,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.updateFormFields = this.updateFormFields.bind(this);
     this.appendValues = this.appendValues.bind(this);
     this.appendAPI = this.appendAPI.bind(this);
+    this.getCascadingFieldValue = this.getCascadingFieldValue.bind(this);
   }
 
   public componentDidMount() {
@@ -141,8 +140,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-    this.props.devOpsService.getLatestVer(44).then((data)=>{console.log(data)})
-    this.props.devOpsService.FilterWorkItems();
+    // this.props.devOpsService.getLatestVer(44).then((data) => { console.log(data); });
+    // this.props.devOpsService.FilterWorkItems();
   }
 
   public handleChange(value: any, name) {
@@ -152,7 +151,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var i = 0;
     stateValues = this.appendValues(stateValues, value, name);
 
-    console.log("state value", stateValues);
     this.setState({
       formFields: stateValues
     });
@@ -233,9 +231,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async submitForm(addorupdate: string) {
-    console.log(this.state.formFields);
+    DescriptionData = "";
     var parentFieldsRequiredHasValues: boolean = true;
-    var subFields;
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
@@ -246,13 +243,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       });
     }
     var APIData = _.cloneDeep(this.state.formData);
-    console.log(APIData,"246")
     var mlt: string;
     var formFields = _.cloneDeep(this.state.formFields);
     this.appendAPI(formFields, APIData).then(async (dataReturned) => {
       if (dataReturned.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
-        console.log(APIData);
         // APIData.push({
         //   "op": "add",
         //   "path": "/fields/System.AreaPath",
@@ -264,9 +259,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "op": "add",
           "path": "/fields/System.Description",
           "from": null,
-          "value": this.state.DescriptionData
+          "value": DescriptionData
         });
-        console.log(APIData,"APIDTATA");
         await this.props.devOpsService.addfeature(APIData).then(data => {
           Area.value = "";
           this.setState({
@@ -287,7 +281,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async appendAPI(Fields: MetaDataType[], APIData) {
-    console.log(Fields,APIData)
     var requiredHasValues: boolean = true;
     var subFields;
     var mlt: string;
@@ -297,16 +290,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         mlt = await this.onUpdateClick(field.value);
         field.value = mlt;
       }
-
-   
-      if(field.devopsName == "System.Description"){
-        var tempstr="";
-        tempstr.concat(field.title);
-        tempstr.concat("<p><br></p>");
-        tempstr.concat(field.value);
-        console.log(tempstr,"sstrs")
-        this.setState({DescriptionData:tempstr});
-        console.log(this.state.DescriptionData,"dd",tempstr)
+      if (field.devopsName == "System.Description") {
+        var tempDesc = "";
+        tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div></br>");
+        tempDesc = tempDesc.concat("<div>", field.value, "</div></br>");
+        DescriptionData = DescriptionData.concat(tempDesc);
       }
       // else if(field.devopsName=="System.AreaPath")
       // {
@@ -317,15 +305,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       //     "value": field.value
       //   });
       // }
-      else {
-      //var DevOpsTitle = MetaDataMpping.filter(f => f.FormTitle == field.title)[0].DevOpsName;
-      APIData.push({
-        "op": "add",
-        "path": "/fields/" + field.devopsName,
-        "from": null,
-        "value": field.value
-      });
-    }
+      else if (field.devopsName != "System.Description") {
+        APIData.push({
+          "op": "add",
+          "path": "/fields/" + field.devopsName,
+          "from": null,
+          "value": field.value
+        });
+      }
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -338,7 +325,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               requiredHasValues = false;
             }
           });
-
           // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
         }
         this.appendAPI(subFields, APIData).then(data => {
@@ -354,22 +340,36 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     Area.value = option.key;
     this.props.spService.getFormMetadata(option.text).then((data) => {
       var jsonData = JSON.parse(data.JSON);
-      console.log(jsonData,"jsonn");
       this.setState({
         formFields: jsonData,
         showMessage: false,
         showAddButton: true
       });
     });
-    // call devops service for filter
-    // map the json data using title and devops name
-    // append values from devops in value property
+  }
+
+  public getCascadingFieldValue(fieldName) {
+    var value = "";
+    this.state.formFields.map(f => {
+      if (f.title == fieldName) {
+        value = f.value;
+      }
+      else if (f.subFields != null && f.subFields.length > 0) {
+        if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
+          f.subFields.filter(sfo => sfo.active == true)[0].fields.map(sf => {
+            if (sf.title == fieldName) {
+              value = sf.value;
+            }
+          });
+        }
+      }
+    });
+    return value;
   }
 
   public render(): JSX.Element {
     return (
       <div className="ms-Grid gdcBorder">
-        dev env
         <div className="ms-Grid-row">
           {this.state.showMessage
             ? <MessageBar
@@ -416,7 +416,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className + " gdcColumn6"}>
               <TextField label={ele.label} onChange={(e, value) => this.handleChange(value, ele.title)}
-                value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer}/>
+                value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
@@ -443,6 +443,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
+          </React.Fragment>
+        );
+      case "SingleSelectCascadingInput":
+        var cascadingField = ele.cascadingField;
+        var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
+        var options = cascadingFieldValue != ""
+          ? ele.options.filter(opt => opt.cascadingOption == cascadingFieldValue)
+          : ele.options;
+        return (
+          <React.Fragment>
+            <div className={ele.className + " gdcColumn6"}>
+              <Dropdown
+                placeholder="Select an option"
+                label={ele.label}
+                options={options}
+                onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                required={ele.required}
+              //styles={dropdownStyles}
+              />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
           </React.Fragment>
         );
       case "DateInput":
