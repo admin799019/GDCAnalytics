@@ -4,7 +4,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { DatePicker, DayOfWeek, mergeStyles, IDatePickerProps, MonthOfYear, ICalendarStrings, IDatePickerStrings } from '@fluentui/react';
+import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import * as _ from 'lodash';
 import { Label } from '@fluentui/react/lib/Label';
@@ -12,6 +12,9 @@ import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { IStackTokens, Stack, IStackStyles } from '@fluentui/react/lib/Stack';
 import { IRenderFunction } from '@fluentui/react/lib/Utilities';
+import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
+import { DefaultButton } from '@fluentui/react/lib/Button';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 
 
 import ReactQuill from 'react-quill';
@@ -59,9 +62,10 @@ const Area = {
   "className": "fields",
   "helperText": "",
   "options": [
+    { "key": "Data Services", "text": "Data Services" },
     { "key": "Channel Analytics", "text": "Channel Analytics" },
-    { "key": "GDC Business Intelligence", "text": "GDC Business Intelligence" },
-    { "key": "Data Services", "text": "Data Services" }
+    { "key": "Marketing Engagement & Innovation", "text": "Marketing Engagement & Innovation" },
+    { "key": "Targeting Enablement & Business Health", "text": "Targeting Enablement & Business Health" }
   ],
   "value": ""
 };
@@ -104,7 +108,7 @@ export interface IDevOpsState {
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
-
+  requiredHasValues : boolean = true;
   public constructor(props) {
     super(props);
 
@@ -127,7 +131,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
     this.handleChange = this.handleChange.bind(this);
     this.handleToggleChange = this.handleToggleChange.bind(this);
-    this.onUpdateClick = this.onUpdateClick.bind(this);
+    this.UpdateRichText = this.UpdateRichText.bind(this);
+    this.UpdateRichTextFields = this.UpdateRichTextFields.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.updateFormFields = this.updateFormFields.bind(this);
     this.appendValues = this.appendValues.bind(this);
@@ -146,9 +151,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
-    var subFields = Array<MetaDataType>();
-    var subFieldsObject;
-    var i = 0;
     stateValues = this.appendValues(stateValues, value, name);
 
     this.setState({
@@ -200,7 +202,32 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public onUpdateClick(data): Promise<any> {
+  public UpdateRichTextFields(fields): Promise<any> {
+    fields.map(async (f) => {
+      if (f.type == "MultiLineTextInput") {
+        await this.UpdateRichText(f.value).then(mlt => {
+          f.value = mlt;
+        });
+      }
+      if (f.subFields != null && f.subFields.length > 0) {
+        if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
+          f.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
+            if (sf.type == "MultiLineTextInput") {
+              await this.UpdateRichText(sf.value).then(smlt => {
+                sf.value = smlt;
+              });
+            }
+          });
+        }
+      }
+    });
+    return Promise.all(fields).then(d => {
+      console.log("rich text",fields);
+      return fields;
+    });
+  }
+
+  public UpdateRichText(data): Promise<any> {
     let element = document.createElement('div');
     element.innerHTML = data;
     let imgsLenth = element.querySelectorAll('img').length;
@@ -224,7 +251,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       element.querySelectorAll('img').forEach((ele, i) => {
         ele.src = d[i];
       });
-      console.log("element - ", element);
+      // console.log("element - ", element);
       // this.props.devOpsService.updatefeature(element.innerHTML);
       return element.innerHTML;
     });
@@ -245,8 +272,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var APIData = _.cloneDeep(this.state.formData);
     var mlt: string;
     var formFields = _.cloneDeep(this.state.formFields);
-    this.appendAPI(formFields, APIData).then(async (dataReturned) => {
-      if (dataReturned.requiredHasValues && parentFieldsRequiredHasValues) {
+
+    this.UpdateRichTextFields(formFields).then(updatedformFields => {
+      var dataReturned = this.appendAPI(_.cloneDeep(updatedformFields), APIData);
+      if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         // APIData.push({
         //   "op": "add",
@@ -261,7 +290,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": DescriptionData
         });
-        await this.props.devOpsService.addfeature(APIData).then(data => {
+        this.props.devOpsService.addfeature(APIData).then(data => {
           Area.value = "";
           this.setState({
             formFields: metaData,
@@ -280,20 +309,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public async appendAPI(Fields: MetaDataType[], APIData) {
+  public appendAPI(Fields: MetaDataType[], APIData) {
     var requiredHasValues: boolean = true;
     var subFields;
-    var mlt: string;
 
     for (let field of Fields) {
-      if (field.type == "MultiLineTextInput") {
-        mlt = await this.onUpdateClick(field.value);
-        field.value = mlt;
-      }
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
-        tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div></br>");
-        tempDesc = tempDesc.concat("<div>", field.value, "</div></br>");
+        tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
         DescriptionData = DescriptionData.concat(tempDesc);
       }
       // else if(field.devopsName=="System.AreaPath")
@@ -305,7 +328,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       //     "value": field.value
       //   });
       // }
-      else if (field.devopsName != "System.Description") {
+      if (field.devopsName != "System.Description") {
         APIData.push({
           "op": "add",
           "path": "/fields/" + field.devopsName,
@@ -313,7 +336,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "value": field.value
         });
       }
-
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
 
@@ -322,23 +344,22 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           stateCopy.map(scv => {
             if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
               scv.showError = true;
-              requiredHasValues = false;
+              this.requiredHasValues = false;
             }
           });
           // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
         }
-        this.appendAPI(subFields, APIData).then(data => {
-          requiredHasValues = data.requiredHasValues;
-          return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
-        });
+        var data = this.appendAPI(subFields, APIData);
+        // requiredHasValues = data.requiredHasValues;
+        // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
       }
     }
     return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
   }
 
   public updateFormFields(option) {
-    Area.value = option.key;
-    this.props.spService.getFormMetadata(option.text).then((data) => {
+    Area.value = option;
+    this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
       this.setState({
         formFields: jsonData,
@@ -369,8 +390,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public render(): JSX.Element {
     return (
-      <div className="ms-Grid gdcBorder">
-        <div className="ms-Grid-row">
+      <div className="gdcBorder">
+        <div className="">
           {this.state.showMessage
             ? <MessageBar
               messageBarType={MessageBarType.success}
@@ -381,30 +402,37 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             : <div></div>
           }
         </div>
-        <div className="ms-Grid-row gdcPaddingBottom15">
-          <div className="ms-Grid-col ms-sm8">
-            <Dropdown
-              placeholder="Select an option"
-              label={Area.label}
-              options={Area.options}
-              onChange={(e, o) => this.updateFormFields(o)}
-              className="ms-sm6"
-              selectedKey={Area.value}
-            //styles={dropdownStyles}
-            />
+        <Panel
+          headerText="GDC Intake Form"
+          isOpen={true}
+          type={PanelType.extraLarge}
+          closeButtonAriaLabel="Close"
+        >
+          <div className="ms-Grid">
+            <div className="ms-Grid-row gdcPaddingBottom15">
+              <div className="ms-Grid-col ms-sm12">
+                {
+                  Area.options.map(area => {
+                    return (<DefaultButton text={area.text}
+                      onClick={e => this.updateFormFields(area.text)}
+                    />);
+                  })
+                }
+              </div>
+              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
+                <PrimaryButton text="Add" className="gdcAddButton" onClick={() => this.submitForm("add")} />
+                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              {
+                this.state.formFields.map((ele) => {
+                  return this.renderFields(ele);
+                })
+              }
+            </div>
           </div>
-          <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
-            <PrimaryButton text="Add" className="gdcAddButton" onClick={() => this.submitForm("add")} />
-            {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
-          </div>
-        </div>
-        <div className="ms-Grid-row">
-          {
-            this.state.formFields.map((ele) => {
-              return this.renderFields(ele);
-            })
-          }
-        </div>
+        </Panel>
       </div>
     );
   }
@@ -464,6 +492,21 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
+          </React.Fragment>
+        );
+      case "RadioButtonInput":
+        return (
+          <React.Fragment>
+            <div className={ele.className + " gdcColumn6"}>
+              <ChoiceGroup options={ele.options}
+                onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                label={ele.label} required={ele.required} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
+            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+              : null
+            }
           </React.Fragment>
         );
       case "DateInput":
