@@ -17,7 +17,7 @@ const ChannelAnalyticsMetaData = [
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
         "label": "What area of Channel Analytics is your request for?",
-        "className": "ms-Grid-col ms-sm6 ms-lg6 ms-xxl4 ms-xl6 ms-md6",
+        "className": "ms-Grid-col ms-sm6 ms-lg4 ms-xl4 ms-md6",
         "options": [
             {
                 "key": "Operational Framework\\Channel Analytics\\Demand Response",
@@ -209,7 +209,7 @@ const ChannelAnalyticsMetaData = [
             },
             {
                 "key": "Report Request",
-                "text": "Report Request"
+                "text": "Report Request,styles:{field: { marginLeft: `15px`}"
             }
         ],
         "value": "",
