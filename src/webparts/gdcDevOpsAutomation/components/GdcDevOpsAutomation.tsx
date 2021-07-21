@@ -192,7 +192,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
       }
     });
-
     return stateValues;
   }
 
@@ -210,17 +209,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public UpdateRichTextFields(fields): Promise<any> {
-    fields.map(async (f) => {
+    var fs = _.cloneDeep(fields);
+    fs.map((f) => {
       if (f.type == "MultiLineTextInput") {
-        await this.UpdateRichText(f.value).then(mlt => {
+        this.UpdateRichText(f.value).then(mlt => {
           f.value = mlt;
         });
       }
       if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
-          f.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
+          f.subFields.filter(sfo => sfo.active == true)[0].fields.map((sf) => {
             if (sf.type == "MultiLineTextInput") {
-              await this.UpdateRichText(sf.value).then(smlt => {
+              this.UpdateRichText(sf.value).then(smlt => {
                 sf.value = smlt;
               });
             }
@@ -228,13 +228,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
       }
     });
-    return Promise.all(fields).then(d => {
+    return Promise.all(fs).then(d => {
       console.log("rich text", fields);
       return fields;
     });
   }
 
-  public UpdateRichText(data): Promise<any> {
+  public async UpdateRichText(data): Promise<any> {
     let element = document.createElement('div');
     element.innerHTML = data;
     let imgsLenth = element.querySelectorAll('img').length;
@@ -258,82 +258,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       element.querySelectorAll('img').forEach((ele, i) => {
         ele.src = d[i];
       });
-      // console.log("element - ", element);
+      console.log("element - ", element);
       // this.props.devOpsService.updatefeature(element.innerHTML);
       return element.innerHTML;
     });
   }
 
-  public async submitForm(addorupdate: string) {
-    this.DescriptionData = "";
-    var parentFieldsRequiredHasValues: boolean = true;
-    if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
-      var stateCopy = [...this.state.formFields];
-      stateCopy.map(scv => {
-        if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
-          scv.showError = true;
-          parentFieldsRequiredHasValues = false;
-        }
-      });
-    }
-    var APIData = _.cloneDeep(this.state.formData);
-    var mlt: string;
-    var formFields = _.cloneDeep(this.state.formFields);
-
-    this.UpdateRichTextFields(formFields).then(updatedformFields => {
-      var dataReturned = this.appendAPI(_.cloneDeep(updatedformFields), APIData);
-      if (this.requiredHasValues && parentFieldsRequiredHasValues) {
-        APIData = dataReturned.APIData;
-        console.log(dataReturned);
-        // APIData.push({
-        //   "op": "add",
-        //   "path": "/fields/System.AreaPath",
-        //   "from": null,
-        //   "value": `Operational Framework\\` + Area.value
-        // });
-        //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
-        APIData.push({
-          "op": "add",
-          "path": "/fields/System.Description",
-          "from": null,
-          "value": this.DescriptionData
-        });
-        this.props.devOpsService.addfeature(APIData).then(data => {
-          Area.value = "";
-          this.setState({
-            formFields: metaData,
-            formSuccessMessage: "New Ojective has been created successfully with ID " + data.id,
-            showMessage: true,
-            showAddButton: false
-          });
-          // var attach=[]
-          // console.log(this.state.filePickerResult)
-          //           if(this.state.filePickerResult!=null){
-          //            attach.push({
-          //             "op": "add",
-          //             "path": "/relations/-",
-          //             "value": {
-          //               "rel": "Hyperlink",
-          //               "url": this.state.filePickerResult
-          //             }
-          //           });
-          //           console.log("hello from attachments")
-          //           this.props.devOpsService.addAttachment(attach,data.id).then((data)=>
-          //           console.log(data));
-          //         }
-
-
-        });
-
-      }
-      else {
-        stateCopy = dataReturned.Fields;
-        this.setState({
-          formFields: stateCopy
-        });
-      }
-    });
-  }
+  // var attach=[]
+  // console.log(this.state.filePickerResult)
+  //           if(this.state.filePickerResult!=null){
+  //            attach.push({
+  //             "op": "add",
+  //             "path": "/relations/-",
+  //             "value": {
+  //               "rel": "Hyperlink",
+  //               "url": this.state.filePickerResult
+  //             }
+  //           });
+  //           console.log("hello from attachments")
+  //           this.props.devOpsService.addAttachment(attach,data.id).then((data)=>
+  //           console.log(data));
+  //         }
 
 
 
@@ -370,6 +315,61 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   //     }
   //   })
   // }
+
+  public async submitForm(addorupdate: string) {
+    this.DescriptionData = "";
+    var parentFieldsRequiredHasValues: boolean = true;
+    if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
+      var stateCopy = [...this.state.formFields];
+      stateCopy.map(scv => {
+        if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
+          scv.showError = true;
+          parentFieldsRequiredHasValues = false;
+        }
+      });
+    }
+    var APIData = _.cloneDeep(this.state.formData);
+    var mlt: string;
+    var formFields = _.cloneDeep(this.state.formFields);
+
+    this.UpdateRichTextFields(formFields).then(updatedformFields => {
+      this.appendAPI(_.cloneDeep(updatedformFields), APIData).then(dataReturned => {
+        if (this.requiredHasValues && parentFieldsRequiredHasValues) {
+          APIData = dataReturned.APIData;
+          console.log(dataReturned);
+          // APIData.push({
+          //   "op": "add",
+          //   "path": "/fields/System.AreaPath",
+          //   "from": null,
+          //   "value": `Operational Framework\\` + Area.value
+          // });
+          //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
+          APIData.push({
+            "op": "add",
+            "path": "/fields/System.Description",
+            "from": null,
+            "value": this.DescriptionData
+          });
+          this.props.devOpsService.addfeature(APIData).then(data => {
+            Area.value = "";
+            this.setState({
+              formFields: metaData,
+              formSuccessMessage: "New Ojective has been created successfully with ID " + data.id,
+              showMessage: true,
+              showAddButton: false
+            });
+          });
+        }
+        else {
+          stateCopy = dataReturned.Fields;
+          this.setState({
+            formFields: stateCopy
+          });
+        }
+      });
+    });
+  }
+
   public onMultiSelectChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
     console.log("multi", item);
     if (item) {
@@ -385,7 +385,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
   }
 
-  public appendAPI(Fields: MetaDataType[], APIData) {
+  public async appendAPI(Fields: MetaDataType[], APIData) {
     var requiredHasValues: boolean = true;
     var subFields;
 
@@ -426,9 +426,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
           // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
         }
-        var data = this.appendAPI(subFields, APIData);
-        // requiredHasValues = data.requiredHasValues;
-        // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
+        this.appendAPI(subFields, APIData).then(data => {
+          // requiredHasValues = data.requiredHasValues;
+          return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
+        });
       }
     }
     return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
@@ -447,7 +448,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public onFileUpload(e) {
-    
+
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -676,24 +677,25 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
         );
-      case "FilePickerInput":
+      case "FileInput":
         return (
-          // <FilePicker
-          //   bingAPIKey="<BING API KEY>"
-          //   buttonLabel={"Please attach a file"}
-          //   buttonClassName={styles.button}
+          <React.Fragment>
+            {/* <FilePicker
+              bingAPIKey="<BING API KEY>"
+              buttonLabel={"Please attach a file"}
+              buttonClassName={styles.button}
 
-          //   accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
-          //   buttonIcon="Upload"
-          //   onSave={(filePickerResult: IFilePickerResult[]) => {
-          //     this.setState({ filePickerResult })
-          //     // this._onFilePickerSave(this.state.filePickerResult);
-          //   }}
-          //   onChange={(filePickerResult: IFilePickerResult[]) => { this.setState({ filePickerResult }) }}
-          //   context={this.props.context}
-
-          // />
-          <input type="file" onChange={e => this.onFileUpload(e)}></input>
+              accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
+              buttonIcon="Upload"
+              onSave={(filePickerResult: IFilePickerResult[]) => {
+                this.setState({ filePickerResult })
+                // this._onFilePickerSave(this.state.filePickerResult);
+              }}
+              onChange={(filePickerResult: IFilePickerResult[]) => { this.onFileUpload(filePickerResult) }}
+              context={this.props.context}
+            /> */}
+            <input type="file" multiple onChange={e => this.onFileUpload(e)}></input>
+          </React.Fragment>
         )
     }
   }
