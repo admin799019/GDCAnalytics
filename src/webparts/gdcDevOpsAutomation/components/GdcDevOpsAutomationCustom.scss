@@ -74,8 +74,14 @@
    margin-bottom:25px;
     @include ms-Grid-col;
     @include ms-sm6;
+    padding-left: 0px;
+    width:41%;
   }
-
+  .gdcColumnBlock{
+    display:inline-block;
+    min-height:192px !important;
+    width:90%;
+  }
   .gdcColumn12 {
     min-height: 192px !important;
   }

@@ -553,13 +553,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
            
-            <div className={ele.className + " abc " + styles.gdcColumn6} style={{width:"40%"}}>
+            <div className={ele.className + " abc " + styles.gdcColumn6} style={{width:"41%"}}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
                 options={ele.options}
                 
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px'},dropdownOptionText:{fontWeight:'500px'},}}
+                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black',margin:'0px'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
             //styles={dropdownStyles}
@@ -586,7 +586,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder="Select an option"
                 label={ele.label}
                 options={options}
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px'},dropdownOptionText:{fontWeight:'500px'},}}
+                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
               //styles={dropdownStyles}
@@ -640,10 +640,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         );
       case "MultiLineTextInput":
         return (
-          <div className={ele.className + " gdcColumn12"}>
+          <div className="ms-Grid-row">
+          <div className={ele.className + " gdcColumnBlock"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             <ReactQuill  style={{ minHeight: 100 ,boxShadow:'2px 2px lightgrey'}} onChange={(data) => this.handleChange(data, ele.title)} />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+          </div>
           </div>
         );
       case "MultiSelectInput":
@@ -656,7 +658,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 label={ele.label}
                 multiSelect
                 options={ele.options}
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px'},dropdownOptionText:{fontWeight:'500px'},}}
+                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
                 onChange={this.onMultiSelectChange}
                 required={ele.required}
                 defaultSelectedKeys={this.state.multiSelectedKeys}

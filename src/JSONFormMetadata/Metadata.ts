@@ -209,7 +209,7 @@ const ChannelAnalyticsMetaData = [
             },
             {
                 "key": "Report Request",
-                "text": "Report Request,styles:{field: { marginLeft: `15px`}"
+                "text": "Report Request"
             }
         ],
         "value": "",
@@ -241,7 +241,7 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "RequestedPriority",
-                        "type": "MultiSelectInput",
+                        "type": "SingleSelectInput",
                         "label": "RequestedPriority",
                         "className": "ms-Grid-col ms-sm6",
                         "options": [
@@ -283,7 +283,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Request Title",
                         "type": "SingleLineTextInput",
                         "label": "Request Title",
-                        "className": "ms-Grid-col ms-sm6",
+                        "className": "ms-Grid-col ms-sm12 ms-xl12 ms-lg12 ms-md12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Title is required",
@@ -293,7 +293,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "What is the business question you are trying to answer?",
                         "type": "MultiLineTextInput",
                         "label": "What is the business question you are trying to answer?",
-                        "className": "ms-Grid-col ms-sm12",
+                        "className": "ms-Grid-col ms-sm12 ms-xl12 ms-lg12 ms-md12",
                         "value": "",
                         "required": true,
                         "errorMessage": "",
@@ -313,7 +313,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "What is the business need this request maps to?",
                         "type": "SingleLineTextInput",
                         "label": "What is the business need this request maps to?",
-                        "className": "ms-Grid-col ms-sm6",
+                        "className": "ms-Grid-col ms-sm12 ms-xl12 ms-lg12 ms-md12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -348,7 +348,7 @@ const ChannelAnalyticsMetaData = [
         "title": "Requested Completion Date",
         "type": "SingleLineTextInput",
         "label": "Requested Completion Date",
-        "className": "ms-Grid-col ms-sm6",
+        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
         "value": "",
         "required": true,
         "errorMessage": "",
@@ -358,21 +358,11 @@ const ChannelAnalyticsMetaData = [
         "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
         "type": "MultiLineTextInput",
         "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
-        "className": "ms-Grid-col ms-sm12",
+        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
         "value": "",
         "required": false,
         "errorMessage": "",
         "devopsName": "System.Description"
-    },
-    {
-        "title": "Please provide attachments or screenshots to support your request",
-        "type": "FileInput",
-        "label": "Please provide attachments or screenshots to support your request",
-        "className": "ms-Grid-col ms-sm12",
-        "value": "",
-        "required": false,
-        "errorMessage": "",
-        "devopsName": "Attachments"
     }
 ];
 
