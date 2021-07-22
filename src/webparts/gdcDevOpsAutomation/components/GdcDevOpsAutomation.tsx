@@ -109,6 +109,7 @@ export interface IDevOpsState {
   multiSelectedKeys: string[];
   files: [];
   openPanel: boolean;
+  selectedButton:string
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
@@ -135,7 +136,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       showAddButton: false,
       multiSelectedKeys: [],
       files: [],
-      openPanel: false
+      openPanel: false,
+      selectedButton:""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -411,7 +413,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       this.setState({
         formFields: jsonData,
         showMessage: false,
-        showAddButton: true
+        showAddButton: true,
+        selectedButton:option
       });
     });
   }
@@ -524,9 +527,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
-                    return (<DefaultButton text={area.text} className="headerButton"
+                    return (<DefaultButton
+                     
+                       text={area.text}
+                        className={this.state.selectedButton==area.text?"selectedButton":"headerButton"}
                       onClick={e => this.updateFormFields(area.text)
-                      
+                       
                       }
                       
                     />);
@@ -719,7 +725,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "FileInput":
         return (
           <React.Fragment>
-            <input type="file" multiple onChange={e => this.onFileUpload(e)}></input>
+            <div>
+            
+            <label style={{backgroundColor:"lightgrey"}} className={styles.fileInput} >
+            <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+            Add attachment
+            <input type="file"
+             style={{display:'none'}}
+              
+             placeholder="Add attachment"
+            multiple onChange={e => this.onFileUpload(e)} />
+          </label>
+        
+     
+            </div>
           </React.Fragment>
         );
     }

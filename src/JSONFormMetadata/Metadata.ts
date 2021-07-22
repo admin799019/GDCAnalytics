@@ -17,7 +17,7 @@ const ChannelAnalyticsMetaData = [
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
         "label": "What area of Channel Analytics is your request for?",
-        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+        "className": "ms-Grid-col ms-sm6",
         "options": [
             {
                 "key": "Operational Framework\\Channel Analytics\\Demand Response",
@@ -60,7 +60,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "POD Category",
                         "type": "SingleSelectInput",
                         "label": "POD Category",
-                        "className": "ms-Grid-col gdcOuterWidth6 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col ms-sm6",
                         "options": [
                             {
                                 "key": "All PODs",
@@ -186,7 +186,7 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "Commercial"
                             }
                         ],
-                        "className": "ms-Grid-col gdcOuterWidth6 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col ms-sm6",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
