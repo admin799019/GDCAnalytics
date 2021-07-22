@@ -109,7 +109,7 @@ export interface IDevOpsState {
   multiSelectedKeys: string[];
   files: [];
   openPanel: boolean;
-  selectedButton:string
+  selectedButton: string;
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
@@ -137,7 +137,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       multiSelectedKeys: [],
       files: [],
       openPanel: false,
-      selectedButton:""
+      selectedButton: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -414,7 +414,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         formFields: jsonData,
         showMessage: false,
         showAddButton: true,
-        selectedButton:option
+        selectedButton: option
       });
     });
   }
@@ -483,7 +483,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         <div className="gdcPanelHeaderEllipses1"></div>
         <div className="gdcPanelHeaderEllipses2"></div>
         <div className="gdcPanelCloseButton">
-          <Link onClick={(e) => { this.setState({ openPanel: false }) }} underline={false}>
+          <Link onClick={(e) => { this.setState({ openPanel: false }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
@@ -506,21 +506,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
         </div>
         <div>
-          <Link onClick={(e) => { this.setState({ openPanel: true }) }} className="gdcNewButton" underline>
+          <Link onClick={(e) => { this.setState({ openPanel: true }); }} className="gdcNewButton" underline>
             + New Intake Form
           </Link>
         </div>
         <Panel
           headerText="GDC Intake Form"
-
           isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
-          // onRenderNavigationContent={this.onRenderNavigationContent}
           onRenderHeader={this.onRenderNavigationContent}
           hasCloseButton={false}
-          // closeButtonAriaLabel="Close"
-          // onDismiss={(e) => { this.setState({ openPanel: false }) }}
-          // headerClassName="gdcPanelHeader"
           className="gdcPanel"
         >
           <div className="ms-Grid" dir="ltr">
@@ -530,29 +525,25 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 {
                   Area.options.map(area => {
                     return (<DefaultButton
-                     
-                       text={area.text}
-                        className={this.state.selectedButton==area.text?"selectedButton":"headerButton"}
+                      text={area.text}
+                      className={this.state.selectedButton == area.text ? "selectedButton" : "headerButton"}
                       onClick={e => this.updateFormFields(area.text)
-                       
                       }
-                      
                     />);
                   })
                 }
               </div>
-
             </div>
             <div className="ms-Grid-row">
-            {
-              this.state.formFields.map((ele) => {
-                return this.renderFields(ele);
-              })
-            }
-            <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
-              <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
-              {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
-            </div>
+              {
+                this.state.formFields.map((ele) => {
+                  return this.renderFields(ele);
+                })
+              }
+              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
+                <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
+                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
+              </div>
             </div>
           </div>
         </Panel>
@@ -728,18 +719,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div>
-            
-            <label style={{backgroundColor:"lightgrey"}} className={styles.fileInput} >
-            <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-            Add attachment
-            <input type="file"
-             style={{display:'none'}}
-              
-             placeholder="Add attachment"
-            multiple onChange={e => this.onFileUpload(e)} />
-          </label>
-        
-     
+              <label style={{ backgroundColor: "lightgrey" }} className={styles.fileInput} >
+                <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
+                Add attachment
+                <input type="file"
+                  style={{ display: 'none' }}
+
+                  placeholder="Add attachment"
+                  multiple onChange={e => this.onFileUpload(e)} />
+              </label>
             </div>
           </React.Fragment>
         );

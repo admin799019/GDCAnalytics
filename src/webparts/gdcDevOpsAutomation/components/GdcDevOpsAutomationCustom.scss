@@ -80,10 +80,11 @@ height:40px;
 }
 .selectedButton{
   margin-right:14px;
-  background-color: darkslategray;
+  color: #fff;
+  background-color: #17787B;
 }
 .headerButton::selection{
-  background-color: darkslategray;
+  background-color: #17787B;
 }
 .questionTop{
   margin-top: 25px;
@@ -128,7 +129,7 @@ height:40px;
   } 
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
 .dropDown{
-  margin-bottom:25px;
+  margin-top:25px;
   .ms-Dropdown-caretDownWrapper{
     line-height: 35px;
   } 
@@ -155,7 +156,7 @@ height:40px;
         height:40px;
         font-size: 14px;
         color:black;
-       // line-height: 20px;
+        line-height: 36px;
        padding: 0px 28px 0px 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         vertical-align: middle;
@@ -221,17 +222,9 @@ margin-bottom:25px;
     display: none;
   }
 
-  // .gdcBorder {
-  //   /* border: 1px solid black;
-  //   min-height: 400px; */
-  // }
-
-
-/* 
-  #spCommandBar {
-    display: none;
-  } */
-
+  .gdcBorder {
+    font-family: Segoe UI;
+  }
 
   .gdcMessage {
     position: fixed;
@@ -285,16 +278,19 @@ margin-bottom:25px;
   color: #fff;
   position: fixed;
   right: 20px;
-  font-size: 14px;
+  font-size: 12px;
   .ms-Link {
     color: white;
     vertical-align: middle;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
+    padding: 5px;
     .gdcCloseIcon {
       padding-right: 5px;
       vertical-align: middle;
     }
   }
-  .ms-Link :hover {
+  .ms-Link:hover {
     text-decoration: none !important;
   }
 }
@@ -307,4 +303,6 @@ margin-bottom:25px;
   margin-top: 0px;
 }
 }
+
+/* Panel End */
 
