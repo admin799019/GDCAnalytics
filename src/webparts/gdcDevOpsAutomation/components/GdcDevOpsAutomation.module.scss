@@ -1,7 +1,10 @@
 @import '~office-ui-fabric-react/dist/sass/_References.scss';
 
 .gdcDevOpsAutomation {
+.fileInput{
+  background-color: lightgrey;
 
+}
   .container {
     max-width: 700px;
     margin: 0px auto;
@@ -38,11 +41,8 @@
     @include ms-fontColor-white;
   }
 
-  .gdcColumn12 {
-    min-height: 192px !important;
-  }
-
-  .gdcColumnSM6 {
+  
+  .gdcColumn6 {
     @include ms-Grid-col;
     @include ms-sm6;
     @include ms-lg6;

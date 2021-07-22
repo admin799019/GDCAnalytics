@@ -78,6 +78,10 @@ height:40px;
 .headerButton{
   margin-right:14px;
 }
+.selectedButton{
+  margin-right:14px;
+  background-color: darkslategray;
+}
 .headerButton::selection{
   background-color: darkslategray;
 }
@@ -92,6 +96,9 @@ height:40px;
 } 
 .textField{
   margin-bottom: 25px;
+  .ms-Label{
+    white-space: nowrap;
+  }
  .ms-TextField-fieldGroup{
    height:40px !important;
    line-height: 35px;
@@ -122,8 +129,15 @@ height:40px;
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
 .dropDown{
   margin-bottom:25px;
+  .ms-Dropdown-caretDownWrapper{
+    line-height: 35px;
+  } 
   .ms-Dropdown {
     margin-top:15px;
+  }
+  .fileInput{
+  background-color: lightgrey;
+
   }
   .ms-Dropdown-container {
     
