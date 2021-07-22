@@ -244,7 +244,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "RequestedPriority",
                         "type": "SingleSelectInput",
                         "label": "RequestedPriority",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
@@ -264,20 +264,21 @@ const ChannelAnalyticsMetaData = [
                         "errorMessage": "",
                         "devopsName": "Custom.RequestedPriority"
                     },
+                  
+                    {
+                        "title": "Requested Completion Date",
+                        "type": "DateInput",
+                        "label": "Requested Completion Date",
+                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "",
+                        "devopsName": "System.Description"
+                    },
                     {
                         "title": "Which reporting page does your question apply to?",
                         "type": "SingleLineTextInput",
                         "label": "Which reporting page does your question apply to?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Field is required",
-                        "devopsName": "System.Description"
-                    },
-                    {
-                        "title": "Requested Completion Date",
-                        "type": "SingleLineTextInput",
-                        "label": "Requested Completion Date",
                         "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
                         "value": "",
                         "required": true,
@@ -371,10 +372,34 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "Custom.ReportRequestType"
                     },
                     {
+                        "title": "RequestedPriority",
+                        "type": "SingleSelectInput",
+                        "label": "RequestedPriority",
+                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "options": [
+                            {
+                                "key": "Priority 1: Urgent an important - must have ASAP",
+                                "text": "Priority 1: Urgent an important - must have ASAP"
+                            },
+                            {
+                                "key": "Priority 2: Not urgent but important - must have",
+                                "text": "Priority 2: Not urgent but important - must have"
+                            },
+                            {
+                                "key": "Priority 3: Low priority - nice to have",
+                                "text": "Priority 3: Low priority - nice to have"
+                            }
+                        ],
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "Custom.RequestedPriority"
+                    },
+                    {
                         "title": "Requested Completion Date",
                         "type": "SingleLineTextInput",
                         "label": "Requested Completion Date",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
