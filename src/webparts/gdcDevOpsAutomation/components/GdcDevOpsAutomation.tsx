@@ -17,6 +17,7 @@ import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import { Link } from '@fluentui/react';
+import { Attach12Regular } from '@fluentui/react-icons';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -520,7 +521,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         >
           <div className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row gdcPaddingBottom15">
-              <div className="ms-Grid-col ms-sm12">
+              <div className="ms-Grid-col ms-sm12 questionHeader">
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
@@ -583,7 +584,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 className="dropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
-              //styles={dropdownStyles}
+              
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -623,7 +624,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <div className={ele.className + " abc " + " gdcColumn6"}>
               <ChoiceGroup options={ele.options}
                 className="choiceField"
-                //styles={{ flexContainer: { display: "flex", margin: "5px" }, root: { marginRight: '30px', fontWeight: "500" } }}
+               
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -681,7 +682,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 label={ele.label}
                 multiSelect
                 options={ele.options}
-                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
                 onChange={this.onMultiSelectChange}
                 required={ele.required}
                 defaultSelectedKeys={this.state.multiSelectedKeys}
@@ -718,16 +718,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "FileInput":
         return (
           <React.Fragment>
-            <div>
-              <label style={{ backgroundColor: "lightgrey" }} className={styles.fileInput} >
-                <i className="ms-Icon ms-Icon--Attach" aria-hidden="true"></i>
-                Add attachment
-                <input type="file"
-                  style={{ display: 'none' }}
-
-                  placeholder="Add attachment"
-                  multiple onChange={e => this.onFileUpload(e)} />
-              </label>
+            <div className="filepicker">
+            
+            <label className="fileInput" >
+            <i className="ms-Icon " aria-hidden="true"></i>
+            <Attach12Regular />
+            Add attachment
+            <input type="file"
+             style={{display:'none'}}
+              
+             placeholder="Add attachment"
+            multiple onChange={e => this.onFileUpload(e)} />
+          </label>
+        
+     
             </div>
           </React.Fragment>
         );

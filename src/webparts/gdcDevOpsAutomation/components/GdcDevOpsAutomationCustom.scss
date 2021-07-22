@@ -7,8 +7,9 @@
   }
 
   .ql-container.ql-snow {
-    border: 1px solid #838383 !important;
-  
+    border-bottom: 1px solid #838383;
+    border-left: 1px solid #838383;
+    border-right:1px solid #838383;
   //  border-top : 1px !important;
   //margin: 15px 0px;
     
@@ -35,10 +36,17 @@ height:40px;
 }
 /* Grid end */
 
-
+.ms-Button:hover{
+  background-color: #17787b;
+  color:white;
+  
+}
+.questionHeader{
+  font-weight: 500;
+}
   .gdcAddButton {
     //float: right;
- 
+   margin-top:20px;
       // Our button
       text-decoration: none;
       height: 32px;
@@ -80,11 +88,11 @@ height:40px;
 }
 .selectedButton{
   margin-right:14px;
-  color: #fff;
-  background-color: #17787B;
+  background-color: #17787b;
+  color:white;
 }
 .headerButton::selection{
-  background-color: #17787B;
+  background-color: #17787b;
 }
 .questionTop{
   margin-top: 25px;
@@ -96,7 +104,7 @@ height:40px;
 
 } 
 .textField{
-  margin-bottom: 25px;
+  margin-top: 25px;
   .ms-Label{
     white-space: nowrap;
   }
@@ -108,10 +116,10 @@ height:40px;
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
 }
-.multiLine{
-  margin-bottom: 25px;
+// .multiLine{
+//  // margin-top: 25px;
  
-}
+// }
 .inline{
   display: inline-block;
   margin-right: 5%;
@@ -121,6 +129,7 @@ height:40px;
 }
 .gdcFieldWidth6{
   @include ms-sm6;
+  margin-top:25px;
 }
 .gdcOuterWidth6{
   @include ms-sm6;
@@ -128,8 +137,12 @@ height:40px;
   // margin-right: 5%;  
   } 
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
-.dropDown{
-  margin-top:25px;
+
+  .dropDown{
+  //margin-top:25px;
+  .ms-Label{
+    white-space: nowrap;
+  }
   .ms-Dropdown-caretDownWrapper{
     line-height: 35px;
   } 
@@ -138,7 +151,7 @@ height:40px;
   }
   .fileInput{
   background-color: lightgrey;
-
+  color:red;
   }
   .ms-Dropdown-container {
     
@@ -189,7 +202,7 @@ margin-bottom:25px;
    .gdcColumn6 {
     min-height: 80px !important;
    margin-top: 25px;
-   margin-bottom:25px;
+   
     @include ms-Grid-col;
     @include ms-sm6;
     padding-left: 0px;
@@ -199,12 +212,15 @@ margin-bottom:25px;
   }
   .gdcColumnBlock{
     display:inline-block;
-    min-height:192px !important;
+    margin-top: 25px;
     width:100%;
+    .ms-Label{
+      white-space: nowrap;
+    }
   }
-  .gdcColumn12 {
-    min-height: 192px !important;
-  }
+  // .gdcColumn12 {
+    
+  // }
 
   .gdcerror {
     color: rgb(164, 38, 44);
