@@ -374,7 +374,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       //     "value": field.value
       //   });
       // }
-      if (field.devopsName != "System.Description") {
+      if (field.devopsName != "System.Description" && field.devopsName != "Attachments") {
         APIData.push({
           "op": "add",
           "path": "/fields/" + field.devopsName,
