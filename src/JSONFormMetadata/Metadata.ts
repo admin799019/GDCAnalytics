@@ -419,7 +419,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Please provide attachments or screenshots to support your request",
                         "type": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
-                        "className": "ms-Grid-col ms-sm12",
+                        "className": "ms-Grid-col ms-sm12 fileInput",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
