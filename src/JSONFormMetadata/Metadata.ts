@@ -17,7 +17,7 @@ const ChannelAnalyticsMetaData = [
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
         "label": "What area of Channel Analytics is your request for?",
-        "className": "ms-Grid-col gdcColumn12",
+        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
         "options": [
             {
                 "key": "Operational Framework\\Channel Analytics\\Demand Response",
@@ -244,7 +244,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "RequestedPriority",
                         "type": "SingleSelectInput",
                         "label": "RequestedPriority",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col gdcColumn6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
@@ -269,7 +269,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Requested Completion Date",
                         "type": "DateInput",
                         "label": "Requested Completion Date",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col gdcColumn6",
                         "value": "",
                         "required": true,
                         "errorMessage": "",
@@ -375,7 +375,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "RequestedPriority",
                         "type": "SingleSelectInput",
                         "label": "RequestedPriority",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col gdcColumn6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
@@ -399,7 +399,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Requested Completion Date",
                         "type": "SingleLineTextInput",
                         "label": "Requested Completion Date",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6 inline",
+                        "className": "ms-Grid-col gdcColumn6",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -419,7 +419,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Please provide attachments or screenshots to support your request",
                         "type": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
-                        "className": "ms-Grid-col ms-sm12",
+                        "className": "ms-Grid-col ms-sm12 fileInput",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
