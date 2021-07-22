@@ -192,8 +192,9 @@ margin-bottom:25px;
     @include ms-Grid-col;
     @include ms-sm6;
     padding-left: 0px;
-    width:41%;
+    // width:41%;
     float: none !important;
+    display: inline-block;
   }
   .gdcColumnBlock{
     display:inline-block;
@@ -243,12 +244,28 @@ margin-bottom:25px;
 
 /* GDC Panel */
 
-.gdcPanelHeaderEllipses
+.gdcPanelHeaderEllipses1
   {
     float: right;
     border-radius: 50%;
-    width: 200px;
-    height: 200px; 
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: -125px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .gdcPanelHeaderEllipses2
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 1px;
+    top: 100px;
+    background: rgba(255, 255, 255, 0.08);
   }
 
 .gdcPanelHeader {
@@ -259,13 +276,16 @@ margin-bottom:25px;
 .gdcPanelHeaderText {
   padding: 180px 0px 10px 20px;
   float: left;
-  font-size: 48px;
+  font-size: 40px;
   
 }
 .gdcPanelCloseButton {
   padding: 25px;
   float: right;
-  color: white;
+  color: #fff;
+  position: fixed;
+  right: 20px;
+  font-size: 14px;
   .ms-Link {
     color: white;
     vertical-align: middle;
