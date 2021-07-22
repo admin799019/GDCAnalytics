@@ -15,7 +15,7 @@
 
   .ql-toolbar.ql-snow {
     border: 1px solid black !important;
-    display: none;
+    //display: none;
 }
 
 /* react quill toolbar end */
@@ -29,9 +29,9 @@
   
       // Primary Button
       min-width: 80px;
-      background-color: $ms-color-themePrimary;
+      background-color: grey;
       border-color: $ms-color-themePrimary;
-      color: $ms-color-white;
+      color:white;
   
       // Basic Button
       outline: transparent;
@@ -67,8 +67,79 @@
   margin-bottom:25px;
   font-weight: 500px;
 }
+.gdcOuterWidth12{
+@include ms-sm12
 
-  .gdcColumn6 {
+} 
+.textField{
+
+ .ms-TextField-fieldGroup{
+   height:56px !important;
+   line-height: 20px;
+   font-size: 18px;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+}
+.inline{
+  display: inline-block;
+  margin-right: 5%;
+}
+.gdcFieldWidth12{
+  @include ms-sm12
+}
+.gdcFieldWidth6{
+  @include ms-sm5
+}
+.gdcOuterWidth6{
+  @include ms-sm5
+  
+  } 
+  //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
+.dropDown{
+  .ms-Dropdown-container {
+   // height: 50px;
+     line-height: 45px;
+      font-weight: 500;
+       color: black;
+        margin: 0px;
+        #Dropdown6{
+          color:blue;
+      
+      }
+      }
+      .ms-Dropdown-title {
+        height:56px;
+        font-size: 18px;
+        line-height: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        vertical-align: middle;
+      }    
+  }
+  .choiceField{
+
+  .ms-ChoiceFieldGroup-flexContainer{
+    display: "flex"
+  }
+  .ms-ChoiceField-wrapper{
+    margin-right:25px;
+    font-weight: 500;
+   font-size: 14px;
+  }
+}
+//.dropdown{ }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }
+  
+  
+.abc{
+min-height: 80px !important;
+margin-top: 25px;
+margin-bottom:25px;
+ @include ms-Grid-col;
+ @include ms-sm6;
+ padding-left: 0px;
+ width:41%;
+ float: none !important;
+}
+   .gdcColumn6 {
     min-height: 80px !important;
    margin-top: 25px;
    margin-bottom:25px;
@@ -81,7 +152,7 @@
   .gdcColumnBlock{
     display:inline-block;
     min-height:192px !important;
-    width:90%;
+    width:100%;
   }
   .gdcColumn12 {
     min-height: 192px !important;

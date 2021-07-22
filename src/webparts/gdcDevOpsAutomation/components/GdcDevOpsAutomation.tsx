@@ -518,30 +518,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           // headerClassName="gdcPanelHeader"
           className="gdcPanel"
       >
-          <div className="ms-Grid" dir="ltr">
-            <div className="ms-Grid-row">
-              {
-                this.state.formFields.map((ele) => {
-                  return this.renderFields(ele);
-                })
-              }
-            </div>
+           <div className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row gdcPaddingBottom15">
               <div className="ms-Grid-col ms-sm12">
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
-                    return (<DefaultButton text={area.text} className="headerButton"
+                    return (<DefaultButton text={area.text} className="headerButton" 
                       onClick={e => this.updateFormFields(area.text)
-                      }
+                              }
                     />);
                   })
                 }
               </div>
-              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
-                <PrimaryButton text="Add" className="gdcAddButton" onClick={() => this.submitForm("add")} />
-                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
-              </div>
+              
             </div>
             {/* <div className="ms-Grid-row"> */}
               {
@@ -549,6 +539,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   return this.renderFields(ele);
                 })
               }
+              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
+                <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
+                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
+              </div>
             {/* </div> */}
           </div>
         </Panel>
@@ -562,18 +556,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
-
   public renderFields(ele: MetaDataType) {
     switch (ele.type) {
       case "SingleLineTextInput":
         return (
           <React.Fragment>
-            <div className="ms-Grid-row">
-              <div className={ele.className + " gdcColumn6"}>
+            
+              <div className={ele.className}>
                 <TextField label={ele.label}
                   onChange={(e, value) => this.handleChange(value, ele.title)}
-                  style={{ boxShadow: "1px 1px lightgrey" }}
-                  styles={{ fieldGroup: { height: '42px', border: '1px solid grey' } }}
+                 className="textField"
+               
                   value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
@@ -581,20 +574,19 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
                 : null
               }
-            </div>
+           
           </React.Fragment>
         );
       case "SingleSelectInput":
         return (
           <React.Fragment>
-
-            <div className={ele.className + " abc " + styles.gdcColumn6} style={{ width: "41%" }}>
+        
+            <div className={ele.className}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
                 options={ele.options}
-
-                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black', margin: '0px' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
+                className="dropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
               //styles={dropdownStyles}
@@ -605,7 +597,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-
+           
           </React.Fragment>
         );
       case "SingleSelectCascadingInput":
@@ -616,12 +608,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           : ele.options;
         return (
           <React.Fragment>
-            <div className={ele.className + " gdcColumn6"}>
+            <div className={ele.className}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
                 options={options}
-                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
+                className="dropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
               //styles={dropdownStyles}
@@ -633,9 +625,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "RadioButtonInput":
         return (
           <React.Fragment>
-            <div className={ele.className + " gdcColumn6"}>
+            
+            <div className={ele.className +" abc "+ " gdcColumn6"}>
               <ChoiceGroup options={ele.options}
-                styles={{ flexContainer: { display: "flex", margin: "5px" }, root: { marginRight: '30px', fontWeight: "500" } }}
+              className="choiceField"
+                //styles={{ flexContainer: { display: "flex", margin: "5px" }, root: { marginRight: '30px', fontWeight: "500" } }}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -644,11 +638,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
+           
           </React.Fragment>
         );
       case "DateInput":
         return (
-          <div className={ele.className + " gdcColumn6"}>
+          <div className={ele.className }>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             <DatePicker placeholder="Select a date..." ariaLabel="Select a date"
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
@@ -678,7 +673,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="ms-Grid-row">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-              <ReactQuill style={{ minHeight: 100, boxShadow: '2px 2px lightgrey' }} onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill  onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
