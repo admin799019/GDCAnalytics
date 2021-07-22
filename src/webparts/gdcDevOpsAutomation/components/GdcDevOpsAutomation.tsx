@@ -477,6 +477,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return (
       <div className="gdcPanelHeader">
         <div className="gdcPanelHeaderText"> GDC Intake Form </div>
+        <div className="gdcPanelHeaderEllipses"></div>
         <div className="gdcPanelCloseButton">
           <Link onClick={(e) => { this.setState({ openPanel: false }) }} underline={false}>
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
@@ -533,7 +534,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               </div>
 
             </div>
-            {/* <div className="ms-Grid-row"> */}
+            <div className="ms-Grid-row">
             {
               this.state.formFields.map((ele) => {
                 return this.renderFields(ele);
@@ -543,7 +544,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
               {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
             </div>
-            {/* </div> */}
+            </div>
           </div>
         </Panel>
       </div>

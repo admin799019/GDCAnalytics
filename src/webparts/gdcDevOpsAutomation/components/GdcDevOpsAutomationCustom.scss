@@ -98,14 +98,15 @@
   margin-right: 5%;
 }
 .gdcFieldWidth12{
-  @include ms-sm12
+  @include ms-sm12;
 }
 .gdcFieldWidth6{
-  @include ms-sm5
+  @include ms-sm6;
 }
 .gdcOuterWidth6{
-  @include ms-sm5
-  
+  @include ms-sm6;
+  // display: inline-block;
+  // margin-right: 5%;  
   } 
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
 .dropDown{
@@ -205,6 +206,17 @@ margin-bottom:25px;
     right: 0;
     z-index: 99;
     padding: 5px;
+  }
+
+
+/* GDC Panel */
+
+.gdcPanelHeaderEllipses
+  {
+    float: right;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px; 
   }
 
 .gdcPanelHeader {
