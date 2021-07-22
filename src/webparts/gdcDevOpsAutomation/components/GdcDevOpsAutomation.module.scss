@@ -42,12 +42,12 @@
     min-height: 192px !important;
   }
 
-  .gdcColumn6 {
+  .gdcColumnSM6 {
     @include ms-Grid-col;
     @include ms-sm6;
     @include ms-lg6;
     @include ms-xl4;
-    width:40%;
+    // width:40%;
   }
 
   .button {

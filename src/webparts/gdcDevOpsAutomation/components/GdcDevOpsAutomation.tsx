@@ -477,7 +477,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return (
       <div className="gdcPanelHeader">
         <div className="gdcPanelHeaderText"> GDC Intake Form </div>
-        <div className="gdcPanelHeaderEllipses"></div>
+        <div className="gdcPanelHeaderEllipses1"></div>
+        <div className="gdcPanelHeaderEllipses2"></div>
         <div className="gdcPanelCloseButton">
           <Link onClick={(e) => { this.setState({ openPanel: false }) }} underline={false}>
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
