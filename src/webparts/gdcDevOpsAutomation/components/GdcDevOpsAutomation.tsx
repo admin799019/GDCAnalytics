@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
+import CustomStyles from './GdcDevOpsAutomation.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
@@ -148,6 +149,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.appendValues = this.appendValues.bind(this);
     this.appendAPI = this.appendAPI.bind(this);
     this.getCascadingFieldValue = this.getCascadingFieldValue.bind(this);
+    this.onRenderNavigationContent = this.onRenderNavigationContent.bind(this);
   }
 
   public componentDidMount() {
@@ -478,8 +480,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       <div className="gdcPanelHeader">
         <div className="gdcPanelHeaderText"> GDC Intake Form </div>
         <div className="gdcPanelCloseButton">
-          <Link onClick={(e) => { this.setState({ openPanel: false }) }}>
-            <Icon iconName="Cancel" /> Close
+          <Link onClick={(e) => { this.setState({ openPanel: false }) }} underline={false}>
+            <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
       </div>
@@ -501,7 +503,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
         </div>
         <div>
-          <Link onClick={(e) => { this.setState({ openPanel: true }) }} className="" underline>
+          <Link onClick={(e) => { this.setState({ openPanel: true }) }} className="gdcNewButton" underline>
             + New Intake Form
           </Link>
         </div>
@@ -545,13 +547,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             </div>
           </div>
         </Panel>
-        <div className="ms-Grid-row">
-          {
-            this.state.formFields.map((ele) => {
-              return this.renderFields(ele);
-            })
-          }
-        </div>
       </div>
     );
   }

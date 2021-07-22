@@ -20,6 +20,16 @@
 
 /* react quill toolbar end */
 
+/* Grid */
+.gdcGrid {
+  @include ms-Grid;
+}
+.gdcGridRow {
+  @include ms-Grid-row;
+}
+/* Grid end */
+
+
   .gdcAddButton {
     //float: right;
  
@@ -55,6 +65,9 @@
         vertical-align: top;
         display: inline-block;
       }
+  }
+  .gdcNewButton {
+    font-size: 18px;
   }
 .headerButton{
   margin-right:14px;
@@ -123,17 +136,31 @@
   }
 
 .gdcPanelHeader {
-  padding: 200px 0px 10px 10px;
   background: #17787B;
   color: white;
+  font-family: Segoe UI;
 }
 .gdcPanelHeaderText {
+  padding: 180px 0px 10px 20px;
   float: left;
+  font-size: 48px;
+  
 }
 .gdcPanelCloseButton {
+  padding: 25px;
   float: right;
-  padding: 5px;
   color: white;
+  .ms-Link {
+    color: white;
+    vertical-align: middle;
+    .gdcCloseIcon {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+  }
+  .ms-Link :hover {
+    text-decoration: none !important;
+  }
 }
 
 .gdcPanel {
