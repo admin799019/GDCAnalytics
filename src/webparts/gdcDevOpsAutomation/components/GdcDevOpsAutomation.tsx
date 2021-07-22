@@ -18,8 +18,6 @@ import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import { Link } from '@fluentui/react';
 
-import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/FilePicker';
-
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -519,32 +517,32 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           // onDismiss={(e) => { this.setState({ openPanel: false }) }}
           // headerClassName="gdcPanelHeader"
           className="gdcPanel"
-      >
-           <div className="ms-Grid" dir="ltr">
+        >
+          <div className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row gdcPaddingBottom15">
               <div className="ms-Grid-col ms-sm12">
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
-                    return (<DefaultButton text={area.text} className="headerButton" 
+                    return (<DefaultButton text={area.text} className="headerButton"
                       onClick={e => this.updateFormFields(area.text)
-                              }
+                      }
                     />);
                   })
                 }
               </div>
-              
+
             </div>
             {/* <div className="ms-Grid-row"> */}
-              {
-                this.state.formFields.map((ele) => {
-                  return this.renderFields(ele);
-                })
-              }
-              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
-                <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
-                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
-              </div>
+            {
+              this.state.formFields.map((ele) => {
+                return this.renderFields(ele);
+              })
+            }
+            <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
+              <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
+              {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
+            </div>
             {/* </div> */}
           </div>
         </Panel>
@@ -556,26 +554,26 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "SingleLineTextInput":
         return (
           <React.Fragment>
-            
-              <div className={ele.className}>
-                <TextField label={ele.label}
-                  onChange={(e, value) => this.handleChange(value, ele.title)}
-                 className="textField"
-               
-                  value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
-                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-              </div>
-              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
-                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
-                : null
-              }
-           
+
+            <div className={ele.className}>
+              <TextField label={ele.label}
+                onChange={(e, value) => this.handleChange(value, ele.title)}
+                className="textField"
+
+                value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
+            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+              : null
+            }
+
           </React.Fragment>
         );
       case "SingleSelectInput":
         return (
           <React.Fragment>
-        
+
             <div className={ele.className}>
               <Dropdown
                 placeholder="Select an option"
@@ -592,7 +590,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-           
+
           </React.Fragment>
         );
       case "SingleSelectCascadingInput":
@@ -620,10 +618,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "RadioButtonInput":
         return (
           <React.Fragment>
-            
-            <div className={ele.className +" abc "+ " gdcColumn6"}>
+
+            <div className={ele.className + " abc " + " gdcColumn6"}>
               <ChoiceGroup options={ele.options}
-              className="choiceField"
+                className="choiceField"
                 //styles={{ flexContainer: { display: "flex", margin: "5px" }, root: { marginRight: '30px', fontWeight: "500" } }}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 label={ele.label} required={ele.required} />
@@ -633,12 +631,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-           
+
           </React.Fragment>
         );
       case "DateInput":
         return (
-          <div className={ele.className }>
+          <div className={ele.className}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             <DatePicker placeholder="Select a date..." ariaLabel="Select a date"
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
@@ -668,7 +666,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="ms-Grid-row">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-              <ReactQuill  onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -719,20 +717,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "FileInput":
         return (
           <React.Fragment>
-            {/* <FilePicker
-              bingAPIKey="<BING API KEY>"
-              buttonLabel={"Please attach a file"}
-              buttonClassName={styles.button}
-
-              accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg", ".txt"]}
-              buttonIcon="Upload"
-              onSave={(filePickerResult: IFilePickerResult[]) => {
-                this.setState({ filePickerResult })
-                // this._onFilePickerSave(this.state.filePickerResult);
-              }}
-              onChange={(filePickerResult: IFilePickerResult[]) => { this.onFileUpload(filePickerResult) }}
-              context={this.props.context}
-            /> */}
             <input type="file" multiple onChange={e => this.onFileUpload(e)}></input>
           </React.Fragment>
         );
