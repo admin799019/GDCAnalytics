@@ -507,6 +507,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         </div>
         <Panel
           headerText="GDC Intake Form"
+
           isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
           // onRenderNavigationContent={this.onRenderNavigationContent}
@@ -516,8 +517,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           // onDismiss={(e) => { this.setState({ openPanel: false }) }}
           // headerClassName="gdcPanelHeader"
           className="gdcPanel"
-
-        >
+      >
           <div className="ms-Grid" dir="ltr">
             <div className="ms-Grid-row">
               {
@@ -543,6 +543,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
             </div>
+            {/* <div className="ms-Grid-row"> */}
+              {
+                this.state.formFields.map((ele) => {
+                  return this.renderFields(ele);
+                })
+              }
+            {/* </div> */}
           </div>
         </Panel>
         <div className="ms-Grid-row">
