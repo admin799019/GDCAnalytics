@@ -7,17 +7,23 @@
   }
 
   .ql-container.ql-snow {
-    border: 1px solid grey !important;
+    border: 1px solid #838383 !important;
+  
   //  border-top : 1px !important;
-  margin: 15px 0px;
+  //margin: 15px 0px;
     
   }
 
   .ql-toolbar.ql-snow {
-    border: 1px solid black !important;
+    border: 1px solid #838383 !important;
+    margin-top:15px;
     //display: none;
 }
-
+.dateInput{
+  .ms-TextField-fieldGroup {
+height:40px;
+  }
+}
 /* react quill toolbar end */
 
 /* Grid */
@@ -85,13 +91,18 @@
 
 } 
 .textField{
-
+  margin-bottom: 25px;
  .ms-TextField-fieldGroup{
-   height:56px !important;
-   line-height: 20px;
-   font-size: 18px;
+   height:40px !important;
+   line-height: 35px;
+   font-size: 16px;
+   margin-top: 15px;
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
+}
+.multiLine{
+  margin-bottom: 25px;
+ 
 }
 .inline{
   display: inline-block;
@@ -110,7 +121,12 @@
   } 
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
 .dropDown{
+  margin-bottom:25px;
+  .ms-Dropdown {
+    margin-top:15px;
+  }
   .ms-Dropdown-container {
+    
    // height: 50px;
      line-height: 45px;
       font-weight: 500;
@@ -122,9 +138,11 @@
       }
       }
       .ms-Dropdown-title {
-        height:56px;
-        font-size: 18px;
-        line-height: 20px;
+        height:40px;
+        font-size: 14px;
+        color:black;
+       // line-height: 20px;
+       padding: 0px 28px 0px 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         vertical-align: middle;
       }    

@@ -527,7 +527,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   Area.options.map(area => {
                     return (<DefaultButton text={area.text} className="headerButton"
                       onClick={e => this.updateFormFields(area.text)
+                      
                       }
+                      
                     />);
                   })
                 }
@@ -639,7 +641,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <DatePicker placeholder="Select a date..." ariaLabel="Select a date"
+            <DatePicker placeholder="Select a date..." ariaLabel="Select a date" className="dateInput"
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -667,7 +669,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="ms-Grid-row">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-              <ReactQuill onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill className="multiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
