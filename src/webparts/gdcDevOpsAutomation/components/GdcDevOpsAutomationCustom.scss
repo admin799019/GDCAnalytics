@@ -112,3 +112,36 @@
   #spCommandBar {
     display: none;
   } */
+
+
+  .gdcMessage {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    padding: 5px;
+  }
+
+.gdcPanelHeader {
+  padding: 200px 0px 10px 10px;
+  background: #17787B;
+  color: white;
+}
+.gdcPanelHeaderText {
+  float: left;
+}
+.gdcPanelCloseButton {
+  float: right;
+  padding: 5px;
+  color: white;
+}
+
+.gdcPanel {
+  .commands  {
+  margin-top: 0px;
+}
+.ms-Panel-commands {
+  margin-top: 0px;
+}
+}
+

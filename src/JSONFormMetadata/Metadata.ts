@@ -272,6 +272,36 @@ const ChannelAnalyticsMetaData = [
                         "required": true,
                         "errorMessage": "Title is required",
                         "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Requested Completion Date",
+                        "type": "SingleLineTextInput",
+                        "label": "Requested Completion Date",
+                        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "type": "MultiLineTextInput",
+                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Please provide attachments or screenshots to support your request",
+                        "type": "FileInput",
+                        "label": "Please provide attachments or screenshots to support your request",
+                        "className": "ms-Grid-col ms-sm12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "Attachments"
                     }
                 ],
                 "active": false
@@ -338,31 +368,41 @@ const ChannelAnalyticsMetaData = [
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Custom.ReportRequestType"
+                    },
+                    {
+                        "title": "Requested Completion Date",
+                        "type": "SingleLineTextInput",
+                        "label": "Requested Completion Date",
+                        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "type": "MultiLineTextInput",
+                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Please provide attachments or screenshots to support your request",
+                        "type": "FileInput",
+                        "label": "Please provide attachments or screenshots to support your request",
+                        "className": "ms-Grid-col ms-sm12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "Attachments"
                     }
                 ],
                 "active": false
             }
         ]
-    },
-    {
-        "title": "Requested Completion Date",
-        "type": "SingleLineTextInput",
-        "label": "Requested Completion Date",
-        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
-        "value": "",
-        "required": true,
-        "errorMessage": "",
-        "devopsName": "System.Description"
-    },
-    {
-        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
-        "type": "MultiLineTextInput",
-        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
-        "className": "ms-Grid-col ms-sm12 ms-lg12 ms-xl12 ms-md12",
-        "value": "",
-        "required": false,
-        "errorMessage": "",
-        "devopsName": "System.Description"
     }
 ];
 

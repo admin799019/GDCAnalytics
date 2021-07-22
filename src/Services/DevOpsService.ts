@@ -99,7 +99,7 @@ export class DevOpsService implements IDevOpsService {
                     return response.json();
                 })
                 .then((projects: any): void => {
-                    console.log(["update Try", projects]);
+                    console.log(["Relate Attachment Try", projects]);
                 });
         });
     }

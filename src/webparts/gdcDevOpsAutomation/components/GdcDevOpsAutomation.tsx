@@ -14,7 +14,8 @@ import { IStackTokens, Stack, IStackStyles } from '@fluentui/react/lib/Stack';
 import { classNamesFunction, IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
-import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
+import { Link } from '@fluentui/react';
 
 import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/FilePicker';
 
@@ -107,13 +108,14 @@ export interface IDevOpsState {
   showMessage: boolean;
   showAddButton: boolean;
   multiSelectedKeys: string[];
-  filePickerResult: IFilePickerResult[];
-  // DescriptionData: string;
+  files: [];
+  openPanel: boolean;
 }
 
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
-  requiredHasValues: boolean = true;
-  DescriptionData = "";
+  public requiredHasValues: boolean = true;
+  public DescriptionData = "";
+  public AttachmentAPI;
   public constructor(props) {
     super(props);
 
@@ -133,7 +135,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       showMessage: false,
       showAddButton: false,
       multiSelectedKeys: [],
-      filePickerResult: []
+      files: [],
+      openPanel: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -152,7 +155,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-    this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
+    // this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
 
@@ -264,58 +267,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  // var attach=[]
-  // console.log(this.state.filePickerResult)
-  //           if(this.state.filePickerResult!=null){
-  //            attach.push({
-  //             "op": "add",
-  //             "path": "/relations/-",
-  //             "value": {
-  //               "rel": "Hyperlink",
-  //               "url": this.state.filePickerResult
-  //             }
-  //           });
-  //           console.log("hello from attachments")
-  //           this.props.devOpsService.addAttachment(attach,data.id).then((data)=>
-  //           console.log(data));
-  //         }
-
-
-
-  // private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
-  //   this.setState({ filePickerResult: filePickerResult });
-  //   if (filePickerResult && filePickerResult.length > 0) {
-  //     console.log("hellofrom picker saving")
-  //     for (var i = 0; i < filePickerResult.length; i++) {
-  //       const item = filePickerResult[i];
-
-  //       const fileResultContent = await item.downloadFileContent();
-  //       const base64file: any = await this.convertBase64(fileResultContent);
-  //       console.log(base64file, "hellobase64");
-  //       base64file1 = base64file.substring(base64file.indexOf('base64,') + 7);
-  //       //  console.log(fileResultContent);
-  //       const blob = new Blob([base64file1], { type: "image/png" });
-  //   this.props.devOpsService.uploadImage(blob, "image.png").then((data)=>{
-  //     console.log(data);
-  //     this.setState({filePickerResult:data})
-  //   })
-  //     }
-  //   }
-  // }
-  // public convertBase64 = (file) => {
-  //   console.log("hellofromconverter");
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
-  //     fileReader.onload = () => {
-  //       resolve(fileReader.result);
-  //     };
-  //     fileReader.onerror = (error) => {
-  //       reject(error);
-  //     }
-  //   })
-  // }
-
   public async submitForm(addorupdate: string) {
     this.DescriptionData = "";
     var parentFieldsRequiredHasValues: boolean = true;
@@ -352,12 +303,29 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
           this.props.devOpsService.addfeature(APIData).then(data => {
             Area.value = "";
+            this.AttachFiles().then(fileUrls => {
+              fileUrls.forEach(url => {
+                // APIData.push({
+                //   'op': 'add',
+                //   'path': '/relations/-',
+                //   'value': {
+                //     'rel': 'AttachedFile',
+                //     'url': url
+                //   }
+                // })
+              });
+            });
+            //this.props.devOpsService.addAttachment(this.AttachmentAPI, data.id);
             this.setState({
               formFields: metaData,
               formSuccessMessage: "New Ojective has been created successfully with ID " + data.id,
               showMessage: true,
-              showAddButton: false
+              showAddButton: false,
+              openPanel: false
             });
+            setTimeout(function () {
+              this.setState({ showMessage: false });
+            }.bind(this), 5000);
           });
         }
         else {
@@ -381,7 +349,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           item.selected ? x : this.state.multiSelectedKeys.filter(key => key !== item.key),
       });
     }
-    console.log(this.state.multiSelectedKeys)
     this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
   }
 
@@ -394,7 +361,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         var tempDesc = "";
         tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
         this.DescriptionData = this.DescriptionData.concat(tempDesc);
-
       }
       // else if(field.devopsName=="System.AreaPath")
       // {
@@ -412,6 +378,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": field.value
         });
+      }
+      if (field.devopsName == "Attachments") {
+
       }
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -448,7 +417,41 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public onFileUpload(e) {
+    e.preventDefault();
+    let files;
 
+    for (let f = 0; f < e.target.files.length; f++) {
+      files.push(e.target.files[f]);
+    }
+    this.setState({
+      files: files
+    });
+  }
+
+  public async AttachFiles(): Promise<any> {
+    var FileUploadCalls = [];
+    this.state.files.map((file: any) => {
+      // let file = files[f];
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = (data: any) => {
+        let base64 = data.target.result.toString().substring(data.target.result.toString().indexOf('base64,') + 7);
+        const byteCharacters = atob(base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray]);
+        FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
+      };
+    });
+    return Promise.all(FileUploadCalls).then((d) => {
+      console.log("files - ", d);
+      return d;
+    }).catch((err) => {
+      console.log("err", err);
+    });
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -470,10 +473,23 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return value;
   }
 
+  public onRenderNavigationContent(props, defaultRender) {
+    return (
+      <div className="gdcPanelHeader">
+        <div className="gdcPanelHeaderText"> GDC Intake Form </div>
+        <div className="gdcPanelCloseButton">
+          <Link onClick={(e) => { this.setState({ openPanel: false }) }}>
+            <Icon iconName="Cancel" /> Close
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   public render(): JSX.Element {
     return (
       <div className="gdcBorder">
-        <div className="">
+        <div className="gdcMessage">
           {this.state.showMessage
             ? <MessageBar
               messageBarType={MessageBarType.success}
@@ -484,21 +500,40 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             : <div></div>
           }
         </div>
+        <div>
+          <Link onClick={(e) => { this.setState({ openPanel: true }) }} className="" underline>
+            + New Intake Form
+          </Link>
+        </div>
         <Panel
           headerText="GDC Intake Form"
-          isOpen={true}
+          isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
-          closeButtonAriaLabel="Close"
+          // onRenderNavigationContent={this.onRenderNavigationContent}
+          onRenderHeader={this.onRenderNavigationContent}
+          hasCloseButton={false}
+          // closeButtonAriaLabel="Close"
+          // onDismiss={(e) => { this.setState({ openPanel: false }) }}
+          // headerClassName="gdcPanelHeader"
+          className="gdcPanel"
+
         >
           <div className="ms-Grid" dir="ltr">
+            <div className="ms-Grid-row">
+              {
+                this.state.formFields.map((ele) => {
+                  return this.renderFields(ele);
+                })
+              }
+            </div>
             <div className="ms-Grid-row gdcPaddingBottom15">
               <div className="ms-Grid-col ms-sm12">
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
-                    return (<DefaultButton text={area.text} className="headerButton" 
+                    return (<DefaultButton text={area.text} className="headerButton"
                       onClick={e => this.updateFormFields(area.text)
-                              }
+                      }
                     />);
                   })
                 }
@@ -507,13 +542,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 <PrimaryButton text="Add" className="gdcAddButton" onClick={() => this.submitForm("add")} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
-            </div>
-            <div className="ms-Grid-row">
-              {
-                this.state.formFields.map((ele) => {
-                  return this.renderFields(ele);
-                })
-              }
             </div>
           </div>
         </Panel>
@@ -534,36 +562,35 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className="ms-Grid-row">
-            <div className={ele.className + " gdcColumn6"}>
-              <TextField label={ele.label}
-               onChange={(e, value) => this.handleChange(value, ele.title)}
-               style={{boxShadow:"1px 1px lightgrey"}}
-               styles={{fieldGroup:{height:'42px',border: '1px solid grey'}}}
-                value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
-              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-            </div>
-            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
-              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
-              : null
-            }
+              <div className={ele.className + " gdcColumn6"}>
+                <TextField label={ele.label}
+                  onChange={(e, value) => this.handleChange(value, ele.title)}
+                  style={{ boxShadow: "1px 1px lightgrey" }}
+                  styles={{ fieldGroup: { height: '42px', border: '1px solid grey' } }}
+                  value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
+                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              </div>
+              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+                : null
+              }
             </div>
           </React.Fragment>
         );
-
       case "SingleSelectInput":
         return (
           <React.Fragment>
-           
-            <div className={ele.className + " abc " + styles.gdcColumn6} style={{width:"41%"}}>
+
+            <div className={ele.className + " abc " + styles.gdcColumn6} style={{ width: "41%" }}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
                 options={ele.options}
-                
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black',margin:'0px'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
+
+                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black', margin: '0px' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
-            //styles={dropdownStyles}
+              //styles={dropdownStyles}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -571,7 +598,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-        
+
           </React.Fragment>
         );
       case "SingleSelectCascadingInput":
@@ -587,7 +614,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder="Select an option"
                 label={ele.label}
                 options={options}
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
+                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
               //styles={dropdownStyles}
@@ -601,7 +628,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className + " gdcColumn6"}>
               <ChoiceGroup options={ele.options}
-               styles={{ flexContainer: { display: "flex" ,margin:"5px"},root:{marginRight:'30px',fontWeight:"500"} }}
+                styles={{ flexContainer: { display: "flex", margin: "5px" }, root: { marginRight: '30px', fontWeight: "500" } }}
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -642,24 +669,23 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "MultiLineTextInput":
         return (
           <div className="ms-Grid-row">
-          <div className={ele.className + " gdcColumnBlock"}>
-            <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <ReactQuill  style={{ minHeight: 100 ,boxShadow:'2px 2px lightgrey'}} onChange={(data) => this.handleChange(data, ele.title)} />
-            {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-          </div>
+            <div className={ele.className + " gdcColumnBlock"}>
+              <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+              <ReactQuill style={{ minHeight: 100, boxShadow: '2px 2px lightgrey' }} onChange={(data) => this.handleChange(data, ele.title)} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
           </div>
         );
       case "MultiSelectInput":
         return (
           <React.Fragment>
             <div className={ele.className + " gdcColumn6"}>
-
               <Dropdown
                 placeholder="Select multi option"
                 label={ele.label}
                 multiSelect
                 options={ele.options}
-                styles={{title:{height:'50px',lineHeight: '45px',fontweight: '500px',color:'black'},dropdown:{marginTop:'20px',height:'50px',class:"dd"},caretDown:{fontWeight:'500px',marginTop:'10px'},dropdownOptionText:{fontWeight:'500px'},}}
+                styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
                 onChange={this.onMultiSelectChange}
                 required={ele.required}
                 defaultSelectedKeys={this.state.multiSelectedKeys}
@@ -712,7 +738,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             /> */}
             <input type="file" multiple onChange={e => this.onFileUpload(e)}></input>
           </React.Fragment>
-        )
+        );
     }
   }
 }
