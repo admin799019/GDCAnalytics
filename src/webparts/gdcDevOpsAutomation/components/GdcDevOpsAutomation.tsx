@@ -17,7 +17,7 @@ import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import { Link } from '@fluentui/react';
-// import { Attach12Regular } from '@fluentui/react-icons';
+
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
