@@ -683,14 +683,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "SwitchInput":
         return (
           <React.Fragment>
-            <div>
+           
               <div className={ele.className}>
-                <Toggle label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
+                <Toggle
+                className="gdcSwitchInput"
+                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                   onChange={(e, c) => this.handleChange(c, ele.title)}
                   checked={ele.checked}
                 />
               </div>
-            </div>
+         
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
@@ -723,9 +725,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             showHiddenInUI={false}
             principalTypes={[PrincipalType.User]}
             resolveDelay={1000} /> */}
-
-            <CustomPeoplePicker required={ele.required} spService={this.props.spService} pickerFieldName={ele.title} handlePeopleChange={this.handleChange} />
+            <div className="peoplepicker">
+            <CustomPeoplePicker
+              
+             required={ele.required} spService={this.props.spService} pickerFieldName={ele.title} handlePeopleChange={this.handleChange} />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+          </div>
           </div>
         );
       case "FileInput":

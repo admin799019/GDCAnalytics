@@ -45,6 +45,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     pickerSuggestionsProps={suggestionProps}
                     className={'ms-PeoplePicker'}
                     key={'normal'}
+                    
                     selectionAriaLabel={'Selected contacts'}
                     removeButtonAriaLabel={'Remove'}
                     onInputChange={(i) => this.onInputChange(i)}
