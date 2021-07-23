@@ -3,7 +3,7 @@ import styles from './GdcDevOpsAutomation.module.scss';
 import CustomStyles from './GdcDevOpsAutomation.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
-import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { Dropdown, IDropdownOption,IDropdownProps } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
@@ -112,11 +112,12 @@ export interface IDevOpsState {
   openPanel: boolean;
   selectedButton: string;
 }
-
+const iconStyles = { marginRight: '8px' };
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI;
+  
   public constructor(props) {
     super(props);
 
@@ -151,6 +152,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.appendAPI = this.appendAPI.bind(this);
     this.getCascadingFieldValue = this.getCascadingFieldValue.bind(this);
     this.onRenderNavigationContent = this.onRenderNavigationContent.bind(this);
+    this.onRenderPlaceholder=this.onRenderPlaceholder.bind(this);
+    this.onRenderOption=this.onRenderOption.bind(this);
   }
 
   public componentDidMount() {
@@ -491,7 +494,39 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
-
+  private onRenderOption(option: IDropdownOption): JSX.Element {  
+    //console.log(option.data.icon)
+    return (  
+      <div>  
+        { (  
+          <Icon style={{ marginRight: '8px', color: option.data }} iconName={"CircleFill"} aria-hidden="true" title={option.data.icon} />  
+        )}  
+        <span>{option.text}</span>  
+      </div>  
+    );  
+  } 
+  private onRenderTitle(options: IDropdownOption[]): JSX.Element {  
+    const option = options[0];  
+    
+    return (  
+      <div>  
+        {(  
+          <Icon style={{ marginRight: '8px', color: option.data }} iconName={"CircleFill"} aria-hidden="true" title={option.data.icon} />  
+        )}  
+        <span>{option.text}</span>  
+      </div>  
+    );  
+  }  
+  public onRenderPlaceholder = (props: IDropdownProps): JSX.Element => {
+    console.log("radio placeholder");
+    return (
+      <div className="dropdownExample-placeholder">
+        {/* <Icon style={iconStyles} iconName={'MessageFill'} aria-hidden="true" /> */}
+        <span>{props.placeholder}</span>
+      </div>
+    );
+  };
+  
   public render(): JSX.Element {
     return (
       <div className="gdcBorder">
@@ -590,6 +625,30 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           </React.Fragment>
         );
+        case "PrioritySelectInput":
+          console.log("inside priority select");
+          return (
+            <React.Fragment>
+              <div className={ele.className}>
+                <Dropdown
+                  placeholder="Select an option"
+                  label={ele.label}
+                  className="gdcDropDown"
+                  onRenderOption={this.onRenderOption}
+                  options={ele.options}
+                  onRenderTitle={this.onRenderTitle}
+                  onRenderPlaceholder={this.onRenderPlaceholder}
+                  onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                  required={ele.required}
+                />
+                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              </div>
+              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+                : null
+              }
+            </React.Fragment>
+          );
       case "SingleSelectCascadingInput":
         var cascadingField = ele.cascadingField;
         var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
@@ -665,28 +724,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             </div>
           </div>
         );
-      case "MultiSelectInput":
-        return (
-          <React.Fragment>
-            <div className={ele.className}>
-              <Dropdown
-                placeholder="Select multi option"
-                label={ele.label}
-                multiSelect
-                options={ele.options}
-                onChange={this.onMultiSelectChange}
-                required={ele.required}
-                defaultSelectedKeys={this.state.multiSelectedKeys}
-
-              />
-              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-            </div>
-            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
-              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
-              : null
-            }
-          </React.Fragment>
-        );
+    
       case "PeoplePickerInput":
         return (
           <div className={ele.className }>

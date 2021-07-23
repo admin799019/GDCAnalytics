@@ -12,7 +12,7 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =  [
     {
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
@@ -242,21 +242,24 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "RequestedPriority",
-                        "type": "SingleSelectInput",
+                        "type": "PrioritySelectInput",
                         "label": "RequestedPriority",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
-                                "text": "Priority 1: Urgent an important - must have ASAP"
+                                "text": "Priority 1: Urgent an important - must have ASAP",
+                                "data": "{icon: 'RadioBullet' }"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
-                                "text": "Priority 2: Not urgent but important - must have"
+                                "text": "Priority 2: Not urgent but important - must have",
+                                "data": "{icon: 'RadioBullet' }"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
-                                "text": "Priority 3: Low priority - nice to have"
+                                "text": "Priority 3: Low priority - nice to have",
+                                "data": "{icon: 'RadioBullet' }"
                             }
                         ],
                         "value": "",
@@ -373,21 +376,24 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "RequestedPriority",
-                        "type": "SingleSelectInput",
+                        "type": "PrioritySelectInput",
                         "label": "RequestedPriority",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
-                                "text": "Priority 1: Urgent an important - must have ASAP"
+                                "text": "Priority 1: Urgent an important - must have ASAP",
+                                "data": "#ff5a5a"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
-                                "text": "Priority 2: Not urgent but important - must have"
+                                "text": "Priority 2: Not urgent but important - must have",
+                                 "data": "#faaa4c"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
-                                "text": "Priority 3: Low priority - nice to have"
+                                "text": "Priority 3: Low priority - nice to have",
+                                "data": "#6ef1c2" 
                             }
                         ],
                         "value": "",
@@ -430,8 +436,7 @@ const ChannelAnalyticsMetaData = [
             }
         ]
     }
-];
-
+]
 const AnalyticsmetaData = [
     {
         "title": "Request Title",
