@@ -289,9 +289,9 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "title":"Are there any other details or dependencies that the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -344,10 +344,21 @@ const ChannelAnalyticsMetaData =  [
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
+
+                   {
+                        "title": "What is the business impact if this request is not committed?",
+                        "type": "MultiLineTextInput",
+                        "label": "What is the business impact if this request is not committed?",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
                     {
-                        "title": "What is the business need this request maps to?",
+                        "title": "What business objective does this request map to?",
                         "type": "SingleLineTextInput",
-                        "label": "What is the business need this request maps to?",
+                        "label": "What business objective does this request map to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": false,
@@ -376,7 +387,7 @@ const ChannelAnalyticsMetaData =  [
                     },
                     {
                         "title": "RequestedPriority",
-                        "type": "PrioritySelectInput",
+                        "type": "SingleSelectInput",
                         "label": "RequestedPriority",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
@@ -412,9 +423,9 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "title": "Are there any other details or dependencies that the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -436,7 +447,7 @@ const ChannelAnalyticsMetaData =  [
             }
         ]
     }
-]
+];
 const AnalyticsmetaData = [
     {
         "title": "Request Title",
