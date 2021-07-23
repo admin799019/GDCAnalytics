@@ -17,7 +17,7 @@ import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import { Link } from '@fluentui/react';
-import { Attach12Regular } from '@fluentui/react-icons';
+// import { Attach12Regular } from '@fluentui/react-icons';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -508,7 +508,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         </div>
         <div>
           <Link onClick={(e) => { this.setState({ openPanel: true }); }} className="gdcNewButton" underline>
-            + New Intake Form
+            New Intake Form
           </Link>
         </div>
         <Panel
@@ -519,9 +519,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           hasCloseButton={false}
           className="gdcPanel"
         >
-          <div className="ms-Grid" dir="ltr">
-            <div className="ms-Grid-row gdcPaddingBottom15">
-              <div className="ms-Grid-col ms-sm12 questionHeader">
+          <div className="gdcGrid">
+            <div className="gdcGridRow gdcPaddingBottom15">
+              <div className="gdcGridCol gdcGridCol12 questionHeader">
                 <p className="questionTop">What team is request for?</p>
                 {
                   Area.options.map(area => {
@@ -535,13 +535,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 }
               </div>
             </div>
-            <div className="ms-Grid-row">
+            <div className="gdcGridRow">
               {
                 this.state.formFields.map((ele) => {
                   return this.renderFields(ele);
                 })
               }
-              <div className={this.state.showAddButton ? "ms-Grid-col ms-sm4 " : "ms-Grid-col ms-sm4 gdcDisplayNone "}>
+              <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
@@ -551,17 +551,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
+
   public renderFields(ele: MetaDataType) {
     switch (ele.type) {
       case "SingleLineTextInput":
         return (
           <React.Fragment>
-
             <div className={ele.className}>
               <TextField label={ele.label}
                 onChange={(e, value) => this.handleChange(value, ele.title)}
-                className="textField"
-
+                className="gdcTextField"
                 value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -569,22 +568,19 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-
           </React.Fragment>
         );
       case "SingleSelectInput":
         return (
           <React.Fragment>
-
             <div className={ele.className}>
               <Dropdown
                 placeholder="Select an option"
                 label={ele.label}
                 options={ele.options}
-                className="dropDown"
+                className="gdcDropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
-              
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -592,7 +588,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-
           </React.Fragment>
         );
       case "SingleSelectCascadingInput":
@@ -608,7 +603,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder="Select an option"
                 label={ele.label}
                 options={options}
-                className="dropDown"
+                className="gdcDropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 required={ele.required}
               //styles={dropdownStyles}
@@ -620,11 +615,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "RadioButtonInput":
         return (
           <React.Fragment>
-
-            <div className={ele.className + " abc " + " gdcColumn6"}>
+            <div className={ele.className}>
               <ChoiceGroup options={ele.options}
-                className="choiceField"
-               
+                className="gdcRadioButton"
                 onChange={(e, o) => this.handleChange(o.key, ele.title)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -633,14 +626,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
             }
-
           </React.Fragment>
         );
       case "DateInput":
         return (
-          <div className={ele.className}>
+          <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <DatePicker placeholder="Select a date..." ariaLabel="Select a date" className="dateInput"
+            <DatePicker placeholder="Select a date..." ariaLabel="Select a date" className=""
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -650,7 +642,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div>
-              <div className={ele.className + " gdcColumn6"}>
+              <div className={ele.className }>
                 <Toggle label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                   onChange={(e, c) => this.handleChange(c, ele.title)}
                   checked={ele.checked}
@@ -665,10 +657,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         );
       case "MultiLineTextInput":
         return (
-          <div className="ms-Grid-row">
+          <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-              <ReactQuill className="multiLine" onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -676,7 +668,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "MultiSelectInput":
         return (
           <React.Fragment>
-            <div className={ele.className + " gdcColumn6"}>
+            <div className={ele.className}>
               <Dropdown
                 placeholder="Select multi option"
                 label={ele.label}
@@ -697,7 +689,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         );
       case "PeoplePickerInput":
         return (
-          <div className={ele.className + " gdcColumn6"}>
+          <div className={ele.className }>
             {/* <PeoplePicker
             context={this.props.context}
             titleText="People Picker"
@@ -718,20 +710,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "FileInput":
         return (
           <React.Fragment>
-            <div className="filepicker">
-            
-            <label className="fileInput" >
-            <i className="ms-Icon " aria-hidden="true"></i>
-            <Attach12Regular />
-            Add attachment
-            <input type="file"
-             style={{display:'none'}}
-              
-             placeholder="Add attachment"
-            multiple onChange={e => this.onFileUpload(e)} />
-          </label>
-        
-     
+            <div className={ele.className + " filepicker" }>
+              <div className="fileInput" >
+                <Icon iconName="Attach" className="gdcAttachIcon" />
+                {/* <Attach12Regular /> */}
+                Add attachment
+                <input type="file"
+                  style={{ display: 'none' }}
+                  placeholder="Add attachment"
+                  multiple onChange={e => this.onFileUpload(e)} />
+              </div>
             </div>
           </React.Fragment>
         );

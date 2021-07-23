@@ -20,11 +20,7 @@
     margin-top:15px;
     //display: none;
 }
-.dateInput{
-  .ms-TextField-fieldGroup {
-height:40px;
-  }
-}
+
 /* react quill toolbar end */
 
 /* Grid */
@@ -34,12 +30,160 @@ height:40px;
 .gdcGridRow {
   @include ms-Grid-row;
 }
+
+.gdcGridCol {
+  @include ms-Grid-col;
+}
+
+.gdcGridCol6 {
+  @include ms-sm6;
+  min-height: 125px;
+}
+
+.gdcGridCol12 {
+  @include ms-sm12;
+  min-height: 125px;
+}
+
 /* Grid end */
+
+/* Text Field */
+
+.gdcTextField {
+  margin-top: 16px;
+  .ms-Label{
+    white-space: nowrap;
+  }
+ .ms-TextField-fieldGroup{
+   height:40px !important;
+   line-height: 35px;
+   font-size: 16px;
+   margin-top: 8px;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+}
+
+/* Text Field End */
+
+/* DropDown */
+
+.gdcDropDown{
+  margin-top:16px;
+  .ms-Label{
+    white-space: nowrap;
+  }
+  .ms-Dropdown-caretDownWrapper{
+    line-height: 35px;
+  }
+  .ms-Dropdown {
+    margin-top:8px;
+  }  
+  .ms-Dropdown-container {
+    line-height: 45px;
+    font-weight: 500;
+    color: black;
+    margin: 0px;
+    #Dropdown6 {
+      color:blue;
+    }
+  }
+  .ms-Dropdown-title {
+    height:40px;
+    font-size: 14px;
+    color:black;
+    line-height: 36px;
+    padding: 0px 28px 0px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    vertical-align: middle;
+  }    
+}
+
+/* DropDown End */
+
+/* Radio Button */
+
+.gdcRadioButton {
+  margin-top: 16px;
+  .ms-ChoiceFieldGroup-flexContainer{
+    display: "flex"
+  }
+  .ms-ChoiceField-wrapper{
+    margin-right:25px;
+    font-weight: 500;
+   font-size: 14px;
+  }
+}
+
+/* Radio Button End */
+
+/* Date Input */
+
+.gdcDateInput {
+  .ms-Label{
+    margin-top: 16px;
+  }
+  .ms-DatePicker {
+    margin-top: 8px;
+  }
+  .ms-TextField-fieldGroup {
+    height:40px;
+  }
+}
+
+/* Date Input End */
+
+/* MultiLine */
+
+.gdcMultiLine {
+  margin-top: 8px;
+}
+
+.gdcColumnBlock{
+  display:inline-block;
+  margin-top: 16px;
+  width:100%;
+  min-height: 256px;
+  .ms-Label{
+    white-space: nowrap;
+  }
+}
+
+/* MultiLine End */
+
+/* File Picker */
+
+.filepicker {
+  margin-top: 25px;
+}
+
+.fileInput {
+  cursor: pointer;
+  color: #036c70;
+  background: rgba(3,108,112,.06);
+  width: 200px;
+  padding: 5px;
+  .gdcAttachIcon {
+    padding-right: 3px;
+    transform: rotateZ(45deg);
+  }
+}
+
+/* File Picker End */
+
+
+.gdcFieldSeperateRow {
+  width: 51%;
+}
+
+.gdcBottomLine {
+  width: 100%;
+  border-bottom: 1px solid #E5E5E5;
+}
 
 .ms-Button:hover{
   background-color: #17787b;
   color:white;
-  
+  border-color: white;
 }
 .questionHeader{
   font-weight: 500;
@@ -53,7 +197,7 @@ height:40px;
   
       // Primary Button
       min-width: 80px;
-      background-color: grey;
+      background-color: rgba(3, 108, 112, 1);
       border-color: $ms-color-themePrimary;
       color:white;
   
@@ -103,19 +247,9 @@ height:40px;
 @include ms-sm12
 
 } 
-.textField{
-  margin-top: 25px;
-  .ms-Label{
-    white-space: nowrap;
-  }
- .ms-TextField-fieldGroup{
-   height:40px !important;
-   line-height: 35px;
-   font-size: 16px;
-   margin-top: 15px;
-   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- }
-}
+
+
+
 // .multiLine{
 //  // margin-top: 25px;
  
@@ -138,54 +272,7 @@ height:40px;
   } 
   //styles={{ title: { height: '50px', lineHeight: '45px', fontweight: '500px', color: 'black' }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }}
 
-  .dropDown{
-  //margin-top:25px;
-  .ms-Label{
-    white-space: nowrap;
-  }
-  .ms-Dropdown-caretDownWrapper{
-    line-height: 35px;
-  } 
-  .ms-Dropdown {
-    margin-top:15px;
-  }
-  .fileInput{
-  background-color: lightgrey;
-  color:red;
-  }
-  .ms-Dropdown-container {
-    
-   // height: 50px;
-     line-height: 45px;
-      font-weight: 500;
-       color: black;
-        margin: 0px;
-        #Dropdown6{
-          color:blue;
-      
-      }
-      }
-      .ms-Dropdown-title {
-        height:40px;
-        font-size: 14px;
-        color:black;
-        line-height: 36px;
-       padding: 0px 28px 0px 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        vertical-align: middle;
-      }    
-  }
-  .choiceField{
-
-  .ms-ChoiceFieldGroup-flexContainer{
-    display: "flex"
-  }
-  .ms-ChoiceField-wrapper{
-    margin-right:25px;
-    font-weight: 500;
-   font-size: 14px;
-  }
-}
+  
 //.dropdown{ }, dropdown: { marginTop: '20px', height: '50px', class: "dd" }, caretDown: { fontWeight: '500px', marginTop: '10px' }, dropdownOptionText: { fontWeight: '500px' }, }
   
   
@@ -210,14 +297,7 @@ margin-bottom:25px;
     float: none !important;
     display: inline-block;
   }
-  .gdcColumnBlock{
-    display:inline-block;
-    margin-top: 25px;
-    width:100%;
-    .ms-Label{
-      white-space: nowrap;
-    }
-  }
+  
   // .gdcColumn12 {
     
   // }

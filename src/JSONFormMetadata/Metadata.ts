@@ -17,7 +17,7 @@ const ChannelAnalyticsMetaData = [
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
         "label": "What area of Channel Analytics is your request for?",
-        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+        "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
                 "key": "Operational Framework\\Channel Analytics\\Demand Response",
@@ -60,7 +60,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "POD Category",
                         "type": "SingleSelectInput",
                         "label": "POD Category",
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "All PODs",
@@ -186,7 +186,7 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "Commercial"
                             }
                         ],
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -201,7 +201,7 @@ const ChannelAnalyticsMetaData = [
         "title": "What type of request is this?",
         "type": "RadioButtonInput",
         "label": "What type of request is this?",
-        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+        "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
         "options": [
             {
                 "key": "Ask an Expert",
@@ -214,7 +214,7 @@ const ChannelAnalyticsMetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "",
+        "errorMessage": "Request Type is required",
         "devopsName": "Custom.RequestType",
         "subFields": [
             {
@@ -224,7 +224,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Request Title",
                         "type": "SingleLineTextInput",
                         "label": "Request Title",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Request Title is required",
@@ -234,7 +234,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "What is the business question you are trying to answer?",
                         "type": "MultiLineTextInput",
                         "label": "What is the business question you are trying to answer?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -244,7 +244,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "RequestedPriority",
                         "type": "SingleSelectInput",
                         "label": "RequestedPriority",
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
@@ -269,7 +269,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Requested Completion Date",
                         "type": "DateInput",
                         "label": "Requested Completion Date",
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
                         "errorMessage": "",
@@ -279,7 +279,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Which reporting page does your question apply to?",
                         "type": "SingleLineTextInput",
                         "label": "Which reporting page does your question apply to?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -289,7 +289,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "type": "MultiLineTextInput",
                         "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -299,7 +299,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Please provide attachments or screenshots to support your request",
                         "type": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
-                        "className": "ms-Grid-col ms-sm12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -315,7 +315,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Request Title",
                         "type": "SingleLineTextInput",
                         "label": "Request Title",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Request Title is required",
@@ -325,7 +325,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "What is the business question you are trying to answer?",
                         "type": "MultiLineTextInput",
                         "label": "What is the business question you are trying to answer?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -335,7 +335,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Please provide detailed requirements for this request.",
                         "type": "MultiLineTextInput",
                         "label": "Please provide detailed requirements for this request.",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -345,7 +345,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "What is the business need this request maps to?",
                         "type": "SingleLineTextInput",
                         "label": "What is the business need this request maps to?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -355,7 +355,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Is this an enhancement to an existing report or a new report request?",
                         "type": "SingleSelectInput",
                         "label": "Is this an enhancement to an existing report or a new report request?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Enhance Existing Report",
@@ -375,7 +375,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "RequestedPriority",
                         "type": "SingleSelectInput",
                         "label": "RequestedPriority",
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent an important - must have ASAP",
@@ -399,7 +399,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Requested Completion Date",
                         "type": "SingleLineTextInput",
                         "label": "Requested Completion Date",
-                        "className": "ms-Grid-col gdcColumn6",
+                        "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -409,7 +409,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "type": "MultiLineTextInput",
                         "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
-                        "className": "ms-Grid-col gdcOuterWidth12 gdcFieldWidth12",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -419,7 +419,7 @@ const ChannelAnalyticsMetaData = [
                         "title": "Please provide attachments or screenshots to support your request",
                         "type": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
-                        "className": "ms-Grid-col ms-sm12 fileInput",
+                        "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
