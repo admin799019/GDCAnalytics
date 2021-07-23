@@ -557,7 +557,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="gdcGrid">
             <div className="gdcGridRow gdcPaddingBottom15">
               <div className="gdcGridCol gdcGridCol12 questionHeader">
-                <p className="questionTop">What team is request for?</p>
+                <p className="questionTop">What team is your request for?</p>
                 {
                   Area.options.map(area => {
                     return (<DefaultButton
