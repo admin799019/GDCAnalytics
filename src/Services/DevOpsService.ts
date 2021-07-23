@@ -41,7 +41,7 @@ export class DevOpsService implements IDevOpsService {
                     })
                     .then((datar: any): void => {
                         console.log(["Try1Latestversion", datar]);
-                        resolve(datar)
+                        resolve(datar);
                     });
             });
         });

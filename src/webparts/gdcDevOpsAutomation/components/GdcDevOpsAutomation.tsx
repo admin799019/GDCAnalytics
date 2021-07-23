@@ -274,6 +274,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async submitForm(addorupdate: string) {
+    this.setState({ showAddButton: false });
     this.DescriptionData = "";
     var parentFieldsRequiredHasValues: boolean = true;
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
@@ -518,14 +519,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     );
   }
   public onRenderPlaceholder = (props: IDropdownProps): JSX.Element => {
-    console.log("radio placeholder");
     return (
       <div className="dropdownExample-placeholder">
         {/* <Icon style={iconStyles} iconName={'MessageFill'} aria-hidden="true" /> */}
         <span>{props.placeholder}</span>
       </div>
     );
-  };
+  }
 
   public render(): JSX.Element {
     return (
@@ -674,7 +674,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <DatePicker placeholder="Select a date..." ariaLabel="Select a date" className=""
+            <DatePicker placeholder="Select a date" ariaLabel="Select a date" className=""
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
