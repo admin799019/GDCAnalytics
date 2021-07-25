@@ -111,6 +111,8 @@ export interface IDevOpsState {
   files: [];
   openPanel: boolean;
   selectedButton: string;
+  disableSubmitButton: boolean;
+  showErrorMessage: boolean;
 }
 const iconStyles = { marginRight: '8px' };
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
@@ -139,7 +141,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       multiSelectedKeys: [],
       files: [],
       openPanel: false,
-      selectedButton: ""
+      selectedButton: "",
+      disableSubmitButton: false,
+      showErrorMessage: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -177,16 +181,26 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public appendValues(stateValues, value: any, name) {
     var subFieldsObject;
     var i = 0;
-    stateValues.map((field, index) => {
+    stateValues.map((field: MetaDataType, index) => {
       if (field.title == name) {
         i = index;
-        if ((value == "" || value == "<p><br></p>") && field.required == true) {
+        if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
         } else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
-        field.value = value;
-        field.type == "SwitchInput" ? field.checked = value : field.value = value;
+        if (field.type == "SingleLineTextInput" && value == " ") {
+          field.value = "";
+        }
+        if (field.type == "SingleLineTextInput" && value.length >= 255) {
+          field.value = field.value;
+        }
+        else if (field.type == "SwitchInput") {
+          field.checked = value;
+        }
+        else {
+          field.value = value;
+        }
 
         if (field.subFields != null && field.subFields.length > 0) {
           field.subFields.map(sfoption => {
@@ -217,30 +231,34 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public UpdateRichTextFields(fields): Promise<any> {
+  public async UpdateRichTextFields(fields): Promise<any> {
     var fs = _.cloneDeep(fields);
-    fs.map((f) => {
+    let s = [];
+    fs.map(async (f) => {
       if (f.type == "MultiLineTextInput") {
-        this.UpdateRichText(f.value).then(mlt => {
-          f.value = mlt;
-        });
+        f.value = await this.UpdateRichText(f.value); //.then(mlt => {
+        //   f.value = mlt;
+        //   s.push(mlt);
+        // });
       }
       if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
-          f.subFields.filter(sfo => sfo.active == true)[0].fields.map((sf) => {
+          f.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
             if (sf.type == "MultiLineTextInput") {
-              this.UpdateRichText(sf.value).then(smlt => {
-                sf.value = smlt;
-              });
+              sf.value = await this.UpdateRichText(sf.value); //.then(smlt => {
+              //   sf.value = smlt;
+              //   s.push(smlt);
+              // });
             }
           });
         }
       }
     });
-    return Promise.all(fs).then(d => {
-      console.log("rich text", fields);
-      return fields;
-    });
+    return fs;
+    // return Promise.all(fs).then(d => {
+    //   console.log("rich text", fs);
+    //   return fs;
+    // });
   }
 
   public async UpdateRichText(data): Promise<any> {
@@ -274,7 +292,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async submitForm(addorupdate: string) {
-    this.setState({ showAddButton: false });
     this.DescriptionData = "";
     var parentFieldsRequiredHasValues: boolean = true;
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
@@ -290,11 +307,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var mlt: string;
     var formFields = _.cloneDeep(this.state.formFields);
 
-    this.UpdateRichTextFields(formFields).then(updatedformFields => {
-      this.appendAPI(_.cloneDeep(updatedformFields), APIData).then(dataReturned => {
+    await this.UpdateRichTextFields(formFields).then(updatedformFields => {
+      this.appendAPI(updatedformFields, APIData).then(dataReturned => {
         if (this.requiredHasValues && parentFieldsRequiredHasValues) {
           APIData = dataReturned.APIData;
-          console.log(dataReturned);
+          console.log("data returned", dataReturned);
           // APIData.push({
           //   "op": "add",
           //   "path": "/fields/System.AreaPath",
@@ -310,25 +327,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
           this.props.devOpsService.addfeature(APIData).then(data => {
             Area.value = "";
-            this.AttachFiles().then(fileUrls => {
-              fileUrls.forEach(url => {
-                // APIData.push({
-                //   'op': 'add',
-                //   'path': '/relations/-',
-                //   'value': {
-                //     'rel': 'AttachedFile',
-                //     'url': url
-                //   }
-                // })
-              });
-            });
+            // this.AttachFiles().then(fileUrls => {
+            //   fileUrls.forEach(url => {
+            //     // APIData.push({
+            //     //   'op': 'add',
+            //     //   'path': '/relations/-',
+            //     //   'value': {
+            //     //     'rel': 'AttachedFile',
+            //     //     'url': url
+            //     //   }
+            //     // })
+            //   });
+            // });
             //this.props.devOpsService.addAttachment(this.AttachmentAPI, data.id);
             this.setState({
               formFields: metaData,
-              formSuccessMessage: "New Ojective has been created successfully with ID " + data.id,
+              formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
               showMessage: true,
               showAddButton: false,
-              openPanel: false
+              openPanel: false,
+              disableSubmitButton: false,
+              showErrorMessage: false
             });
             setTimeout(function () {
               this.setState({ showMessage: false });
@@ -338,7 +357,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         else {
           stateCopy = dataReturned.Fields;
           this.setState({
-            formFields: stateCopy
+            formFields: stateCopy,
+            disableSubmitButton: false,
+            showErrorMessage: true
           });
         }
       });
@@ -362,8 +383,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public async appendAPI(Fields: MetaDataType[], APIData) {
     var requiredHasValues: boolean = true;
     var subFields;
+    var mlt = [];
 
     for (let field of Fields) {
+      // if (field.type == "MultiLineTextInput") {
+      //   //let mlt = [];
+      //   mlt = await this.UpdateRichText(field.value);
+      //   field.value = "<div>" + mlt + "</div>";
+      //   console.log("field value", field.value);
+      // }
+
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
         tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
@@ -404,11 +433,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         this.appendAPI(subFields, APIData).then(data => {
           // requiredHasValues = data.requiredHasValues;
+          // return Promise.all(mlt).then(p1 => {
           return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
+          // });
         });
       }
     }
+    // return Promise.all(mlt).then(p2 => {
     return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
+    // });
   }
 
   public updateFormFields(option) {
@@ -576,8 +609,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   return this.renderFields(ele);
                 })
               }
+              {this.state.showErrorMessage
+                ? <MessageBar
+                  messageBarType={MessageBarType.error}
+                  isMultiline={false}
+                >Few fields are required
+                </MessageBar>
+                : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
-                <PrimaryButton text="Submit" className="gdcAddButton" onClick={() => this.submitForm("add")} />
+                <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
+                  onClick={() => { this.setState({ disableSubmitButton: true }); this.requiredHasValues = true; this.submitForm("add"); }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
             </div>
@@ -594,6 +635,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <TextField label={ele.label}
+                autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
                 value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
@@ -683,16 +725,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "SwitchInput":
         return (
           <React.Fragment>
-           
-              <div className={ele.className}>
-                <Toggle
+
+            <div className={ele.className}>
+              <Toggle
                 className="gdcSwitchInput"
-                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
-                  onChange={(e, c) => this.handleChange(c, ele.title)}
-                  checked={ele.checked}
-                />
-              </div>
-         
+                label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
+                onChange={(e, c) => this.handleChange(c, ele.title)}
+                checked={ele.checked}
+              />
+            </div>
+
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
@@ -726,11 +768,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             principalTypes={[PrincipalType.User]}
             resolveDelay={1000} /> */}
             <div className="peoplepicker">
-            <CustomPeoplePicker
-              
-             required={ele.required} spService={this.props.spService} pickerFieldName={ele.title} handlePeopleChange={this.handleChange} />
-            {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-          </div>
+              <CustomPeoplePicker
+
+                required={ele.required} spService={this.props.spService} pickerFieldName={ele.title} handlePeopleChange={this.handleChange} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
           </div>
         );
       case "FileInput":
