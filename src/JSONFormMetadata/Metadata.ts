@@ -12,11 +12,11 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData =  [
+const ChannelAnalyticsMetaData = [
     {
         "title": "What area of Channel Analytics is your request for?",
         "type": "SingleSelectInput",
-        "label": "What area of Channel Analytics is your request for?",
+        "label": "What area of Channel Analytics is the request for?",
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
@@ -101,12 +101,7 @@ const ChannelAnalyticsMetaData =  [
                                 "cascadingOption": "Azure"
                             },
                             {
-                                "key": "Azure Consumption ",
-                                "text": "Azure Consumption",
-                                "cascadingOption": "Azure"
-                            },
-                            {
-                                "key": "All ",
+                                "key": "All",
                                 "text": "All",
                                 "cascadingOption": "All PODs"
                             },
@@ -136,8 +131,8 @@ const ChannelAnalyticsMetaData =  [
                                 "cascadingOption": "BizApps"
                             },
                             {
-                                "key": "Dev Ops",
-                                "text": "Dev Ops",
+                                "key": "DevOps",
+                                "text": "DevOps",
                                 "cascadingOption": "Azure"
                             },
                             {
@@ -151,8 +146,8 @@ const ChannelAnalyticsMetaData =  [
                                 "cascadingOption": "BizApps"
                             },
                             {
-                                "key": "Power Apps",
-                                "text": "Power Apps",
+                                "key": "PowerApps",
+                                "text": "PowerApps",
                                 "cascadingOption": "BizApps"
                             },
                             {
@@ -247,27 +242,27 @@ const ChannelAnalyticsMetaData =  [
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
-                                "key": "Priority 1: Urgent an important - must have ASAP",
-                                "text": "Priority 1: Urgent an important - must have ASAP",
+                                "key": "Priority 1: Urgent and important - must have ASAP",
+                                "text": "Priority 1: Urgent and important - must have ASAP",
                                 "data": "#ff5a5a"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
                                 "text": "Priority 2: Not urgent but important - must have",
-                                 "data": "#faaa4c"
+                                "data": "#faaa4c"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
                                 "text": "Priority 3: Low priority - nice to have",
-                                "data": "#6ef1c2" 
+                                "data": "#6ef1c2"
                             }
                         ],
                         "value": "",
-                        "required": false,
-                        "errorMessage": "",
+                        "required": true,
+                        "errorMessage": "Priority is required",
                         "devopsName": "Custom.RequestedPriority"
                     },
-                  
+
                     {
                         "title": "Requested Completion Date",
                         "type": "DateInput",
@@ -275,21 +270,11 @@ const ChannelAnalyticsMetaData =  [
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
-                        "errorMessage": "",
-                        "devopsName": "System.Description"
-                    },
-                    {
-                        "title": "Which reporting page does your question apply to?",
-                        "type": "SingleLineTextInput",
-                        "label": "Which reporting page does your question apply to?",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "value": "",
-                        "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "title": "Are there any other details or dependencies that the team should be aware of?",
                         "type": "MultiLineTextInput",
                         "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
@@ -373,14 +358,25 @@ const ChannelAnalyticsMetaData =  [
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
+
+                    {
+                        "title": "What is the business impact if this request is not committed?",
+                        "type": "MultiLineTextInput",
+                        "label": "What is the business impact if this request is not committed?",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
                     {
                         "title": "What is the business need this request maps to?",
                         "type": "SingleLineTextInput",
                         "label": "What is the business need this request maps to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
-                        "required": false,
-                        "errorMessage": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
                     {
@@ -399,40 +395,40 @@ const ChannelAnalyticsMetaData =  [
                             }
                         ],
                         "value": "",
-                        "required": false,
-                        "errorMessage": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
                         "devopsName": "Custom.ReportRequestType"
                     },
                     {
-                        "title": "RequestedPriority",
-                        "type": "PrioritySelectInput",
-                        "label": "RequestedPriority",
+                        "title": "What is the priority of your request?",
+                        "type": "SingleSelectInput",
+                        "label": "What is the priority of your request?",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
-                                "key": "Priority 1: Urgent an important - must have ASAP",
-                                "text": "Priority 1: Urgent an important - must have ASAP",
+                                "key": "Priority 1: Urgent and important - must have ASAP",
+                                "text": "Priority 1: Urgent and important - must have ASAP",
                                 "data": "#ff5a5a"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
                                 "text": "Priority 2: Not urgent but important - must have",
-                                 "data": "#faaa4c"
+                                "data": "#faaa4c"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
                                 "text": "Priority 3: Low priority - nice to have",
-                                "data": "#6ef1c2" 
+                                "data": "#6ef1c2"
                             }
                         ],
                         "value": "",
-                        "required": false,
-                        "errorMessage": "",
+                        "required": true,
+                        "errorMessage": "Priority is required",
                         "devopsName": "Custom.RequestedPriority"
                     },
                     {
                         "title": "Requested Completion Date",
-                        "type": "SingleLineTextInput",
+                        "type": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
@@ -466,6 +462,7 @@ const ChannelAnalyticsMetaData =  [
         ]
     }
 ];
+
 const AnalyticsmetaData = [
     {
         "title": "Request Title",
