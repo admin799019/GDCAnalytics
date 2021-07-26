@@ -773,7 +773,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
-              <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
+              <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
               {ele.helperText ?
                {...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
                
