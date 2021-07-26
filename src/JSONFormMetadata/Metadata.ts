@@ -410,6 +410,7 @@ const ChannelAnalyticsMetaData = [
                         "type": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
+                        "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
