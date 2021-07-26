@@ -2,6 +2,9 @@
 
 
 /* react quill toolbar */
+.quill > .ql-container > .ql-editor.ql-blank::before{
+  font-style: normal;
+}
 .ql-editor {
     min-height: 150px;
   }
@@ -73,7 +76,7 @@
     white-space: nowrap;
   }
   .ms-Dropdown-caretDownWrapper{
-    line-height: 35px;
+    line-height: 37px;
   }
   .ms-Dropdown {
     margin-top:8px;
@@ -92,7 +95,7 @@
     font-size: 14px;
     color:black;
     line-height: 36px;
-    padding: 0px 28px 0px 20px;
+    padding: 0px 28px 0px 8px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     vertical-align: middle;
   }    
@@ -143,6 +146,15 @@ height:40px;
   }
   .ms-TextField-fieldGroup {
     height:40px;
+    i {
+      margin-top: 2px;
+    }
+  }
+  .ms-TextField-field {
+    color: black;
+  }
+  .ms-TextField-field::placeholder {
+    color: black;
   }
 }
 
@@ -240,6 +252,11 @@ height:40px;
         display: inline-block;
       }
   }
+
+  .gdcAddButton:disabled {
+    background-color: rgba(16, 16, 16, 0.3);
+  }
+
   .gdcNewButton {
     font-size: 18px;
   }
@@ -326,6 +343,17 @@ height:40px;
     top: 0px;
     background: rgba(255, 255, 255, 0.08);
   }
+  .gdcScrollPanelHeaderEllipses1
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: -125px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
   .gdcPanelHeaderEllipses2
   {
@@ -338,14 +366,45 @@ height:40px;
     top: 100px;
     background: rgba(255, 255, 255, 0.08);
   }
+  .gdcScrollPanelHeaderEllipses2
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 1px;
+    top: 25px;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
 .gdcPanelHeader {
   background: #17787B;
   color: white;
   font-family: Segoe UI;
+  max-height: 300px;
+	transition-property: all;
+	transition-duration: 10s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.gdcScrollPanelHeader {
+  background: #17787B;
+  color: white;
+  font-family: Segoe UI;
+  max-height:100px;
+  transform: translateY(-1%);
+  transition: transform 0.5s ease-in-out;
+  //transition-duration: 5s;
+	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 .gdcPanelHeaderText {
   padding: 180px 0px 10px 20px;
+  float: left;
+  font-size: 40px;
+  
+}
+.gdcScrollPanelHeaderText {
+  padding: 0px 0px 10px 40px;
   float: left;
   font-size: 40px;
   
@@ -372,7 +431,27 @@ height:40px;
     text-decoration: none !important;
   }
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#c8c6c4
+; 
+  border-radius:10px;
+  height:10%;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 .gdcPanel {
   .commands  {
   margin-top: 0px;
