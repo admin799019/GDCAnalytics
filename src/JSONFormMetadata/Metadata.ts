@@ -32,16 +32,16 @@ const ChannelAnalyticsMetaData = [
                 "text": "Partner"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\LFQ",
-                "text": "LFQ"
-            },
-            {
                 "key": "Operational Framework\\Channel Analytics\\Paid Acquisition",
                 "text": "Paid Acquisition"
             },
             {
                 "key": "Operational Framework\\Channel Analytics\\GEP Analytics",
                 "text": "GEP Analytics"
+            },
+            {
+                "key": "Operational Framework\\Channel Analytics\\LFQ",
+                "text": "LFQ"
             },
             {
                 "key": "Operational Framework\\Channel Analytics\\Relationship Marketing",
@@ -75,8 +75,8 @@ const ChannelAnalyticsMetaData = [
                                 "text": "BizApps"
                             },
                             {
-                                "key": "Commercial",
-                                "text": "Commercial"
+                                "key": "M365 Commercial",
+                                "text": "M365 Commercial"
                             }
                         ],
                         "value": "",
@@ -91,28 +91,23 @@ const ChannelAnalyticsMetaData = [
                         "label": "POD Name",
                         "options": [
                             {
+                                "key": "All",
+                                "text": "All",
+                                "cascadingOption": "All PODs"
+                            },
+							{
                                 "key": "Azure Consumption",
                                 "text": "Azure Consumption",
                                 "cascadingOption": "Azure"
                             },
                             {
-                                "key": "Azure X-POD",
-                                "text": "Azure X-POD",
+                                "key": "Azure Free Account Activation/Conversion",
+                                "text": "Azure Free Account Activation/Conversion",
                                 "cascadingOption": "Azure"
-                            },
-                            {
-                                "key": "All",
-                                "text": "All",
-                                "cascadingOption": "All PODs"
                             },
                             {
                                 "key": "Azure Marketplace",
                                 "text": "Azure Marketplace",
-                                "cascadingOption": "Azure"
-                            },
-                            {
-                                "key": "Azure Free Account Activation/Conversion",
-                                "text": "Azure Free Account Activation/Conversion",
                                 "cascadingOption": "Azure"
                             },
                             {
@@ -126,23 +121,23 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "Azure"
                             },
                             {
+                                "key": "Azure Upsell/Xsell",
+                                "text": "Azure Upsell/Xsell",
+                                "cascadingOption": "Azure"
+                            },
+                            {
+                                "key": "Azure X-POD",
+                                "text": "Azure X-POD",
+                                "cascadingOption": "Azure"
+                            },
+                            {
                                 "key": "Power BI",
                                 "text": "Power BI",
                                 "cascadingOption": "BizApps"
                             },
                             {
-                                "key": "DevOps",
-                                "text": "DevOps",
-                                "cascadingOption": "Azure"
-                            },
-                            {
                                 "key": "Dynamics 365",
                                 "text": "Dynamics 365",
-                                "cascadingOption": "BizApps"
-                            },
-                            {
-                                "key": "PowerAutomate",
-                                "text": "PowerAutomate",
                                 "cascadingOption": "BizApps"
                             },
                             {
@@ -151,34 +146,44 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "BizApps"
                             },
                             {
+                                "key": "PowerAutomate",
+                                "text": "PowerAutomate",
+                                "cascadingOption": "BizApps"
+                            },
+                            {
+                                "key": "DevOps",
+                                "text": "DevOps",
+                                "cascadingOption": "Azure"
+                            },
+                            {
                                 "key": "M365_All",
                                 "text": "M365_All",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             },
                             {
                                 "key": "M365_ODB",
                                 "text": "M365_ODB",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             },
                             {
                                 "key": "M365_Teams",
                                 "text": "M365_Teams",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             },
                             {
                                 "key": "Comm_Onb_Usage",
                                 "text": "Comm_Onb_Usage",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             },
                             {
                                 "key": "Comm_Trial",
                                 "text": "Comm_Trial",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             },
                             {
                                 "key": "Comm_Renewal",
                                 "text": "Comm_Renewal",
-                                "cascadingOption": "Commercial"
+                                "cascadingOption": "M365 Commercial"
                             }
                         ],
                         "className": "gdcGridCol gdcGridCol6",
@@ -221,6 +226,7 @@ const ChannelAnalyticsMetaData = [
                         "label": "Request Title",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
+                        "helperText":"Please Enter the Title of your Request",
                         "required": true,
                         "errorMessage": "Request Title is required",
                         "devopsName": "System.Title"
@@ -236,9 +242,9 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "RequestedPriority",
+                        "title": "What is the priority of your request?",
                         "type": "SingleSelectInput",
-                        "label": "RequestedPriority",
+                        "label": "What is the priority of your request?",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -276,41 +282,13 @@ const ChannelAnalyticsMetaData = [
                     {
                         "title": "Are there any other details or dependencies that the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
+                        "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "System.Description"
-                    },
-                    {
-                        "title": "Is this Request Urgent",
-                        "type": "SwitchInput",
-                        "label": "Is this Request Urgent",
-                        "placeholder": "",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "helperText": "MuSwitchInput",
-                        "options": [
-                            { "onText": "Urgent" },
-                            { "offText": "Not Urgent" }
-                        ],
-                        "value": "false",
-                        "required": false,
-                        "errorMessage": "",
-                        "checked": false,
-                        "devopsName": "Custom.IsThisRequestUrgent"
-                    },
-                    {
-                        "title": "Business Sponsor",
-                        "type": "PeoplePickerInput",
-                        "label": "Business Sponsor",
-                        "placeholder": "",
-                        "helperText": "TextInput",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Business sponsor is required",
-                        "devopsName": "Custom.BusinessSponsor"
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
@@ -335,18 +313,9 @@ const ChannelAnalyticsMetaData = [
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
+                        "helperText":"Please Enter the Title of your Request",
                         "errorMessage": "Request Title is required",
                         "devopsName": "System.Title"
-                    },
-                    {
-                        "title": "What is the business question you are trying to answer?",
-                        "type": "MultiLineTextInput",
-                        "label": "What is the business question you are trying to answer?",
-                        "className": "gdcGridCol gdcGridCol12",
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Field is required",
-                        "devopsName": "System.Description"
                     },
                     {
                         "title": "Please provide detailed requirements for this request.",
@@ -370,9 +339,9 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "What is the business need this request maps to?",
+                        "title": "What business objective does this request map to?",
                         "type": "SingleLineTextInput",
-                        "label": "What is the business need this request maps to?",
+                        "label": "What business objective does this request map to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
@@ -437,9 +406,9 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "title": "Are there any other details or dependencies that the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
+                        "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,

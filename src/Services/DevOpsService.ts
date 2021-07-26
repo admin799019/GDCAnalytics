@@ -41,7 +41,7 @@ export class DevOpsService implements IDevOpsService {
                     })
                     .then((datar: any): void => {
                         console.log(["Try1Latestversion", datar]);
-                        resolve(datar)
+                        resolve(datar);
                     });
             });
         });
@@ -56,7 +56,6 @@ export class DevOpsService implements IDevOpsService {
         //         "value": data
         //     }
         // ]);
-        console.log(data);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
