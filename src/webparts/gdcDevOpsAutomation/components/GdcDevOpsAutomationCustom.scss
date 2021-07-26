@@ -115,7 +115,23 @@
 }
 
 /* Radio Button End */
-
+/*SwitchInput*/
+.gdcSwitchInput{
+  margin-top:16px;
+  
+  .ms-Toggle-innerContainer{
+    margin-top:8px;
+  }
+}
+.peoplepicker{
+  margin-top:16px;
+  .ms-BasePicker-text{
+height:40px;
+  }
+}
+.ms-PeoplePicker{
+  margin-top:8px;
+}
 /* Date Input */
 
 .gdcDateInput {
@@ -160,7 +176,7 @@
   cursor: pointer;
   color: #036c70;
   background: rgba(3,108,112,.06);
-  width: 200px;
+  width: 120px;
   padding: 5px;
   .gdcAttachIcon {
     padding-right: 3px;
