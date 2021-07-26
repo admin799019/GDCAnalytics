@@ -124,7 +124,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public DescriptionData = "";
   public AttachmentAPI;
   public panelRef;
-  public richTextFieldCalls;
+  public richTextFieldCalls: number = 0;
   public constructor(props) {
 
     super(props);
