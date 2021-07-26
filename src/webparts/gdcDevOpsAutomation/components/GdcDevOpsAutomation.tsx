@@ -31,6 +31,7 @@ import { ISPService } from '../../../Services/ISPService';
 import { metaData } from '../../../JSONFormMetadata/Metadata';
 
 import CustomPeoplePicker from "./CustomPeoplePicker";
+import { elementContains } from 'office-ui-fabric-react';
 
 interface MetaDataType {
   title: string;
@@ -87,7 +88,7 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info" title={props.name + " required"} ariaLabel="value required" />
+        <Icon iconName="Info" title={props.name } ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -665,7 +666,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
-                value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
+                value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
@@ -772,12 +773,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
-              <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
-                {ele.helperText != undefined ? <Icon iconName="Info" title={ele.helperText} ariaLabel={ele.helperText} /> : ""}
+              <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
+              {ele.helperText ?
+               {...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
+               
+               }:"" }
               </Label>
-              <ReactQuill
-                placeholder="Enter your text here"
-                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
+            
+              <ReactQuill 
+              placeholder="Enter your text here"
+              
+              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -810,7 +816,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
+            <p className="notworking">Attachments are not functional at the moment</p>
               <div className="fileInput" >
+               
                 <Icon iconName="Attach" className="gdcAttachIcon" />
                 {/* <Attach12Regular /> */}
                 Add attachment

@@ -164,9 +164,11 @@ height:40px;
 
 .gdcMultiLine {
   margin-top: 8px;
+  white-space: nowrap;
 }
 
 .gdcColumnBlock{//Multiline field
+  white-space: nowrap;
   display:inline-block;
   margin-top: 16px;
   width:100%;
@@ -406,7 +408,7 @@ height:40px;
 .gdcScrollPanelHeaderText {
   padding: 0px 0px 10px 40px;
   float: left;
-  font-size: 40px;
+  font-size: 30px;
   
 }
 .gdcPanelCloseButton {
@@ -460,6 +462,8 @@ height:40px;
   margin-top: 0px;
 }
 }
-
+.notworking{
+  font-style: italic;
+}
 /* Panel End */
 
