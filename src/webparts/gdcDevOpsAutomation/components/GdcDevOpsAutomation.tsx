@@ -119,6 +119,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI;
+  public richTextFieldCalls: number = 0;
 
   public constructor(props) {
     super(props);
@@ -158,6 +159,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.onRenderNavigationContent = this.onRenderNavigationContent.bind(this);
     this.onRenderPlaceholder = this.onRenderPlaceholder.bind(this);
     this.onRenderOption = this.onRenderOption.bind(this);
+    this.addUserStory = this.addUserStory.bind(this);
   }
 
   public componentDidMount() {
@@ -165,8 +167,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-    // this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
-    // this.props.devOpsService.FilterWorkItems();
   }
 
   public handleChange(value: any, name) {
@@ -233,32 +233,51 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public async UpdateRichTextFields(fields): Promise<any> {
     var fs = _.cloneDeep(fields);
-    let s = [];
-    fs.map(async (f) => {
+    fields.map(async (f) => {
       if (f.type == "MultiLineTextInput") {
-        f.value = await this.UpdateRichText(f.value); //.then(mlt => {
-        //   f.value = mlt;
-        //   s.push(mlt);
-        // });
+        this.richTextFieldCalls = this.richTextFieldCalls + 1;
+        await this.UpdateRichText(f.value).then(mlt => {
+          f.value = mlt;
+          this.richTextFieldCalls = this.richTextFieldCalls - 1;
+          if (this.richTextFieldCalls == 0) {
+            console.log("updated state", fields);
+            this.setState({
+              formFields: fields
+            });
+            this.addUserStory();
+          }
+        });
       }
       if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
           f.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
             if (sf.type == "MultiLineTextInput") {
-              sf.value = await this.UpdateRichText(sf.value); //.then(smlt => {
-              //   sf.value = smlt;
-              //   s.push(smlt);
-              // });
+              this.richTextFieldCalls = this.richTextFieldCalls + 1;
+              await this.UpdateRichText(sf.value).then(smlt => {
+                sf.value = smlt;
+                this.richTextFieldCalls = this.richTextFieldCalls - 1;
+
+                if (this.richTextFieldCalls == 0) {
+                  console.log("updated state", fields);
+                  this.setState({
+                    formFields: fields
+                  });
+                  this.addUserStory();
+                }
+              });
             }
           });
         }
       }
     });
-    return fs;
-    // return Promise.all(fs).then(d => {
-    //   console.log("rich text", fs);
-    //   return fs;
-    // });
+
+    if (this.richTextFieldCalls == 0) {
+      console.log("updated state", fields);
+      this.setState({
+        formFields: fields
+      });
+      this.addUserStory();
+    }
   }
 
   public async UpdateRichText(data): Promise<any> {
@@ -291,9 +310,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public async submitForm(addorupdate: string) {
-    this.DescriptionData = "";
+  public addUserStory() {
+    var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
+
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
@@ -303,71 +323,58 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
       });
     }
-    var APIData = _.cloneDeep(this.state.formData);
-    var mlt: string;
-    var formFields = _.cloneDeep(this.state.formFields);
 
-    await this.UpdateRichTextFields(formFields).then(updatedformFields => {
-      this.appendAPI(updatedformFields, APIData).then(dataReturned => {
-        if (this.requiredHasValues && parentFieldsRequiredHasValues) {
-          APIData = dataReturned.APIData;
-          console.log("data returned", dataReturned);
-          // APIData.push({
-          //   "op": "add",
-          //   "path": "/fields/System.AreaPath",
-          //   "from": null,
-          //   "value": `Operational Framework\\` + Area.value
-          // });
-          //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
-          APIData.push({
-            "op": "add",
-            "path": "/fields/System.Description",
-            "from": null,
-            "value": this.DescriptionData
-          });
-          this.props.devOpsService.addfeature(APIData).then(data => {
-            Area.value = "";
-            // this.AttachFiles().then(fileUrls => {
-            //   fileUrls.forEach(url => {
-            //     // APIData.push({
-            //     //   'op': 'add',
-            //     //   'path': '/relations/-',
-            //     //   'value': {
-            //     //     'rel': 'AttachedFile',
-            //     //     'url': url
-            //     //   }
-            //     // })
-            //   });
-            // });
-            //this.props.devOpsService.addAttachment(this.AttachmentAPI, data.id);
-            this.setState({
-              formFields: metaData,
-              formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
-              showMessage: true,
-              showAddButton: false,
-              openPanel: false,
-              disableSubmitButton: false,
-              showErrorMessage: false
-            });
-            setTimeout(function () {
-              this.setState({ showMessage: false });
-            }.bind(this), 5000);
-          });
-        }
-        else {
-          stateCopy = dataReturned.Fields;
+    this.appendAPI(this.state.formFields, APIData).then(dataReturned => {
+      if (this.requiredHasValues && parentFieldsRequiredHasValues) {
+        APIData = dataReturned.APIData;
+        // APIData.push({
+        //   "op": "add",
+        //   "path": "/fields/System.AreaPath",
+        //   "from": null,
+        //   "value": `Operational Framework\\` + Area.value
+        // });
+        //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
+        APIData.push({
+          "op": "add",
+          "path": "/fields/System.Description",
+          "from": null,
+          "value": this.DescriptionData
+        });
+        this.props.devOpsService.addfeature(APIData).then(data => {
+          Area.value = "";
           this.setState({
-            formFields: stateCopy,
+            formFields: metaData,
+            formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
+            showMessage: true,
+            showAddButton: false,
+            openPanel: false,
             disableSubmitButton: false,
-            showErrorMessage: true
+            showErrorMessage: false
           });
-        }
-      });
+          setTimeout(function () {
+            this.setState({ showMessage: false });
+          }.bind(this), 5000);
+        });
+      }
+      else {
+        stateCopy = dataReturned.Fields;
+        this.setState({
+          formFields: stateCopy,
+          disableSubmitButton: false,
+          showErrorMessage: true
+        });
+      }
     });
   }
 
+  public async submitForm(addorupdate: string) {
+    this.DescriptionData = "";
+    var formFields = _.cloneDeep(this.state.formFields);
+
+    this.UpdateRichTextFields(formFields);
+  }
+
   public onMultiSelectChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
-    console.log("multi", item);
     if (item) {
       console.log(item.key);
       var x: any = this.state.multiSelectedKeys;
@@ -386,13 +393,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var mlt = [];
 
     for (let field of Fields) {
-      // if (field.type == "MultiLineTextInput") {
-      //   //let mlt = [];
-      //   mlt = await this.UpdateRichText(field.value);
-      //   field.value = "<div>" + mlt + "</div>";
-      //   console.log("field value", field.value);
-      // }
-
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
         tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
@@ -432,16 +432,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           // return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
         }
         this.appendAPI(subFields, APIData).then(data => {
-          // requiredHasValues = data.requiredHasValues;
-          // return Promise.all(mlt).then(p1 => {
           return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
-          // });
         });
       }
     }
-    // return Promise.all(mlt).then(p2 => {
     return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
-    // });
   }
 
   public updateFormFields(option) {
@@ -521,15 +516,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         <div className="gdcPanelHeaderEllipses1"></div>
         <div className="gdcPanelHeaderEllipses2"></div>
         <div className="gdcPanelCloseButton">
-          <Link onClick={(e) => { this.setState({ openPanel: false }); }} underline={false}  >
+          <Link onClick={(e) => { this.setState({ openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
       </div>
     );
   }
+
   private onRenderOption(option: IDropdownOption): JSX.Element {
-    //console.log(option.data.icon)
     return (
       <div>
         {(
@@ -539,6 +534,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
+
   private onRenderTitle(options: IDropdownOption[]): JSX.Element {
     const option = options[0];
 
@@ -551,6 +547,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
+
   public onRenderPlaceholder = (props: IDropdownProps): JSX.Element => {
     return (
       <div className="dropdownExample-placeholder">
@@ -618,7 +615,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
-                  onClick={() => { this.setState({ disableSubmitButton: true }); this.requiredHasValues = true; this.submitForm("add"); }} />
+                  onClick={() => { this.setState({ disableSubmitButton: true, showErrorMessage: false }); this.requiredHasValues = true; this.submitForm("add"); }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
             </div>

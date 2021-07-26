@@ -56,7 +56,6 @@ export class DevOpsService implements IDevOpsService {
         //         "value": data
         //     }
         // ]);
-        console.log("api data", data);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
