@@ -114,7 +114,7 @@ export interface IDevOpsState {
   selectedButton: string;
   disableSubmitButton: boolean;
   showErrorMessage: boolean;
-  panelHasScroll:boolean;
+  panelHasScroll: boolean;
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -122,10 +122,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI;
- public panelRef;
- public richTextFieldCalls;
+  public panelRef;
+  public richTextFieldCalls;
   public constructor(props) {
-    
+
     super(props);
     this.panelRef = React.createRef();
 
@@ -150,7 +150,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       selectedButton: "",
       disableSubmitButton: false,
       showErrorMessage: false,
-      panelHasScroll:false
+      panelHasScroll: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -174,7 +174,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       projects: projects
     });
 
-    
+
     // this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
@@ -182,17 +182,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, value, name);
-    console.log(this.panelRef.current._scrollableContent.clientHeight,this.panelRef.current._scrollableContent.scrollHeight);
-    if(this.panelRef.current._scrollableContent.scrollHeight>this.panelRef.current._scrollableContent.clientHeight)
-    this.setState({
-      formFields: stateValues,
-      panelHasScroll:true
-    });
+    console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
+    if (this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
+      this.setState({
+        formFields: stateValues,
+        panelHasScroll: true
+      });
     else
-    this.setState({
-      formFields: stateValues,
-      panelHasScroll:false
-    });
+      this.setState({
+        formFields: stateValues,
+        panelHasScroll: false
+      });
   }
 
   public appendValues(stateValues, value: any, name) {
@@ -457,11 +457,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-    
+
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
-      
+
       this.setState({
         formFields: jsonData,
         showMessage: false,
@@ -530,12 +530,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public onRenderNavigationContent(props, defaultRender) {
     return (
-      <div {...this.state.panelHasScroll? {className:"gdcScrollPanelHeader"}:{className:"gdcPanelHeader"}}>
-        <div {...this.state.panelHasScroll? {className:"gdcScrollPanelHeaderText" }:{className:"gdcPanelHeaderText"}}> GDC Intake Form </div>
-        <div {...this.state.panelHasScroll? {className:"gdcScrollPanelHeaderEllipses1" }:{className:"gdcPanelHeaderEllipses1" }}></div>
-        <div {...this.state.panelHasScroll? {className:"gdcScrollPanelHeaderEllipses2" }:{className:"gdcPanelHeaderEllipses2" }}></div>
+      // <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
+
+      <div className="gdcPanelHeader" >
+        <div className="gdcPanelHeaderText" > GDC Intake Form </div>
+        <div className="gdcPanelHeaderEllipses1" ></div>
+        <div className="gdcPanelHeaderEllipses2" ></div>
         <div className="gdcPanelCloseButton">
-          <Link onClick={(e) => { this.setState({ openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false }); }} underline={false}  >
+          <Link onClick={(e) => { this.setState({ openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
@@ -599,9 +604,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           headerText="GDC Intake Form"
           isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
-        
+
           componentRef={this.panelRef}
-         
+
           onRenderHeader={this.onRenderNavigationContent}
           hasCloseButton={false}
           className="gdcPanel"
@@ -637,7 +642,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
-                  onClick={() => { this.setState({ disableSubmitButton: true, showErrorMessage: false }); this.requiredHasValues = true; this.submitForm("add"); }} />
+                  onClick={() => {
+                    this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
+                    this.requiredHasValues = true; this.submitForm("add");
+                  }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
             </div>
@@ -654,7 +662,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <TextField label={ele.label}
-               autoComplete="off"
+                autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
                 value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
@@ -764,13 +772,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
-              <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
-              {ele.helperText!= undefined ? <Icon iconName="Info" title={ele.title} ariaLabel={ele.helperText} />:{}}
+              <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
+                {ele.helperText != undefined ? <Icon iconName="Info" title={ele.helperText} ariaLabel={ele.helperText} /> : ""}
               </Label>
-              <ReactQuill 
-              placeholder="Enter your text here"
-              
-              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill
+                placeholder="Enter your text here"
+                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
