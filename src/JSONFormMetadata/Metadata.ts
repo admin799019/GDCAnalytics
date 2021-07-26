@@ -241,9 +241,9 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "What is the priority of you request?",
+                        "title": "RequestedPriority",
                         "type": "SingleSelectInput",
-                        "label": "What is the priority of you request?",
+                        "label": "RequestedPriority",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -289,14 +289,43 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title":"Are there any other details or dependencies that the team should be aware of?",
+                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Are there any other details or dependencies that the team should be aware of?",
+                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Is this Request Urgent",
+                        "type": "SwitchInput",
+                        "label": "Is this Request Urgent",
+                        "placeholder": "",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "helperText": "MuSwitchInput",
+                        "options": [
+                            { "onText": "Urgent" },
+                            { "offText": "Not Urgent" }
+                        ],
+                        "value": "false",
+                        "required": false,
+                        "errorMessage": "",
+                        "checked": false,
+                        "devopsName": "Custom.IsThisRequestUrgent"
+                    },
+                    {
+                        "title": "Business Sponsor",
+                        "type": "PeoplePickerInput",
+                        "label": "Business Sponsor",
+                        "placeholder": "",
+                        "helperText": "TextInput",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Business sponsor is required",
+                        "devopsName": "Custom.BusinessSponsor"
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
@@ -344,21 +373,10 @@ const ChannelAnalyticsMetaData =  [
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
-
-                   {
-                        "title": "What is the business impact if this request is not committed?",
-                        "type": "MultiLineTextInput",
-                        "label": "What is the business impact if this request is not committed?",
-                        "className": "gdcGridCol gdcGridCol12",
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Field is required",
-                        "devopsName": "System.Description"
-                    },
                     {
-                        "title": "What business objective does this request map to?",
+                        "title": "What is the business need this request maps to?",
                         "type": "SingleLineTextInput",
-                        "label": "What business objective does this request map to?",
+                        "label": "What is the business need this request maps to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": false,
@@ -386,9 +404,9 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "Custom.ReportRequestType"
                     },
                     {
-                        "title": "What is the priority of you request?",
-                        "type": "SingleSelectInput",
-                        "label": "What is the priority of you request?",
+                        "title": "RequestedPriority",
+                        "type": "PrioritySelectInput",
+                        "label": "RequestedPriority",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -423,9 +441,9 @@ const ChannelAnalyticsMetaData =  [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Are there any other details or dependencies that the team should be aware of?",
+                        "title": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "type": "MultiLineTextInput",
-                        "label": "Are there any other details or dependencies that the team should be aware of?",
+                        "label": "Any other information that might be relevant to requirements gathering or dependencies the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,

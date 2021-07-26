@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
 import CustomStyles from './GdcDevOpsAutomation.module.scss';
+//import  {useRef } from 'react'
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
@@ -112,14 +113,17 @@ export interface IDevOpsState {
   openPanel: boolean;
   selectedButton: string;
 }
+
 const iconStyles = { marginRight: '8px' };
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI;
-
+ public myRef;
   public constructor(props) {
+    
     super(props);
+    this.myRef = React.createRef();
 
     this.state = {
       projects: [],
@@ -161,6 +165,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
+
+    
     // this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
@@ -168,9 +174,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, value, name);
-
+    console.log(this.myRef.current._scrollableContent.clientHeight,this.myRef.current._scrollableContent.scrollHeight);
     this.setState({
       formFields: stateValues
+      //panelContentHasScroll:boolean
     });
   }
 
@@ -411,9 +418,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
+    
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
+      
       this.setState({
         formFields: jsonData,
         showMessage: false,
@@ -529,7 +538,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public render(): JSX.Element {
     return (
-      <div className="gdcBorder">
+      <div className="gdcBorder ">
         <div className="gdcMessage">
           {this.state.showMessage
             ? <MessageBar
@@ -550,11 +559,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           headerText="GDC Intake Form"
           isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
+        
+          componentRef={this.myRef}
+         
           onRenderHeader={this.onRenderNavigationContent}
           hasCloseButton={false}
           className="gdcPanel"
         >
-          <div className="gdcGrid">
+          <div className="gdcGrid"  >
             <div className="gdcGridRow gdcPaddingBottom15">
               <div className="gdcGridCol gdcGridCol12 questionHeader">
                 <p className="questionTop">What team is your request for?</p>
@@ -594,6 +606,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <TextField label={ele.label}
+                {...ele.title=="Request Title"? {placeholder:"Enter your Title"}:{}}
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
                 value={ele.value} name={ele.title} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
@@ -704,7 +717,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-              <ReactQuill className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill 
+              placeholder="Enter your text here"
+              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
