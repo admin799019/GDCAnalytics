@@ -655,7 +655,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <TextField label={ele.label}
-              
+               autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
                 value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
