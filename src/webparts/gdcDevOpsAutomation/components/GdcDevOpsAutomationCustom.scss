@@ -395,7 +395,7 @@ height:40px;
   color: white;
   font-family: Segoe UI;
  // max-height:100px;
- animation:  reduce 1s ease-in-out backwards;
+ animation:  reduce 1s cubic-bezier(0, 1, 0.5, 1) backwards;
   //transition-duration: 5s;
 	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
@@ -440,6 +440,25 @@ height:40px;
   .ms-Link:hover {
     text-decoration: none !important;
   }
+}
+.gdcScrollPanelCloseButton{
+  padding: 10px 25px 25px 25px;
+  float: right;
+  color: #fff;
+  position: fixed;
+  right: 20px;
+  font-size: 12px;
+  .ms-Link {
+    color: white;
+    vertical-align: middle;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
+    padding: 5px;
+    .gdcCloseIcon {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+}
 }
 ::-webkit-scrollbar {
   width: 10px;

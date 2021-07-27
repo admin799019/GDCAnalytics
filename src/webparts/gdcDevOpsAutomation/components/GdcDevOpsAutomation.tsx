@@ -183,16 +183,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, value, name);
-    console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
-    if (this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
+    this.setState({
+      formFields: stateValues,
+    });
+   // console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
+    if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
       this.setState({
-        formFields: stateValues,
         panelHasScroll: true
       });
-    else
+
+
       this.setState({
         formFields: stateValues,
-        panelHasScroll: false
       });
   }
 
@@ -531,17 +533,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public onRenderNavigationContent(props, defaultRender) {
     return (
-      // <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
-      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
-      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
-      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
+      <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
+        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
+        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
+        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
 
-      <div className="gdcPanelHeader" >
+      {/* <div className="gdcPanelHeader" >
         <div className="gdcPanelHeaderText" > GDC Intake Form </div>
         <div className="gdcPanelHeaderEllipses1" ></div>
-        <div className="gdcPanelHeaderEllipses2" ></div>
-        <div className="gdcPanelCloseButton">
-          <Link onClick={(e) => { this.setState({ openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
+        <div className="gdcPanelHeaderEllipses2" ></div> */}
+        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelCloseButton" } : { className: "gdcPanelCloseButton" }}>
+          <Link onClick={(e) => { this.setState({panelHasScroll:false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
