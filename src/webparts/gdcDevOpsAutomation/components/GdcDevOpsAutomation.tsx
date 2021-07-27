@@ -666,6 +666,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.title)}
                 className="gdcTextField"
+                placeholder="Enter your text here"
                 value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -707,7 +708,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
         var options = cascadingFieldValue != ""
           ? ele.options.filter(opt => opt.cascadingOption == cascadingFieldValue)
-          : ele.options;
+          : [];
         return (
           <React.Fragment>
             <div className={ele.className}>
