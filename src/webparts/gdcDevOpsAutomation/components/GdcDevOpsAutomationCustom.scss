@@ -212,12 +212,16 @@ height:40px;
   width: 100%;
   border-bottom: 1px solid #E5E5E5;
 }
-
-.ms-Button:hover{
+.headerButton:hover{
   background-color: #17787b;
   color:white;
   border-color: white;
 }
+// .ms-Button:hover{
+//   background-color: #17787b;
+//   color:white;
+//   border-color: white;
+// }
 .questionHeader{
   font-weight: 500;
 }
