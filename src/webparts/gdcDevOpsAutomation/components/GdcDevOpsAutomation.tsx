@@ -176,7 +176,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
 
     
-    // this.props.devOpsService.getLatestVer(81).then((data) => { console.log(data); });
+    this.props.devOpsService.getLatestVer(304).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
 
