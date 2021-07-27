@@ -638,7 +638,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 ? <MessageBar
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
-                >Few fields are required
+                >Please complete required fields
                 </MessageBar>
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
