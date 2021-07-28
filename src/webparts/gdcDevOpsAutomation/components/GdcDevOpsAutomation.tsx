@@ -176,7 +176,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
 
     
-    this.props.devOpsService.getLatestVer(304).then((data) => { console.log(data); });
+    this.props.devOpsService.getLatestVer(311).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
 
@@ -217,6 +217,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         else if (field.type == "SwitchInput") {
           field.checked = value;
+          field.value=value;
+          console.log(field,"field");
         }
         else {
           field.value = value;
@@ -235,20 +237,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
       }
     });
+    console.log(stateValues,"ss")
     return stateValues;
   }
 
   public handleToggleChange(value: any, name) {
+    
     var stateValues = this.state.formFields;
+   
     stateValues.map((f) => {
+      
       if (f.title == name) {
+       
         f.checked = value;
         f.value = value;
       }
     });
+
     this.setState({
       formFields: stateValues
     });
+    console.log(stateValues,"togless")
   }
 
   public async UpdateRichTextFields(fields): Promise<any> {
@@ -460,7 +469,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-
+console.log(option,"from update form field")
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
@@ -747,7 +756,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <DatePicker placeholder="Select a date" ariaLabel="Select a date" className=""
+            <DatePicker 
+            
+            placeholder="Select a date" ariaLabel="Select a date" className=""
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
