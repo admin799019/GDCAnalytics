@@ -433,55 +433,250 @@ const ChannelAnalyticsMetaData = [
     }
 ];
 
-const AnalyticsmetaData = [
+const DataServicesmetaData = [
     {
-        "title": "Request Title",
-        "type": "SingleLineTextInput",
-        "label": "Request Title",
+        
+        "title": "What type of request is this?",
+        "type": "SingleSelectInput",
+        "label": "What type of request is this?",
         "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm6",
+        "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
+        "helperText": "",
+        "options": [
+            { "key": "Data Platform Development Request", "text": "Data Platform Development Request" },
+            { "key": "Support Needed", "text": "Support Needed" }
+        ],
         "value": "",
         "required": true,
-        "errorMessage": "Title is required",
-        "devopsName": "System.Title"
-    },
-    {
-        "title": "Business Sponsor",
-        "type": "PeoplePickerInput",
-        "label": "Business Sponsor",
-        "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm6",
-        "value": "",
-        "required": true,
-        "errorMessage": "Business sponsor is required",
-        "devopsName": "Custom.BusinessSponsor"
-    },
-    {
-        "title": "Objective",
-        "type": "MultiLineTextInput",
-        "label": "Objective",
-        "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm12 gdcColumn12",
-        "value": "",
-        "required": true,
-        "errorMessage": "Objective is required",
-        "devopsName": "System.Description"
-    },
-    {
-        "title": "Need By Date",
-        "type": "DateInput",
-        "label": "Need By Date",
-        "placeholder": "",
-        "className": "ms-Grid-col ms-sm6",
-        "helperText": "DateInput",
-        "value": "",
-        "required": true,
-        "errorMessage": "Need By Date is required",
-        "devopsName": "Custom.NeedByDate"
+        "errorMessage": "Please choose request type",
+        "devopsName": "Custom.WhatTypeOfRequestIsThis",
+        "subFields": [
+            {
+                "option": "Data Platform Development Request",
+                "fields": [
+                    {
+                        "title": "Request Title",
+                        "type": "SingleLineTextInput",
+                        "label": "Request Title",
+                        "placeholder": "",
+                        "helperText": "TextInput",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Title is required",
+                        "devopsName": "System.Title"
+                    },
+                    {
+                        "title": "Objective",
+                        "type": "MultiLineTextInput",
+                        "label": "Objective",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Problem Statement",
+                        "type": "MultiLineTextInput",
+                        "label": "Problem Statement",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Business Value",
+                        "type": "MultiLineTextInput",
+                        "label": "Busines Value",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Desired Output",
+                        "type": "MultiLineTextInput",
+                        "label": "Desired Output",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Use Cases",
+                        "type": "MultiLineTextInput",
+                        "label": "Use Cases",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Success Criteria",
+                        "type": "MultiLineTextInput",
+                        "label": "Success Criteria",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Business Rules",
+                        "type": "MultiLineTextInput",
+                        "label": "Business Rules",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Output Frequency",
+                        "type": "MultiLineTextInput",
+                        "label": "Output Frequency",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Data Definition",
+                        "type": "MultiLineTextInput",
+                        "label": "Data Definition",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Request Maturity",
+                        "type": "MultiLineTextInput",
+                        "label": "Request Maturity",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Requested Completion Date",
+                        "type": "DateInput",
+                        "label": "Requested Completion Date",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "Custom.RequestedCompletionDate"
+                    },
+                    {
+                        "title": "Please provide attachments or screenshots to support your request",
+                        "type": "FileInput",
+                        "label": "Please provide attachments or screenshots to support your request",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "Attachments"
+                    }
+                ],
+                "active": false
+            },
+            {
+                "option": "Support Needed",
+                "fields": [
+                    {
+                        "title": "Request Title",
+                        "type": "SingleLineTextInput",
+                        "label": "Request Title",
+                        "placeholder": "",
+                        "helperText": "TextInput",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Title is required",
+                        "devopsName": "System.Title"
+                    },
+                    {
+                        "title": "Description of issue",
+                        "type": "MultiLineTextInput",
+                        "label": "Description of issue",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Business Impact",
+                        "type": "MultiLineTextInput",
+                        "label": "Business Impact",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Expected Results",
+                        "type": "MultiLineTextInput",
+                        "label": "Expected Results",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "System.Description"
+                    },
+                    {
+                        "title": "Is this Request Urgent",
+                        "type": "SwitchInput",
+                        "label": "Is this Request Urgent",
+                        "placeholder": "",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "helperText": "MuSwitchInput",
+                        "options": [
+                            { "onText": "Urgent" },
+                            { "offText": "Not Urgent" }
+                        ],
+                        "value": "false",
+                        "required": false,
+                        "errorMessage": "",
+                        "checked": false,
+                        "devopsName": "Custom.IsThisRequestUrgent"
+                    },
+                    {
+                        "title": "Requested Completion Date",
+                        "type": "DateInput",
+                        "label": "Requested Completion Date",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Field is required",
+                        "devopsName": "Custom.RequestedCompletionDate"
+                    },
+                    {
+                        "title": "Please provide attachments or screenshots to support your request",
+                        "type": "FileInput",
+                        "label": "Please provide attachments or screenshots to support your request",
+                        "className": "gdcGridCol gdcGridCol12",
+                        "value": "",
+                        "required": false,
+                        "errorMessage": "",
+                        "devopsName": "Attachments"
+                    }
+                ],
+                "active": false
+            }
+        ]
     }
+    
 ];
 
 const BusinessIntelligencemetaData = [
@@ -523,160 +718,7 @@ const BusinessIntelligencemetaData = [
     }
 ];
 
-const DataServicesmetaData = [
-    {
-        "title": "Request Title",
-        "type": "SingleLineTextInput",
-        "label": "Request Title",
-        "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm6",
-        "value": "",
-        "required": true,
-        "errorMessage": "Title is required",
-        "devopsName": "System.Title"
-    },
-    {
-        "title": "Data Services Request Type",
-        "type": "SingleSelectInput",
-        "label": "Data Services Request Type",
-        "placeholder": "",
-        "className": "ms-Grid-col ms-sm6",
-        "helperText": "",
-        "options": [
-            { "key": "Data Platform Development Request", "text": "Data Platform Development Request" },
-            { "key": "Report a Bug/Issue", "text": "Report a Bug/Issue" }
-        ],
-        "value": "",
-        "required": false,
-        "errorMessage": "",
-        "devopsName": "Custom.DataServicesRequestType",
-        "subFields": [
-            {
-                "option": "Data Platform Development Request",
-                "fields": [
-                    {
-                        "title": "Is this Request Urgent",
-                        "type": "SwitchInput",
-                        "label": "Is this Request Urgent",
-                        "placeholder": "",
-                        "className": "ms-Grid-col ms-sm6",
-                        "helperText": "MuSwitchInput",
-                        "options": [
-                            { "onText": "Urgent" },
-                            { "offText": "Not Urgent" }
-                        ],
-                        "value": "false",
-                        "required": false,
-                        "errorMessage": "",
-                        "checked": false,
-                        "devopsName": "Custom.IsThisRequestUrgent",
-                        "subFields": [
-                            {
-                                "option": true,
-                                "fields": [
-                                    {
-                                        "title": "Need By Date",
-                                        "type": "DateInput",
-                                        "label": "Need By Date",
-                                        "placeholder": "",
-                                        "className": "ms-Grid-col ms-sm6",
-                                        "helperText": "DateInput",
-                                        "value": "",
-                                        "required": true,
-                                        "errorMessage": "Need by Date required",
-                                        "devopsName": "Custom.NeedByDate"
-                                    }
-                                ],
-                                "active": false
-                            }
-                        ]
-                    },
-                    {
-                        "title": "Stakeholders",
-                        "type": "PeoplePickerInput",
-                        "label": "Stakeholders",
-                        "placeholder": "",
-                        "helperText": "TextInput",
-                        "className": "ms-Grid-col ms-sm6",
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Stakeholders is required",
-                        "devopsName": "Custom.Stakeholders"
-                    }
-                ],
-                "active": false
-            },
-            {
-                "option": "Report a Bug/Issue",
-                "fields": [
-                    {
-                        "title": "Is this Request Urgent",
-                        "type": "SwitchInput",
-                        "label": "Is this Request Urgent",
-                        "placeholder": "",
-                        "className": "ms-Grid-col ms-sm6",
-                        "helperText": "MuSwitchInput",
-                        "options": [
-                            { "onText": "Urgent" },
-                            { "offText": "Not Urgent" }
-                        ],
-                        "value": "false",
-                        "required": false,
-                        "errorMessage": "",
-                        "checked": false,
-                        "devopsName": "Custom.IsThisRequestUrgent",
-                        "subFields": [
-                            {
-                                "option": true,
-                                "fields": [
-                                    {
-                                        "title": "Need By Date",
-                                        "type": "DateInput",
-                                        "label": "Need By Date",
-                                        "placeholder": "",
-                                        "className": "ms-Grid-col ms-sm6",
-                                        "helperText": "DateInput",
-                                        "value": "",
-                                        "required": true,
-                                        "errorMessage": "Need by Date required",
-                                        "devopsName": "Custom.NeedByDate"
-                                    }
-                                ],
-                                "active": false
-                            }
-                        ]
-                    }
-                ],
-                "active": false
-            }
-        ]
-    },
-    {
-        "title": "Objective",
-        "type": "MultiLineTextInput",
-        "label": "Objective",
-        "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm12",
-        "value": "",
-        "required": false,
-        "errorMessage": "",
-        "devopsName": "System.Description"
-    },
-    {
-        "title": "Problem Statement",
-        "type": "MultiLineTextInput",
-        "label": "Problem Statement",
-        "placeholder": "",
-        "helperText": "TextInput",
-        "className": "ms-Grid-col ms-sm12",
-        "value": "",
-        "required": false,
-        "errorMessage": "",
-        "devopsName": "Custom.ProblemStatement"
-    }
-];
+
 
 const defaultMetaData = {
     muCheckboxInput: {
