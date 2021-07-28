@@ -2,7 +2,7 @@ export const metaData = [
 
     // {
     //     "title": "Is this Request Urgent",
-    //     "type": "SwitchInput",
+    //     "fieldType": "SwitchInput",
     //     "label": "Is this Request Urgent",
     //     "placeholder": "",
     //     "className": "fields",
@@ -15,8 +15,9 @@ export const metaData = [
 const ChannelAnalyticsMetaData = [
     {
         "title": "What area of Channel Analytics is your request for?",
-        "type": "SingleSelectInput",
+        "fieldType": "SingleSelectInput",
         "label": "What area of Channel Analytics is the request for?",
+        "placeholder":"Select an option",
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
@@ -58,8 +59,9 @@ const ChannelAnalyticsMetaData = [
                 "fields": [
                     {
                         "title": "POD Category",
-                        "type": "SingleSelectInput",
+                        "fieldType": "SingleSelectInput",
                         "label": "POD Category",
+                        "placeholder":"Select an option",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -86,8 +88,9 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "POD Name",
-                        "type": "SingleSelectCascadingInput",
+                        "fieldType": "SingleSelectCascadingInput",
                         "cascadingField": "POD Category",
+                        "placeholder":"Select an option",
                         "label": "POD Name",
                         "options": [
                             {
@@ -198,9 +201,9 @@ const ChannelAnalyticsMetaData = [
         ]
     },
     {
-        "title": "What type of request is this?",
-        "type": "RadioButtonInput",
-        "label": "What type of request is this?",
+        "title": "What fieldType of request is this?",
+        "fieldType": "RadioButtonInput",
+        "label": "What fieldType of request is this?",
         "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
         "options": [
             {
@@ -214,16 +217,17 @@ const ChannelAnalyticsMetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "Request Type is required",
-        "devopsName": "Custom.RequestType",
+        "errorMessage": "Request fieldType is required",
+        "devopsName": "Custom.RequestfieldType",
         "subFields": [
             {
                 "option": "Ask an Expert",
                 "fields": [
                     {
                         "title": "Request Title",
-                        "type": "SingleLineTextInput",
+                        "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "helperText":"Please Enter the Title of your Request",
@@ -233,7 +237,8 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "What is the business question you are trying to answer?",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
+                        "placeholder":"Enter the text here",
                         "label": "What is the business question you are trying to answer?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -243,24 +248,25 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "What is the priority of your request?",
-                        "type": "SingleSelectInput",
+                        "fieldType": "SingleSelectInput",
                         "label": "What is the priority of your request?",
+                        "placeholder":"Select an option",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent and important - must have ASAP",
                                 "text": "Priority 1: Urgent and important - must have ASAP",
-                                "data": "#ff5a5a"
+                                "color": "#ff5a5a"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
                                 "text": "Priority 2: Not urgent but important - must have",
-                                "data": "#faaa4c"
+                                "color": "#faaa4c"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
                                 "text": "Priority 3: Low priority - nice to have",
-                                "data": "#6ef1c2"
+                                "color": "#6ef1c2"
                             }
                         ],
                         "value": "",
@@ -271,9 +277,10 @@ const ChannelAnalyticsMetaData = [
 
                     {
                         "title": "Requested Completion Date",
-                        "type": "DateInput",
+                        "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
+                        "placeholder":"Select the date",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -281,9 +288,10 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Are there any other details or dependencies that the team should be aware of?",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
+                        "placeholder":"Enter the text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
@@ -292,9 +300,10 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
-                        "type": "FileInput",
+                        "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
+                        "placeholder":"Add attachment",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -308,8 +317,9 @@ const ChannelAnalyticsMetaData = [
                 "fields": [
                     {
                         "title": "Request Title",
-                        "type": "SingleLineTextInput",
+                        "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -319,7 +329,8 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Please provide detailed requirements for this request.",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
+                        "placeholder":"Enter the text here",
                         "label": "Please provide detailed requirements for this request.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -330,7 +341,8 @@ const ChannelAnalyticsMetaData = [
 
                     {
                         "title": "What is the business impact if this request is not committed?",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
+                        "placeholder":"Enter the text here",
                         "label": "What is the business impact if this request is not committed?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -340,7 +352,8 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "What business objective does this request map to?",
-                        "type": "SingleLineTextInput",
+                        "fieldType": "SingleLineTextInput",
+                        "placeholder":"Enter the text here",
                         "label": "What business objective does this request map to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
@@ -350,7 +363,8 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Is this an enhancement to an existing report or a new report request?",
-                        "type": "SingleSelectInput",
+                        "fieldType": "SingleSelectInput",
+                        "placeholder":"Select an option",
                         "label": "Is this an enhancement to an existing report or a new report request?",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
@@ -366,11 +380,12 @@ const ChannelAnalyticsMetaData = [
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
-                        "devopsName": "Custom.ReportRequestType"
+                        "devopsName": "Custom.ReportRequestfieldType"
                     },
                     {
                         "title": "What is the priority of your request?",
-                        "type": "SingleSelectInput",
+                        "fieldType": "SingleSelectInput",
+                        "placeholder":"Select an option",
                         "label": "What is the priority of your request?",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
@@ -397,9 +412,10 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Requested Completion Date",
-                        "type": "DateInput",
+                        "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
+                        "placeholder":"Select the date",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -407,9 +423,10 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Are there any other details or dependencies that the team should be aware of?",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
+                        "placeholder":"Enter the text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
@@ -418,10 +435,11 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
-                        "type": "FileInput",
+                        "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
+                        "placeholder":"Add attachment",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments"
@@ -436,10 +454,10 @@ const ChannelAnalyticsMetaData = [
 const DataServicesmetaData = [
     {
         
-        "title": "What type of request is this?",
-        "type": "SingleSelectInput",
-        "label": "What type of request is this?",
-        "placeholder": "",
+        "title": "What fieldType of request is this?",
+        "fieldType": "SingleSelectInput",
+        "label": "What fieldType of request is this?",
+        "placeholder":"Select an option",
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "helperText": "",
         "options": [
@@ -448,17 +466,17 @@ const DataServicesmetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "Please choose request type",
-        "devopsName": "Custom.WhatTypeOfRequestIsThis",
+        "errorMessage": "Please choose request fieldType",
+        "devopsName": "Custom.WhatfieldTypeOfRequestIsThis",
         "subFields": [
             {
                 "option": "Data Platform Development Request",
                 "fields": [
                     {
                         "title": "Request Title",
-                        "type": "SingleLineTextInput",
+                        "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
-                        "placeholder": "",
+                        "placeholder":"Enter the text here",
                         "helperText": "TextInput",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -468,8 +486,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Objective",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Objective",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -478,7 +497,8 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Problem Statement",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
+                        "placeholder":"Enter the text here",
                         "label": "Problem Statement",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -488,8 +508,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Business Value",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Busines Value",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -498,8 +519,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Desired Output",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Desired Output",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -508,8 +530,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Use Cases",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Use Cases",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -518,8 +541,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Success Criteria",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Success Criteria",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -528,8 +552,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Business Rules",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Business Rules",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -538,8 +563,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Output Frequency",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Output Frequency",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -548,8 +574,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Data Definition",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Data Definition",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -558,8 +585,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Request Maturity",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Request Maturity",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -568,8 +596,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Requested Completion Date",
-                        "type": "DateInput",
+                        "fieldType": "DateInput",
                         "label": "Requested Completion Date",
+                        "placeholder":"Select the date",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
@@ -578,10 +607,11 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
-                        "type": "FileInput",
+                        "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
+                        "placeholder":"Add attachment",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments"
@@ -594,9 +624,9 @@ const DataServicesmetaData = [
                 "fields": [
                     {
                         "title": "Request Title",
-                        "type": "SingleLineTextInput",
+                        "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
-                        "placeholder": "",
+                   "placeholder":"Enter the text here",
                         "helperText": "TextInput",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -606,8 +636,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Description of issue",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Description of issue",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -616,8 +647,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Business Impact",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Business Impact",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -626,8 +658,9 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Expected Results",
-                        "type": "MultiLineTextInput",
+                        "fieldType": "MultiLineTextInput",
                         "label": "Expected Results",
+                        "placeholder":"Enter the text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -636,7 +669,7 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Is this Request Urgent",
-                        "type": "SwitchInput",
+                        "fieldType": "SwitchInput",
                         "label": "Is this Request Urgent",
                         "placeholder": "",
                         "className": "gdcGridCol gdcGridCol6",
@@ -653,9 +686,10 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Requested Completion Date",
-                        "type": "DateInput",
+                        "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
+                        "placeholder":"Select the date",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
@@ -663,10 +697,11 @@ const DataServicesmetaData = [
                     },
                     {
                         "title": "Please provide attachments or screenshots to support your request",
-                        "type": "FileInput",
+                        "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
+                        "placeholder":"Add attachment",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments"
@@ -682,7 +717,7 @@ const DataServicesmetaData = [
 const BusinessIntelligencemetaData = [
     {
         "title": "Request Title",
-        "type": "SingleLineTextInput",
+        "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "",
         "helperText": "TextInput",
@@ -694,7 +729,7 @@ const BusinessIntelligencemetaData = [
     },
     {
         "title": "Objective",
-        "type": "MultiLineTextInput",
+        "fieldType": "MultiLineTextInput",
         "label": "Objective",
         "placeholder": "",
         "helperText": "TextInput",
@@ -706,9 +741,9 @@ const BusinessIntelligencemetaData = [
     },
     {
         "title": "Need By Date",
-        "type": "DateInput",
+        "fieldType": "DateInput",
         "label": "Need By Date",
-        "placeholder": "",
+        "placeholder":"Select the date",
         "className": "ms-Grid-col ms-sm6",
         "helperText": "DateInput",
         "value": "",
@@ -722,7 +757,7 @@ const BusinessIntelligencemetaData = [
 
 const defaultMetaData = {
     muCheckboxInput: {
-        type: "MuCheckboxInput",
+        fieldType: "MuCheckboxInput",
         label: "muCheckboxInput",
         disabled: false,
         className: "fields",
@@ -731,7 +766,7 @@ const defaultMetaData = {
         validation: "required"
     },
     muDateInput: {
-        type: "MuDateInput",
+        fieldType: "MuDateInput",
         label: "muDateInput",
         helperText: "muDateInput",
         disabled: false,
@@ -741,14 +776,14 @@ const defaultMetaData = {
         validation: "required"
     },
     muDateTimeInput: {
-        type: "MuDateTimeInput",
+        fieldType: "MuDateTimeInput",
         label: "muDateTimeInput",
         className: "fields",
         helperText: "muDateTimeInput",
         values: null,
     },
     muMultipleSelectInput: {
-        type: "MuMultipleSelectInput",
+        fieldType: "MuMultipleSelectInput",
         label: "muMultipleSelectInput",
         placeholder: "",
         className: "fields",
@@ -765,7 +800,7 @@ const defaultMetaData = {
         ]
     },
     muNumberInput: {
-        type: "MuNumberInput",
+        fieldType: "MuNumberInput",
         label: "muNumberInput",
         placeholder: "",
         className: "fields",
@@ -775,7 +810,7 @@ const defaultMetaData = {
 
     },
     muRadioInput: {
-        type: "MuRadioInput",
+        fieldType: "MuRadioInput",
         label: "muRadioInput",
         placeholder: "",
         className: "fields",
@@ -791,7 +826,7 @@ const defaultMetaData = {
         ],
     },
     muSelectInput: {
-        type: "MuSelectInput",
+        fieldType: "MuSelectInput",
         label: "muSelectInput",
         placeholder: "",
         className: "fields",
@@ -809,7 +844,7 @@ const defaultMetaData = {
         validation: "required"
     },
     muSwitchInput: {
-        type: "MuSwitchInput",
+        fieldType: "MuSwitchInput",
         label: "muSwitchInput",
         placeholder: "",
         className: "fields",
@@ -817,7 +852,7 @@ const defaultMetaData = {
         values: null
     },
     muTextAreaInput: {
-        type: "MuTextAreaInput",
+        fieldType: "MuTextAreaInput",
         label: "muTextAreaInput",
         placeholder: "",
         className: "fields",
@@ -825,14 +860,14 @@ const defaultMetaData = {
         validation: "required"
     },
     muTextInput: {
-        type: "MuTextInput",
+        fieldType: "MuTextInput",
         label: "muTextInput",
         placeholder: "",
         helperText: "muTextInput",
         className: "fields"
     },
     muTimeInput: {
-        type: "MuTimeInput",
+        fieldType: "MuTimeInput",
         label: "muTimeInput",
         placeholder: "",
         helperText: "muTimeInput",
