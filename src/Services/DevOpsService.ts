@@ -9,7 +9,8 @@ export class DevOpsService implements IDevOpsService {
 
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-public devopsProject="https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework";
+   // https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework prod
+public devopsProject="https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test";
 public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {

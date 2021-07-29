@@ -218,6 +218,7 @@ height:40px;
   .gdcAttachIcon {
     padding-right: 3px;
     transform: rotateZ(45deg);
+    color: #1D1D1D
   }
 }
 
@@ -233,7 +234,7 @@ height:40px;
   border-bottom: 1px solid #E5E5E5;
 }
 .headerButton:hover{
-  background-color: #17787b;
+  background-color: #1D1D1D;
   color:white;
   border-color: white;
 }
@@ -254,7 +255,7 @@ height:40px;
   
       // Primary Button
       min-width: 80px;
-      background-color: rgba(3, 108, 112, 1);
+      background-color: #1D1D1D;
       border-color: $ms-color-themePrimary;
       color:white;
   
@@ -287,7 +288,7 @@ height:40px;
   }
 
   .gdcAddButton:hover {
-    background-color: rgba(3, 108, 112, 1);
+    background-color: #1D1D1D;
     border-color: white;
       color:white;
   }
@@ -300,11 +301,11 @@ height:40px;
 }
 .selectedButton{
   margin-right:14px;
-  background-color: #17787b;
+  background-color: #1D1D1D;
   color:white;
 }
 .headerButton::selection{
-  background-color: #17787b;
+  background-color: #1D1D1D;
 }
 .questionTop{
   margin-top: 25px;
@@ -414,14 +415,14 @@ height:40px;
   }
 
 .gdcPanelHeader {
-  background: #17787B;
+  background: #1D1D1D;
   color: white;
   font-family: Segoe UI;
  // max-height: 300px;
 
 }
 .gdcScrollPanelHeader {
-  background: #17787B;
+  background: #1D1D1D;
   color: white;
   font-family: Segoe UI;
  // max-height:100px;
