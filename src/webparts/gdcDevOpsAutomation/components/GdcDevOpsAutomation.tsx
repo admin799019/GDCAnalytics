@@ -8,7 +8,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import * as _ from 'lodash';
-import svg from './GDC.svg';
+import Logo from './GDCLogo.jsx'
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
@@ -576,13 +576,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public onRenderNavigationContent(props, defaultRender) {
-    console.log(svg,"hh");
+   
     return (
       
     
       <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
       
-     
+        <Logo />
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
