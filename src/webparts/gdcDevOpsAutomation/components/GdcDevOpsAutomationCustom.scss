@@ -4,11 +4,17 @@
 /* react quill toolbar */
 .quill > .ql-container > .ql-editor.ql-blank::before{
   font-style: normal;
+  padding:0px;
+  margin:0px;
+  color:black;
 }
 .ql-editor {
     min-height: 150px;
   }
-
+  .ql-editor.ql-blank:before {
+    left:8px;
+    color:black;
+  }
   .ql-container.ql-snow {
     border-bottom: 1px solid #838383;
     border-left: 1px solid #838383;
@@ -20,7 +26,7 @@
 
   .ql-toolbar.ql-snow {
     border: 1px solid #838383 !important;
-    margin-top:15px;
+    margin-top:5px;
     .ql-clean{
       display: none;
     }
@@ -54,18 +60,24 @@
 /* Grid end */
 
 /* Text Field */
-
+.ms-TextField-fieldGroup::placeholder{
+  color:black;
+}
 .gdcTextField {
-  margin-top: 16px;
+  margin-top: 8px;
   .ms-Label{
     white-space: nowrap;
   }
  .ms-TextField-fieldGroup{
    height:40px !important;
    line-height: 35px;
-   font-size: 16px;
-   margin-top: 8px;
+   font-size: 8px;
+   margin-top: 2px;
+   color:black;
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+ ::placeholder{
+   color:black;
  }
 }
 
@@ -74,7 +86,7 @@
 /* DropDown */
 
 .gdcDropDown{
-  margin-top:16px;
+  margin-top:8px;
   .ms-Label{
     white-space: nowrap;
   }
@@ -82,16 +94,14 @@
     line-height: 37px;
   }
   .ms-Dropdown {
-    margin-top:8px;
+    margin-top:2px;
   }  
   .ms-Dropdown-container {
     line-height: 45px;
     font-weight: 500;
     color: black;
     margin: 0px;
-    #Dropdown6 {
-      color:blue;
-    }
+    
   }
   .ms-Dropdown-title {
     height:40px;
@@ -109,7 +119,7 @@
 /* Radio Button */
 
 .gdcRadioButton {
-  margin-top: 16px;
+  margin-top: 2px;
   .ms-ChoiceFieldGroup-flexContainer{
     display: "flex"
   }
@@ -123,35 +133,40 @@
 /* Radio Button End */
 /*SwitchInput*/
 .gdcSwitchInput{
-  margin-top:16px;
+  margin-top:8px;
   
   .ms-Toggle-innerContainer{
-    margin-top:8px;
+    margin-top:2px;
   }
 }
 .peoplepicker{
-  margin-top:16px;
+  margin-top:8px;
   .ms-BasePicker-text{
 height:40px;
   }
 }
 .ms-PeoplePicker{
-  margin-top:8px;
+  margin-top:2px;
 }
 /* Date Input */
-
+.gdcDateInput::placeholder{
+  color: black;
+}
 .gdcDateInput {
   .ms-Label{
-    margin-top: 16px;
-  }
-  .ms-DatePicker {
     margin-top: 8px;
   }
+  .ms-DatePicker {
+    margin-top: 2px;
+    color:black;
+  }
   .ms-TextField-fieldGroup {
+    color:black;
     height:40px;
     i {
       margin-top: 2px;
     }
+   
   }
   .ms-TextField-field {
     color: black;
@@ -166,14 +181,14 @@ height:40px;
 /* MultiLine */
 
 .gdcMultiLine {
-  margin-top: 8px;
+  margin-top: 2px;
   white-space: nowrap;
 }
 
 .gdcColumnBlock{//Multiline field
   white-space: nowrap;
   display:inline-block;
-  margin-top: 16px;
+  margin-top: 8px;
   width:100%;
   min-height: 256px;
   .ms-Label{
@@ -225,7 +240,7 @@ height:40px;
 .questionHeader{
   font-weight: 500;
 }
-  .gdcAddButton {
+  .gdcAddButton,.gdcAddButton:hover {
     //float: right;
    margin-top:20px;
       // Our button
@@ -249,7 +264,7 @@ height:40px;
       text-align: center;
       cursor: pointer;
       display: inline-block;
-      padding: 0 16px;
+      padding: 0 8px;
   
       .label {
         font-weight: $ms-font-weight-semibold;
@@ -263,7 +278,7 @@ height:40px;
   }
 
   .gdcAddButton:disabled {
-    background-color: rgba(16, 16, 16, 0.3);
+    background-color: rgba(8, 8, 8, 0.3);
   }
 
   .gdcAddButton:hover {
@@ -317,11 +332,11 @@ height:40px;
     display: inline-block;
   }
   .gdcerror {
-    color: rgb(164, 38, 44);
+    color: rgb(84, 38, 44);
   }
 
   .gdcStar {
-    color: rgb(164, 38, 44);
+    color: rgb(84, 38, 44);
   }
 
   .gdcPaddingBottom15 {

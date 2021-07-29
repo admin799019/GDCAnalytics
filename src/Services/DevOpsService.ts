@@ -9,7 +9,8 @@ export class DevOpsService implements IDevOpsService {
 
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-
+public devopsProject="https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework";
+public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
@@ -34,7 +35,7 @@ export class DevOpsService implements IDevOpsService {
         console.log(id);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
           this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.get("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/"+id+"/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
+                client.get(this.devopsProject+"/_apis/wit/workItems/"+id+"/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
                     .then((response: HttpClientResponse) => {
                         console.log(["TryLates1version", response]);
                         return response.json();
@@ -67,7 +68,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(this.devopsProject+"/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         console.log(["Try1", response]);
                         return response.json();
@@ -93,7 +94,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workitems/"+id+"?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(this.devopsProject+"/_apis/wit/workitems/"+id+"?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -115,7 +116,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch("https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(this.devopsProject+"/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -136,7 +137,7 @@ export class DevOpsService implements IDevOpsService {
 
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/onegdcanalyticsdev/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(this.devopsOrg+"/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
 
                         return response.json();

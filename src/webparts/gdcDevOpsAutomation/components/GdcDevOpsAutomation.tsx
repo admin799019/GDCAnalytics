@@ -34,8 +34,8 @@ import CustomPeoplePicker from "./CustomPeoplePicker";
 import { elementContains } from 'office-ui-fabric-react';
 
 interface MetaDataType {
-  title: string;
-  type: string;
+  field: string;
+  fieldType: string;
   label: string;
   placeholder: string;
   className: string;
@@ -60,8 +60,8 @@ interface subFieldsObjectType {
 var base64file1;
 var defvaldd: any = [];
 const Area = {
-  "title": "Analytics Area",
-  "type": "SingleSelectInput",
+  "field": "Analytics Area",
+  "fieldType": "SingleSelectInput",
   "label": "GDC Data & Analytics Area",
   "placeholder": "",
   "className": "fields",
@@ -202,21 +202,23 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var subFieldsObject;
     var i = 0;
     stateValues.map((field: MetaDataType, index) => {
-      if (field.title == name) {
+      if (field.field == name) {
         i = index;
         if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
         } else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
-        if (field.type == "SingleLineTextInput" && value == " ") {
+        if (field.fieldType == "SingleLineTextInput" && value == " ") {
           field.value = "";
         }
-        if (field.type == "SingleLineTextInput" && value.length >= 255) {
+        if (field.fieldType == "SingleLineTextInput" && value.length >= 255) {
           field.value = field.value;
         }
-        else if (field.type == "SwitchInput") {
+        else if (field.fieldType == "SwitchInput") {
           field.checked = value;
+          field.value = value;
+          console.log(field, "field");
         }
         else {
           field.value = value;
@@ -228,33 +230,40 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
         }
       }
-      else if (field.title != name && field.subFields != null && field.subFields.length > 0) {
+      else if (field.field != name && field.subFields != null && field.subFields.length > 0) {
         subFieldsObject = field.subFields.filter(f => f.active == true);
         if (subFieldsObject.length > 0) {
           subFieldsObject[0].fields = this.appendValues(subFieldsObject[0].fields, value, name);
         }
       }
     });
+    console.log(stateValues, "ss")
     return stateValues;
   }
 
   public handleToggleChange(value: any, name) {
+
     var stateValues = this.state.formFields;
+
     stateValues.map((f) => {
-      if (f.title == name) {
+
+      if (f.field == name) {
+
         f.checked = value;
         f.value = value;
       }
     });
+
     this.setState({
       formFields: stateValues
     });
+    console.log(stateValues, "togless")
   }
 
   public async UpdateRichTextFields(fields): Promise<any> {
     var fs = _.cloneDeep(fields);
     fields.map(async (f) => {
-      if (f.type == "MultiLineTextInput") {
+      if (f.fieldType == "MultiLineTextInput") {
         this.richTextFieldCalls = this.richTextFieldCalls + 1;
         await this.UpdateRichText(f.value).then(mlt => {
           f.value = mlt;
@@ -271,7 +280,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
           f.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
-            if (sf.type == "MultiLineTextInput") {
+            if (sf.fieldType == "MultiLineTextInput") {
               this.richTextFieldCalls = this.richTextFieldCalls + 1;
               await this.UpdateRichText(sf.value).then(smlt => {
                 sf.value = smlt;
@@ -415,7 +424,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     for (let field of Fields) {
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
-        tempDesc = tempDesc.concat("<div><b>", field.title, "</b></div><div>", field.value, "</div></br>");
+        tempDesc = tempDesc.concat("<div><b>", field.field, "</b></div><div>", field.value, "</div></br>");
         this.DescriptionData = this.DescriptionData.concat(tempDesc);
       }
       // else if(field.devopsName=="System.AreaPath")
@@ -460,7 +469,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-
+    console.log(option, "from update form field")
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
@@ -515,13 +524,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public getCascadingFieldValue(fieldName) {
     var value = "";
     this.state.formFields.map(f => {
-      if (f.title == fieldName) {
+      if (f.field == fieldName) {
         value = f.value;
       }
       else if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
           f.subFields.filter(sfo => sfo.active == true)[0].fields.map(sf => {
-            if (sf.title == fieldName) {
+            if (sf.field == fieldName) {
               value = sf.value;
             }
           });
@@ -552,24 +561,24 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     );
   }
 
-  private onRenderOption(option: IDropdownOption): JSX.Element {
+  private onRenderOption(option: any): JSX.Element {
     return (
       <div>
         {(
-          <Icon style={{ marginRight: '8px', color: option.data }} iconName={"CircleFill"} aria-hidden="true" title={option.data.icon} />
+          <Icon style={{ marginRight: '8px', color: option.color }} iconName={"CircleFill"} aria-hidden="true" title={option.color} />
         )}
         <span>{option.text}</span>
       </div>
     );
   }
 
-  private onRenderTitle(options: IDropdownOption[]): JSX.Element {
+  private onRenderTitle(options: any[]): JSX.Element {
     const option = options[0];
 
     return (
       <div>
         {(
-          <Icon style={{ marginRight: '8px', color: option.data }} iconName={"CircleFill"} aria-hidden="true" title={option.data.icon} />
+          <Icon style={{ marginRight: '8px', color: option.color }} iconName={"CircleFill"} aria-hidden="true" title={option.color} />
         )}
         <span>{option.text}</span>
       </div>
@@ -579,7 +588,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public onRenderPlaceholder = (props: IDropdownProps): JSX.Element => {
     return (
       <div className="dropdownExample-placeholder">
-        {/* <Icon style={iconStyles} iconName={'MessageFill'} aria-hidden="true" /> */}
+        {/* <Icon style={iconStyles} iconName={'MessageFill'} aria-hidden="true" />  */}
         <span>{props.placeholder}</span>
       </div>
     );
@@ -660,16 +669,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public renderFields(ele: MetaDataType) {
-    switch (ele.type) {
+    switch (ele.fieldType) {
       case "SingleLineTextInput":
         return (
           <React.Fragment>
             <div className={ele.className}>
               <TextField label={ele.label}
                 autoComplete="off"
-                onChange={(e, value) => this.handleChange(value, ele.title)}
+                onChange={(e, value) => this.handleChange(value, ele.field)}
                 className="gdcTextField"
-                placeholder="Enter your text here"
+                placeholder={ele.placeholder}
                 value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -684,18 +693,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <Dropdown
-                placeholder="Select an option"
+                placeholder={ele.placeholder}
                 label={ele.label}
                 className="gdcDropDown"
 
                 options={ele.options}
-                {...ele.options[0].data != null || ele.options[0].data != undefined ?
+                {...ele.options[0].color != null || ele.options[0].color != undefined ?
                   {
                     onRenderOption: this.onRenderOption,
                     onRenderTitle: this.onRenderTitle,
                     onRenderPlaceholder: this.onRenderPlaceholder
                   } : {}}
-                onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                onChange={(e, o) => this.handleChange(o.key, ele.field)}
                 required={ele.required}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -716,11 +725,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <Dropdown
-                placeholder="Select an option"
+                placeholder={ele.placeholder}
                 label={ele.label}
                 options={options}
                 className="gdcDropDown"
-                onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                onChange={(e, o) => this.handleChange(o.key, ele.field)}
                 required={ele.required}
               //styles={dropdownStyles}
               />
@@ -734,7 +743,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <div className={ele.className}>
               <ChoiceGroup options={ele.options}
                 className="gdcRadioButton"
-                onChange={(e, o) => this.handleChange(o.key, ele.title)}
+                onChange={(e, o) => this.handleChange(o.key, ele.field)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -748,9 +757,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <DatePicker placeholder="Select a date" ariaLabel="Select a date" className=""
+            <DatePicker
               allowTextInput
-              onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
+              placeholder={ele.placeholder}
+              ariaLabel="Select a date" className=""
+              onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.field)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
@@ -763,7 +774,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <Toggle
                 className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
-                onChange={(e, c) => this.handleChange(c, ele.title)}
+                onChange={(e, c) => this.handleChange(c, ele.field)}
                 checked={ele.checked}
               />
             </div>
@@ -784,13 +795,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     ...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
                   } : ""}
               </Label>
-              <ReactQuill
-                placeholder="Enter your text here"
 
-                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
-              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-            </div>
+              <ReactQuill
+              placeholder={ele.placeholder}
+
+              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
+            {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
+          </div >
         );
 
       case "PeoplePickerInput":
@@ -811,7 +823,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <div className="peoplepicker">
               <CustomPeoplePicker
 
-                required={ele.required} spService={this.props.spService} pickerFieldName={ele.title} handlePeopleChange={this.handleChange} />
+                required={ele.required} spService={this.props.spService} pickerFieldName={ele.field} handlePeopleChange={this.handleChange} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -828,7 +840,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 Add attachment
                 <input type="file"
                   style={{ display: 'none' }}
-                  placeholder="Add attachment"
+                  placeholder={ele.placeholder}
                   multiple onChange={e => this.onFileUpload(e)} />
               </div>
             </div>
