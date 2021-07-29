@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
-import CustomStyles from './GdcDevOpsAutomation.module.scss';
-//import  {useRef } from 'react'
+import CustomStyles from './GdcDevOpsAutomation.module.scss'; 
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
@@ -9,6 +8,7 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import * as _ from 'lodash';
+import svg from './GDC.svg';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
@@ -18,8 +18,6 @@ import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import { Link } from '@fluentui/react';
-
-
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -204,14 +202,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     stateValues.map((field: MetaDataType, index) => {
       if (field.field == name) {
         i = index;
-        if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
+    if(field.fieldType!="MultiLineTextInput"){
+        if (value == "" || value == " " || value == "<p><br></p>" || value.trim() == "" && field.required == true) {
           field.showError = true;
         } else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
+      }
+
         if (field.fieldType == "SingleLineTextInput" && value == " ") {
           field.value = "";
         }
+
         if (field.fieldType == "SingleLineTextInput" && value.length >= 255) {
           field.value = field.value;
         }
@@ -219,6 +221,32 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           field.checked = value;
           field.value = value;
           console.log(field, "field");
+        }
+        else if (field.fieldType == "MultiLineTextInput") {
+          console.log("hi from multi check append value")
+          var regex = /(<([^>]+)>)/ig
+          let hasText = !!value.replace(regex, "").trim().length;
+          let element = document.createElement('div');
+          element.innerHTML = value;
+          console.log(element.innerHTML, "inner");
+          let imgsLenth = element.querySelectorAll('img').length;
+          console.log(imgsLenth, "l")
+          if (!hasText) {
+            if (imgsLenth > 0) {
+              console.log("hi from inned if")
+              hasText = true;
+            }
+          }
+          console.log(hasText, "hastext");
+          if (hasText) {
+            field.showError = false;
+            this.requiredHasValues = true;
+          }
+          else {
+            console.log("cryy");
+            field.showError = true;
+            this.requiredHasValues = false;
+          }
         }
         else {
           field.value = value;
@@ -312,12 +340,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public async UpdateRichText(data): Promise<any> {
     let element = document.createElement('div');
     element.innerHTML = data;
+    console.log(element.innerHTML, "inner");
     let imgsLenth = element.querySelectorAll('img').length;
     var imageCalls = [];
     element.querySelectorAll('img').forEach((ele) => {
       if (ele.src.indexOf('base64,') != 0) {
         let base64 = ele.src.substring(ele.src.indexOf('base64,') + 7);
-
+       
         const byteCharacters = atob(base64);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -346,7 +375,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
-        if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
+        if (scv.required == true && (scv.value == "" && scv.fieldType!="MultiLineTextInput")) {
+          console.log("hi from user story error")
           scv.showError = true;
           parentFieldsRequiredHasValues = false;
         }
@@ -453,7 +483,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         if (subFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
           var stateCopy = [...subFields];
           stateCopy.map(scv => {
-            if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
+            if (scv.required == true &&  scv.fieldType!="MultiLineTextInput" && (scv.value == "" || scv.value == "<p><br></p>")) {
+            
               scv.showError = true;
               this.requiredHasValues = false;
             }
@@ -481,9 +512,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         selectedButton: option
       });
       if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
-      this.setState({
-        panelHasScroll: true
-      });
+        this.setState({
+          panelHasScroll: true
+        });
     });
   }
 
@@ -545,18 +576,24 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public onRenderNavigationContent(props, defaultRender) {
+    console.log(svg,"hh");
     return (
+      
+    
       <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
+      
+     
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
-{/* 
+        
+        {/* 
       <div className="gdcPanelHeader" >
         <div className="gdcPanelHeaderText" > GDC Intake Form </div>
         <div className="gdcPanelHeaderEllipses1" ></div>
         <div className="gdcPanelHeaderEllipses2" ></div> */}
         {/* <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelCloseButton" } : { className: "gdcPanelCloseButton" }}> */}
-        <div {...this.state.panelHasScroll ? {className:"gdcPanelCloseButton"}:{className:"gdcScrollPanelCloseButton"}}>
+        <div {...this.state.panelHasScroll ? { className: "gdcPanelCloseButton" } : { className: "gdcScrollPanelCloseButton" }}>
           <Link onClick={(e) => { this.setState({ panelHasScroll: false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
@@ -660,8 +697,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
                   onClick={() => {
-                    this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
+                   
                     this.requiredHasValues = true; this.submitForm("add");
+                    this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
                   }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
@@ -801,11 +839,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               </Label>
 
               <ReactQuill
-              placeholder={ele.placeholder}
+                placeholder={ele.placeholder}
 
-              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
-            {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-          </div>
+                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
           </div >
         );
 
