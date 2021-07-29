@@ -1,7 +1,7 @@
 export const metaData = [
 
     // {
-    //     "title": "Is this Request Urgent",
+    //     "field": "Is this Request Urgent",
     //     "fieldType": "SwitchInput",
     //     "label": "Is this Request Urgent",
     //     "placeholder": "",
@@ -14,7 +14,7 @@ export const metaData = [
 
 const ChannelAnalyticsMetaData = [
     {
-        "title": "What area of Channel Analytics is your request for?",
+        "field": "What area of Channel Analytics is your request for?",
         "fieldType": "SingleSelectInput",
         "label": "What area of Channel Analytics is the request for?",
         "placeholder":"Select an option",
@@ -58,7 +58,7 @@ const ChannelAnalyticsMetaData = [
                 "option": "Operational Framework\\Channel Analytics\\Relationship Marketing",
                 "fields": [
                     {
-                        "title": "POD Category",
+                        "field": "POD Category",
                         "fieldType": "SingleSelectInput",
                         "label": "POD Category",
                         "placeholder":"Select an option",
@@ -87,7 +87,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "Custom.RMPODCategory"
                     },
                     {
-                        "title": "POD Name",
+                        "field": "POD Name",
                         "fieldType": "SingleSelectCascadingInput",
                         "cascadingField": "POD Category",
                         "placeholder":"Select an option",
@@ -201,9 +201,9 @@ const ChannelAnalyticsMetaData = [
         ]
     },
     {
-        "title": "What fieldType of request is this?",
+        "field": "What fieldType of request is this?",
         "fieldType": "RadioButtonInput",
-        "label": "What fieldType of request is this?",
+        "label": "What Type of request is this?",
         "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
         "options": [
             {
@@ -224,7 +224,7 @@ const ChannelAnalyticsMetaData = [
                 "option": "Ask an Expert",
                 "fields": [
                     {
-                        "title": "Request Title",
+                        "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                         "placeholder":"Enter the text here",
@@ -236,7 +236,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Title"
                     },
                     {
-                        "title": "What is the business question you are trying to answer?",
+                        "field": "What is the business question you are trying to answer?",
                         "fieldType": "MultiLineTextInput",
                         "placeholder":"Enter the text here",
                         "label": "What is the business question you are trying to answer?",
@@ -247,7 +247,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "What is the priority of your request?",
+                        "field": "What is the priority of your request?",
                         "fieldType": "SingleSelectInput",
                         "label": "What is the priority of your request?",
                         "placeholder":"Select an option",
@@ -276,7 +276,7 @@ const ChannelAnalyticsMetaData = [
                     },
 
                     {
-                        "title": "Requested Completion Date",
+                        "field": "Requested Completion Date",
                         "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
@@ -287,7 +287,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Are there any other details or dependencies that the team should be aware of?",
+                        "field": "Are there any other details or dependencies that the team should be aware of?",
                         "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
@@ -299,7 +299,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Please provide attachments or screenshots to support your request",
+                        "field": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -316,7 +316,7 @@ const ChannelAnalyticsMetaData = [
                 "option": "Report Request",
                 "fields": [
                     {
-                        "title": "Request Title",
+                        "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                         "placeholder":"Enter the text here",
@@ -328,7 +328,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Title"
                     },
                     {
-                        "title": "Please provide detailed requirements for this request.",
+                        "field": "Please provide detailed requirements for this request.",
                         "fieldType": "MultiLineTextInput",
                         "placeholder":"Enter the text here",
                         "label": "Please provide detailed requirements for this request.",
@@ -340,7 +340,7 @@ const ChannelAnalyticsMetaData = [
                     },
 
                     {
-                        "title": "What is the business impact if this request is not committed?",
+                        "field": "What is the business impact if this request is not committed?",
                         "fieldType": "MultiLineTextInput",
                         "placeholder":"Enter the text here",
                         "label": "What is the business impact if this request is not committed?",
@@ -351,7 +351,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "What business objective does this request map to?",
+                        "field": "What business objective does this request map to?",
                         "fieldType": "SingleLineTextInput",
                         "placeholder":"Enter the text here",
                         "label": "What business objective does this request map to?",
@@ -362,7 +362,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Is this an enhancement to an existing report or a new report request?",
+                        "field": "Is this an enhancement to an existing report or a new report request?",
                         "fieldType": "SingleSelectInput",
                         "placeholder":"Select an option",
                         "label": "Is this an enhancement to an existing report or a new report request?",
@@ -383,7 +383,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "Custom.ReportRequestfieldType"
                     },
                     {
-                        "title": "What is the priority of your request?",
+                        "field": "What is the priority of your request?",
                         "fieldType": "SingleSelectInput",
                         "placeholder":"Select an option",
                         "label": "What is the priority of your request?",
@@ -392,17 +392,17 @@ const ChannelAnalyticsMetaData = [
                             {
                                 "key": "Priority 1: Urgent and important - must have ASAP",
                                 "text": "Priority 1: Urgent and important - must have ASAP",
-                                "data": "#ff5a5a"
+                                "color": "#ff5a5a"
                             },
                             {
                                 "key": "Priority 2: Not urgent but important - must have",
                                 "text": "Priority 2: Not urgent but important - must have",
-                                "data": "#faaa4c"
+                                "color": "#faaa4c"
                             },
                             {
                                 "key": "Priority 3: Low priority - nice to have",
                                 "text": "Priority 3: Low priority - nice to have",
-                                "data": "#6ef1c2"
+                                "color": "#6ef1c2"
                             }
                         ],
                         "value": "",
@@ -411,7 +411,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "Custom.RequestedPriority"
                     },
                     {
-                        "title": "Requested Completion Date",
+                        "field": "Requested Completion Date",
                         "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
@@ -422,7 +422,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Are there any other details or dependencies that the team should be aware of?",
+                        "field": "Are there any other details or dependencies that the team should be aware of?",
                         "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
@@ -434,7 +434,7 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Please provide attachments or screenshots to support your request",
+                        "field": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -454,7 +454,7 @@ const ChannelAnalyticsMetaData = [
 const DataServicesmetaData = [
     {
         
-        "title": "What fieldType of request is this?",
+        "field": "What fieldType of request is this?",
         "fieldType": "SingleSelectInput",
         "label": "What fieldType of request is this?",
         "placeholder":"Select an option",
@@ -473,7 +473,7 @@ const DataServicesmetaData = [
                 "option": "Data Platform Development Request",
                 "fields": [
                     {
-                        "title": "Request Title",
+                        "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                         "placeholder":"Enter the text here",
@@ -485,7 +485,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Title"
                     },
                     {
-                        "title": "Objective",
+                        "field": "Objective",
                         "fieldType": "MultiLineTextInput",
                         "label": "Objective",
                         "placeholder":"Enter the text here",
@@ -496,7 +496,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Problem Statement",
+                        "field": "Problem Statement",
                         "fieldType": "MultiLineTextInput",
                         "placeholder":"Enter the text here",
                         "label": "Problem Statement",
@@ -507,7 +507,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Business Value",
+                        "field": "Business Value",
                         "fieldType": "MultiLineTextInput",
                         "label": "Busines Value",
                         "placeholder":"Enter the text here",
@@ -518,7 +518,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Desired Output",
+                        "field": "Desired Output",
                         "fieldType": "MultiLineTextInput",
                         "label": "Desired Output",
                         "placeholder":"Enter the text here",
@@ -529,7 +529,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Use Cases",
+                        "field": "Use Cases",
                         "fieldType": "MultiLineTextInput",
                         "label": "Use Cases",
                         "placeholder":"Enter the text here",
@@ -540,7 +540,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Success Criteria",
+                        "field": "Success Criteria",
                         "fieldType": "MultiLineTextInput",
                         "label": "Success Criteria",
                         "placeholder":"Enter the text here",
@@ -551,7 +551,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Business Rules",
+                        "field": "Business Rules",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Rules",
                         "placeholder":"Enter the text here",
@@ -562,7 +562,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Output Frequency",
+                        "field": "Output Frequency",
                         "fieldType": "MultiLineTextInput",
                         "label": "Output Frequency",
                         "placeholder":"Enter the text here",
@@ -573,7 +573,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Data Definition",
+                        "field": "Data Definition",
                         "fieldType": "MultiLineTextInput",
                         "label": "Data Definition",
                         "placeholder":"Enter the text here",
@@ -584,7 +584,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Request Maturity",
+                        "field": "Request Maturity",
                         "fieldType": "MultiLineTextInput",
                         "label": "Request Maturity",
                         "placeholder":"Enter the text here",
@@ -595,7 +595,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Requested Completion Date",
+                        "field": "Requested Completion Date",
                         "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "placeholder":"Select the date",
@@ -606,7 +606,7 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.RequestedCompletionDate"
                     },
                     {
-                        "title": "Please provide attachments or screenshots to support your request",
+                        "field": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -623,7 +623,7 @@ const DataServicesmetaData = [
                 "option": "Support Needed",
                 "fields": [
                     {
-                        "title": "Request Title",
+                        "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                    "placeholder":"Enter the text here",
@@ -635,7 +635,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Title"
                     },
                     {
-                        "title": "Description of issue",
+                        "field": "Description of issue",
                         "fieldType": "MultiLineTextInput",
                         "label": "Description of issue",
                         "placeholder":"Enter the text here",
@@ -646,7 +646,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Business Impact",
+                        "field": "Business Impact",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Impact",
                         "placeholder":"Enter the text here",
@@ -657,7 +657,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Expected Results",
+                        "field": "Expected Results",
                         "fieldType": "MultiLineTextInput",
                         "label": "Expected Results",
                         "placeholder":"Enter the text here",
@@ -668,7 +668,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "title": "Is this Request Urgent",
+                        "field": "Is this Request Urgent",
                         "fieldType": "SwitchInput",
                         "label": "Is this Request Urgent",
                         "placeholder": "",
@@ -685,7 +685,7 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.IsThisRequestUrgent"
                     },
                     {
-                        "title": "Requested Completion Date",
+                        "field": "Requested Completion Date",
                         "fieldType": "DateInput",
                         "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
@@ -696,7 +696,7 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.RequestedCompletionDate"
                     },
                     {
-                        "title": "Please provide attachments or screenshots to support your request",
+                        "field": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -716,7 +716,7 @@ const DataServicesmetaData = [
 
 const BusinessIntelligencemetaData = [
     {
-        "title": "Request Title",
+        "field": "Request Title",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "",
@@ -728,7 +728,7 @@ const BusinessIntelligencemetaData = [
         "devopsName": "System.Title"
     },
     {
-        "title": "Objective",
+        "field": "Objective",
         "fieldType": "MultiLineTextInput",
         "label": "Objective",
         "placeholder": "",
@@ -740,7 +740,7 @@ const BusinessIntelligencemetaData = [
         "devopsName": "System.Description"
     },
     {
-        "title": "Need By Date",
+        "field": "Need By Date",
         "fieldType": "DateInput",
         "label": "Need By Date",
         "placeholder":"Select the date",
