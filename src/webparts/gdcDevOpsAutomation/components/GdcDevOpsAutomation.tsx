@@ -88,7 +88,7 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info" title={props.name } ariaLabel="value required" />
+        <Icon iconName="Info" title={props.name} ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -175,8 +175,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       projects: projects
     });
 
-    
-    this.props.devOpsService.getLatestVer(304).then((data) => { console.log(data); });
+
+    // this.props.devOpsService.getLatestVer(304).then((data) => { console.log(data); });
     // this.props.devOpsService.FilterWorkItems();
   }
 
@@ -186,16 +186,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       formFields: stateValues,
     });
-   // console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
+    // console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
     if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
       this.setState({
         panelHasScroll: true
       });
 
 
-      this.setState({
-        formFields: stateValues,
-      });
+    this.setState({
+      formFields: stateValues,
+    });
   }
 
   public appendValues(stateValues, value: any, name) {
@@ -533,17 +533,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public onRenderNavigationContent(props, defaultRender) {
     return (
-      <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
+      // <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
+      //   <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
 
-      {/* <div className="gdcPanelHeader" >
+      <div className="gdcPanelHeader" >
         <div className="gdcPanelHeaderText" > GDC Intake Form </div>
         <div className="gdcPanelHeaderEllipses1" ></div>
-        <div className="gdcPanelHeaderEllipses2" ></div> */}
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelCloseButton" } : { className: "gdcPanelCloseButton" }}>
-          <Link onClick={(e) => { this.setState({panelHasScroll:false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
+        <div className="gdcPanelHeaderEllipses2" ></div>
+        {/* <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelCloseButton" } : { className: "gdcPanelCloseButton" }}> */}
+        <div className="gdcPanelCloseButton">
+          <Link onClick={(e) => { this.setState({ panelHasScroll: false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
         </div>
@@ -640,7 +641,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 ? <MessageBar
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
-                >Please complete required fields
+                >Please complete the required fields
                 </MessageBar>
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
@@ -748,6 +749,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             <DatePicker placeholder="Select a date" ariaLabel="Select a date" className=""
+              allowTextInput
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.title)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -777,16 +779,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
-              {ele.helperText ?
-               {...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
-               
-               }:"" }
+                {ele.helperText ?
+                  {
+                    ...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
+                  } : ""}
               </Label>
-            
-              <ReactQuill 
-              placeholder="Enter your text here"
-              
-              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
+              <ReactQuill
+                placeholder="Enter your text here"
+
+                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.title)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -819,9 +820,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
-            <p className="notworking">Attachments are not functional at the moment</p>
+              <p className="notworking">Attachments are not functional at the moment</p>
               <div className="fileInput" >
-               
+
                 <Icon iconName="Attach" className="gdcAttachIcon" />
                 {/* <Attach12Regular /> */}
                 Add attachment
