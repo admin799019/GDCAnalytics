@@ -480,6 +480,10 @@ console.log(option,"from update form field")
         showAddButton: true,
         selectedButton: option
       });
+      if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
+      this.setState({
+        panelHasScroll: true
+      });
     });
   }
 
