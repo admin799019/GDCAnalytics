@@ -21,31 +21,31 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
-                "key": "Operational Framework\\Channel Analytics\\Demand Response",
+                "key": "Operational Framework Test\\Channel Analytics\\Demand Response",
                 "text": "Demand Response"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Global Programs",
+                "key": "Operational Framework Test\\Channel Analytics\\Global Programs",
                 "text": "Global Programs"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Partner",
+                "key": "Operational Framework Test\\Channel Analytics\\Partner",
                 "text": "Partner"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Paid Acquisition",
+                "key": "Operational Framework Test\\Channel Analytics\\Paid Acquisition",
                 "text": "Paid Acquisition"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\GEP Analytics",
+                "key": "Operational Framework Test\\Channel Analytics\\GEP Analytics",
                 "text": "GEP Analytics"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\LFQ",
+                "key": "Operational Framework Test\\Channel Analytics\\LFQ",
                 "text": "LFQ"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Relationship Marketing",
+                "key": "Operational Framework Test\\Channel Analytics\\Relationship Marketing",
                 "text": "Relationship Marketing"
             }
         ],
@@ -218,7 +218,7 @@ const ChannelAnalyticsMetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Request fieldType is required",
-        "devopsName": "Custom.RequestfieldType",
+        "devopsName": "Custom.RequestType",
         "subFields": [
             {
                 "option": "Ask an Expert",
@@ -467,7 +467,7 @@ const DataServicesmetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Please choose request fieldType",
-        "devopsName": "Custom.WhatfieldTypeOfRequestIsThis",
+        "devopsName": "Custom.WhatTypeOfRequestIsThis",
         "subFields": [
             {
                 "option": "Data Platform Development Request",
