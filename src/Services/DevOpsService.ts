@@ -9,8 +9,8 @@ export class DevOpsService implements IDevOpsService {
 
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-public devopsProject="https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework";
-public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
+    public devopsProject = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework";
+    public devopsOrg = "https://dev.azure.com/onegdcanalyticsdev"
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
@@ -31,11 +31,11 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
                 });
         });
     }
-    public  getLatestVer(id): Promise<any> {
+    public getLatestVer(id): Promise<any> {
         console.log(id);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
-          this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.get(this.devopsProject+"/_apis/wit/workItems/"+id+"/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
+            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+                client.get(this.devopsProject + "/_apis/wit/workItems/" + id + "/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
                     .then((response: HttpClientResponse) => {
                         console.log(["TryLates1version", response]);
                         return response.json();
@@ -68,7 +68,7 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post(this.devopsProject+"/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(this.devopsProject + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         console.log(["Try1", response]);
                         return response.json();
@@ -81,7 +81,7 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
         });
 
     }
-    public addAttachment(data,id): any {
+    public addAttachment(data, id): any {
         const body: string = JSON.stringify(data);
         console.log(body);
         const requestHeaders: Headers = new Headers();
@@ -94,7 +94,7 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch(this.devopsProject+"/_apis/wit/workitems/"+id+"?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(this.devopsProject + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -116,7 +116,7 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch(this.devopsProject+"/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(this.devopsProject + "/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -137,7 +137,7 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
 
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post(this.devopsOrg+"/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(this.devopsOrg + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
 
                         return response.json();
@@ -239,6 +239,26 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
                             });
                     });
             });
+        });
+    }
+
+    public async getTeamDetails(team: string): Promise<any> {
+
+        const requestHeaders: Headers = new Headers();
+        requestHeaders.append('Content-type', 'application/json-patch+json');
+
+        const httpClientOptions: IHttpClientOptions = {
+            headers: requestHeaders,
+        };
+        return this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+            client.fetch(this.devopsOrg + "/_apis/projects/Operational%20Framework/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                .then((response: HttpClientResponse) => {
+                    return response.json();
+                })
+                .then((projects: any): void => {
+                    console.log(["get Team details Try", projects]);
+                    return projects;
+                });
         });
     }
 }

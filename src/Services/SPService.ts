@@ -1,5 +1,6 @@
 import { sp, SPRest } from "@pnp/sp";
 import "@pnp/sp/lists";
+import "@pnp/sp/sputilities"
 import { PageContext } from '@microsoft/sp-page-context';
 import { Logger, ConsoleListener } from '@pnp/logging';
 import { graph } from "@pnp/graph";
@@ -54,5 +55,19 @@ export class SPService implements ISPService {
         // const allUsers = await graph.users();
         // return allUsers;
     }
+
+    public async sendEmail() {
+        sp.utility.sendEmail({
+            Body: "This Email is sent using <b>PNP Js</b>",
+            Subject: "Mail Sent using PNP js",
+            //Array of string for To of Email  
+            To: ["AdeleV@M365x799019.OnMicrosoft.com"],
+        }).then((i) => {
+            console.log("email sent", i);
+        }).catch((i) => {
+            console.log("email not sent", i);
+        });
+    }
+
 
 }

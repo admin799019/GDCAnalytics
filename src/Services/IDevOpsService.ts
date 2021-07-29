@@ -7,4 +7,5 @@ export interface IDevOpsService {
     SearchWorkItems(): Promise<any>;
     getLatestVer(id):Promise<any>;
     addAttachment(data,id): any;
+    getTeamDetails(team: string): Promise<any>;
 }

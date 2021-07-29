@@ -370,7 +370,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "value": this.DescriptionData
         });
         this.props.devOpsService.addfeature(APIData).then(data => {
-          Area.value = "";
           this.setState({
             formFields: metaData,
             formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
@@ -383,6 +382,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           setTimeout(function () {
             this.setState({ showMessage: false });
           }.bind(this), 5000);
+          this.props.devOpsService.getTeamDetails(Area.value).then(emails => {
+            this.props.spService.sendEmail();
+          });
+          Area.value = "";
         });
       }
       else {
@@ -481,9 +484,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         selectedButton: option
       });
       if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
-      this.setState({
-        panelHasScroll: true
-      });
+        this.setState({
+          panelHasScroll: true
+        });
     });
   }
 
@@ -700,6 +703,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder={ele.placeholder}
                 label={ele.label}
                 className="gdcDropDown"
+                defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
                 options={ele.options}
                 {...ele.options[0].color != null || ele.options[0].color != undefined ?
@@ -801,11 +805,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               </Label>
 
               <ReactQuill
-              placeholder={ele.placeholder}
+                placeholder={ele.placeholder}
 
-              className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
-            {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-          </div>
+                className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
           </div >
         );
 
