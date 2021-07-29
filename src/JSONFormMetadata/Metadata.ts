@@ -21,31 +21,31 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
-                "key": "Operational Framework\\Channel Analytics\\Demand Response",
+                "key": "Operational Framework Test\\Channel Analytics\\Demand Response",
                 "text": "Demand Response"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Global Programs",
+                "key": "Operational Framework Test\\Channel Analytics\\Global Programs",
                 "text": "Global Programs"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Partner",
+                "key": "Operational Framework Test\\Channel Analytics\\Partner",
                 "text": "Partner"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Paid Acquisition",
+                "key": "Operational Framework Test\\Channel Analytics\\Paid Acquisition",
                 "text": "Paid Acquisition"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\GEP Analytics",
+                "key": "Operational Framework Test\\Channel Analytics\\GEP Analytics",
                 "text": "GEP Analytics"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\LFQ",
+                "key": "Operational Framework Test\\Channel Analytics\\LFQ",
                 "text": "LFQ"
             },
             {
-                "key": "Operational Framework\\Channel Analytics\\Relationship Marketing",
+                "key": "Operational Framework Test\\Channel Analytics\\Relationship Marketing",
                 "text": "Relationship Marketing"
             }
         ],
@@ -77,8 +77,8 @@ const ChannelAnalyticsMetaData = [
                                 "text": "BizApps"
                             },
                             {
-                                "key": "M365 Commercial",
-                                "text": "M365 Commercial"
+                                "key": "Commercial",
+                                "text": "Commercial"
                             }
                         ],
                         "value": "",
@@ -159,34 +159,34 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "Azure"
                             },
                             {
-                                "key": "M365_All",
-                                "text": "M365_All",
-                                "cascadingOption": "M365 Commercial"
+                                "key": "Commercial_All",
+                                "text": "Comm_All",
+                                "cascadingOption": "Commercial"
                             },
                             {
-                                "key": "M365_ODB",
-                                "text": "M365_ODB",
-                                "cascadingOption": "M365 Commercial"
+                                "key": "Comm_ODB",
+                                "text": "Comm_ODB",
+                                "cascadingOption": "Commercial"
                             },
                             {
-                                "key": "M365_Teams",
-                                "text": "M365_Teams",
-                                "cascadingOption": "M365 Commercial"
+                                "key": "Comm_Teams",
+                                "text": "Comm_Teams",
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Onb_Usage",
                                 "text": "Comm_Onb_Usage",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Trial",
                                 "text": "Comm_Trial",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             },
                             {
                                 "key": "Comm_Renewal",
                                 "text": "Comm_Renewal",
-                                "cascadingOption": "M365 Commercial"
+                                "cascadingOption": "Commercial"
                             }
                         ],
                         "className": "gdcGridCol gdcGridCol6",
@@ -201,7 +201,7 @@ const ChannelAnalyticsMetaData = [
         ]
     },
     {
-        "field": "What fieldType of request is this?",
+        "field": "What Type of request is this?",
         "fieldType": "RadioButtonInput",
         "label": "What Type of request is this?",
         "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
@@ -218,7 +218,7 @@ const ChannelAnalyticsMetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Request fieldType is required",
-        "devopsName": "Custom.RequestfieldType",
+        "devopsName": "Custom.RequestType",
         "subFields": [
             {
                 "option": "Ask an Expert",
@@ -247,9 +247,9 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "What is the priority of your request?",
+                        "field": "What is the priority of this request?",
                         "fieldType": "SingleSelectInput",
-                        "label": "What is the priority of your request?",
+                        "label": "What is the priority of this request?",
                         "placeholder":"Select an option",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
@@ -363,7 +363,7 @@ const ChannelAnalyticsMetaData = [
                     },
                     {
                         "field": "Is this an enhancement to an existing report or a new report request?",
-                        "fieldType": "SingleSelectInput",
+                        "fieldType": "SingleLineTextInput",
                         "placeholder":"Select an option",
                         "label": "Is this an enhancement to an existing report or a new report request?",
                         "className": "gdcGridCol gdcGridCol6",
@@ -383,10 +383,10 @@ const ChannelAnalyticsMetaData = [
                         "devopsName": "Custom.ReportRequestfieldType"
                     },
                     {
-                        "field": "What is the priority of your request?",
+                        "field": "What is the priority of this request?",
                         "fieldType": "SingleSelectInput",
                         "placeholder":"Select an option",
-                        "label": "What is the priority of your request?",
+                        "label": "What is the priority of this request?",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -467,7 +467,7 @@ const DataServicesmetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Please choose request fieldType",
-        "devopsName": "Custom.WhatfieldTypeOfRequestIsThis",
+        "devopsName": "Custom.WhatTypeOfRequestIsThis",
         "subFields": [
             {
                 "option": "Data Platform Development Request",
