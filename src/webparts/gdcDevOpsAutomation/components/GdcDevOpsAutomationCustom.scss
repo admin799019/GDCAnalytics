@@ -281,6 +281,12 @@ height:40px;
     background-color: rgba(8, 8, 8, 0.3);
   }
 
+  .gdcAddButton:hover {
+    background-color: rgba(3, 108, 112, 1);
+    border-color: white;
+      color:white;
+  }
+
   .gdcNewButton {
     font-size: 18px;
   }
@@ -433,9 +439,9 @@ height:40px;
   
 }
 .gdcScrollPanelHeaderText {
-  padding: 30px 0px 10px 30px;
+  padding: 56px 0px 10px 40px;
   float: left;
-  font-size: 26px;
+  font-size: 24px;
   
 }
 .gdcPanelCloseButton {
