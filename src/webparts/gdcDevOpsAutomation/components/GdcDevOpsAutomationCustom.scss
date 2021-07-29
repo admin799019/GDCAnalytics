@@ -5,8 +5,13 @@
 .quill > .ql-container > .ql-editor.ql-blank::before{
   font-style: normal;
   padding:0px;
-  margin:0px;
+  margin:0px ;
   color:black;
+}
+.quill > .ql-container > .ql-editor.ql-blank{
+
+  margin:-5px ;
+  
 }
 .ql-editor {
     min-height: 150px;
