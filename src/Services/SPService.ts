@@ -1,6 +1,8 @@
 import { sp, SPRest } from "@pnp/sp";
 import "@pnp/sp/lists";
-import "@pnp/sp/sputilities"
+import "@pnp/sp/sputilities";
+import "@pnp/sp/webs";
+import "@pnp/sp/site-users/web";
 import { PageContext } from '@microsoft/sp-page-context';
 import { Logger, ConsoleListener } from '@pnp/logging';
 import { graph } from "@pnp/graph";
@@ -56,18 +58,19 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail() {
+    public async sendEmail(area: string, emails, id) {
+        var url = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test/_workitems/edit/" + id;
+        let currentUser = await sp.web.currentUser();
+        emails.push(currentUser.Email);
         sp.utility.sendEmail({
-            Body: "This Email is sent using <b>PNP Js</b>",
-            Subject: "Mail Sent using PNP js",
+            Body: 'A New User Story has been submitted under ' + area + '. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
+            Subject: 'New User Story has been Submitted',
             //Array of string for To of Email  
-            To: ["AdeleV@M365x799019.OnMicrosoft.com"],
+            To: emails,
         }).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);
         });
     }
-
-
 }

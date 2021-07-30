@@ -9,9 +9,9 @@ export class DevOpsService implements IDevOpsService {
 
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-   // https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework prod
-public devopsProject="https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test";
-public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
+    // https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework prod
+    public devopsProject = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test";
+    public devopsOrg = "https://dev.azure.com/onegdcanalyticsdev"
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
@@ -194,7 +194,6 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
                 client.post("https://almsearch.dev.azure.com/Veena0200/_apis/search/workitemsearchresults?api-version=6.0-preview.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
-                        // console.log(["search Try1", response]);
                         return response.json();
                     })
                     .then((datar: any): void => {
@@ -243,23 +242,25 @@ public devopsOrg="https://dev.azure.com/onegdcanalyticsdev"
         });
     }
 
-    public async getTeamDetails(team: string): Promise<any> {
+    public getTeamDetails(team: string): Promise<any> {
+        return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
+            const requestHeaders: Headers = new Headers();
+            requestHeaders.append('Content-type', 'application/json-patch+json');
 
-        const requestHeaders: Headers = new Headers();
-        requestHeaders.append('Content-type', 'application/json-patch+json');
+            const httpClientOptions: IHttpClientOptions = {
+                headers: requestHeaders,
+            };
+            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+                client.get(this.devopsOrg + "/_apis/projects/Operational%20Framework%20Test/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                    .then((response: HttpClientResponse) => {
+                        return response.json();
+                    })
+                    .then((teams: any): void => {
+                        console.log(["get Team details Try", teams]);
+                        resolve(teams);
+                    });
+            });
 
-        const httpClientOptions: IHttpClientOptions = {
-            headers: requestHeaders,
-        };
-        return this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch(this.devopsOrg + "/_apis/projects/Operational%20Framework/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
-                .then((response: HttpClientResponse) => {
-                    return response.json();
-                })
-                .then((projects: any): void => {
-                    console.log(["get Team details Try", projects]);
-                    return projects;
-                });
         });
     }
 }

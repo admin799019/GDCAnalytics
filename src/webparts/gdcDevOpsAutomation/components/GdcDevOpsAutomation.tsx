@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
-import CustomStyles from './GdcDevOpsAutomation.module.scss'; 
+import CustomStyles from './GdcDevOpsAutomation.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
@@ -101,7 +101,6 @@ export interface IDevOpsProps {
 export interface IDevOpsState {
   projects: [];
   text: any;
-  elements: any;
   formData: any;
   formFields: MetaDataType[];
   formSuccessMessage: string;
@@ -120,11 +119,10 @@ const iconStyles = { marginRight: '8px' };
 export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, IDevOpsState> {
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
-  public AttachmentAPI;
+  public AttachmentAPI: any = [];
   public panelRef;
   public richTextFieldCalls: number = 0;
   public constructor(props) {
-
     super(props);
     this.panelRef = React.createRef();
 
@@ -132,12 +130,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       projects: [],
       text: "",
       // DescriptionData: "",
-      elements: [
-        { id: 'Request Title' },
-        { id: 'Analytics Area' },
-        { id: 'Objective' },
-        { id: 'Need By Date' }
-      ],
       formData: [],
       formFields: metaData,
       formSuccessMessage: "",
@@ -149,7 +141,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       selectedButton: "",
       disableSubmitButton: false,
       showErrorMessage: false,
-      panelHasScroll: false
+      panelHasScroll: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -202,13 +194,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     stateValues.map((field: MetaDataType, index) => {
       if (field.field == name) {
         i = index;
-    if(field.fieldType!="MultiLineTextInput"){
+        // if (field.fieldType != "MultiLineTextInput") {
         if (value == "" || value == " " || value == "<p><br></p>" || value.trim() == "" && field.required == true) {
           field.showError = true;
         } else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
-      }
+        // }
 
         if (field.fieldType == "SingleLineTextInput" && value == " ") {
           field.value = "";
@@ -220,34 +212,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         else if (field.fieldType == "SwitchInput") {
           field.checked = value;
           field.value = value;
-          console.log(field, "field");
         }
-        else if (field.fieldType == "MultiLineTextInput") {
-          console.log("hi from multi check append value")
-          var regex = /(<([^>]+)>)/ig
-          let hasText = !!value.replace(regex, "").trim().length;
-          let element = document.createElement('div');
-          element.innerHTML = value;
-          console.log(element.innerHTML, "inner");
-          let imgsLenth = element.querySelectorAll('img').length;
-          console.log(imgsLenth, "l")
-          if (!hasText) {
-            if (imgsLenth > 0) {
-              console.log("hi from inned if")
-              hasText = true;
-            }
-          }
-          console.log(hasText, "hastext");
-          if (hasText) {
-            field.showError = false;
-            this.requiredHasValues = true;
-          }
-          else {
-            console.log("cryy");
-            field.showError = true;
-            this.requiredHasValues = false;
-          }
-        }
+        // else if (field.fieldType == "MultiLineTextInput") {
+        //   var regex = /(<([^>]+)>)/ig;
+        //   let hasText = !!value.replace(regex, "").trim().length;
+        //   let element = document.createElement('div');
+        //   element.innerHTML = value;
+        //   let imgsLenth = element.querySelectorAll('img').length;
+        //   if (!hasText) {
+        //     if (imgsLenth > 0) {
+        //       hasText = true;
+        //     }
+        //   }
+        //   if (hasText) {
+        //     field.showError = false;
+        //     this.requiredHasValues = true;
+        //   }
+        //   else {
+        //     field.showError = true;
+        //     this.requiredHasValues = false;
+        //   }
+        // }
         else {
           field.value = value;
         }
@@ -265,31 +250,25 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
       }
     });
-    console.log(stateValues, "ss")
     return stateValues;
   }
 
   public handleToggleChange(value: any, name) {
-
     var stateValues = this.state.formFields;
-
     stateValues.map((f) => {
-
       if (f.field == name) {
-
         f.checked = value;
         f.value = value;
       }
     });
-
     this.setState({
       formFields: stateValues
     });
-    console.log(stateValues, "togless")
   }
 
-  public async UpdateRichTextFields(fields): Promise<any> {
-    var fs = _.cloneDeep(fields);
+  public async UpdateRichTextFields(): Promise<any> {
+    var fields = _.cloneDeep(this.state.formFields);
+
     fields.map(async (f) => {
       if (f.fieldType == "MultiLineTextInput") {
         this.richTextFieldCalls = this.richTextFieldCalls + 1;
@@ -340,13 +319,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public async UpdateRichText(data): Promise<any> {
     let element = document.createElement('div');
     element.innerHTML = data;
-    console.log(element.innerHTML, "inner");
     let imgsLenth = element.querySelectorAll('img').length;
     var imageCalls = [];
     element.querySelectorAll('img').forEach((ele) => {
       if (ele.src.indexOf('base64,') != 0) {
         let base64 = ele.src.substring(ele.src.indexOf('base64,') + 7);
-       
+
         const byteCharacters = atob(base64);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -371,27 +349,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public addUserStory() {
     var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
+    var teamDetails: any;
 
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
-        if (scv.required == true && (scv.value == "" && scv.fieldType!="MultiLineTextInput")) {
-          console.log("hi from user story error")
+        if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
           scv.showError = true;
           parentFieldsRequiredHasValues = false;
         }
       });
     }
 
-    this.appendAPI(this.state.formFields, APIData).then(dataReturned => {
+    this.appendAPI(this.state.formFields, APIData).then(async dataReturned => {
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
-        // APIData.push({
-        //   "op": "add",
-        //   "path": "/fields/System.AreaPath",
-        //   "from": null,
-        //   "value": `Operational Framework\\` + Area.value
-        // });
+        APIData.push({
+          "op": "add",
+          "path": "/fields/System.AreaPath",
+          "from": null,
+          "value": `Operational Framework Test\\` + Area.value
+        });
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
           "op": "add",
@@ -399,7 +377,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
-        this.props.devOpsService.addfeature(APIData).then(data => {
+        APIData = APIData.concat(this.AttachmentAPI);
+        this.props.devOpsService.addfeature(APIData).then((data) => {
           this.setState({
             formFields: metaData,
             formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
@@ -412,8 +391,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           setTimeout(function () {
             this.setState({ showMessage: false });
           }.bind(this), 5000);
-          this.props.devOpsService.getTeamDetails(Area.value).then(emails => {
-            this.props.spService.sendEmail();
+          this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
+            let emails: any = [];
+            emailData.value.forEach(element => {
+              emails.push(element.identity.uniqueName);
+            });
+            this.props.spService.sendEmail(Area.value, emails, data.id);
+          }).catch(err => {
+            console.log("teams err", err);
           });
           Area.value = "";
         });
@@ -431,14 +416,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public async submitForm(addorupdate: string) {
     this.DescriptionData = "";
-    var formFields = _.cloneDeep(this.state.formFields);
-
-    this.UpdateRichTextFields(formFields);
+    this.AttachFiles();
   }
 
   public onMultiSelectChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
     if (item) {
-      console.log(item.key);
       var x: any = this.state.multiSelectedKeys;
       x.push(item.key);
       this.setState({
@@ -486,8 +468,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         if (subFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
           var stateCopy = [...subFields];
           stateCopy.map(scv => {
-            if (scv.required == true &&  scv.fieldType!="MultiLineTextInput" && (scv.value == "" || scv.value == "<p><br></p>")) {
-            
+            if (scv.required == true && (scv.value == "" || scv.value == "<p><br></p>")) {
               scv.showError = true;
               this.requiredHasValues = false;
             }
@@ -503,7 +484,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-    console.log(option, "from update form field")
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       var jsonData = JSON.parse(data.JSON);
@@ -512,18 +492,19 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         formFields: jsonData,
         showMessage: false,
         showAddButton: true,
-        selectedButton: option
+        selectedButton: option,
+        panelHasScroll: true
       });
-      if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
-        this.setState({
-          panelHasScroll: true
-        });
+      // if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
+      //   this.setState({
+      //     panelHasScroll: true
+      //   });
     });
   }
 
   public onFileUpload(e) {
     e.preventDefault();
-    let files;
+    var files: any = [];
 
     for (let f = 0; f < e.target.files.length; f++) {
       files.push(e.target.files[f]);
@@ -534,8 +515,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async AttachFiles(): Promise<any> {
+    let count: number = 0;
     var FileUploadCalls = [];
-    this.state.files.map((file: any) => {
+    this.state.files.forEach((file: any) => {
       // let file = files[f];
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -548,15 +530,33 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray]);
-        FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
+        // FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
+        count = count + 1;
+        this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+          FileUploadCalls.push(d);
+          this.AttachmentAPI.push({
+            "op": "add",
+            "path": "/relations/-",
+            "value": {
+              "rel": "AttachedFile",
+              "url": d,
+              "attributes": {
+                "comment": ""
+              }
+            }
+          });
+          count = count - 1;
+          if (count == 0) {
+            console.log("files - ", this.AttachmentAPI);
+            this.UpdateRichTextFields();
+          }
+        });
       };
     });
-    return Promise.all(FileUploadCalls).then((d) => {
-      console.log("files - ", d);
-      return d;
-    }).catch((err) => {
-      console.log("err", err);
-    });
+    if (count == 0) {
+      console.log("files - ", this.AttachmentAPI);
+      this.UpdateRichTextFields();
+    }
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -579,17 +579,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public onRenderNavigationContent(props, defaultRender) {
-   
     return (
-      
-    
       <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
-      
         {/* <Logo /> */}
+        {/* <div id="gdclogoId"></div> */}
+        {/* <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" /> */}
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
         <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
-        
         {/* 
       <div className="gdcPanelHeader" >
         <div className="gdcPanelHeaderText" > GDC Intake Form </div>
@@ -700,9 +697,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
                   onClick={() => {
-                   
-                    this.requiredHasValues = true; this.submitForm("add");
+
                     this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
+                    this.requiredHasValues = true; this.submitForm("add");
                   }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
               </div>
@@ -878,16 +875,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
-              <p className="notworking">Attachments are not functional at the moment</p>
               <div className="fileInput" >
 
-                <Icon iconName="Attach" className="gdcAttachIcon" />
-                {/* <Attach12Regular /> */}
-                Add attachment
+                <Label htmlFor="file-upload" className="custom-file-upload">
+                  <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
+                </Label>
                 <input type="file"
-                  style={{ display: 'none' }}
-                  placeholder={ele.placeholder}
-                  multiple onChange={e => this.onFileUpload(e)} />
+                  id="file-upload"
+                  multiple
+                  onChange={e => this.onFileUpload(e)} />
               </div>
             </div>
           </React.Fragment>

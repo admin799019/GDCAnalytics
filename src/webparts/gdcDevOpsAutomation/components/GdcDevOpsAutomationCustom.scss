@@ -210,15 +210,23 @@ height:40px;
 
 /* File Picker */
 
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: none;
+  cursor: pointer;
+}
+
 .filepicker {
   margin-top: 25px;
 }
 
 .fileInput {
   cursor: pointer;
-  color: #036c70;
+  // color: #036c70;
   background: rgba(3,108,112,.06);
-  width: 120px;
+  width: 200px;
   padding: 5px;
   .gdcAttachIcon {
     padding-right: 3px;
@@ -317,6 +325,23 @@ height:40px;
   margin-bottom:25px;
   font-weight: 500px;
 }
+
+/* logo */
+
+#gdclogoId {
+  background-image: url(GDC.svg);
+}
+
+
+
+
+/* logo end */
+
+
+
+
+
+
 .gdcOuterWidth12{
 @include ms-sm12
 } 
@@ -431,7 +456,7 @@ height:40px;
   color: white;
   font-family: Segoe UI;
  // max-height:100px;
- animation:  reduce 1s cubic-bezier(0, 1, 0.5, 1) backwards;
+ animation:  reduce 0.5s cubic-bezier(0, 1, 0.5, 1) backwards;
   //transition-duration: 5s;
 	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
