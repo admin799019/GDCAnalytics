@@ -356,8 +356,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
         }
         else {
-          let pathPrefix = "Operational Framework Test\\Channel Analytics\\"
-          APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value))
+          let pathPrefix = "Operational Framework Test\\Channel Analytics\\";
+          APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
           console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, "hello from areapath");
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);

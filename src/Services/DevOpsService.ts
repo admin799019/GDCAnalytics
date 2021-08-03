@@ -11,7 +11,7 @@ export class DevOpsService implements IDevOpsService {
     private _spHttpClient: SPHttpClient;
     // https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework prod
     public devopsProject = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test";
-    public devopsOrg = "https://dev.azure.com/onegdcanalyticsdev"
+    public devopsOrg = "https://dev.azure.com/onegdcanalyticsdev";
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
