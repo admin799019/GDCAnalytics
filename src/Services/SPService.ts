@@ -9,9 +9,10 @@ import { graph } from "@pnp/graph";
 import "@pnp/graph/groups";
 import "@pnp/graph/users";
 import { MSGraphClientFactory } from '@microsoft/sp-http';
+import { IEmailProperties } from "@pnp/sp/sputilities";
 
 import { ISPService } from "./ISPService";
-import { IEmailProperties } from "@pnp/sp/sputilities";
+import { OrganizationConfig } from "../JSONFormMetadata/FormDataMapping";
 
 export class SPService implements ISPService {
     private _pageContext: PageContext;
@@ -60,12 +61,12 @@ export class SPService implements ISPService {
     }
 
     public async sendEmail(area: string, emails, id) {
-        var url = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test/_workitems/edit/" + id;
+        var url = OrganizationConfig.ProjectUrl + "/_workitems/edit/" + id;
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
 
         var emailProps: IEmailProperties = {
-            Body: 'A New User Story has been submitted under ' + area + ' area. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
+            Body: 'A New User Story has been submitted. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
             Subject: 'New User Story has been Submitted',
             To: emails,
         };

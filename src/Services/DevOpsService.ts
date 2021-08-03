@@ -1,17 +1,16 @@
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOptions } from "@microsoft/sp-http";
 import { SPHttpClient } from "@microsoft/sp-http";
+
 import { IDevOpsService } from "./IDevOpsService";
+import { OrganizationConfig } from "../JSONFormMetadata/FormDataMapping";
 
 export class DevOpsService implements IDevOpsService {
 
     public static readonly serviceKey: ServiceKey<IDevOpsService> = ServiceKey.create<IDevOpsService>('SPFx:DevOpsService', DevOpsService);
-
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-    // https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework prod
-    public devopsProject = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test";
-    public devopsOrg = "https://dev.azure.com/onegdcanalyticsdev";
+    
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
@@ -22,7 +21,7 @@ export class DevOpsService implements IDevOpsService {
     public async getProjects1(): Promise<any> {
 
         await this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.get(`https://dev.azure.com/onegdcanalyticsdev/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
+            client.get(OrganizationConfig.OrganizationUrl + `/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
                 .then((response: HttpClientResponse) => {
                     console.log(["Try1", response]);
                     return response.json();
@@ -36,7 +35,7 @@ export class DevOpsService implements IDevOpsService {
         console.log(id);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.get(this.devopsProject + "/_apis/wit/workItems/" + id + "/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
+                client.get(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/" + id + "/updates?$orderby=RevisedDate desc&$top=1&api-version=6.0", AadHttpClient.configurations.v1)
                     .then((response: HttpClientResponse) => {
                         console.log(["TryLates1version", response]);
                         return response.json();
@@ -69,7 +68,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post(this.devopsProject + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         console.log(["Try1", response]);
                         return response.json();
@@ -80,8 +79,8 @@ export class DevOpsService implements IDevOpsService {
                     });
             });
         });
-
     }
+
     public addAttachment(data, id): any {
         const body: string = JSON.stringify(data);
         console.log(body);
@@ -95,7 +94,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch(this.devopsProject + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(OrganizationConfig.ProjectUrl + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -117,7 +116,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch(this.devopsProject + "/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -138,7 +137,7 @@ export class DevOpsService implements IDevOpsService {
 
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post(this.devopsOrg + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(OrganizationConfig.OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
 
                         return response.json();
@@ -251,7 +250,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders,
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.get(this.devopsOrg + "/_apis/projects/Operational%20Framework%20Test/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.get(OrganizationConfig.OrganizationUrl + "/_apis/projects/Operational%20Framework%20Test/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         return response.json();
                     })

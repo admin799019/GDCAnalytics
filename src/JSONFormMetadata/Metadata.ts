@@ -65,8 +65,8 @@ const ChannelAnalyticsMetaData =  [
                                 "text": "BizApps"
                             },
                             {
-                                "key": "M365 Commercial",
-                                "text": "M365 Commercial"
+                                "key": "Commercial",
+                                "text": "Commercial"
                             }
                         ],
                         "value": "",
