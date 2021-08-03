@@ -356,9 +356,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           });
         }
         else {
-          let pathPrefix="Operational Framework Test\\Channel Analytics\\"
-          APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value=(pathPrefix.concat( APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value))
-          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value,"hello from areapath");
+          let pathPrefix = "Operational Framework Test\\Channel Analytics\\"
+          APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value))
+          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, "hello from areapath");
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
@@ -524,6 +524,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public async AttachFiles(): Promise<any> {
     let count: number = 0;
     var FileUploadCalls = [];
+    var richTextCallSent: boolean = false;
     this.state.files.forEach((file: any) => {
       // let file = files[f];
       let reader = new FileReader();
@@ -553,16 +554,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           });
           count = count - 1;
-          if (count == 0) {
+          if (count == 0 && !richTextCallSent) {
             console.log("files - ", this.AttachmentAPI);
             this.UpdateRichTextFields();
+            richTextCallSent = true;
           }
         });
       };
     });
-    if (count == 0) {
+    if (count == 0 && !richTextCallSent) {
       console.log("files - ", this.AttachmentAPI);
       this.UpdateRichTextFields();
+      richTextCallSent = true;
     }
   }
 
@@ -617,7 +620,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   private onRenderTitle(options: any[]): JSX.Element {
     const option = options[0];
-
     return (
       <div>
         {(
@@ -661,9 +663,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           headerText="GDC Intake Form"
           isOpen={this.state.openPanel}
           type={PanelType.extraLarge}
-
           componentRef={this.panelRef}
-
           onRenderHeader={this.onRenderNavigationContent}
           hasCloseButton={false}
           className="gdcPanel"
@@ -692,7 +692,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               }
               {this.state.showErrorMessage
                 ? <MessageBar
-                className="requireMessage"
+                  className="requireMessage"
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
                 >Please complete the required fields
@@ -700,8 +700,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
-                  onClick={() => {
-
+                  onClick={(e) => {
                     this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
                     this.requiredHasValues = true; this.submitForm("add");
                   }} />
@@ -844,16 +843,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     ...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
                   } : ""}
               </Label>
-
               <ReactQuill
                 placeholder={ele.placeholder}
-
                 className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div >
         );
-
       case "PeoplePickerInput":
         return (
           <div className={ele.className}>

@@ -332,6 +332,9 @@ input[type="file"] {
   .gdcAddButton:disabled {
     background-color: rgba(8, 8, 8, 0.3);
   }
+  .gdcAddButton:disabled:hover {
+    background-color: rgba(8, 8, 8, 0.3);
+  }
 
   .gdcAddButton:hover {
     background-color: #1D1D1D;
