@@ -480,19 +480,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public updateFormFields(option) {
     Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
-      var jsonData = JSON.parse(data.JSON);
-
-      this.setState({
-        formFields: jsonData,
-        showMessage: false,
-        showAddButton: true,
-        selectedButton: option,
-        panelHasScroll: true
-      });
-      // if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
-      //   this.setState({
-      //     panelHasScroll: true
-      //   });
+      if (data != null) {
+        var jsonData = JSON.parse(data.JSON);
+        this.setState({
+          formFields: jsonData,
+          showMessage: false,
+          showAddButton: true,
+          selectedButton: option,
+          panelHasScroll: true,
+          showErrorMessage: false,
+        });
+      }
+      else {
+        this.setState({
+          formFields: metaData,
+          showMessage: false,
+          showAddButton: false,
+          selectedButton: option,
+          panelHasScroll: true,
+          showErrorMessage: false
+        });
+      }
     });
   }
 
@@ -630,7 +638,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         <div className="gdcMessage">
           {this.state.showMessage
             ?
-             <MessageBar
+            <MessageBar
               messageBarType={MessageBarType.success}
               isMultiline={false}
             >

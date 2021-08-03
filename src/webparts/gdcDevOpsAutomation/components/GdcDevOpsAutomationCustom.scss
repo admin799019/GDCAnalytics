@@ -344,11 +344,13 @@ input[type="file"] {
   }
 .headerButton{
   margin-right:14px;
+  border-radius: 15px;
 }
 .selectedButton{
   margin-right:14px;
   background-color: #1D1D1D;
   color:white;
+  border-radius: 15px;
 }
 .headerButton::selection{
   background-color: #1D1D1D;
