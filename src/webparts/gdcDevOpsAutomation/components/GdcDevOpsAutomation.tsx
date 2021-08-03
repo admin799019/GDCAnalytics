@@ -355,6 +355,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             "value": `Operational Framework Test\\` + Area.value
           });
         }
+        else {
+          let pathPrefix="Operational Framework Test\\Channel Analytics\\"
+          APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value=(pathPrefix.concat( APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value))
+          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value,"hello from areapath");
+        }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
           "op": "add",
@@ -687,6 +692,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               }
               {this.state.showErrorMessage
                 ? <MessageBar
+                className="requireMessage"
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
                 >Please complete the required fields
