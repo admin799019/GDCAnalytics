@@ -54,12 +54,12 @@
 
 .gdcGridCol6 {
   @include ms-sm6;
-  min-height: 125px;
+  min-height: 105px;
 }
 
 .gdcGridCol12 {
   @include ms-sm12;
-  min-height: 125px;
+  min-height: 105px;
 }
 
 /* Grid end */
@@ -140,7 +140,9 @@
 }
 
 /* Radio Button End */
+
 /*SwitchInput*/
+
 .gdcSwitchInput{
   margin-top:8px;
   
@@ -157,12 +159,21 @@
     margin-top:2px;
   }
 }
+
+/* Switch Input end */
+
+.gdcMessage {
 .ms-MessageBar{
   position: fixed;
-    top: 110px;
-    width:90%;
+    top: 60px;
+    width: 370px;
+    right: 5px;
 
 }
+}
+
+
+
 .peoplepicker{
   margin-top:8px;
   .ms-BasePicker-text{
@@ -398,11 +409,11 @@ input[type="file"] {
     display: inline-block;
   }
   .gdcerror {
-    color: rgb(84, 38, 44);
+    color: rgb(168,0,0);
   }
 
   .gdcStar {
-    color: rgb(84, 38, 44);
+    color: rgb(168,0,0);
   }
 
   .gdcPaddingBottom15 {

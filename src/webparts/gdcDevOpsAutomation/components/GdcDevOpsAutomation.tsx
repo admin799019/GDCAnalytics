@@ -184,7 +184,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
         }
-         else if (value != "" || value != "<p><br></p>") {
+        else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
 
@@ -195,7 +195,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         if (field.fieldType == "SingleLineTextInput" && value.length >= 255) {
           field.value = field.value;
         }
-        
+
         if (field.fieldType == "SwitchInput") {
           field.checked = value == true ? true : false;
           field.value = value;
@@ -368,7 +368,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         });
         APIData = APIData.concat(this.AttachmentAPI);
         this.props.devOpsService.addfeature(APIData).then((data) => {
-          if(data.id != null) {
+          if (data.id != null) {
             this.setState({
               formFields: metaData,
               formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
@@ -381,14 +381,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             });
             setTimeout(function () {
               this.setState({ showMessage: false });
-            }.bind(this), 10000);
-            // this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
-            //   let emails: any = [];
-            //   emailData.value.forEach(element => {
-            //     emails.push(element.identity.uniqueName);
-            //   });
-            //   this.props.spService.sendEmail(Area.value, emails, data.id);
-            // });
+            }.bind(this), 5000);
+            this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
+              let emails: any = [];
+              emailData.value.forEach(element => {
+                emails.push(element.identity.uniqueName);
+              });
+              this.props.spService.sendEmail(Area.value, emails, data.id);
+            });
             Area.value = "";
           }
           else {
@@ -404,10 +404,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             });
             setTimeout(function () {
               this.setState({ showMessage: false });
-            }.bind(this), 10000);
+            }.bind(this), 5000);
             Area.value = "";
           }
-          
+
         });
       }
       else {
@@ -795,6 +795,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             <DatePicker
               allowTextInput
+              isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date" className=""
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.field)}
@@ -807,12 +808,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <Toggle
-               {...ele.checked?{className:"gdcSwitchInput black"}:{className:"gdcSwitchInput"}}
+                {...ele.checked ? { className: "gdcSwitchInput black" } : { className: "gdcSwitchInput" }}
                 //className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                 onChange={(e, c) => this.handleChange(c, ele.field)}
                 checked={ele.checked}
-                   
+
               />
             </div>
 
@@ -869,10 +870,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
-           <p> {ele.placeholder}</p>
+              <p> {ele.placeholder}</p>
               <div className="fileInput" >
                 <Label htmlFor="file-upload" className="custom-file-upload">
-                
+
                   <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
