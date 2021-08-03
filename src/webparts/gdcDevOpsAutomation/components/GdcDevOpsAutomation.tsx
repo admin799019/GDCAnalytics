@@ -562,7 +562,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         });
       };
     });
-    if (count == 0 && !richTextCallSent) {
+    if (count == 0 && !richTextCallSent && this.state.files.length == 0) {
       console.log("files - ", this.AttachmentAPI);
       this.UpdateRichTextFields();
       richTextCallSent = true;
