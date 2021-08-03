@@ -10,7 +10,7 @@
 }
 .quill > .ql-container > .ql-editor.ql-blank{
 
-  margin:-5px ;
+  margin-left:-7px;
   
 }
 .ql-editor {
@@ -133,6 +133,10 @@
     font-weight: 500;
    font-size: 14px;
   }
+  .ms-ChoiceField-field::after{
+    border-color: black;
+    background: black;
+  }
 }
 
 /* Radio Button End */
@@ -144,10 +148,20 @@
     margin-top:2px;
   }
 }
+.black{
+
+  .ms-Toggle-background{
+  background: black;
+}
+  .ms-Toggle-innerContainer{
+    margin-top:2px;
+  }
+}
 .ms-MessageBar{
   position: fixed;
-    top: 100px;
+    top: 110px;
     width:90%;
+
 }
 .peoplepicker{
   margin-top:8px;
@@ -230,6 +244,12 @@ input[type="file"] {
 
 .filepicker {
   margin-top: 25px;
+
+}
+.filepicker > p {
+  font-weight:500;
+  
+  
 }
 
 .fileInput {

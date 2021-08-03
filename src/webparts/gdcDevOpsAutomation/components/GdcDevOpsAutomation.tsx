@@ -183,7 +183,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         i = index;
         if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
-        } else if (value != "" || value != "<p><br></p>") {
+        }
+         else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
 
@@ -806,10 +807,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <Toggle
-                className="gdcSwitchInput"
+               {...ele.checked?{className:"gdcSwitchInput black"}:{className:"gdcSwitchInput"}}
+                //className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                 onChange={(e, c) => this.handleChange(c, ele.field)}
                 checked={ele.checked}
+                   
               />
             </div>
 
@@ -866,8 +869,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
+           <p> {ele.placeholder}</p>
               <div className="fileInput" >
                 <Label htmlFor="file-upload" className="custom-file-upload">
+                
                   <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
