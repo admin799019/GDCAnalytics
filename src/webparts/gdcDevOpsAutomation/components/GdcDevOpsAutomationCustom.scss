@@ -143,10 +143,16 @@
 /*SwitchInput*/
 .gdcSwitchInput{
   margin-top:8px;
- 
-  .pill{
-    background: black;
+  
+  .ms-Toggle-innerContainer{
+    margin-top:2px;
   }
+}
+.black{
+
+  .ms-Toggle-background{
+  background: black;
+}
   .ms-Toggle-innerContainer{
     margin-top:2px;
   }
