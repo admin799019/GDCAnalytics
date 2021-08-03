@@ -161,10 +161,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-
-
-    // this.props.devOpsService.getLatestVer(304).then((data) => { console.log(data); });
-    // this.props.devOpsService.FilterWorkItems();
   }
 
   public handleChange(value: any, name) {
@@ -369,6 +365,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         APIData = APIData.concat(this.AttachmentAPI);
         this.props.devOpsService.addfeature(APIData).then((data) => {
           if(data.id != null) {
+            console.log("id succesfull mesage")
             this.setState({
               formFields: metaData,
               formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
@@ -633,7 +630,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       <div className="gdcBorder ">
         <div className="gdcMessage">
           {this.state.showMessage
-            ? <MessageBar
+            ?
+             <MessageBar
               messageBarType={MessageBarType.success}
               isMultiline={false}
             >
