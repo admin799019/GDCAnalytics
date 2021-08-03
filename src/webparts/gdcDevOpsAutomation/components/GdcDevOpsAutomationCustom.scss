@@ -208,6 +208,16 @@ height:40px;
 
 /* MultiLine End */
 
+/* Switch input */
+
+.gdcSwitchInput {
+  .ms-Toggle-background:focus {
+    background: black;
+  }
+}
+
+/* Switch input End */
+
 /* File Picker */
 
 input[type="file"] {

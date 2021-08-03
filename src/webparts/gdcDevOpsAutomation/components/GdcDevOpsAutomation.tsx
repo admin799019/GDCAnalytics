@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './GdcDevOpsAutomation.module.scss';
 import CustomStyles from './GdcDevOpsAutomation.module.scss';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
@@ -55,8 +54,6 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
-var base64file1;
-var defvaldd: any = [];
 const Area = {
   "field": "Analytics Area",
   "fieldType": "SingleSelectInput",
@@ -176,16 +173,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       formFields: stateValues,
     });
-    // console.log(this.panelRef.current._scrollableContent.clientHeight, this.panelRef.current._scrollableContent.scrollHeight);
-    if (!this.state.panelHasScroll && this.panelRef.current._scrollableContent.scrollHeight > this.panelRef.current._scrollableContent.clientHeight)
-      this.setState({
-        panelHasScroll: true
-      });
-
-
-    this.setState({
-      formFields: stateValues,
-    });
   }
 
   public appendValues(stateValues, value: any, name) {
@@ -194,13 +181,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     stateValues.map((field: MetaDataType, index) => {
       if (field.field == name) {
         i = index;
-        // if (field.fieldType != "MultiLineTextInput") {
-        if (value == "" || value == " " || value == "<p><br></p>" || value.trim() == "" && field.required == true) {
+        if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
         } else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
-        // }
 
         if (field.fieldType == "SingleLineTextInput" && value == " ") {
           field.value = "";
@@ -209,8 +194,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         if (field.fieldType == "SingleLineTextInput" && value.length >= 255) {
           field.value = field.value;
         }
-        else if (field.fieldType == "SwitchInput") {
-          field.checked = value;
+        
+        if (field.fieldType == "SwitchInput") {
+          field.checked = value == true ? true : false;
           field.value = value;
         }
         // else if (field.fieldType == "MultiLineTextInput") {
@@ -364,12 +350,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.appendAPI(this.state.formFields, APIData).then(async dataReturned => {
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
-        APIData.push({
-          "op": "add",
-          "path": "/fields/System.AreaPath",
-          "from": null,
-          "value": `Operational Framework Test\\` + Area.value
-        });
+        if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
+          APIData.push({
+            "op": "add",
+            "path": "/fields/System.AreaPath",
+            "from": null,
+            "value": `Operational Framework Test\\` + Area.value
+          });
+        }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
           "op": "add",
@@ -379,28 +367,46 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         });
         APIData = APIData.concat(this.AttachmentAPI);
         this.props.devOpsService.addfeature(APIData).then((data) => {
-          this.setState({
-            formFields: metaData,
-            formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
-            showMessage: true,
-            showAddButton: false,
-            openPanel: false,
-            disableSubmitButton: false,
-            showErrorMessage: false
-          });
-          setTimeout(function () {
-            this.setState({ showMessage: false });
-          }.bind(this), 5000);
-          this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
-            let emails: any = [];
-            emailData.value.forEach(element => {
-              emails.push(element.identity.uniqueName);
+          if(data.id != null) {
+            this.setState({
+              formFields: metaData,
+              formSuccessMessage: "New User Story has been created successfully with ID " + data.id,
+              showMessage: true,
+              showAddButton: false,
+              openPanel: false,
+              disableSubmitButton: false,
+              showErrorMessage: false,
+              panelHasScroll: false
             });
-            this.props.spService.sendEmail(Area.value, emails, data.id);
-          }).catch(err => {
-            console.log("teams err", err);
-          });
-          Area.value = "";
+            setTimeout(function () {
+              this.setState({ showMessage: false });
+            }.bind(this), 10000);
+            // this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
+            //   let emails: any = [];
+            //   emailData.value.forEach(element => {
+            //     emails.push(element.identity.uniqueName);
+            //   });
+            //   this.props.spService.sendEmail(Area.value, emails, data.id);
+            // });
+            Area.value = "";
+          }
+          else {
+            this.setState({
+              formFields: metaData,
+              formSuccessMessage: "Error occured while processing your request. Please try again.",
+              showMessage: true,
+              showAddButton: false,
+              openPanel: false,
+              disableSubmitButton: false,
+              showErrorMessage: false,
+              panelHasScroll: false
+            });
+            setTimeout(function () {
+              this.setState({ showMessage: false });
+            }.bind(this), 10000);
+            Area.value = "";
+          }
+          
         });
       }
       else {
@@ -442,15 +448,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         tempDesc = tempDesc.concat("<div><b>", field.field, "</b></div><div>", field.value, "</div></br>");
         this.DescriptionData = this.DescriptionData.concat(tempDesc);
       }
-      // else if(field.devopsName=="System.AreaPath")
-      // {
-      //   APIData.push({
-      //     "op": "add",
-      //     "path": "/fields/" + field.devopsName,
-      //     "from": null,
-      //     "value": field.value
-      //   });
-      // }
       if (field.devopsName != "System.Description" && field.devopsName != "Attachments") {
         APIData.push({
           "op": "add",
@@ -580,20 +577,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public onRenderNavigationContent(props, defaultRender) {
     return (
-      <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeader" } : { className: "gdcPanelHeader" }}>
+      <div className={this.state.panelHasScroll ? "gdcScrollPanelHeader" : "gdcPanelHeader"}>
         {/* <Logo /> */}
         {/* <div id="gdclogoId"></div> */}
         {/* <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" /> */}
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderText" } : { className: "gdcPanelHeaderText" }}> GDC Intake Form </div>
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses1" } : { className: "gdcPanelHeaderEllipses1" }}></div>
-        <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelHeaderEllipses2" } : { className: "gdcPanelHeaderEllipses2" }}></div>
-        {/* 
-      <div className="gdcPanelHeader" >
-        <div className="gdcPanelHeaderText" > GDC Intake Form </div>
-        <div className="gdcPanelHeaderEllipses1" ></div>
-        <div className="gdcPanelHeaderEllipses2" ></div> */}
-        {/* <div {...this.state.panelHasScroll ? { className: "gdcScrollPanelCloseButton" } : { className: "gdcPanelCloseButton" }}> */}
-        <div {...this.state.panelHasScroll ? { className: "gdcPanelCloseButton" } : { className: "gdcScrollPanelCloseButton" }}>
+        <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div>
+        <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses1" : "gdcPanelHeaderEllipses1"}></div>
+        <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses2" : "gdcPanelHeaderEllipses2"}></div>
+
+        <div className={this.state.panelHasScroll ? "gdcPanelCloseButton" : "gdcScrollPanelCloseButton"}>
           <Link onClick={(e) => { this.setState({ panelHasScroll: false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
             <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
           </Link>
@@ -812,7 +804,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "SwitchInput":
         return (
           <React.Fragment>
-
             <div className={ele.className}>
               <Toggle
                 className="gdcSwitchInput"
@@ -876,7 +867,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
               <div className="fileInput" >
-
                 <Label htmlFor="file-upload" className="custom-file-upload">
                   <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
                 </Label>

@@ -11,6 +11,7 @@ import "@pnp/graph/users";
 import { MSGraphClientFactory } from '@microsoft/sp-http';
 
 import { ISPService } from "./ISPService";
+import { IEmailProperties } from "@pnp/sp/sputilities";
 
 export class SPService implements ISPService {
     private _pageContext: PageContext;
@@ -62,12 +63,13 @@ export class SPService implements ISPService {
         var url = "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test/_workitems/edit/" + id;
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
-        sp.utility.sendEmail({
-            Body: 'A New User Story has been submitted under ' + area + '. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
+
+        var emailProps: IEmailProperties = {
+            Body: 'A New User Story has been submitted under ' + area + ' area. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
             Subject: 'New User Story has been Submitted',
-            //Array of string for To of Email  
             To: emails,
-        }).then((i) => {
+        };
+        sp.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);
