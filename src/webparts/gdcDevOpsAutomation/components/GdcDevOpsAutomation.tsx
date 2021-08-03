@@ -194,13 +194,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     stateValues.map((field: MetaDataType, index) => {
       if (field.field == name) {
         i = index;
-        // if (field.fieldType != "MultiLineTextInput") {
-        if (value == "" || value == " " || value == "<p><br></p>" || value.trim() == "" && field.required == true) {
+         if (field.fieldType != "SwitchInput") {
+        if (value == "" || value == " " || value == "<p><br></p>" || value.trim() == ""  && field.required == true) {
           field.showError = true;
-        } else if (value != "" || value != "<p><br></p>") {
+        }
+         else if (value != "" || value != "<p><br></p>") {
           field.showError = false;
         }
-        // }
+     }
 
         if (field.fieldType == "SingleLineTextInput" && value == " ") {
           field.value = "";
@@ -364,12 +365,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.appendAPI(this.state.formFields, APIData).then(async dataReturned => {
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
+      if(Area.value=="Data Services"){
         APIData.push({
           "op": "add",
           "path": "/fields/System.AreaPath",
           "from": null,
           "value": `Operational Framework Test\\` + Area.value
         });
+      }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
           "op": "add",
@@ -815,10 +818,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
             <div className={ele.className}>
               <Toggle
+                {this.state.formFields[]}
                 className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                 onChange={(e, c) => this.handleChange(c, ele.field)}
                 checked={ele.checked}
+                   
               />
             </div>
 
@@ -875,9 +880,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " filepicker"}>
+           <p> {ele.placeholder}</p>
               <div className="fileInput" >
-
+          
                 <Label htmlFor="file-upload" className="custom-file-upload">
+                
                   <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
