@@ -427,6 +427,11 @@ input[type="file"] {
     z-index: 99;
     padding: 5px;
   }
+  .requireMessage{
+    position: fixed;
+    top:110px;
+    width: 90%
+  }
 
 
 /* GDC Panel */

@@ -21,31 +21,31 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
-                "key": "Operational Framework Test\\Channel Analytics\\Demand Response",
+                "key": "Demand Response",
                 "text": "Demand Response"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\Global Programs",
+                "key": "Global Programs",
                 "text": "Global Programs"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\Partner",
+                "key": "Partner",
                 "text": "Partner"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\Paid Acquisition",
+                "key": "Paid Acquisition",
                 "text": "Paid Acquisition"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\GEP Analytics",
+                "key": "GEP Analytics",
                 "text": "GEP Analytics"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\LFQ",
+                "key": "LFQ",
                 "text": "LFQ"
             },
             {
-                "key": "Operational Framework Test\\Channel Analytics\\Relationship Marketing",
+                "key": "Relationship Marketing",
                 "text": "Relationship Marketing"
             }
         ],
@@ -55,7 +55,7 @@ const ChannelAnalyticsMetaData = [
         "devopsName": "System.AreaPath",
         "subFields": [
             {
-                "option": "Operational Framework Test\\Channel Analytics\\Relationship Marketing",
+                "option": "Relationship Marketing",
                 "fields": [
                     {
                         "field": "POD Category",
