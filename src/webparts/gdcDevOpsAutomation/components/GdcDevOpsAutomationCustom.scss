@@ -125,6 +125,7 @@
 
 .gdcRadioButton {
   margin-top: 2px;
+  white-space: nowrap;
   .ms-ChoiceFieldGroup-flexContainer{
     display: "flex"
   }
@@ -143,13 +144,15 @@
 /*SwitchInput*/
 .gdcSwitchInput{
   margin-top:8px;
-  
+  // .ms-Toggle-background:focus{
+  //   background:white;
+  // }
   .ms-Toggle-innerContainer{
     margin-top:2px;
   }
 }
 .black{
-
+ 
   .ms-Toggle-background{
   background: black;
 }
