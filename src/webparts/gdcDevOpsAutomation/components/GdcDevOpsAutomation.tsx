@@ -110,6 +110,7 @@ export interface IDevOpsState {
   disableSubmitButton: boolean;
   showErrorMessage: boolean;
   panelHasScroll: boolean;
+  attachmentsName:string[]
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -139,6 +140,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       disableSubmitButton: false,
       showErrorMessage: false,
       panelHasScroll: false,
+      attachmentsName:[]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -512,12 +514,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public onFileUpload(e) {
     e.preventDefault();
     var files: any = [];
-
+    let names:string[]=this.state.attachmentsName;
     for (let f = 0; f < e.target.files.length; f++) {
+      console.log(e.target.files[f].name,"file")
       files.push(e.target.files[f]);
+      names.push(e.target.files[f].name)
     }
     this.setState({
-      files: files
+      files: files,
+      attachmentsName:names
     });
   }
 
@@ -844,6 +849,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   } : ""}
               </Label>
               <ReactQuill
+               preserveWhitespace={true}
                 placeholder={ele.placeholder}
                 className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -888,6 +894,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   multiple
                   onChange={e => this.onFileUpload(e)} />
               </div>
+              <div className="attachmentNames">{this.state.attachmentsName.map((n)=>{
+                return(<p>{n}</p>)
+              })}</div>
             </div>
           </React.Fragment>
         );
