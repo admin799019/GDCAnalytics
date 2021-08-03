@@ -256,6 +256,12 @@ input[type="file"] {
 .attachmentNames{
 font-size:12px;
 }
+.attachmentNames > label{
+  font-size:12px;
+  display: block;
+  margin-top:4px;
+  
+  }
 .fileInput {
   cursor: pointer;
   // color: #036c70;
