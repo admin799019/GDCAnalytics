@@ -303,7 +303,7 @@ const ChannelAnalyticsMetaData = [
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
-                        "placeholder":"Implementation Guidance(Attachments)",
+                        "placeholder":"Please provide attachments or screenshots to support your request",
                         "value": "",
                         "required": false,
                         "errorMessage": "",
@@ -439,7 +439,7 @@ const ChannelAnalyticsMetaData = [
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
-                        "placeholder":"Implementation Guidance(Attachments)",
+                        "placeholder":"Please provide attachments or screenshots to support your request",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments"
