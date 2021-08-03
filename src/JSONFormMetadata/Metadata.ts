@@ -1,18 +1,6 @@
-export const metaData = [
+export const metaData = [];
 
-    // {
-    //     "field": "Is this Request Urgent",
-    //     "fieldType": "SwitchInput",
-    //     "label": "Is this Request Urgent",
-    //     "placeholder": "",
-    //     "className": "fields",
-    //     "helperText": "MuSwitchInput",
-    //     "options": null,
-    //     "value": ""
-    // }
-];
-
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =  [
     {
         "field": "What area of Channel Analytics is your request for?",
         "fieldType": "SingleSelectInput",
@@ -77,8 +65,8 @@ const ChannelAnalyticsMetaData = [
                                 "text": "BizApps"
                             },
                             {
-                                "key": "Commercial",
-                                "text": "Commercial"
+                                "key": "M365 Commercial",
+                                "text": "M365 Commercial"
                             }
                         ],
                         "value": "",
@@ -203,7 +191,7 @@ const ChannelAnalyticsMetaData = [
     {
         "field": "What type of request is this?",
         "fieldType": "RadioButtonInput",
-        "label": "What Type of request is this?",
+        "label": "What type of request is this?",
         "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
         "options": [
             {
@@ -217,7 +205,7 @@ const ChannelAnalyticsMetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "Request fieldType is required",
+        "errorMessage": "Request type is required",
         "devopsName": "Custom.RequestType",
         "subFields": [
             {
@@ -227,10 +215,10 @@ const ChannelAnalyticsMetaData = [
                         "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
-                        "helperText":"Please Enter the Title of your Request",
+                        "helperText":"Please enter the title of your request",
                         "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Title"
@@ -238,7 +226,7 @@ const ChannelAnalyticsMetaData = [
                     {
                         "field": "What is the business question you are trying to answer?",
                         "fieldType": "MultiLineTextInput",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "label": "What is the business question you are trying to answer?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -291,7 +279,7 @@ const ChannelAnalyticsMetaData = [
                         "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
@@ -319,7 +307,7 @@ const ChannelAnalyticsMetaData = [
                         "field": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -330,7 +318,7 @@ const ChannelAnalyticsMetaData = [
                     {
                         "field": "Please provide detailed requirements for this request.",
                         "fieldType": "MultiLineTextInput",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "label": "Please provide detailed requirements for this request.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -342,7 +330,7 @@ const ChannelAnalyticsMetaData = [
                     {
                         "field": "What is the business impact if this request is not committed?",
                         "fieldType": "MultiLineTextInput",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "label": "What is the business impact if this request is not committed?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
@@ -353,7 +341,7 @@ const ChannelAnalyticsMetaData = [
                     {
                         "field": "What business objective does this request map to?",
                         "fieldType": "SingleLineTextInput",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "label": "What business objective does this request map to?",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
@@ -426,7 +414,7 @@ const ChannelAnalyticsMetaData = [
                         "fieldType": "MultiLineTextInput",
                         "label": "Are there any other details or dependencies that the team should be aware of?",
                         "className": "gdcGridCol gdcGridCol12",
-                        "placeholder":"Enter the text here",
+                        "placeholder":"Enter your text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
                         "value": "",
                         "required": false,
@@ -593,15 +581,15 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Requested Completion Date",
+                        "field": "Need By Date",
                         "fieldType": "DateInput",
-                        "label": "Requested Completion Date",
+                        "label": "Need By Date",
                         "placeholder": "Select the date",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
-                        "devopsName": "Custom.RequestedCompletionDate"
+                        "devopsName": "System.Description"
                     },
                     {
                         "field": "Please provide attachments or screenshots to support your request",
@@ -683,15 +671,15 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.IsThisRequestUrgent"
                     },
                     {
-                        "field": "Requested Completion Date",
+                        "field": "Need By Date",
                         "fieldType": "DateInput",
-                        "label": "Requested Completion Date",
+                        "label": "Need By Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
-                        "devopsName": "Custom.RequestedCompletionDate"
+                        "devopsName": "System.Description"
                     },
                     {
                         "field": "Please provide attachments or screenshots to support your request",
