@@ -3,7 +3,7 @@ import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOpt
 import { SPHttpClient } from "@microsoft/sp-http";
 
 import { IDevOpsService } from "./IDevOpsService";
-import { OrganizationConfig } from "../JSONFormMetadata/FormDataMapping";
+import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 
 export class DevOpsService implements IDevOpsService {
 

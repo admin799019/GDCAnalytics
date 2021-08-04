@@ -515,8 +515,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var files: any = [];
 
     for (let f = 0; f < e.target.files.length; f++) {
-      console.log(e.target.files[f].name,"file")
-      files.push(e.target.files[f].name);
+      files.push(e.target.files[f]);
     }
     this.setState({
       files: files,
@@ -846,7 +845,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   } : ""}
               </Label>
               <ReactQuill
-               preserveWhitespace={true}
+                defaultValue={ele.value}
+                preserveWhitespace={true}
                 placeholder={ele.placeholder}
                 className="gdcMultiLine" onChange={(data) => this.handleChange(data, ele.field)} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -891,9 +891,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   multiple
                   onChange={e => this.onFileUpload(e)} />
               </div>
-              <div className="attachmentNames">{this.state.files.map((n)=>{
-                console.log(n);
-                return(<label>{n}</label>)
+              <div className="attachmentNames">{this.state.files.map((n:any) => {
+                return (<label>{n.name}</label>);
               })}</div>
             </div>
           </React.Fragment>

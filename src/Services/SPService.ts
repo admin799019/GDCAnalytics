@@ -12,7 +12,7 @@ import { MSGraphClientFactory } from '@microsoft/sp-http';
 import { IEmailProperties } from "@pnp/sp/sputilities";
 
 import { ISPService } from "./ISPService";
-import { OrganizationConfig } from "../JSONFormMetadata/FormDataMapping";
+import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 
 export class SPService implements ISPService {
     private _pageContext: PageContext;

@@ -416,7 +416,7 @@ const ChannelAnalyticsMetaData =  [
                         "className": "gdcGridCol gdcGridCol12",
                         "placeholder":"Enter your text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
-                        "value": "",
+                        "value": "aa",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "System.Description"
