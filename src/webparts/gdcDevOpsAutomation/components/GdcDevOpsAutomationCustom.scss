@@ -1,10 +1,22 @@
 @import '~office-ui-fabric-react/dist/sass/_References.scss';
 
 .requiredred{
-  border:1px solid red;
+  //border:1px solid red;
+  .ql-toolbar.ql-snow {
+  border-left: 1px solid red !important;
+    border-right: 1px solid red !important;
+    border-top: 1px solid red !important;
+  }
+
+  .ql-container.ql-snow {
+  border-top: 0;
+  border-left: 1px solid red !important;
+  border-right: 1px solid red !important;
+  border-bottom: 1px solid red !important;
+  }
 }
 .requiredreddrop{
-  .ms-Dropdown{
+  .ms-Dropdown-title{
   border:1px solid red  !important;
   }
   .ms-TextField-fieldGroup{
@@ -254,9 +266,10 @@ margin-top:0px;
 }
 
 /* MultiLine End */
-
 /* File Picker */
-
+.errorclosebutton{
+  position:relative;
+}
 input[type="file"] {
   display: none;
 }

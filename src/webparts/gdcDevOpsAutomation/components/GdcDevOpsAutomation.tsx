@@ -778,8 +778,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   className="requireMessage"
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
-                >Please complete the required fields
-                </MessageBar>
+                >Please complete the required fields.
+                <Icon iconName="ErrorBadge" title="closebutton" className="errorclosebutton" onClick={(e)=>{
+                  this.setState({showErrorMessage:false})
+                }} />
+                            </MessageBar>
                 : <div></div>}
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
