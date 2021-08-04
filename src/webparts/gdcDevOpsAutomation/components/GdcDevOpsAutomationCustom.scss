@@ -1,14 +1,14 @@
 @import '~office-ui-fabric-react/dist/sass/_References.scss';
 
 .requiredred{
-  border:2px solid red;
+  border:1px solid red;
 }
 .requiredreddrop{
   .ms-Dropdown{
-  border:2px solid red  !important;
+  border:1px solid red  !important;
   }
   .ms-TextField-fieldGroup{
-    border:2px solid red  !important;
+    border:1px solid red  !important;
   }
 }
 /* react quill toolbar */

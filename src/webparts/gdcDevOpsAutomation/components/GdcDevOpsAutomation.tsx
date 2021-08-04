@@ -340,7 +340,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
-  public addUserStory() {
+  public  addUserStory() {
     var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
     var teamDetails: any;
@@ -545,7 +545,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     let count: number = 0;
     var FileUploadCalls = [];
     var richTextCallSent: boolean = false;
-    this.state.formFields.map((field: MetaDataType, index) => {
+   
+    this.state.formFields.map(async (field: MetaDataType, index) => {
+      
       if(field.fieldType=="FileInput"){
       field.files.forEach((file: any) => {
       // let file = files[f];
@@ -591,6 +593,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     if (field.subFields.filter(sfo => sfo.active == true).length > 0) {
       field.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
         if(sf.fieldType=="FileInput"){
+         
           sf.files.forEach((file: any) => {
             // let file = files[f];
             let reader = new FileReader();
@@ -607,6 +610,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               // FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
               count = count + 1;
               this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+               
                 console.log(d,"url");
                 FileUploadCalls.push(d);
                 this.AttachmentAPI.push(
@@ -621,7 +625,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     }
                   }
                 });
+                
                 count = count - 1;
+              
                 if (count == 0 && !richTextCallSent) {
                   console.log("files - ", this.AttachmentAPI);
                   this.UpdateRichTextFields();
@@ -639,7 +645,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
     if (count == 0 && !richTextCallSent && this.state.files.length == 0) {
       console.log("files - ", this.AttachmentAPI);
-      this.UpdateRichTextFields();
+      await this.UpdateRichTextFields();
       richTextCallSent = true;
 
     }
