@@ -9,6 +9,7 @@
   }
 .tooltip{
   cursor:pointer;
+  margin-left: 2px;
   .rootHovered {
     background-color: black
   }
@@ -101,6 +102,15 @@
   .ms-Label{
     white-space: nowrap;
   }
+  .questionspan{
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .questionspan:hover{
+    overflow: visible; 
+    white-space: normal;
+  }
+
   .ms-Label::after{
     padding-right:0px;
   }
