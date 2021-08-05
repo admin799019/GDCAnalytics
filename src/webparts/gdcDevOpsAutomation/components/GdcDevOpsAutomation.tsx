@@ -71,7 +71,10 @@ const Area = {
   "value": ""
 };
 const iconStyle=
-  { cursor: 'pointer' }
+  { cursor: 'pointer',
+    rootHovered: {
+    backgroundColor: "black"
+  } }
   
 
 const stackTokens: IStackTokens = {
@@ -88,6 +91,7 @@ const onWrapDefaultLabelRenderer = (
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
         <Icon iconName="Info" 
+       // styles={{}}
        style={iconStyle}
         title={props.name} 
       
