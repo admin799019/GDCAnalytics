@@ -70,6 +70,9 @@ const Area = {
   ],
   "value": ""
 };
+const iconStyle=
+  { cursor: 'pointer' }
+  
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -84,7 +87,12 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info" title={props.name} ariaLabel="value required" />
+        <Icon iconName="Info" 
+       style={iconStyle}
+        title={props.name} 
+      
+       
+        className="tooltip"  ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -691,7 +699,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         <div className={this.state.panelHasScroll ? "gdcPanelCloseButton" : "gdcScrollPanelCloseButton"}>
           <Link onClick={(e) => { this.setState({ panelHasScroll: false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
-            <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
+            <Icon iconName="Cancel" style={iconStyle} className="gdcCloseIcon" /> Close
           </Link>
         </div>
       </div>
@@ -787,7 +795,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   messageBarType={MessageBarType.error}
                   isMultiline={false}
                 >Please complete the required fields.
-                <Icon iconName="ErrorBadge" title="closebutton" className="errorclosebutton" onClick={(e)=>{
+                <Icon iconName="ErrorBadge" title="closebutton" style={iconStyle} className="errorclosebutton" onClick={(e)=>{
                   this.setState({showErrorMessage:false})
                 }} />
                             </MessageBar>
@@ -902,7 +910,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
+            <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
             <DatePicker
               allowTextInput
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
@@ -941,7 +949,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
                   {
-                    ...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
+                    ...  <Icon iconName="Info" className="tooltip" style={iconStyle} title={ele.helperText} ariaLabel="value required" />
                   } : ""}
               </Label>
               <ReactQuill
@@ -986,7 +994,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className="fileInput" >
                 <Label htmlFor="file-upload" className="custom-file-upload">
 
-                  <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
+                  <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
                   id="file-upload"
