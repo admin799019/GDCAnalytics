@@ -70,9 +70,12 @@ const Area = {
   ],
   "value": ""
 };
-const iconStyle =
-  { cursor: 'pointer' }
-
+const iconStyle=
+  { cursor: 'pointer',
+    rootHovered: {
+    backgroundColor: "black"
+  } }
+  
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -87,12 +90,13 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info"
-          style={iconStyle}
-          title={props.name}
-
-
-          className="tooltip" ariaLabel="value required" />
+        <Icon iconName="Info" 
+       // styles={{}}
+       style={iconStyle}
+        title={props.name} 
+      
+       
+        className="tooltip"  ariaLabel="value required" />
       </Stack>
     </>
   );

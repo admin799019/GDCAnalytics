@@ -8,7 +8,10 @@
     border-top: 1px solid rgb(168,0,0) !important;
   }
 .tooltip{
-  cursor:pointer
+  cursor:pointer;
+  .rootHovered {
+    background-color: black
+  }
 }
   .ql-container.ql-snow {
   border-top: 0;

@@ -23,7 +23,10 @@
     @include ms-lgPush1;
   }
   .tooltip{
-    cursor:pointer
+    cursor:pointer;
+    .rootHovered {
+      background-color: black
+    }
   }
   .title {
     @include ms-font-xl;
