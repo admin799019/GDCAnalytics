@@ -197,6 +197,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           field.checked = value == true ? true : false;
           field.value = value;
         }
+
+        // if (field.fieldType == "MultiLineTextInput") {
+        //   var ele = document.createElement('div');
+        //   ele.innerHTML = value;
+        //   console.log("multi", ele.innerText);
+        // }
         // else if (field.fieldType == "MultiLineTextInput") {
         //   var regex = /(<([^>]+)>)/ig;
         //   let hasText = !!value.replace(regex, "").trim().length;
@@ -379,7 +385,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               openPanel: false,
               disableSubmitButton: false,
               showErrorMessage: false,
-              panelHasScroll: false
+              panelHasScroll: false,
+              selectedButton: ""
             });
             setTimeout(function () {
               this.setState({ showMessage: false });
@@ -402,7 +409,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               openPanel: false,
               disableSubmitButton: false,
               showErrorMessage: false,
-              panelHasScroll: false
+              panelHasScroll: false,
+              selectedButton: ""
             });
             setTimeout(function () {
               this.setState({ showMessage: false });
@@ -702,7 +710,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
                 <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
                   onClick={(e) => {
-                    this.setState({ disableSubmitButton: true, showErrorMessage: false, selectedButton: "" });
+                    this.setState({ disableSubmitButton: true, showErrorMessage: false });
                     this.requiredHasValues = true; this.submitForm("add");
                   }} />
                 {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
@@ -891,7 +899,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   multiple
                   onChange={e => this.onFileUpload(e)} />
               </div>
-              <div className="attachmentNames">{this.state.files.map((n:any) => {
+              <div className="attachmentNames">{this.state.files.map((n: any) => {
                 return (<label>{n.name}</label>);
               })}</div>
             </div>
