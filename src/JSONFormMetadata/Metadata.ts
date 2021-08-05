@@ -12,7 +12,7 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =[
     {
         "field": "What area of Channel Analytics is your request for?",
         "fieldType": "SingleSelectInput",
@@ -203,7 +203,7 @@ const ChannelAnalyticsMetaData = [
     {
         "field": "What type of request is this?",
         "fieldType": "RadioButtonInput",
-        "label": "What Type of request is this?",
+        "label": "What type of request is this?",
         "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
         "options": [
             {
@@ -217,7 +217,7 @@ const ChannelAnalyticsMetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "Request fieldType is required",
+        "errorMessage": "Request type is required",
         "devopsName": "Custom.RequestType",
         "subFields": [
             {
@@ -230,7 +230,7 @@ const ChannelAnalyticsMetaData = [
                         "placeholder":"Enter your text here",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
-                        "helperText":"Please Enter the Title of your Request",
+                        "helperText":"Please enter the title of your request",
                         "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Title"
@@ -307,7 +307,8 @@ const ChannelAnalyticsMetaData = [
                         "value": "",
                         "required": false,
                         "errorMessage": "",
-                        "devopsName": "Attachments"
+                        "devopsName": "Attachments",
+                        "files":[]
                     }
                 ],
                 "active": false
@@ -336,6 +337,7 @@ const ChannelAnalyticsMetaData = [
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
+						"questions":["Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)","Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?","Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from."],
                         "devopsName": "System.Description"
                     },
 
@@ -428,7 +430,7 @@ const ChannelAnalyticsMetaData = [
                         "className": "gdcGridCol gdcGridCol12",
                         "placeholder":"Enter your text here",
                         "helperText":"You can inlcude any information,details or any dependencies for the team  ",
-                        "value": "aa",
+                        "value": "",
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "System.Description"
@@ -442,7 +444,8 @@ const ChannelAnalyticsMetaData = [
                         "placeholder":"Please provide attachments or screenshots to support your request",
                         "required": false,
                         "errorMessage": "",
-                        "devopsName": "Attachments"
+                        "devopsName": "Attachments",
+                        "files":[]
                     }
                 ],
                 "active": false
@@ -612,7 +615,8 @@ const DataServicesmetaData = [
                         "placeholder": "Implementation Guidance(Attachments)",
                         "required": false,
                         "errorMessage": "",
-                        "devopsName": "Attachments"
+                        "devopsName": "Attachments",
+                        "files":[]
                     }
                 ],
                 "active": false
@@ -702,7 +706,8 @@ const DataServicesmetaData = [
                         "placeholder": "Implementation Guidance(Attachments)",
                         "required": false,
                         "errorMessage": "",
-                        "devopsName": "Attachments"
+                        "devopsName": "Attachments",
+                        "files":[]
                     }
                 ],
                 "active": false

@@ -1,6 +1,28 @@
 @import '~office-ui-fabric-react/dist/sass/_References.scss';
 
+.requiredred{
+  //border:1px solid red;
+  .ql-toolbar.ql-snow {
+  border-left: 1px solid red !important;
+    border-right: 1px solid red !important;
+    border-top: 1px solid red !important;
+  }
 
+  .ql-container.ql-snow {
+  border-top: 0;
+  border-left: 1px solid red !important;
+  border-right: 1px solid red !important;
+  border-bottom: 1px solid red !important;
+  }
+}
+.requiredreddrop{
+  .ms-Dropdown-title{
+  border:1px solid red  !important;
+  }
+  .ms-TextField-fieldGroup{
+    border:1px solid red  !important;
+  }
+}
 /* react quill toolbar */
 .quill > .ql-container > .ql-editor.ql-blank::before{
   font-style: normal;
@@ -32,7 +54,7 @@
 
   .ql-toolbar.ql-snow {
     border: 1px solid #838383 !important;
-    margin-top:5px;
+   
     .ql-clean{
       display: none;
     }
@@ -194,9 +216,15 @@ height:40px;
   .ms-Label{
     margin-top: 8px;
   }
+  .ms-TextField > span {
+    margin-top:0px;
+  } 
   .ms-DatePicker {
     margin-top: 2px;
     color:black;
+    .statusMessage{
+      margin-top:0px;
+          }
   }
   .ms-TextField-fieldGroup {
     color:black;
@@ -208,6 +236,9 @@ height:40px;
   }
   .ms-TextField-field {
     color: black;
+    .statusMessage{
+margin-top:0px;
+    }
   }
   .ms-TextField-field::placeholder {
     color: black;
@@ -235,9 +266,10 @@ height:40px;
 }
 
 /* MultiLine End */
-
 /* File Picker */
-
+.errorclosebutton{
+  position:relative;
+}
 input[type="file"] {
   display: none;
 }
