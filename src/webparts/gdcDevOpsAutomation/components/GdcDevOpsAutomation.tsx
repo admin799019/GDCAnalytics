@@ -64,15 +64,15 @@ const Area = {
   "helperText": "",
   "options": [
     { "key": "Data Services", "text": "Data Services" },
-    { "key": "Channel Analytics", "text": "Channel Analytics" },
+    { "key": "Business Analytics and Insights", "text": "Business Analytics and Insights" },
     { "key": "Marketing Engagement & Innovation", "text": "Marketing Engagement & Innovation" },
     { "key": "Targeting Enablement & Business Health", "text": "Targeting Enablement & Business Health" }
   ],
   "value": ""
 };
-const iconStyle=
+const iconStyle =
   { cursor: 'pointer' }
-  
+
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -87,12 +87,12 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info" 
-       style={iconStyle}
-        title={props.name} 
-      
-       
-        className="tooltip"  ariaLabel="value required" />
+        <Icon iconName="Info"
+          style={iconStyle}
+          title={props.name}
+
+
+          className="tooltip" ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -215,8 +215,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         //   console.log("multi", ele.innerText);
         // }
         if (field.fieldType == "FileInput") {
-          console.log("inside append values", field)
-          field.files =  field.files.concat(value);
+          console.log("inside append values", field);
+          field.files = field.files.concat(value);
         }
 
         // else if (field.fieldType == "MultiLineTextInput") {
@@ -282,7 +282,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           f.value = mlt;
           this.richTextFieldCalls = this.richTextFieldCalls - 1;
           if (this.richTextFieldCalls == 0) {
-            console.log("updated state", fields);
             this.setState({
               formFields: fields
             });
@@ -300,7 +299,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 this.richTextFieldCalls = this.richTextFieldCalls - 1;
 
                 if (this.richTextFieldCalls == 0) {
-                  console.log("updated state", fields);
                   this.setState({
                     formFields: fields
                   });
@@ -314,7 +312,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
 
     if (this.richTextFieldCalls == 0) {
-      console.log("updated state", fields);
       this.setState({
         formFields: fields
       });
@@ -380,9 +377,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             });
         }
         else {
-          let pathPrefix = "Operational Framework Test\\Channel Analytics\\";
+          let pathPrefix = "Operational Framework Test\\Business Analytics and Insights\\";
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
-          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, "hello from areapath");
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
         APIData.push({
@@ -391,13 +387,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
-        console.log(this.AttachmentAPI, "attachfiles datta")
         APIData = [...APIData, ...this.AttachmentAPI];
 
-        //console.log("hellofrom loop");
         //  APIData=APIData.concat(this.AttachmentAPI[0]);
 
-        console.log(APIData, "apidata final")
+        console.log(APIData, "apidata");
         this.props.devOpsService.addfeature(APIData).then((data) => {
           if (data.id != null) {
             this.setState({
@@ -549,7 +543,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, files, name);
-    console.log(stateValues, "in fileupload");
     this.setState({
       formFields: stateValues
     });
@@ -577,119 +570,75 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       }
     });
     this.setState({
-      formFields : this.state.formFields
-    })
+      formFields: this.state.formFields
+    });
   }
 
   public async AttachFiles(): Promise<any> {
     let count: number = 0;
-    var FileUploadCalls = [];
     var richTextCallSent: boolean = false;
+    var AttachmentFiles;
 
     this.state.formFields.map(async (field: MetaDataType, index) => {
-
       if (field.fieldType == "FileInput") {
-        field.files.forEach((file: any) => {
-          // let file = files[f];
-          let reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onloadend = (data: any) => {
-            let base64 = data.target.result.toString().substring(data.target.result.toString().indexOf('base64,') + 7);
-            const byteCharacters = atob(base64);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray]);
-            // FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
-            count = count + 1;
-            this.props.devOpsService.uploadImage(blob, file.name).then(d => {
-              FileUploadCalls.push(d);
-              this.AttachmentAPI.push(
-                {
-                  "op": "add",
-                  "path": "/relations/-",
-                  "value": {
-                    "rel": "AttachedFile",
-                    "url": d,
-                    "attributes": {
-                      "comment": ""
-                    }
-                  }
-                }
-              );
-              count = count - 1;
-              if (count == 0 && !richTextCallSent) {
-                console.log("files - ", this.AttachmentAPI);
-                this.UpdateRichTextFields();
-                richTextCallSent = true;
-              }
-            });
-          };
-        });
+        AttachmentFiles = field.files;
       }
       if (field.subFields != null && field.subFields.length > 0) {
         if (field.subFields.filter(sfo => sfo.active == true).length > 0) {
           field.subFields.filter(sfo => sfo.active == true)[0].fields.map(async (sf) => {
             if (sf.fieldType == "FileInput") {
-
-              sf.files.forEach((file: any) => {
-                // let file = files[f];
-                let reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onloadend = (data: any) => {
-                  let base64 = data.target.result.toString().substring(data.target.result.toString().indexOf('base64,') + 7);
-                  const byteCharacters = atob(base64);
-                  const byteNumbers = new Array(byteCharacters.length);
-                  for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                  }
-                  const byteArray = new Uint8Array(byteNumbers);
-                  const blob = new Blob([byteArray]);
-                  // FileUploadCalls.push(this.props.devOpsService.uploadImage(blob, file.name));
-                  count = count + 1;
-                  this.props.devOpsService.uploadImage(blob, file.name).then(d => {
-
-                    console.log(d, "url");
-                    FileUploadCalls.push(d);
-                    this.AttachmentAPI.push(
-                      {
-                        "op": "add",
-                        "path": "/relations/-",
-                        "value": {
-                          "rel": "AttachedFile",
-                          "url": d,
-                          "attributes": {
-                            "comment": ""
-                          }
-                        }
-                      });
-
-                    count = count - 1;
-
-                    if (count == 0 && !richTextCallSent) {
-                      console.log("files - ", this.AttachmentAPI);
-                      this.UpdateRichTextFields();
-                      richTextCallSent = true;
-                    }
-                  });
-                };
-              });
+              AttachmentFiles = sf.files;
             }
           });
         }
       }
-
-
-
-      if (count == 0 && !richTextCallSent && this.state.files.length == 0) {
-        console.log("files - ", this.AttachmentAPI);
-        await this.UpdateRichTextFields();
-        richTextCallSent = true;
-
-      }
     });
+
+    if (AttachmentFiles != null && AttachmentFiles.length > 0) {
+      AttachmentFiles.map((file: any) => {
+        count = count + 1;
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = (data: any) => {
+          let base64 = data.target.result.toString().substring(data.target.result.toString().indexOf('base64,') + 7);
+          const byteCharacters = atob(base64);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray]);
+
+          this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+            this.AttachmentAPI.push(
+              {
+                "op": "add",
+                "path": "/relations/-",
+                "value": {
+                  "rel": "AttachedFile",
+                  "url": d,
+                  "attributes": {
+                    "comment": ""
+                  }
+                }
+              });
+            count = count - 1;
+            if (count == 0 && !richTextCallSent) {
+              console.log("files - ", this.AttachmentAPI);
+              this.UpdateRichTextFields();
+              richTextCallSent = true;
+            }
+          });
+        };
+      });
+    }
+
+    if ((count == 0 && !richTextCallSent) || (AttachmentFiles != null && AttachmentFiles.length == 0)) {
+      console.log("files - ", this.AttachmentAPI);
+      this.UpdateRichTextFields();
+      richTextCallSent = true;
+    }
+
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -869,7 +818,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 label={ele.label}
                 className="gdcDropDown"
                 onRenderLabel={onWrapDefaultLabelRenderer}
-                {...ele.showError == true ?{className:"gdcDropDown requiredreddrop"}:{className:"gdcDropDown"}}
+                {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
                 options={ele.options}
@@ -1017,7 +966,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <p> {ele.placeholder}</p>
               <div className="fileInput" >
                 <Label htmlFor="file-upload" className="custom-file-upload">
-
                   <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
@@ -1027,7 +975,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               </div>
               <div className="attachmentNames">{
                 ele.files.map((n: any) => {
-                  return (<div className="gdcAttachmentsname">{n.name}  <Icon iconName="Cancel" onClick={e => { this.onFileDelete(n.name) }} /></div>);
+                  return (
+                    <div className="gdcAttachmentsname">{n.name}
+                      <Icon iconName="Cancel" onClick={e => { this.onFileDelete(n.name); }} />
+                    </div>
+                  );
                 })}</div>
             </div>
           </React.Fragment>
