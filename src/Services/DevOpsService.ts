@@ -1,7 +1,6 @@
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOptions } from "@microsoft/sp-http";
 import { SPHttpClient } from "@microsoft/sp-http";
-
 import { IDevOpsService } from "./IDevOpsService";
 import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 

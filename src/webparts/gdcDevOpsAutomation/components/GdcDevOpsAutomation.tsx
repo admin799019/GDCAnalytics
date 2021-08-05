@@ -70,6 +70,9 @@ const Area = {
   ],
   "value": ""
 };
+const iconStyle=
+  { cursor: 'pointer' }
+  
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -77,14 +80,19 @@ const stackTokens: IStackTokens = {
 };
 
 const onWrapDefaultLabelRenderer = (
-  props: ITextFieldProps,
-  defaultRender: IRenderFunction<ITextFieldProps>,
+  props: any,
+  defaultRender: IRenderFunction<any>,
 ): JSX.Element => {
   return (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span>{defaultRender(props)}</span>
-        <Icon iconName="Info" title={props.name} ariaLabel="value required" />
+        <Icon iconName="Info" 
+       style={iconStyle}
+        title={props.name} 
+      
+       
+        className="tooltip"  ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -716,7 +724,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
           <div className={this.state.panelHasScroll ? "gdcPanelCloseButton" : "gdcScrollPanelCloseButton"}>
             <Link onClick={(e) => { this.setState({ panelHasScroll: false, openPanel: false, formFields: metaData, showAddButton: false, showErrorMessage: false, selectedButton: "" }); }} underline={false}  >
-              <Icon iconName="Cancel" className="gdcCloseIcon" /> Close
+              <Icon iconName="Cancel" style={iconStyle} className="gdcCloseIcon" /> Close
             </Link>
           </div>
         </div>
@@ -860,7 +868,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder={ele.placeholder}
                 label={ele.label}
                 className="gdcDropDown"
-                {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
+                onRenderLabel={onWrapDefaultLabelRenderer}
+                {...ele.showError == true ?{className:"gdcDropDown requiredreddrop"}:{className:"gdcDropDown"}}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
                 options={ele.options}
@@ -925,6 +934,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+            <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
             <DatePicker
               allowTextInput
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
@@ -963,7 +973,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
                   {
-                    ...  <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
+                    ...  <Icon iconName="Info" className="tooltip" style={iconStyle} title={ele.helperText} ariaLabel="value required" />
                   } : ""}
               </Label>
               <ReactQuill
@@ -1008,7 +1018,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className="fileInput" >
                 <Label htmlFor="file-upload" className="custom-file-upload">
 
-                  <Icon iconName="Attach" className="gdcAttachIcon" /> Add attachment
+                  <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
                   id="file-upload"

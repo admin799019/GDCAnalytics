@@ -7,7 +7,9 @@
     border-right: 1px solid rgb(168,0,0) !important;
     border-top: 1px solid rgb(168,0,0) !important;
   }
-
+.tooltip{
+  cursor:pointer
+}
   .ql-container.ql-snow {
   border-top: 0;
   border-left: 1px solid rgb(168,0,0) !important;
@@ -96,6 +98,9 @@
   .ms-Label{
     white-space: nowrap;
   }
+  .ms-Label::after{
+    padding-right:0px;
+  }
  .ms-TextField-fieldGroup{
    height:40px !important;
    line-height: 35px;
@@ -117,6 +122,9 @@
   margin-top:8px;
   .ms-Label{
     white-space: nowrap;
+  }
+  .ms-Label::after{
+    padding-right: 0px;
   }
   .ms-Dropdown-caretDownWrapper{
     line-height: 37px;
@@ -213,9 +221,13 @@ height:40px;
   color: black;
 }
 .gdcDateInput {
+  display: inline-block;
   .ms-Label{
     margin-top: 8px;
+    white-space: nowrap;
+    display: inline-block;
   }
+  white-space: nowrap;
   .ms-TextField > span {
     margin-top:0px;
   } 

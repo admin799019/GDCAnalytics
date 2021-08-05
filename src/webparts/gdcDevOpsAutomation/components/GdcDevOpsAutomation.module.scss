@@ -22,7 +22,9 @@
     @include ms-xlPush2;
     @include ms-lgPush1;
   }
-
+  .tooltip{
+    cursor:pointer
+  }
   .title {
     @include ms-font-xl;
     @include ms-fontColor-white;
