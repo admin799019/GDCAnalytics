@@ -105,6 +105,10 @@
   .questionspan{
     text-overflow: ellipsis;
     overflow: hidden;
+    
+    .ms-Label{
+      display: inline;
+    }
   }
   .questionspan:hover{
     overflow: visible; 
