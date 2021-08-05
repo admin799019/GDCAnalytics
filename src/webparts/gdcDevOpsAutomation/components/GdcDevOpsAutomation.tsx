@@ -100,7 +100,10 @@ const onWrapDefaultLabelRenderer = (
     </>
   );
 };
-
+const handleClick = event => {
+  const { target = {} } = event || {};
+  target.value = "";
+};
 export interface IDevOpsProps {
   devOpsService: IDevOpsService;
   spService: ISPService;
@@ -541,23 +544,29 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public onFileUpload(e, name) {
     e.preventDefault();
     var files: any = [];
+    console.log("from insertion 0")
     for (let f = 0; f < e.target.files.length; f++) {
       files.push(e.target.files[f]);
     }
+    console.log(files,"from insertion1")
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, files, name);
+    console.log(stateValues,"after insertion file")
     this.setState({
       formFields: stateValues
     });
   }
 
   public onFileDelete(name) {
+    console.log("in deletion")
     var AttachmentJson;
     this.state.formFields.map(f => {
       if (f.fieldType == "FileInput") {
         AttachmentJson = f;
         AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
         f = AttachmentJson;
+        console.log(f,"after deletion")
+      
       }
       if (f.subFields != null && f.subFields.length != 0) {
         var subFields = f.subFields.filter(sfs => sfs.active == true);
@@ -565,8 +574,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           subFields[0].fields.map(sf => {
             if (sf.fieldType == "FileInput") {
               AttachmentJson = sf;
+           
               AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
+             
               sf = AttachmentJson;
+             
+              console.log(sf,"after deletion")
+              
             }
           });
         }
@@ -575,6 +589,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       formFields: this.state.formFields
     });
+  return;
   }
 
   public async AttachFiles(): Promise<any> {
@@ -974,6 +989,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 <input type="file"
                   id="file-upload"
                   multiple
+                  nv-file-select
+               
+                  onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.field)} />
               </div>
               <div className="attachmentNames">{
