@@ -77,8 +77,8 @@ const stackTokens: IStackTokens = {
 };
 
 const onWrapDefaultLabelRenderer = (
-  props: ITextFieldProps,
-  defaultRender: IRenderFunction<ITextFieldProps>,
+  props: any,
+  defaultRender: IRenderFunction<any>,
 ): JSX.Element => {
   return (
     <>
@@ -836,6 +836,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder={ele.placeholder}
                 label={ele.label}
                 className="gdcDropDown"
+                onRenderLabel={onWrapDefaultLabelRenderer}
                 {...ele.showError == true ?{className:"gdcDropDown requiredreddrop"}:{className:"gdcDropDown"}}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
@@ -901,6 +902,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+            <Icon iconName="Info" title={ele.helperText} ariaLabel="value required" />
             <DatePicker
               allowTextInput
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
