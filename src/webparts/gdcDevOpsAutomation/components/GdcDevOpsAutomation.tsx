@@ -70,11 +70,12 @@ const Area = {
   ],
   "value": ""
 };
-const iconStyle=
-  { cursor: 'pointer',
+const iconStyle =
+{
+  cursor: 'pointer',
   marginLeft: '2px',
-   }
-  
+}
+
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -89,13 +90,13 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
-        <Icon iconName="Info" 
-       // styles={{}}
-       style={iconStyle}
-        title={props.name} 
-      
-       
-        className="tooltip"  ariaLabel="value required" />
+        <Icon iconName="Info"
+          // styles={{}}
+          style={iconStyle}
+          title={props.name}
+
+
+          className="tooltip" ariaLabel="value required" />
       </Stack>
     </>
   );
@@ -548,10 +549,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     for (let f = 0; f < e.target.files.length; f++) {
       files.push(e.target.files[f]);
     }
-    console.log(files,"from insertion1")
+    console.log(files, "from insertion1")
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, files, name);
-    console.log(stateValues,"after insertion file")
+    console.log(stateValues, "after insertion file")
     this.setState({
       formFields: stateValues
     });
@@ -565,8 +566,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         AttachmentJson = f;
         AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
         f = AttachmentJson;
-        console.log(f,"after deletion")
-      
+        console.log(f, "after deletion")
+
       }
       if (f.subFields != null && f.subFields.length != 0) {
         var subFields = f.subFields.filter(sfs => sfs.active == true);
@@ -574,13 +575,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           subFields[0].fields.map(sf => {
             if (sf.fieldType == "FileInput") {
               AttachmentJson = sf;
-           
+
               AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
-             
+
               sf = AttachmentJson;
-             
-              console.log(sf,"after deletion")
-              
+
+              console.log(sf, "after deletion")
+
             }
           });
         }
@@ -589,7 +590,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       formFields: this.state.formFields
     });
-  return;
+    return;
   }
 
   public async AttachFiles(): Promise<any> {
@@ -901,12 +902,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-            <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
+            {ele.helperText != null && ele.helperText != ""
+              ? <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
+              : <div></div>}
             <DatePicker
               allowTextInput
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date"
+              minDate={new Date(Date.now())}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.field)}
             />
@@ -990,7 +994,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   id="file-upload"
                   multiple
                   nv-file-select
-               
+
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.field)} />
               </div>
