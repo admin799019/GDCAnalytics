@@ -21,8 +21,8 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
-                "key": "Functional / Engine Teams within BA&I",
-                "text": "Functional / Engine Teams within BA&I"
+                "key": "Functional or Engine Teams within BA and I",
+                "text": "Functional or Engine Teams within BA and I"
             },
             {
                 "key": "Business Analytics & Insights",
@@ -234,7 +234,7 @@ const ChannelAnalyticsMetaData = [
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
         "className": "gdcGridCol gdcGridCol12",
-        "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br></br><b>What is the reach or surface area of this request? (How many people might consume this information/report)</b></br></br><b>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly</b></br><p> </p>",
+        "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b><p> </p><p> </p><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br></br><b>What is the reach or surface area of this request? (How many people might consume this information/report)</b></br></br><b>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly</b></br><p> </p>",
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
@@ -282,6 +282,7 @@ const ChannelAnalyticsMetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Field is required",
+        "helperText": "Need by date",
         "devopsName": "System.Description"
     },
     {
