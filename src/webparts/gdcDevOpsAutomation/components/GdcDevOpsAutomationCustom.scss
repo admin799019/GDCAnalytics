@@ -102,6 +102,10 @@
   .ms-Label{
     white-space: nowrap;
   }
+  .ms-Stack{
+    max-width: max-content;
+  
+  }
   .questionspan{
     text-overflow: ellipsis;
     overflow: hidden;
@@ -109,6 +113,7 @@
     .ms-Label{
       display: inline;
     }
+   
   }
   .questionspan:hover{
     overflow: visible; 
