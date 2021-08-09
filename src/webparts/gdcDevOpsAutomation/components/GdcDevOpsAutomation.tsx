@@ -394,6 +394,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
          { 
           pathPrefix = "Operational Framework Test\\";
           }
+          else if(this.state.selectedButton=="Targeting Enablement & Business Health")
+          { 
+           pathPrefix = "Operational Framework Test\\Targeting Enablement and Business Health\\";
+           }
+         console.log(pathPrefix,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
