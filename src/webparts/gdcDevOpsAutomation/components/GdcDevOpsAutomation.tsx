@@ -147,12 +147,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.panelRef = React.createRef();
     let tempVar: any = [];
     this.props.spService.getAreasList().then((data) => {
-    
       data.map((x) => {
-        console.log(x);
         tempVar.push({ key: x.Title, text: x.Title });
       })
-      console.log(tempVar);
     })
     this.state = {
       projects: [],
