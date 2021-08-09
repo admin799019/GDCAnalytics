@@ -6,6 +6,7 @@ import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/D
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
+import { TooltipHost, ITooltipHostStyles,ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
 //import Logo from './../GDCLogo.jsx';
 import { Label } from '@fluentui/react/lib/Label';
@@ -85,7 +86,7 @@ const stackTokens: IStackTokens = {
   childrenGap: 2,
   maxWidth: 300,
 };
-
+const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
 const onWrapDefaultLabelRenderer = (
   props: any,
   defaultRender: IRenderFunction<any>,
@@ -94,17 +95,30 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
+        <TooltipHost
+        tooltipProps = {{
+          onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : props.name || props.title}}></div>)
+          }}
+       // content={props.name || props.title}
+        styles={hostStyles}
+      >
         <Icon iconName="Info"
-
           style={iconStyle}
-          title={props.name || props.title}
-
-
+          // title={props.name || props.title}
           className="tooltip" ariaLabel="value required" />
+          </TooltipHost>
       </Stack>
     </>
   );
 };
+// const tooltipProps: ITooltipProps = {
+//   onRenderContent: () => (
+//     <ul style={{ margin: 10, padding: 0 }}>
+//       <li>{tooltipProps.content}</li>
+//     </ul>
+//   ),
+
+// };
 const handleClick = event => {
   const { target = {} } = event || {};
   target.value = "";
@@ -995,14 +1009,26 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         );
       case "MultiLineTextInput":
         var firstCall = true;
+        var tooltipcontent = document.createElement('div');
+        tooltipcontent.innerHTML = ele.helperText;
+        console.log(tooltipcontent,tooltipcontent.innerHTML,"so");
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
-                  {
-                    ...  <Icon iconName="Info" className="tooltip" style={iconStyle} title={ele.helperText} ariaLabel="value required" />
-                  } : ""}
+                  <TooltipHost 
+                  tooltipProps = {{
+                  onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : ele.helperText}}></div>)
+                  }}
+                  //  {...ele.helperTextList ? 
+                      // {onRenderContent:
+                    //content={ele.helperText}
+                    styles={hostStyles}
+                  >
+                      <Icon iconName="Info" className="tooltip" style={iconStyle}  ariaLabel="value required" />
+               </TooltipHost>
+                : ""}
               </Label>
               <ReactQuill
                 defaultValue={ele.defaultValue}
