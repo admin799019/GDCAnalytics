@@ -91,9 +91,9 @@ const onWrapDefaultLabelRenderer = (
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
         <Icon iconName="Info"
-          // styles={{}}
+          
           style={iconStyle}
-          title={props.name}
+          title={props.name|| props.title}
 
 
           className="tooltip" ariaLabel="value required" />
@@ -374,6 +374,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.appendAPI(this.state.formFields, APIData).then(async dataReturned => {
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
+        let pathPrefix;
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -383,8 +384,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "value": `Operational Framework Test\\` + Area.value
             });
         }
+       
         else {
-          let pathPrefix = "Operational Framework Test\\Business Analytics and Insights\\";
+          if(this.state.selectedButton=="Business Analytics and Insights")
+          {
+           pathPrefix = "Operational Framework Test\\Business Analytics and Insights\\";
+         }
+         else if(this.state.selectedButton=="Marketing Engagement & Innovation")
+         { 
+          pathPrefix = "Operational Framework Test\\";
+          }
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
@@ -836,6 +845,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder={ele.placeholder}
                 label={ele.label}
                 className="gdcDropDown"
+                title={ele.helperText}
                 onRenderLabel={onWrapDefaultLabelRenderer}
                 {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
