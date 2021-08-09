@@ -703,6 +703,7 @@ const MEI = [
                         "fieldType": "SingleSelectInput",
                         "label": "What is the priority of your request?",
                         "className": "gdcGridCol gdcGridCol6",
+                        "placeholder": "Select an option",
                         "options": [
                             {
                                 "key": "Priority 1: Urgent and important - must have ASAP",
@@ -795,6 +796,7 @@ const MEI = [
                         "field": "What is the priority of your request?",
                         "fieldType": "SingleSelectInput",
                         "label": "What is the priority of your request?",
+                        "placeholder": "Select an option",
                         "className": "gdcGridCol gdcGridCol6",
                         "options": [
                             {
@@ -860,6 +862,233 @@ const MEI = [
         ]
     }
     ];
+    const TaregetingEnablementandBusinessHealth = [
+        {
+            "field": "What tools is your request for?",
+            "fieldType": "SingleSelectInput",
+            "label": "What tools is your request for?",
+            "placeholder": "Select an option",
+            "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
+            "options": [
+                {
+                    "key": "AGT",
+                    "text": "AGT"
+                },
+                {
+                    "key": "AGR",
+                    "text": "AGR"
+                },
+                {
+                    "key": "BAT",
+                    "text": "BAT"
+                },
+                {
+                    "key": "BAPR",
+                    "text": "BAPR"
+                }
+            ],
+            "value": "",
+            "required": true,
+            "errorMessage": "Please select area",
+            "devopsName": "System.AreaPath",
+            "helperText": "Are there other tools or options needed"
+        },
+        {
+            "field": "Request Title",
+            "fieldType": "SingleLineTextInput",
+            "label": "Request Title",
+            "placeholder": "Enter your text here",
+            "className": "gdcGridCol gdcGridCol12",
+            "value": "",
+            "required": true,
+            "helperText": "Please Enter the Title of your Request",
+            "errorMessage": "Field is required",
+            "devopsName": "System.Title"
+        },
+        {
+            "field": "What type of request is this?",
+            "fieldType": "SingleSelectInput",
+            "placeholder": "Select an option",
+            "label": "What type of request is this?",
+            "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
+            "options": [
+                {
+                    "key": "Report Request",
+                    "text": "Report Request"
+                },
+                {
+                    "key": "Ask an Expert",
+                    "text": "Ask an Expert"
+                }
+            ],
+            "value": "",
+            "required": true,
+            "errorMessage": "Request type is required",
+            "devopsName": "Custom.RequestType",
+            "subFields": [
+                {
+                    "option": "Report Request",
+                    "fields": [
+                     
+                        {
+                            "field": "What is the impact of doing this request versus not?",
+                            "fieldType": "MultiLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "What is the impact of doing this request versus not?",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                        {
+                            "field": "What business objective are you trying to achieve?",
+                            "fieldType": "SingleLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "What business objective are you trying to achieve?",
+                            "className": "gdcGridCol gdcGridCol6",
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                
+                        {
+                            "field": "Requested Completion Date",
+                            "fieldType": "DateInput",
+                            "label": "Requested Completion Date",
+                            "className": "gdcGridCol gdcGridCol6",
+                            "placeholder": "Select the date",
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                          {
+                            "field": "Are there any other details or dependencies that the team should be aware of",
+                            "fieldType": "MultiLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "Are there any other details or dependencies that the team should be aware of",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
+                            "required": true,
+                            "helpertext":"Does your question pertain to an existing report we produce?",
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },   {
+                            "field": "Please provide detailed requirements for this request.",
+                            "fieldType": "MultiLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "Please provide detailed requirements for this request.",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                        {
+                            "field": "Please attach any supporting artifacts here",
+                            "fieldType": "FileInput",
+                            "label": "Please attach any supporting artifacts here",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "",
+                            "placeholder": "Please attach any supporting artifacts here",
+                            "required": false,
+                            "errorMessage": "",
+                            "devopsName": "Attachments",
+                            "files": []
+                        }
+    
+    
+                    ],
+                    "active": false
+                },
+    
+                        {
+                    "option": "Ask an Expert",
+                    "fields": [
+                     
+                        {
+                            "field": "What is the business question you are trying to answer?",
+                            "fieldType": "MultiLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "What is the business question you are trying to answer?",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                        {
+                            "field": "What is the priority of your request?",
+                            "fieldType": "SingleSelectInput",
+                            "label": "What is the priority of your request?",
+                            "placeholder": "Select an option",
+                            "className": "gdcGridCol gdcGridCol6",
+                            "options": [
+                                {
+                                    "key": "Priority 1: Urgent and important - must have ASAP",
+                                    "text": "Priority 1: Urgent and important - must have ASAP",
+                                    "color": "#ff5a5a"
+                                },
+                                {
+                                    "key": "Priority 2: Not urgent but important - must have",
+                                    "text": "Priority 2: Not urgent but important - must have",
+                                    "color": "#faaa4c"
+                                },
+                                {
+                                    "key": "Priority 3: Low priority - nice to have",
+                                    "text": "Priority 3: Low priority - nice to have",
+                                    "color": "#6ef1c2"
+                                }
+                            ],
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Priority is required",
+                            "devopsName": "Custom.RequestedPriority"
+                        },
+                        {
+                            "field": "Requested Completion Date",
+                            "fieldType": "DateInput",
+                            "label": "Requested Completion Date",
+                            "className": "gdcGridCol gdcGridCol6",
+                            "placeholder": "Select the date",
+                            "value": "",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                          {
+                            "field": "Are there any other details or dependencies that the team should be aware of",
+                            "fieldType": "MultiLineTextInput",
+                            "placeholder": "Enter your text here",
+                            "label": "Are there any other details or dependencies that the team should be aware of",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "helperText":"Does your question pertain to an existing report we produce?",
+                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
+                            "required": true,
+                            "errorMessage": "Field is required",
+                            "devopsName": "System.Description"
+                        },
+                        {
+                            "field": "Please attach any supporting artifacts here",
+                            "fieldType": "FileInput",
+                            "label": "Please attach any supporting artifacts here",
+                            "className": "gdcGridCol gdcGridCol12",
+                            "value": "",
+                            "placeholder": "Please attach any supporting artifacts here",
+                            "required": false,
+                            "errorMessage": "",
+                            "devopsName": "Attachments",
+                            "files": []
+                        }
+    
+                    ],
+                    "active": false
+                    }
+            ]
+        }
+        ];
         const BusinessIntelligencemetaData = [
             {
                 "field": "Request Title",
