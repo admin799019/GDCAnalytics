@@ -111,14 +111,6 @@ const onWrapDefaultLabelRenderer = (
     </>
   );
 };
-// const tooltipProps: ITooltipProps = {
-//   onRenderContent: () => (
-//     <ul style={{ margin: 10, padding: 0 }}>
-//       <li>{tooltipProps.content}</li>
-//     </ul>
-//   ),
-
-// };
 const handleClick = event => {
   const { target = {} } = event || {};
   target.value = "";
@@ -973,7 +965,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             {ele.helperText != null && ele.helperText != ""
-              ? <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
+              ?<TooltipHost 
+              tooltipProps = {{
+              onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : ele.helperText}}></div>)
+              }}
+              //  {...ele.helperTextList ? 
+                  // {onRenderContent:
+                //content={ele.helperText}
+                styles={hostStyles}
+              > <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
+              </TooltipHost>
               : <div></div>}
             <DatePicker
               allowTextInput
