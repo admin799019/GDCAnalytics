@@ -37,11 +37,16 @@ export class SPService implements ISPService {
 
         this._msGraphClientFactory = msGraphClientFactory;
     }
-
+    public async getAreasList(): Promise<any> {
+        var data = await sp.web.lists.getByTitle('GDC Form JSON').items.select("Title").get();
+        console.log(data,"area list")
+        return data;
+    }
     public async getFormMetadata(type): Promise<any> {
         var data = await sp.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
         return data[0];
     }
+
 
     public async getOfficeUsers(name): Promise<any> {
         const graphClient = await this._msGraphClientFactory.getClient();

@@ -30,6 +30,7 @@ import { metaData } from '../../../JSONFormMetadata/Metadata';
 import CustomPeoplePicker from "./CustomPeoplePicker";
 import { elementContains } from 'office-ui-fabric-react';
 import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
+import { SPService } from '../../../Services/SPService';
 
 interface MetaDataType {
   field: string;
@@ -57,21 +58,22 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
-const Area = {
-  "field": "Analytics Area",
-  "fieldType": "SingleSelectInput",
-  "label": "GDC Data & Analytics Area",
-  "placeholder": "",
-  "className": "fields",
-  "helperText": "",
-  "options": [
-    { "key": "Data Services", "text": "Data Services" },
-    { "key": "Business Analytics and Insights", "text": "Business Analytics and Insights" },
-    { "key": "Marketing Engagement & Innovation", "text": "Marketing Engagement & Innovation" },
-    { "key": "Targeting Enablement & Business Health", "text": "Targeting Enablement & Business Health" }
-  ],
-  "value": ""
-};
+// const Area = {
+//   "field": "Analytics Area",
+//   "fieldType": "SingleSelectInput",
+//   "label": "GDC Data & Analytics Area",
+//   "placeholder": "",
+//   "className": "fields",
+//   "helperText": "",
+//   "options": [
+
+//     { "key": "Data Services", "text": "Data Services" },
+//     { "key": "Business Analytics and Insights", "text": "Business Analytics and Insights" },
+//     { "key": "Marketing Engagement & Innovation", "text": "Marketing Engagement & Innovation" },
+//     { "key": "Targeting Enablement & Business Health", "text": "Targeting Enablement & Business Health" }
+//   ],
+//   "value": ""
+// };
 const iconStyle =
 {
   cursor: 'pointer',
@@ -93,9 +95,9 @@ const onWrapDefaultLabelRenderer = (
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
         <Icon iconName="Info"
-          
+
           style={iconStyle}
-          title={props.name|| props.title}
+          title={props.name || props.title}
 
 
           className="tooltip" ariaLabel="value required" />
@@ -127,7 +129,8 @@ export interface IDevOpsState {
   disableSubmitButton: boolean;
   showErrorMessage: boolean;
   panelHasScroll: boolean;
-
+  AreaButtons: any;
+  Area: any;
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -135,12 +138,22 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI: any = [];
+
   public panelRef;
+
   public richTextFieldCalls: number = 0;
   public constructor(props) {
     super(props);
     this.panelRef = React.createRef();
-
+    let tempVar: any = [];
+    this.props.spService.getAreasList().then((data) => {
+    
+      data.map((x) => {
+        console.log(x);
+        tempVar.push({ key: x.Title, text: x.Title });
+      })
+      console.log(tempVar);
+    })
     this.state = {
       projects: [],
       text: "",
@@ -155,7 +168,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       selectedButton: "",
       disableSubmitButton: false,
       showErrorMessage: false,
-      panelHasScroll: false
+      panelHasScroll: false,
+      AreaButtons: [],
+      Area: {
+        "field": "Analytics Area",
+        "fieldType": "SingleSelectInput",
+        "label": "GDC Data & Analytics Area",
+        "placeholder": "",
+        "className": "fields",
+        "helperText": "",
+        "options": tempVar,
+        "value": ""
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -176,9 +200,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public componentDidMount() {
+
+
     var projects: [];
     this.setState({
-      projects: projects
+      projects: projects,
+
     });
   }
 
@@ -407,24 +434,21 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "op": "add",
               "path": "/fields/System.AreaPath",
               "from": null,
-              "value": OrganizationConfig.ProjectName + `\\` + Area.value
+              "value": OrganizationConfig.ProjectName + `\\` + this.state.Area.value
             });
         }
-       
+
         else {
-          if(this.state.selectedButton=="Business Analytics and Insights")
-          {
-           pathPrefix = "Operational Framework Test\\Business Analytics and Insights\\";
-         }
-         else if(this.state.selectedButton=="Marketing Engagement & Innovation")
-         { 
-          pathPrefix = "Operational Framework Test\\";
+          if (this.state.selectedButton == "Business Analytics and Insights") {
+            pathPrefix = OrganizationConfig.ProjectName + "\\Business Analytics and Insights\\";
           }
-          else if(this.state.selectedButton=="Targeting Enablement & Business Health")
-          { 
-           pathPrefix = "Operational Framework Test\\Targeting Enablement and Business Health\\";
-           }
-         console.log(pathPrefix,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
+          else if (this.state.selectedButton == "Marketing Engagement & Innovation") {
+            pathPrefix = OrganizationConfig.ProjectName + "\\";
+          }
+          else if (this.state.selectedButton == "Targeting Enablement & Business Health") {
+            pathPrefix = OrganizationConfig.ProjectName + "\\Targeting Enablement and Business Health\\";
+          }
+          console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
@@ -456,14 +480,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
-            this.props.devOpsService.getTeamDetails(Area.value).then(emailData => {
+            this.props.devOpsService.getTeamDetails(this.state.Area.value).then(emailData => {
               let emails: any = [];
               emailData.value.forEach(element => {
                 emails.push(element.identity.uniqueName);
               });
-              this.props.spService.sendEmail(Area.value, emails, data.id);
+              this.props.spService.sendEmail(this.state.Area.value, emails, data.id);
             });
-            Area.value = "";
+            this.state.Area.value = "";
           }
           else {
             this.setState({
@@ -481,7 +505,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
-            Area.value = "";
+            this.state.Area.value = "";
           }
 
         });
@@ -558,7 +582,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public updateFormFields(option) {
-    Area.value = option;
+    this.state.Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
@@ -773,6 +797,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public render(): JSX.Element {
+    console.log(this.state.Area.options);
     return (
       <div className="gdcBorder ">
         <div className="gdcMessage">
@@ -806,7 +831,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               <div className="gdcGridCol gdcGridCol12 questionHeader">
                 <p className="questionTop">What team is your request for?</p>
                 {
-                  Area.options.map(area => {
+
+                  this.state.Area.options.map(area => {
+
                     return (<DefaultButton
                       text={area.text}
                       className={this.state.selectedButton == area.text ? "selectedButton" : "headerButton"}
