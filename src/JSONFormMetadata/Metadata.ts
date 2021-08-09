@@ -98,7 +98,7 @@ const ChannelAnalyticsMetaData = [
                             }
                         ],
                         "value": "",
-                        "required": false,
+                        "required": true,
                         "errorMessage": "",
                         "devopsName": "Custom.RMPODCategory"
                     },
@@ -207,7 +207,7 @@ const ChannelAnalyticsMetaData = [
                         ],
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
-                        "required": false,
+                        "required": true,
                         "errorMessage": "",
                         "devopsName": "Custom.RMPODName"
                     }
@@ -234,7 +234,8 @@ const ChannelAnalyticsMetaData = [
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
         "className": "gdcGridCol gdcGridCol12",
-        "value": "<b><img href='https://m365x799019.sharepoint.com/GEPAnalyticsTest/SiteAssets/question.png' />Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b><p> </p><p> </p><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b><p> </p><p> </p><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b><p> </p><p> </p><b>What is the reach or surface area of this request? (How many people might consume this information/report)</b><p> </p><p> </p><b>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly</b></br><p> </p>",
+        "defaultValue": "<p><strong>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer) </strong></p><p></br></p><p></br></p><p><strong>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently? </strong></p><p></br></p><p></br></p><p><strong>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from. </strong></p><p></br></p><p></br></p><p><strong>What is the reach or surface area of this request? (How many people might consume this information/report) </strong></p><p></br></p><p></br></p><p><strong>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly </strong></p><p></br></p><p></br></p>",
+        "value": "",
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"

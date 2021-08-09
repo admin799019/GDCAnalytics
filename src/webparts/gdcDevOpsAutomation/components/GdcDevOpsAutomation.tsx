@@ -29,6 +29,7 @@ import { metaData } from '../../../JSONFormMetadata/Metadata';
 
 import CustomPeoplePicker from "./CustomPeoplePicker";
 import { elementContains } from 'office-ui-fabric-react';
+import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
 
 interface MetaDataType {
   field: string;
@@ -47,6 +48,7 @@ interface MetaDataType {
   subFields: Array<subFieldsObjectType>;
   cascadingField: string;
   files: any;
+  defaultValue: string;
 }
 
 interface subFieldsObjectType {
@@ -120,7 +122,6 @@ export interface IDevOpsState {
   showMessage: boolean;
   showAddButton: boolean;
   multiSelectedKeys: string[];
-  files: [];
   openPanel: boolean;
   selectedButton: string;
   disableSubmitButton: boolean;
@@ -150,7 +151,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       showMessage: false,
       showAddButton: false,
       multiSelectedKeys: [],
-      files: [],
       openPanel: false,
       selectedButton: "",
       disableSubmitButton: false,
@@ -203,12 +203,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           field.showError = false;
         }
 
-        if (field.fieldType == "SingleLineTextInput" && value == " ") {
-          field.value = "";
-        }
-
-        if (field.fieldType == "SingleLineTextInput" && value.length >= 255) {
-          field.value = field.value;
+        if (field.fieldType == "SingleLineTextInput") {
+          if (value.length >= 255) {
+            field.value = field.value;
+          }
+          else {
+            if (value.trim().length == 0 || value.trim() == "") {
+              field.showError = true;
+            }
+            field.value = value;
+          }
         }
 
         if (field.fieldType == "SwitchInput") {
@@ -216,11 +220,33 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           field.value = value;
         }
 
-        // if (field.fieldType == "MultiLineTextInput") {
-        //   var ele = document.createElement('div');
-        //   ele.innerHTML = value;
-        //   console.log("multi", ele.innerText);
-        // }
+        if (field.fieldType == "MultiLineTextInput") {
+          var contentAdded: boolean = false;
+          var ele = document.createElement('div');
+          ele.innerHTML = value;
+          var eleValue = ele.innerText.replace(/  +/g, ' ');
+          // console.log("multi - ", ele.innerText);
+          if (field.defaultValue != null && field.defaultValue != "") {
+            var defaultele = document.createElement('div');
+            defaultele.innerHTML = field.defaultValue;
+
+            if (eleValue != defaultele.innerText) {
+              contentAdded = true;
+            }
+          }
+          else if (field.defaultValue == null) {
+            if (eleValue.trim().length != 0) {
+              contentAdded = true;
+            }
+          }
+          let imgsLenth = ele.querySelectorAll('img').length;
+          console.log("content added - ", contentAdded, " images - ", imgsLenth);
+          if (contentAdded == false && imgsLenth == 0) {
+            field.showError = true;
+          }
+          field.value = value;
+        }
+
         if (field.fieldType == "FileInput") {
           console.log("inside append values", field);
           field.files = field.files.concat(value);
@@ -380,11 +406,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "op": "add",
               "path": "/fields/System.AreaPath",
               "from": null,
-              "value": `Operational Framework Test\\` + Area.value
+              "value": OrganizationConfig.ProjectName + `\\` + Area.value
             });
         }
         else {
-          let pathPrefix = "Operational Framework Test\\Business Analytics and Insights\\";
+          let pathPrefix = OrganizationConfig.ProjectName + "\\Business Analytics and Insights\\";
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
@@ -412,6 +438,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               panelHasScroll: false,
               selectedButton: ""
             });
+            this.AttachmentAPI = [];
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
@@ -436,6 +463,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               panelHasScroll: false,
               selectedButton: ""
             });
+            this.AttachmentAPI = [];
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
@@ -545,29 +573,23 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public onFileUpload(e, name) {
     e.preventDefault();
     var files: any = [];
-    console.log("from insertion 0")
     for (let f = 0; f < e.target.files.length; f++) {
       files.push(e.target.files[f]);
     }
-    console.log(files, "from insertion1")
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, files, name);
-    console.log(stateValues, "after insertion file")
     this.setState({
       formFields: stateValues
     });
   }
 
   public onFileDelete(name) {
-    console.log("in deletion")
     var AttachmentJson;
     this.state.formFields.map(f => {
       if (f.fieldType == "FileInput") {
         AttachmentJson = f;
         AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
         f = AttachmentJson;
-        console.log(f, "after deletion")
-
       }
       if (f.subFields != null && f.subFields.length != 0) {
         var subFields = f.subFields.filter(sfs => sfs.active == true);
@@ -575,13 +597,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           subFields[0].fields.map(sf => {
             if (sf.fieldType == "FileInput") {
               AttachmentJson = sf;
-
               AttachmentJson.files = AttachmentJson.files.filter(file => file.name != name);
-
               sf = AttachmentJson;
-
-              console.log(sf, "after deletion")
-
             }
           });
         }
@@ -938,6 +955,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           </React.Fragment>
         );
       case "MultiLineTextInput":
+        var firstCall = true;
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
@@ -948,12 +966,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   } : ""}
               </Label>
               <ReactQuill
-                defaultValue={ele.value}
+                defaultValue={ele.defaultValue}
                 preserveWhitespace={true}
                 {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
                 placeholder={ele.placeholder}
                 // className="gdcMultiLine"
-                onChange={(data) => this.handleChange(data, ele.field)} />
+                onChange={(data, delta, source) => {
+                  if (source != "api") {
+                    this.handleChange(data, ele.field);
+                  }
+                }} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div >

@@ -249,7 +249,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders,
             };
             this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.get(OrganizationConfig.OrganizationUrl + "/_apis/projects/Operational%20Framework%20Test/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.get(OrganizationConfig.OrganizationUrl + "/_apis/projects/" + OrganizationConfig.ProjectName + "/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         return response.json();
                     })

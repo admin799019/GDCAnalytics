@@ -1,4 +1,4 @@
-const Dev = {
+const Demo = {
     OrganizationName: "onegdcanalyticsdev",
     OrganizationUrl: "https://dev.azure.com/onegdcanalyticsdev",
     ProjectName: "Operational Framework",
