@@ -21,8 +21,8 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
             {
-                "key": "Functional or Engine Teams within BA and I:",
-                "text": "Functional or Engine Teams within BA and I:"
+                "key": "Functional or Engine Teams within BA and I",
+                "text": "Functional or Engine Teams within BA and I"
             },
             {
                 "key": "Business Analytics and Insights",
@@ -41,8 +41,8 @@ const ChannelAnalyticsMetaData = [
                 "text": "Customer Advocacy Analytics"
             },
             {
-                "key": "Events and Skilling Analytics",
-                "text": "Events and Skilling Analytics"
+                "key": "Events & Skilling Analytics",
+                "text": "Events & Skilling Analytics"
             },
             {
                 "key": "Lead Flow Analytics",
@@ -71,7 +71,7 @@ const ChannelAnalyticsMetaData = [
         "devopsName": "System.AreaPath",
         "subFields": [
             {
-                "option": "Relationship Marketing",
+                "option": "Relationship Marketing Analytics",
                 "fields": [
                     {
                         "field": "POD Category",
@@ -217,22 +217,6 @@ const ChannelAnalyticsMetaData = [
         ]
     },
     {
-        "field": "What type of request is this?",
-        "fieldType": "SingleSelectInput",
-        "label": "What type of request is this?",
-        "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
-        "options": [
-            {
-                "key": "Report Request",
-                "text": "Report Request"
-            }
-        ],
-        "value": "",
-        "required": true,
-        "errorMessage": "Request type is required",
-        "devopsName": "Custom.RequestType"
-    },
-    {
         "field": "Request Title",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
@@ -240,7 +224,7 @@ const ChannelAnalyticsMetaData = [
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": true,
-        "helperText": "Please Enter the Title of your Request",
+        "helperText": "Please enter the title of your request",
         "errorMessage": "Field is required",
         "devopsName": "System.Title"
     },
@@ -284,16 +268,6 @@ const ChannelAnalyticsMetaData = [
         "placeholder": "Enter your text here",
         "label": "If this request is related to an existing report, please provide link to that report here",
         "className": "gdcGridCol gdcGridCol6",
-        "options": [
-            {
-                "key": "Enhance Existing Report",
-                "text": "Enhance Existing Report"
-            },
-            {
-                "key": "New Report Request",
-                "text": "New Report Request"
-            }
-        ],
         "value": "",
         "required": false,
         "helperText": "Provide links to relevant reports",
@@ -309,7 +283,7 @@ const ChannelAnalyticsMetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Field is required",
-        "devopsName": "System.Description"
+        "devopsName": "Custom.NeedByDate"
     },
     {
         "field": "Please attach any supporting artifacts here",
