@@ -98,11 +98,11 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
-        {console.log(props.name,props.title,"from rendering wrapper")}
+        {console.log(props,"from rendering wrapper")}
         {(props.name!="" && props.name!=undefined) || (props.title!="" &&props.title!=undefined)  ?
         <TooltipHost
         tooltipProps = {{
-          onRenderContent :() => (ReactHtmlParser(props.name | props.title))
+          onRenderContent :() => (ReactHtmlParser(props.name))
           }}
        // content={props.name || props.title}
         styles={hostStyles}
