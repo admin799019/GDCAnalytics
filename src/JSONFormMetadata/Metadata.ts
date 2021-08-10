@@ -224,7 +224,6 @@ const ChannelAnalyticsMetaData =[
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": true,
-        "helperText": "Please enter the title of your request",
         "errorMessage": "Field is required",
         "devopsName": "System.Title"
     },
@@ -360,7 +359,6 @@ const DataServicesmetaData = [
                         "label": "Busines Value",
                         "placeholder": "Enter your text here",
 						"helperText": "<div>What is the business value of this request? Consider the impact on financial results and/or operational efficiency. Key value indicators to consider include:<ul><li>Improve process/operations</li><li>Improve spending decisions (media spend, social, campaign effectiveness, etc.)</li><li>Increase in revenue (conversion rate, # wins, funnel velocity, etc.)</li><li>Breadth and/or depth of improve analysis</li></ul></div>",
-                  
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
