@@ -12,7 +12,7 @@ export const metaData = [
     // }
 ];
 
-const ChannelAnalyticsMetaData = [
+const ChannelAnalyticsMetaData =[
     {
         "field": "What area of Business Analytics & Insights is your request for?",
         "fieldType": "SingleSelectInput",
@@ -41,8 +41,8 @@ const ChannelAnalyticsMetaData = [
                 "text": "Customer Advocacy Analytics"
             },
             {
-                "key": "Events & Skilling Analytics",
-                "text": "Events & Skilling Analytics"
+                "key": "Events and Skilling Analytics",
+                "text": "Events and Skilling Analytics"
             },
             {
                 "key": "Lead Flow Analytics",
@@ -175,7 +175,7 @@ const ChannelAnalyticsMetaData = [
                                 "cascadingOption": "Azure"
                             },
                             {
-                                "key": "Commercial_All",
+                                "key": "Comm_All",
                                 "text": "Comm_All",
                                 "cascadingOption": "Commercial"
                             },
@@ -264,10 +264,10 @@ const ChannelAnalyticsMetaData = [
     },
     {
         "field": "If this request is related to an existing report, please provide link to that report here",
-        "fieldType": "SingleLineTextInput",
+        "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "If this request is related to an existing report, please provide link to that report here",
-        "className": "gdcGridCol gdcGridCol6",
+        "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": false,
         "helperText": "Provide links to relevant reports",
