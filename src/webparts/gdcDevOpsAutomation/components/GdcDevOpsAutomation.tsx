@@ -6,7 +6,7 @@ import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/D
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
-import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
+import { TooltipHost, ITooltipHostStyles,ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
 //import Logo from './../GDCLogo.jsx';
 import ReactHtmlParser from 'react-html-parser';
@@ -99,17 +99,17 @@ const onWrapDefaultLabelRenderer = (
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
         <TooltipHost
-          tooltipProps={{
-            onRenderContent: () => (<div dangerouslySetInnerHTML={{ __html: props.name || props.title }}></div>)
+        tooltipProps = {{
+          onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : props.name || props.title}}></div>)
           }}
-          // content={props.name || props.title}
-          styles={hostStyles}
-        >
-          <Icon iconName="Info"
-            style={iconStyle}
-            // title={props.name || props.title}
-            className="tooltip" ariaLabel="value required" />
-        </TooltipHost>
+       // content={props.name || props.title}
+        styles={hostStyles}
+      >
+        <Icon iconName="Info"
+          style={iconStyle}
+          // title={props.name || props.title}
+          className="tooltip" ariaLabel="value required" />
+          </TooltipHost>
       </Stack>
     </>
   );
@@ -255,13 +255,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         if (field.fieldType == "MultiLineTextInput") {
           var contentAdded: boolean = false;
-         var ele1 = ReactHtmlParser(value);
-         var ele=document.createElement('div');
+          var ele = document.createElement('div');
           ele.innerHTML = value;
           var eleValue = ele.innerText.replace(/  +/g, ' ');
+          // console.log("multi - ", ele.innerText);
           if (field.defaultValue != null && field.defaultValue != "") {
-            var defaultele =  ReactHtmlParser(field.defaultValue);
-            //defaultele.innerHTML = field.defaultValue;
+            var defaultele = document.createElement('div');
+            defaultele.innerHTML = field.defaultValue;
 
             if (eleValue != defaultele.innerText) {
               contentAdded = true;
@@ -273,7 +273,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           }
           let imgsLenth = ele.querySelectorAll('img').length;
-          // console.log("content added - ", contentAdded, " images - ", imgsLenth);
+          console.log("content added - ", contentAdded, " images - ", imgsLenth);
           if (contentAdded == false && imgsLenth == 0) {
             field.showError = true;
           }
@@ -281,6 +281,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         if (field.fieldType == "FileInput") {
+          console.log("inside append values", field);
           field.files = field.files.concat(value);
         }
 
@@ -385,8 +386,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async UpdateRichText(data): Promise<any> {
-    let element =ReactHtmlParser(data);
-    //element.innerHTML = data;
+    let element =document.createElement('div');
+    element.innerHTML = data;
     let imgsLenth = element.querySelectorAll('img').length;
     var imageCalls = [];
     element.querySelectorAll('img').forEach((ele) => {
@@ -453,6 +454,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           else if (this.state.selectedButton == "Targeting Enablement & Business Health") {
             pathPrefix = OrganizationConfig.ProjectName + "\\Targeting Enablement and Business Health\\";
           }
+          console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
         //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
@@ -703,6 +705,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               });
             count = count - 1;
             if (count == 0 && !richTextCallSent) {
+              console.log("files - ", this.AttachmentAPI);
               this.UpdateRichTextFields();
               richTextCallSent = true;
             }
@@ -712,9 +715,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
 
     if ((count == 0 && !richTextCallSent) || (AttachmentFiles != null && AttachmentFiles.length == 0)) {
+      console.log("files - ", this.AttachmentAPI);
       this.UpdateRichTextFields();
       richTextCallSent = true;
     }
+
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -799,6 +804,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public render(): JSX.Element {
+    console.log(this.state.Area.options);
     return (
       <div className="gdcBorder ">
         <div className="gdcMessage">
@@ -963,12 +969,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             {ele.helperText != null && ele.helperText != ""
-              ? <TooltipHost
-                tooltipProps={{
-                  onRenderContent: () => (<div dangerouslySetInnerHTML={{ __html: ele.helperText }}></div>)
-                }}
-                //  {...ele.helperTextList ? 
-                // {onRenderContent:
+              ?<TooltipHost 
+              tooltipProps = {{
+              onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : ele.helperText}}></div>)
+              }}
+              //  {...ele.helperTextList ? 
+                  // {onRenderContent:
                 //content={ele.helperText}
                 styles={hostStyles}
               > <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
@@ -1008,8 +1014,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         );
       case "MultiLineTextInput":
         var firstCall = true;
-     
-    
         return (
           <div className="">
             <div className={ele.className + " gdcColumnBlock"}>
@@ -1025,9 +1029,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   // content={tooltipcontent}
                     styles={hostStyles}
                   >
-                    <Icon iconName="Info" className="tooltip" style={iconStyle} ariaLabel="value required" />
-                  </TooltipHost>
-                  : ""}
+                      <Icon iconName="Info" className="tooltip" style={iconStyle}  ariaLabel="value required" />
+               </TooltipHost>
+                : ""}
               </Label>
            
               <ReactQuill
