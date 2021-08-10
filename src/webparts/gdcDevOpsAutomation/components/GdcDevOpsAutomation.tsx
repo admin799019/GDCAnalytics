@@ -93,13 +93,16 @@ const onWrapDefaultLabelRenderer = (
   props: any,
   defaultRender: IRenderFunction<any>,
 ): JSX.Element => {
+
   return (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
+        {console.log(props.name,props.title,"from rendering wrapper")}
+        {(props.name!="" && props.name!=undefined) || (props.title!="" &&props.title!=undefined)  ?
         <TooltipHost
         tooltipProps = {{
-          onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : props.name || props.title}}></div>)
+          onRenderContent :() => (ReactHtmlParser(props.name | props.title))
           }}
        // content={props.name || props.title}
         styles={hostStyles}
@@ -109,6 +112,7 @@ const onWrapDefaultLabelRenderer = (
           // title={props.name || props.title}
           className="tooltip" ariaLabel="value required" />
           </TooltipHost>
+          :""}
       </Stack>
     </>
   );
@@ -950,7 +954,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             {ele.helperText != null && ele.helperText != ""
               ?<TooltipHost 
               tooltipProps = {{
-              onRenderContent :() => (<div dangerouslySetInnerHTML={{__html : ele.helperText}}></div>)
+              onRenderContent :() => (ReactHtmlParser(ele.helperText))
               }}
               //  {...ele.helperTextList ? 
                   // {onRenderContent:
