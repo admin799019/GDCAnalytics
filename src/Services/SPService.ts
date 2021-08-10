@@ -65,14 +65,14 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail(area: string, emails, id) {
+    public async sendEmail(title,date,area, emails, id) {
         var url = OrganizationConfig.ProjectUrl + "/_workitems/edit/" + id;
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
-
+    console.log(area,currentUser,"testing");
         var emailProps: IEmailProperties = {
-            Body: 'A New User Story has been submitted. Please find the link below: </br> <a href= "' + url + '">link to User Story</a>',
-            Subject: 'New User Story has been Submitted',
+            Body: '<h1>Attention: Intake Request Submission</h1><br></br>An intake request has been submitted to the"'+area+'" backlog by "'+currentUser.Title+'" Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li>"'+title+'"</li><li>Need By Date:"'+date+'"</li>',
+            Subject: 'Attention: Intake Request Submission',
             To: emails,
         };
         sp.utility.sendEmail(emailProps).then((i) => {

@@ -1,6 +1,6 @@
 export interface ISPService {
     getFormMetadata(type) : Promise<any>;
     getOfficeUsers(name): Promise<any>;
-    sendEmail(area: string, emails, Url);
+    sendEmail(title,date,area, emails, Url);
     getAreasList() : Promise<any>;
 }

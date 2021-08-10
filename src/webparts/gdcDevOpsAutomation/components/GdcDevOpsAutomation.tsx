@@ -9,9 +9,11 @@ import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
 //import Logo from './../GDCLogo.jsx';
+import ReactHtmlParser from 'react-html-parser';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
+import {Callout} from '@fluentui/react'
 import { IStackTokens, Stack, IStackStyles } from '@fluentui/react/lib/Stack';
 import { classNamesFunction, IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
@@ -85,6 +87,7 @@ const stackTokens: IStackTokens = {
   childrenGap: 2,
   maxWidth: 300,
 };
+
 const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
 const onWrapDefaultLabelRenderer = (
   props: any,
@@ -251,12 +254,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         if (field.fieldType == "MultiLineTextInput") {
           var contentAdded: boolean = false;
-          var ele = document.createElement('div');
+         var ele1 = ReactHtmlParser(value);
+         var ele=document.createElement('div');
           ele.innerHTML = value;
           var eleValue = ele.innerText.replace(/  +/g, ' ');
           if (field.defaultValue != null && field.defaultValue != "") {
-            var defaultele = document.createElement('div');
-            defaultele.innerHTML = field.defaultValue;
+            var defaultele =  ReactHtmlParser(field.defaultValue);
+            //defaultele.innerHTML = field.defaultValue;
 
             if (eleValue != defaultele.innerText) {
               contentAdded = true;
@@ -360,8 +364,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async UpdateRichText(data): Promise<any> {
-    let element = document.createElement('div');
-    element.innerHTML = data;
+    let element =ReactHtmlParser(data);
+    //element.innerHTML = data;
     let imgsLenth = element.querySelectorAll('img').length;
     var imageCalls = [];
     element.querySelectorAll('img').forEach((ele) => {
@@ -464,7 +468,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               emailData.value.forEach(element => {
                 emails.push(element.identity.uniqueName);
               });
-              this.props.spService.sendEmail(this.state.Area.value, emails, data.id);
+
+              this.props.spService.sendEmail(APIData.filter(d => d.path == "/fields/System.Title")[0].value,APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
             });
             this.state.Area.value = "";
           }
@@ -987,19 +992,21 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
-                  <TooltipHost
-                    tooltipProps={{
-                      onRenderContent: () => (<div dangerouslySetInnerHTML={{ __html: ele.helperText }}></div>)
-                    }}
-                    //  {...ele.helperTextList ? 
-                    // {onRenderContent:
-                    //content={ele.helperText}
+                  <TooltipHost 
+                  tooltipProps = {{
+                 // onRenderContent :() => (<div>{ele.helperText}<ul><li>test</li></ul></div>)
+                 onRenderContent :() => (ReactHtmlParser(ele.helperText))
+                  }}
+                  //  {...ele.helperTextList ? 
+                      // {onRenderContent:
+                  // content={tooltipcontent}
                     styles={hostStyles}
                   >
                     <Icon iconName="Info" className="tooltip" style={iconStyle} ariaLabel="value required" />
                   </TooltipHost>
                   : ""}
               </Label>
+           
               <ReactQuill
                 defaultValue={ele.defaultValue}
                 preserveWhitespace={true}
