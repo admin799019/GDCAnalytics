@@ -5,7 +5,7 @@
     "id": "22b26582-4ad7-4166-8450-a7b7471c5614",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "skipFeatureDeployment": true,
+    "skipFeatureDeployment": false,
     "isDomainIsolated": false,
     "webApiPermissionRequests": [
       {

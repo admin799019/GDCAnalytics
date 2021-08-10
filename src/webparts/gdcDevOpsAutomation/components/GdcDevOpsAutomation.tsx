@@ -41,7 +41,7 @@ interface MetaDataType {
   label: string;
   placeholder: string;
   className: string;
-  helperText: string;
+  helperText: any;
   options: any;
   value: string;
   required: boolean;
@@ -81,8 +81,7 @@ const iconStyle =
 {
   cursor: 'pointer',
   marginLeft: '2px',
-}
-
+};
 
 const stackTokens: IStackTokens = {
   childrenGap: 2,
@@ -158,8 +157,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getAreasList().then((data) => {
       data.map((x) => {
         tempVar.push({ key: x.Title, text: x.Title });
-      })
-    })
+      });
+    });
     this.state = {
       projects: [],
       text: "",
@@ -285,26 +284,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           field.files = field.files.concat(value);
         }
 
-        // else if (field.fieldType == "MultiLineTextInput") {
-        //   var regex = /(<([^>]+)>)/ig;
-        //   let hasText = !!value.replace(regex, "").trim().length;
-        //   let element = document.createElement('div');
-        //   element.innerHTML = value;
-        //   let imgsLenth = element.querySelectorAll('img').length;
-        //   if (!hasText) {
-        //     if (imgsLenth > 0) {
-        //       hasText = true;
-        //     }
-        //   }
-        //   if (hasText) {
-        //     field.showError = false;
-        //     this.requiredHasValues = true;
-        //   }
-        //   else {
-        //     field.showError = true;
-        //     this.requiredHasValues = false;
-        //   }
-        // }
         else {
           field.value = value;
         }
