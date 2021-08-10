@@ -71,7 +71,7 @@ export class SPService implements ISPService {
         emails.push(currentUser.Email);
     console.log(area,currentUser,"testing");
         var emailProps: IEmailProperties = {
-            Body: '<h1>Attention: Intake Request Submission</h1><br></br>An intake request has been submitted to the"'+area+'" backlog by "'+currentUser.Title+'" Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li>"'+title+'"</li><li>Need By Date:"'+date+'"</li>',
+            Body: '<br></br>An intake request has been submitted to the<b>'+area+'</b> backlog by <b>'+currentUser.Title+'</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title </b>: '+title+'</li><li><b>Need By Date: </b>'+date+'</li>',
             Subject: 'Attention: Intake Request Submission',
             To: emails,
         };
