@@ -102,7 +102,7 @@ const onWrapDefaultLabelRenderer = (
         {(props.name!="" && props.name!=undefined) || (props.title!="" &&props.title!=undefined)  ?
         <TooltipHost
         tooltipProps = {{
-          onRenderContent :() => (ReactHtmlParser(props.name))
+          onRenderContent :() => (ReactHtmlParser(props.name!=""?props.name:props.title))
           }}
        // content={props.name || props.title}
         styles={hostStyles}
