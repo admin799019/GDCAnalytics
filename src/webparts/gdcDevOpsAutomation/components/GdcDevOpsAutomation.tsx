@@ -417,6 +417,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
+        
+       
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -447,6 +449,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
+        if (APIData.filter(d => d.path == "/fields/Custom.IsThisRequestUrgent")[0].value == true && APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value == "Operational Framework\\Data Services") {
+          console.log("hello from urgent condition ")
+            APIData.filter(d => d.path == "/fields/System.Title")[0].value="URGENT | "+APIData.filter(d => d.path == "/fields/System.Title")[0].value;
+          
+          }
         APIData = [...APIData, ...this.AttachmentAPI];
 
         //  APIData=APIData.concat(this.AttachmentAPI[0]);
