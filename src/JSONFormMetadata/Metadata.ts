@@ -279,6 +279,7 @@ const ChannelAnalyticsMetaData =[
         "label": "Need By Date",
         "className": "gdcGridCol gdcGridCol6",
         "placeholder": "Select the date",
+        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
         "value": "",
         "required": true,
         "errorMessage": "Field is required",
@@ -572,25 +573,7 @@ const DataServicesmetaData = [
         ]
     }
 ];
-const MEI = [
-    {
-        "field": "What tools is your request for?",
-        "fieldType": "SingleSelectInput",
-        "label": "What tools is your request for?",
-        "placeholder": "Select an option",
-        "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
-        "options": [
-            {
-                "key": "MEI",
-                "text": "MEI"
-            }
-        ],
-        "value": "",
-        "required": true,
-        "errorMessage": "Please select area",
-        "devopsName": "System.AreaPath",
-        "helperText": "Are there other tools or options needed"
-    },
+const MEI =[
     {
         "field": "Request Title",
         "fieldType": "SingleLineTextInput",
@@ -599,7 +582,6 @@ const MEI = [
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": true,
-        "helperText": "Please Enter the Title of your Request",
         "errorMessage": "Field is required",
         "devopsName": "System.Title"
     },
@@ -672,42 +654,16 @@ const MEI = [
                         "errorMessage": "Field is required",
                         "devopsName": "Custom.ReportRequestType"
                     },
+                   
                     {
-                        "field": "What is the priority of your request?",
-                        "fieldType": "SingleSelectInput",
-                        "label": "What is the priority of your request?",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "placeholder": "Select an option",
-                        "options": [
-                            {
-                                "key": "Priority 1: Urgent and important - must have ASAP",
-                                "text": "Priority 1: Urgent and important - must have ASAP",
-                                "color": "#ff5a5a"
-                            },
-                            {
-                                "key": "Priority 2: Not urgent but important - must have",
-                                "text": "Priority 2: Not urgent but important - must have",
-                                "color": "#faaa4c"
-                            },
-                            {
-                                "key": "Priority 3: Low priority - nice to have",
-                                "text": "Priority 3: Low priority - nice to have",
-                                "color": "#6ef1c2"
-                            }
-                        ],
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Priority is required",
-                        "devopsName": "Custom.RequestedPriority"
-                    },
-                    {
-                        "field": "Requested Completion Date",
+                        "field": "Need By Date",
                         "fieldType": "DateInput",
-                        "label": "Requested Completion Date",
+                        "label": "Need By Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
+                        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
                         "value": "",
-                        "required": true,
+                        "required": false,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
@@ -767,41 +723,14 @@ const MEI = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "What is the priority of your request?",
-                        "fieldType": "SingleSelectInput",
-                        "label": "What is the priority of your request?",
-                        "placeholder": "Select an option",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "options": [
-                            {
-                                "key": "Priority 1: Urgent and important - must have ASAP",
-                                "text": "Priority 1: Urgent and important - must have ASAP",
-                                "color": "#ff5a5a"
-                            },
-                            {
-                                "key": "Priority 2: Not urgent but important - must have",
-                                "text": "Priority 2: Not urgent but important - must have",
-                                "color": "#faaa4c"
-                            },
-                            {
-                                "key": "Priority 3: Low priority - nice to have",
-                                "text": "Priority 3: Low priority - nice to have",
-                                "color": "#6ef1c2"
-                            }
-                        ],
-                        "value": "",
-                        "required": true,
-                        "errorMessage": "Priority is required",
-                        "devopsName": "Custom.RequestedPriority"
-                    },
-                    {
-                        "field": "Requested Completion Date",
+                        "field": "Need By Date",
                         "fieldType": "DateInput",
-                        "label": "Requested Completion Date",
+                        "label": "Need By Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
+                        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
                         "value": "",
-                        "required": true,
+                        "required": false,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
@@ -1094,7 +1023,7 @@ const MEI = [
                 "label": "Need By Date",
                 "placeholder": "Select the date",
                 "className": "ms-Grid-col ms-sm6",
-                "helperText": "DateInput",
+                "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
                 "value": "",
                 "required": false,
                 "errorMessage": "",
