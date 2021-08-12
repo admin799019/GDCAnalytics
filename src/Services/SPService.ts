@@ -47,6 +47,13 @@ export class SPService implements ISPService {
         var data = await sp.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
         return data[0];
     }
+    public async getEmailData(Area): Promise<any> {
+        console.log(Area);
+        var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(`GDCEmailArea eq '${Area}'`).getAll();
+       console.log(data[0])
+       
+        return data[0];
+    }
 
     public async getOfficeUsers(name): Promise<any> {
         const graphClient = await this._msGraphClientFactory.getClient();
@@ -65,14 +72,29 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail(title,date,area, emails, id) {
+    public async sendEmail(emaildata1,title,date,area, emails, id) {
         var url = OrganizationConfig.ProjectUrl + "/_workitems/edit/" + id;
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
+        let Bodystr=emaildata1.GDCEmailBody;
+        Bodystr=Bodystr.replace("&#123;"," ");
+        Bodystr=Bodystr.replace("&#125;"," ");
+
+        console.log(Bodystr,"jj")
+        Bodystr=Bodystr.replace("System.Areapath",area);
+        Bodystr=Bodystr.replace("System.CreatedBy",currentUser.Title);
+        Bodystr=Bodystr.replace("System.Link",url);
+        Bodystr=Bodystr.replace("System.Title",title);
+        Bodystr=Bodystr.replace("System.NeedByDate",date);
+        Bodystr=Bodystr.replace("{"," ");
+         Bodystr=Bodystr.replace("}"," ");
+        console.log(Bodystr)
+        console.log(emaildata1,"eamil data")
     console.log(area,currentUser,"testing");
         var emailProps: IEmailProperties = {
-            Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
-            Subject: 'Attention: Intake Request Submission',
+            //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
+            Body:Bodystr,
+            Subject: emaildata1.GDCEmailSubject,
             To: emails,
         };
         sp.utility.sendEmail(emailProps).then((i) => {
