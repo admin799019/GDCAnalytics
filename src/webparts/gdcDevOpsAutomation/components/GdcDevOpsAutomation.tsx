@@ -277,7 +277,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
           let imgsLenth = ele.querySelectorAll('img').length;
           console.log("content added - ", contentAdded, " images - ", imgsLenth);
-          if (contentAdded == false && imgsLenth == 0) {
+          if (contentAdded == false && imgsLenth == 0 && field.required==true) {
             field.showError = true;
           }
           field.value = value;
@@ -449,11 +449,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
-        if (APIData.filter(d => d.path == "/fields/Custom.IsThisRequestUrgent")[0].value == true && APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value == "Operational Framework\\Data Services") {
-          console.log("hello from urgent condition ")
-            APIData.filter(d => d.path == "/fields/System.Title")[0].value="URGENT | "+APIData.filter(d => d.path == "/fields/System.Title")[0].value;
+        // if (APIData.filter(d => d.path == "/fields/Custom.IsThisRequestUrgent")[0].value == true && APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value == "Operational Framework\\Data Services") {
+        //   console.log("hello from urgent condition ")
+        //     APIData.filter(d => d.path == "/fields/System.Title")[0].value="URGENT | "+APIData.filter(d => d.path == "/fields/System.Title")[0].value;
           
-          }
+        //   } for adding urgent in title
         APIData = [...APIData, ...this.AttachmentAPI];
 
         //  APIData=APIData.concat(this.AttachmentAPI[0]);
@@ -1035,7 +1035,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     this.handleChange(data, ele.field);
                   }
                 }} />
+                <div className="requireddiv">
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              </div>
             </div>
           </div >
         );

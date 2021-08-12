@@ -12,4 +12,4 @@ const Test = {
     ProjectUrl: "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test",
 };
 
-export const OrganizationConfig = Demo;
+export const OrganizationConfig = Test;
