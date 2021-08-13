@@ -473,17 +473,23 @@ public emaildata1;
               selectedButton: ""
             });
             this.AttachmentAPI = [];
+            let apiArea:string=APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
-            let emails=[];
-            emails[0]=this.emaildata1.GDCEmailTo;
+            
             // this.props.devOpsService.getTeamDetails(this.state.Area.value).then(emailData => {
             //   let emails: any = [];
             //   emailData.value.forEach(element => {
             //     emails.push(element.identity.uniqueName);
             //   });
-             
+            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\')+1,)).then(emaildata1=>{
+              console.log(emaildata1,"email fornat")
+              this.emaildata1=emaildata1;
+              console.log(emaildata1);
+            });
+            let emails=[];
+            emails[0]=this.emaildata1.GDCEmailTo;
            
               this.props.spService.sendEmail(this.emaildata1,APIData.filter(d => d.path == "/fields/System.Title")[0].value,APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
          
@@ -584,11 +590,6 @@ public emaildata1;
 
   public updateFormFields(option) {
     this.state.Area.value = option;
-    this.props.spService.getEmailData(option).then(emaildata1=>{
-      console.log(emaildata1,"email fornat")
-      this.emaildata1=emaildata1;
-      console.log(emaildata1);
-    });
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
