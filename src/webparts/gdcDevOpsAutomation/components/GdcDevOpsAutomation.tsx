@@ -483,15 +483,18 @@ public emaildata1;
             //   emailData.value.forEach(element => {
             //     emails.push(element.identity.uniqueName);
             //   });
+            let emails=[];
             this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\')+1,)).then(emaildata1=>{
               console.log(emaildata1,"email fornat")
               this.emaildata1=emaildata1;
-              console.log(emaildata1);
-            });
-            let emails=[];
-            emails[0]=this.emaildata1.GDCEmailTo;
-           
+              emails[0]=this.emaildata1.GDCEmailTo;
+              console.log(emaildata1,this.emaildata1);
               this.props.spService.sendEmail(this.emaildata1,APIData.filter(d => d.path == "/fields/System.Title")[0].value,APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
+            });
+          
+          
+           
+              
          
    
             this.state.Area.value = "";

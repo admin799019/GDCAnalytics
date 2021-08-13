@@ -76,6 +76,7 @@ export class SPService implements ISPService {
         var url = OrganizationConfig.ProjectUrl + "/_workitems/edit/" + id;
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
+        console.log(emaildata1)
         let Bodystr=emaildata1.GDCEmailBody;
         let newstr="";
         Bodystr=Bodystr.replaceAll("&#123;"," ");
