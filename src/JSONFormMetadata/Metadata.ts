@@ -1,16 +1,4 @@
-export const metaData = [
-
-    // {
-    //     "id": "Is this Request Urgent",
-    //     "fieldType": "SwitchInput",
-    //     "label": "Is this Request Urgent",
-    //     "placeholder": "",
-    //     "className": "fields",
-    //     "helperText": "MuSwitchInput",
-    //     "options": null,
-    //     "value": ""
-    // }
-];
+export const metaData = [];
 
 const BusinessAnalyticsMetaData = [
     {

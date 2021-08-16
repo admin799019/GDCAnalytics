@@ -64,22 +64,6 @@ interface subFieldsObjectType {
   active: boolean;
 }
 
-// const Area = {
-//   "field": "Analytics Area",
-//   "fieldType": "SingleSelectInput",
-//   "label": "GDC Data & Analytics Area",
-//   "placeholder": "",
-//   "className": "fields",
-//   "helperText": "",
-//   "options": [
-
-//     { "key": "Data Services", "text": "Data Services" },
-//     { "key": "Business Analytics and Insights", "text": "Business Analytics and Insights" },
-//     { "key": "Marketing Engagement & Innovation", "text": "Marketing Engagement & Innovation" },
-//     { "key": "Targeting Enablement & Business Health", "text": "Targeting Enablement & Business Health" }
-//   ],
-//   "value": ""
-// };
 const iconStyle =
 {
   cursor: 'pointer',
@@ -101,7 +85,6 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
-        {console.log(props, "from rendering wrapper")}
         {(props.name != "" && props.name != undefined) || (props.title != "" && props.title != undefined) ?
           <TooltipHost
             tooltipProps={{
@@ -155,7 +138,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public AttachmentAPI: any = [];
   public emaildata1;
   public panelRef;
-  public dependentField:MetaDataType;
+  public dependentField: MetaDataType;
+  public emailFormData = [];
 
   public richTextFieldCalls: number = 0;
   public constructor(props) {
@@ -170,7 +154,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.state = {
       projects: [],
       text: "",
-      // DescriptionData: "",
       formData: [],
       formFields: metaData,
       formSuccessMessage: "",
@@ -185,14 +168,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       AreaButtons: [],
       Area: {
         "field": "Analytics Area",
-        "fieldType": "SingleSelectInput",
         "label": "GDC Data & Analytics Area",
-        "placeholder": "",
         "className": "fields",
-        "helperText": "",
         "options": tempVar,
         "value": ""
-      },
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -285,7 +265,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         if (field.fieldType == "FileInput") {
-          console.log("inside append values", field);
           field.files = field.files.concat(value);
         }
 
@@ -419,7 +398,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         APIData = dataReturned.APIData;
         let pathPrefix;
 
-
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -443,23 +421,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
-        //addorupdate == "add" ? this.props.devOpsService.addfeature(APIData) : this.props.devOpsService.updatefeature(APIData);
+
         APIData.push({
           "op": "add",
           "path": "/fields/System.Description",
           "from": null,
           "value": this.DescriptionData
         });
-        // if (APIData.filter(d => d.path == "/fields/Custom.IsThisRequestUrgent")[0].value == true && APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value == "Operational Framework\\Data Services") {
-        //   console.log("hello from urgent condition ")
-        //     APIData.filter(d => d.path == "/fields/System.Title")[0].value="URGENT | "+APIData.filter(d => d.path == "/fields/System.Title")[0].value;
 
-        //   } for adding urgent in title
         APIData = [...APIData, ...this.AttachmentAPI];
 
-        //  APIData=APIData.concat(this.AttachmentAPI[0]);
-
-        console.log(APIData, "apidata");
         this.props.devOpsService.addfeature(APIData).then((data) => {
           if (data.id != null) {
             this.setState({
@@ -479,17 +450,26 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               this.setState({ showMessage: false });
             }.bind(this), 5000);
 
-            // this.props.devOpsService.getTeamDetails(this.state.Area.value).then(emailData => {
-            //   let emails: any = [];
-            //   emailData.value.forEach(element => {
-            //     emails.push(element.identity.uniqueName);
-            //   });
+            let url = { "id": "Link", "value": "<a href='" + OrganizationConfig.ProjectUrl + "/_workitems/edit/" + data.id + "'>Link</a>" };
+            this.emailFormData.push(url);
+
+            let id = { "id": "Id", "value": data.id };
+            this.emailFormData.push(id);
+
+            if (!(this.emailFormData.filter(ed => ed.id == "Area") != null && this.emailFormData.filter(ed => ed.id == "Area").length > 0)) {
+              let area = { "id": "Area", "value": apiArea };
+              this.emailFormData.push(area);
+            }
+            else if (this.emailFormData.filter(ed => ed.id == "Area") != null && this.emailFormData.filter(ed => ed.id == "Area").length > 0) {
+              this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
+            }
+
             let emails = [];
-            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata1 => {
-              this.emaildata1 = emaildata1;
+            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata => {
+              this.emaildata1 = emaildata;
               emails[0] = this.emaildata1.GDCEmailTo;
-              console.log(emaildata1, this.emaildata1);
-              this.props.spService.sendEmail(this.emaildata1, APIData.filter(d => d.path == "/fields/System.Title")[0].value, APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
+              this.props.spService.sendEmail(emaildata, this.emailFormData, emails, data.id);
+              this.emailFormData = [];
             });
 
             this.state.Area.value = "";
@@ -565,14 +545,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     for (let field of Fields) {
       if (field.hasDependency == true) {
         this.getField(field.dependentField, this.state.formFields);
-        console.log("dependent field", this.dependentField);
-        if(this.dependentField != undefined && this.dependentField != null && this.dependentField.id == field.dependentField && this.dependentField.value == field.dependentFieldValue) {
+        if (this.dependentField != undefined && this.dependentField != null && this.dependentField.id == field.dependentField && this.dependentField.value == field.dependentFieldValue) {
           field.value = field.textToAppend.concat(field.value);
         }
       }
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
-        tempDesc = tempDesc.concat("<div><b>", field.id, "</b></div><div>", field.value, "</div></br>");
+        tempDesc = tempDesc.concat("<div><b>", field.label, "</b></div><div>", field.value, "</div></br>");
         this.DescriptionData = this.DescriptionData.concat(tempDesc);
       }
       if (field.devopsName != "System.Description" && field.devopsName != "Attachments") {
@@ -583,9 +562,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "value": field.value
         });
       }
-      if (field.devopsName == "Attachments") {
-
-      }
+      this.emailFormData.push(field);
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -824,7 +801,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public render(): JSX.Element {
-    console.log(this.state.Area.options);
     return (
       <div className="gdcBorder ">
         <div className="gdcMessage">
@@ -1107,7 +1083,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   id="file-upload"
                   multiple
                   nv-file-select
-
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
               </div>
