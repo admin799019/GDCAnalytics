@@ -208,6 +208,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public appendValues(stateValues, value: any, name) {
+    const parser = new DOMParser();
     var subFieldsObject;
     var i = 0;
     stateValues.map((field: MetaDataType, index) => {
@@ -239,15 +240,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         if (field.fieldType == "MultiLineTextInput") {
           var contentAdded: boolean = false;
-          var ele = document.createElement('div');
-          ele.innerHTML = value;
-          var eleValue = ele.innerText.replace(/  +/g, ' ');
-          // console.log("multi - ", ele.innerText);
+          var ele = parser.parseFromString(value, 'text/html');
+          var eleValue = ele.body.innerText.replace(/  +/g, ' ');
           if (field.defaultValue != null && field.defaultValue != "") {
-            var defaultele = document.createElement('div');
-            defaultele.innerHTML = field.defaultValue;
-
-            if (eleValue != defaultele.innerText) {
+            var defaultele = parser.parseFromString(field.defaultValue, 'text/html');
+            if (eleValue != defaultele.body.innerText) {
               contentAdded = true;
             }
           }
@@ -349,9 +346,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async UpdateRichText(data): Promise<any> {
-    let element = document.createElement('div');
-    element.innerHTML = data;
-    let imgsLenth = element.querySelectorAll('img').length;
+    const parser = new DOMParser();
+    let element = parser.parseFromString(data, 'text/html')
+    var imgsLenth = element.querySelectorAll('img').length;
+
     var imageCalls = [];
     element.querySelectorAll('img').forEach((ele) => {
       if (ele.src.indexOf('base64,') != 0) {
@@ -374,7 +372,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       });
       console.log("element - ", element);
       // this.props.devOpsService.updatefeature(element.innerHTML);
-      return element.innerHTML;
+      // return element.innerHTML;
+      return element.body.innerHTML;
     });
   }
 
