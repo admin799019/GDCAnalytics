@@ -1043,16 +1043,18 @@ public emaildata1;
               </Label>
            
               <ReactQuill
-                defaultValue={ele.defaultValue}
+            value={ele.defaultValue}
                 preserveWhitespace={true}
                 {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
                 placeholder={ele.placeholder}
-                // className="gdcMultiLine"
+                className="gdcMultiLine"
                 onChange={(data, delta, source) => {
                   if (source != "api") {
                     this.handleChange(data, ele.field);
                   }
-                }} />
+                }} 
+               // onChange={(e, c) => this.handleChange(c, ele.field)}
+                />
                 <div className="requireddiv">
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
