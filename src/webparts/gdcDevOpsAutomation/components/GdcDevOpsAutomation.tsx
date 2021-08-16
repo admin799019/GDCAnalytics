@@ -6,14 +6,13 @@ import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/D
 import { PrimaryButton } from '@fluentui/react/lib/Button';
 import { DatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
-import { TooltipHost, ITooltipHostStyles,ITooltipProps } from '@fluentui/react/lib/Tooltip';
+import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
 //import Logo from './../GDCLogo.jsx';
 import ReactHtmlParser from 'react-html-parser';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
-import {Callout} from '@fluentui/react'
 import { IStackTokens, Stack, IStackStyles } from '@fluentui/react/lib/Stack';
 import { classNamesFunction, IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
@@ -36,7 +35,7 @@ import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
 import { SPService } from '../../../Services/SPService';
 
 interface MetaDataType {
-  field: string;
+  id: string;
   fieldType: string;
   label: string;
   placeholder: string;
@@ -53,6 +52,10 @@ interface MetaDataType {
   cascadingField: string;
   files: any;
   defaultValue: string;
+  hasDependency: boolean;
+  dependentField: string;
+  dependentFieldValue: any;
+  textToAppend: string;
 }
 
 interface subFieldsObjectType {
@@ -98,21 +101,21 @@ const onWrapDefaultLabelRenderer = (
     <>
       <Stack horizontal verticalAlign="center" tokens={stackTokens}>
         <span className="questionspan">{defaultRender(props)}</span>
-        {console.log(props,"from rendering wrapper")}
-        {(props.name!="" && props.name!=undefined) || (props.title!="" &&props.title!=undefined)  ?
-        <TooltipHost
-        tooltipProps = {{
-          onRenderContent :() => (ReactHtmlParser(props.name!=""?props.name:props.title))
-          }}
-       // content={props.name || props.title}
-        styles={hostStyles}
-      >
-        <Icon iconName="Info"
-          style={iconStyle}
-          // title={props.name || props.title}
-          className="tooltip" ariaLabel="value required" />
+        {console.log(props, "from rendering wrapper")}
+        {(props.name != "" && props.name != undefined) || (props.title != "" && props.title != undefined) ?
+          <TooltipHost
+            tooltipProps={{
+              onRenderContent: () => (ReactHtmlParser(props.name != "" ? props.name : props.title))
+            }}
+            // content={props.name || props.title}
+            styles={hostStyles}
+          >
+            <Icon iconName="Info"
+              style={iconStyle}
+              // title={props.name || props.title}
+              className="tooltip" ariaLabel="value required" />
           </TooltipHost>
-          :""}
+          : ""}
       </Stack>
     </>
   );
@@ -150,8 +153,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI: any = [];
-public emaildata1;
+  public emaildata1;
   public panelRef;
+  public dependentField:MetaDataType;
 
   public richTextFieldCalls: number = 0;
   public constructor(props) {
@@ -209,12 +213,9 @@ public emaildata1;
   }
 
   public componentDidMount() {
-
-
     var projects: [];
     this.setState({
-      projects: projects,
-
+      projects: projects
     });
   }
 
@@ -230,7 +231,7 @@ public emaildata1;
     var subFieldsObject;
     var i = 0;
     stateValues.map((field: MetaDataType, index) => {
-      if (field.field == name) {
+      if (field.id == name) {
         i = index;
         if ((value == "" || value == " " || value == "<p><br></p>") && field.required == true) {
           field.showError = true;
@@ -277,7 +278,7 @@ public emaildata1;
           }
           let imgsLenth = ele.querySelectorAll('img').length;
           console.log("content added - ", contentAdded, " images - ", imgsLenth);
-          if (contentAdded == false && imgsLenth == 0 && field.required==true) {
+          if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
           }
           field.value = value;
@@ -298,7 +299,7 @@ public emaildata1;
           });
         }
       }
-      else if (field.field != name && field.subFields != null && field.subFields.length > 0) {
+      else if (field.id != name && field.subFields != null && field.subFields.length > 0) {
         subFieldsObject = field.subFields.filter(f => f.active == true);
         if (subFieldsObject.length > 0) {
           subFieldsObject[0].fields = this.appendValues(subFieldsObject[0].fields, value, name);
@@ -311,7 +312,7 @@ public emaildata1;
   public handleToggleChange(value: any, name) {
     var stateValues = this.state.formFields;
     stateValues.map((f) => {
-      if (f.field == name) {
+      if (f.id == name) {
         f.checked = value;
         f.value = value;
       }
@@ -369,7 +370,7 @@ public emaildata1;
   }
 
   public async UpdateRichText(data): Promise<any> {
-    let element =document.createElement('div');
+    let element = document.createElement('div');
     element.innerHTML = data;
     let imgsLenth = element.querySelectorAll('img').length;
     var imageCalls = [];
@@ -417,8 +418,8 @@ public emaildata1;
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-        
-       
+
+
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -433,10 +434,10 @@ public emaildata1;
           if (this.state.selectedButton == "Business Analytics and Insights") {
             pathPrefix = OrganizationConfig.ProjectName + "\\Business Analytics and Insights\\";
           }
-          else if (this.state.selectedButton == "Marketing Engagement & Innovation") {
+          else if (this.state.selectedButton == "Marketing Engagement and Innovation") {
             pathPrefix = OrganizationConfig.ProjectName + "\\";
           }
-          else if (this.state.selectedButton == "Targeting Enablement & Business Health") {
+          else if (this.state.selectedButton == "Targeting Enablement and Business Health") {
             pathPrefix = OrganizationConfig.ProjectName + "\\Targeting Enablement and Business Health\\";
           }
           console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
@@ -452,7 +453,7 @@ public emaildata1;
         // if (APIData.filter(d => d.path == "/fields/Custom.IsThisRequestUrgent")[0].value == true && APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value == "Operational Framework\\Data Services") {
         //   console.log("hello from urgent condition ")
         //     APIData.filter(d => d.path == "/fields/System.Title")[0].value="URGENT | "+APIData.filter(d => d.path == "/fields/System.Title")[0].value;
-          
+
         //   } for adding urgent in title
         APIData = [...APIData, ...this.AttachmentAPI];
 
@@ -473,30 +474,24 @@ public emaildata1;
               selectedButton: ""
             });
             this.AttachmentAPI = [];
-            let apiArea:string=APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
+            let apiArea: string = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
-            
+
             // this.props.devOpsService.getTeamDetails(this.state.Area.value).then(emailData => {
             //   let emails: any = [];
             //   emailData.value.forEach(element => {
             //     emails.push(element.identity.uniqueName);
             //   });
-            let emails=[];
-            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\')+1,)).then(emaildata1=>{
-              console.log(emaildata1,"email fornat")
-              this.emaildata1=emaildata1;
-              emails[0]=this.emaildata1.GDCEmailTo;
-              console.log(emaildata1,this.emaildata1);
-              this.props.spService.sendEmail(this.emaildata1,APIData.filter(d => d.path == "/fields/System.Title")[0].value,APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value,APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
+            let emails = [];
+            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata1 => {
+              this.emaildata1 = emaildata1;
+              emails[0] = this.emaildata1.GDCEmailTo;
+              console.log(emaildata1, this.emaildata1);
+              this.props.spService.sendEmail(this.emaildata1, APIData.filter(d => d.path == "/fields/System.Title")[0].value, APIData.filter(d => d.path == "/fields/Custom.NeedByDate")[0].value, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value, emails, data.id);
             });
-          
-          
-           
-              
-         
-   
+
             this.state.Area.value = "";
           }
           else {
@@ -548,15 +543,36 @@ public emaildata1;
     this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
   }
 
+  public getField(fieldName, fields) {
+    fields.forEach(f => {
+      if (f.id == fieldName) {
+        this.dependentField = f;
+      }
+      else if (f.subFields != null && f.subFields.length > 0) {
+        var sfj = f.subFields.filter(sf => sf.active == true);
+        if (sfj != null && sfj.length > 0) {
+          this.getField(fieldName, sfj[0].fields);
+        }
+      }
+    });
+  }
+
   public async appendAPI(Fields: MetaDataType[], APIData) {
     var requiredHasValues: boolean = true;
     var subFields;
     var mlt = [];
 
     for (let field of Fields) {
+      if (field.hasDependency == true) {
+        this.getField(field.dependentField, this.state.formFields);
+        console.log("dependent field", this.dependentField);
+        if(this.dependentField != undefined && this.dependentField != null && this.dependentField.id == field.dependentField && this.dependentField.value == field.dependentFieldValue) {
+          field.value = field.textToAppend.concat(field.value);
+        }
+      }
       if (field.devopsName == "System.Description") {
         var tempDesc = "";
-        tempDesc = tempDesc.concat("<div><b>", field.field, "</b></div><div>", field.value, "</div></br>");
+        tempDesc = tempDesc.concat("<div><b>", field.id, "</b></div><div>", field.value, "</div></br>");
         this.DescriptionData = this.DescriptionData.concat(tempDesc);
       }
       if (field.devopsName != "System.Description" && field.devopsName != "Attachments") {
@@ -570,6 +586,7 @@ public emaildata1;
       if (field.devopsName == "Attachments") {
 
       }
+
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
 
@@ -728,13 +745,13 @@ public emaildata1;
   public getCascadingFieldValue(fieldName) {
     var value = "";
     this.state.formFields.map(f => {
-      if (f.field == fieldName) {
+      if (f.id == fieldName) {
         value = f.value;
       }
       else if (f.subFields != null && f.subFields.length > 0) {
         if (f.subFields.filter(sfo => sfo.active == true).length > 0) {
           f.subFields.filter(sfo => sfo.active == true)[0].fields.map(sf => {
-            if (sf.field == fieldName) {
+            if (sf.id == fieldName) {
               value = sf.value;
             }
           });
@@ -883,7 +900,7 @@ public emaildata1;
             <div className={ele.className}>
               <TextField label={ele.label}
                 autoComplete="off"
-                onChange={(e, value) => this.handleChange(value, ele.field)}
+                onChange={(e, value) => this.handleChange(value, ele.id)}
                 {...ele.showError == true ? { className: "gdcTextField requiredreddrop" } : { className: "gdcTextField" }}
                 //className="gdcTextField"
                 placeholder={ele.placeholder}
@@ -916,7 +933,7 @@ public emaildata1;
                     onRenderTitle: this.onRenderTitle,
                     onRenderPlaceholder: this.onRenderPlaceholder
                   } : {}}
-                onChange={(e, o) => this.handleChange(o.key, ele.field)}
+                onChange={(e, o) => this.handleChange(o.key, ele.id)}
                 required={ele.required}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -942,7 +959,7 @@ public emaildata1;
                 options={options}
                 {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
                 //className="gdcDropDown"
-                onChange={(e, o) => this.handleChange(o.key, ele.field)}
+                onChange={(e, o) => this.handleChange(o.key, ele.id)}
                 required={ele.required}
               //styles={dropdownStyles}
               />
@@ -957,7 +974,7 @@ public emaildata1;
               <ChoiceGroup options={ele.options}
                 {...ele.showError == true ? { className: "gdcRadioButton requiredred" } : { className: "gdcRadioButton" }}
                 // className="gdcRadioButton"
-                onChange={(e, o) => this.handleChange(o.key, ele.field)}
+                onChange={(e, o) => this.handleChange(o.key, ele.id)}
                 label={ele.label} required={ele.required} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -972,12 +989,12 @@ public emaildata1;
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             {ele.helperText != null && ele.helperText != ""
-              ?<TooltipHost 
-              tooltipProps = {{
-              onRenderContent :() => (ReactHtmlParser(ele.helperText))
-              }}
-              //  {...ele.helperTextList ? 
-                  // {onRenderContent:
+              ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                //  {...ele.helperTextList ? 
+                // {onRenderContent:
                 //content={ele.helperText}
                 styles={hostStyles}
               > <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
@@ -990,7 +1007,7 @@ public emaildata1;
               ariaLabel="Select a date"
               minDate={new Date(Date.now())}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
-              onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.field)}
+              onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
@@ -1003,7 +1020,7 @@ public emaildata1;
                 {...ele.checked ? { className: "gdcSwitchInput black" } : { className: "gdcSwitchInput" }}
                 //className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
-                onChange={(e, c) => this.handleChange(c, ele.field)}
+                onChange={(e, c) => this.handleChange(c, ele.id)}
                 checked={ele.checked}
 
               />
@@ -1022,21 +1039,21 @@ public emaildata1;
             <div className={ele.className + " gdcColumnBlock"}>
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
-                  <TooltipHost 
-                  tooltipProps = {{
-                 // onRenderContent :() => (<div>{ele.helperText}<ul><li>test</li></ul></div>)
-                 onRenderContent :() => (ReactHtmlParser(ele.helperText))
-                  }}
-                  //  {...ele.helperTextList ? 
-                      // {onRenderContent:
-                  // content={tooltipcontent}
+                  <TooltipHost
+                    tooltipProps={{
+                      // onRenderContent :() => (<div>{ele.helperText}<ul><li>test</li></ul></div>)
+                      onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                    }}
+                    //  {...ele.helperTextList ? 
+                    // {onRenderContent:
+                    // content={tooltipcontent}
                     styles={hostStyles}
                   >
-                      <Icon iconName="Info" className="tooltip" style={iconStyle}  ariaLabel="value required" />
-               </TooltipHost>
-                : ""}
+                    <Icon iconName="Info" className="tooltip" style={iconStyle} ariaLabel="value required" />
+                  </TooltipHost>
+                  : ""}
               </Label>
-           
+
               <ReactQuill
                 defaultValue={ele.defaultValue}
                 preserveWhitespace={true}
@@ -1045,11 +1062,11 @@ public emaildata1;
                 // className="gdcMultiLine"
                 onChange={(data, delta, source) => {
                   if (source != "api") {
-                    this.handleChange(data, ele.field);
+                    this.handleChange(data, ele.id);
                   }
                 }} />
-                <div className="requireddiv">
-              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              <div className="requireddiv">
+                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
             </div>
           </div >
@@ -1072,7 +1089,7 @@ public emaildata1;
             <div className="peoplepicker">
               <CustomPeoplePicker
 
-                required={ele.required} spService={this.props.spService} pickerFieldName={ele.field} handlePeopleChange={this.handleChange} />
+                required={ele.required} spService={this.props.spService} pickerFieldName={ele.id} handlePeopleChange={this.handleChange} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
@@ -1092,7 +1109,7 @@ public emaildata1;
                   nv-file-select
 
                   onClick={handleClick}
-                  onChange={e => this.onFileUpload(e, ele.field)} />
+                  onChange={e => this.onFileUpload(e, ele.id)} />
               </div>
               <div className="attachmentNames">{
                 ele.files.map((n: any) => {
