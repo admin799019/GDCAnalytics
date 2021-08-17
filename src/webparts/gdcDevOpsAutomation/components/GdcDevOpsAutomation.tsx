@@ -113,6 +113,9 @@ export interface IDevOpsProps {
   spService: ISPService;
   context: any;
 }
+function elog(ev, object) {
+  console.log(object.id + " - " + ev + ": " + object.value); 
+}
 
 export interface IDevOpsState {
   projects: [];
@@ -257,6 +260,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           console.log("content added - ", contentAdded, " images - ", imgsLenth);
           if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
+            console.log(field.showError,"showerror");
           }
           field.value = value;
         }
@@ -967,11 +971,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 // {onRenderContent:
                 //content={ele.helperText}
                 styles={hostStyles}
-              > <Icon iconName="Info" title={ele.helperText} style={iconStyle} className="tooltip" ariaLabel="value required" />
+              > <Icon iconName="Info" style={iconStyle} className="tooltip" ariaLabel="value required" />
               </TooltipHost>
               : <div></div>}
             <DatePicker
               allowTextInput
+              //onBlur={elog('blur',this)}
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date"
@@ -1029,14 +1034,14 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   preserveWhitespace={true}
                   {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
                   placeholder={ele.placeholder}
-                  className="gdcMultiLine"
                   onChange={(data, delta, source) => {
                     if (source != "api") {
                       this.handleChange(data, ele.id);
                     }
                   }}
                 />
-              </div>
+                {console.log(ele.showError,"ml")}
+           </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
