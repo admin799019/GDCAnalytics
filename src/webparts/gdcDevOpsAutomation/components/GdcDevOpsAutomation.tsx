@@ -347,7 +347,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public async UpdateRichText(data): Promise<any> {
     const parser = new DOMParser();
-    let element = parser.parseFromString(data, 'text/html')
+    let element = parser.parseFromString(data, 'text/html');
     var imgsLenth = element.querySelectorAll('img').length;
 
     var imageCalls = [];
@@ -408,13 +408,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         else {
-         
-            pathPrefix = OrganizationConfig.ProjectName +  `\\` + this.state.Area.value +  `\\`;
-          
-       
-          
+
+          pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
+
+
+
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
-          console.log( APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
+          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
         }
 
         APIData.push({
@@ -1036,7 +1036,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     this.handleChange(data, ele.id);
                   }
                 }}
-                 />
+              />
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
