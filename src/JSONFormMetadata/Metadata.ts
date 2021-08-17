@@ -1,29 +1,13 @@
-export const metaData = [
+export const metaData = [];
 
-    // {
-    //     "field": "Is this Request Urgent",
-    //     "fieldType": "SwitchInput",
-    //     "label": "Is this Request Urgent",
-    //     "placeholder": "",
-    //     "className": "fields",
-    //     "helperText": "MuSwitchInput",
-    //     "options": null,
-    //     "value": ""
-    // }
-];
-
-const ChannelAnalyticsMetaData =[
+const BusinessAnalyticsMetaData = [
     {
-        "field": "What area of Business Analytics & Insights is your request for?",
+        "id": "What area of Business Analytics & Insights is your request for?",
         "fieldType": "SingleSelectInput",
         "label": "What area of Business Analytics & Insights is the request for?",
         "placeholder": "Select an option",
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
-            {
-                "key": "Functional or Engine Teams within BA and I",
-                "text": "Functional or Engine Teams within BA and I"
-            },
             {
                 "key": "Business Analytics and Insights",
                 "text": "Business Analytics and Insights"
@@ -74,7 +58,7 @@ const ChannelAnalyticsMetaData =[
                 "option": "Relationship Marketing Analytics",
                 "fields": [
                     {
-                        "field": "POD Category",
+                        "id": "POD Category",
                         "fieldType": "SingleSelectInput",
                         "label": "POD Category",
                         "placeholder": "Select an option",
@@ -103,7 +87,7 @@ const ChannelAnalyticsMetaData =[
                         "devopsName": "Custom.RMPODCategory"
                     },
                     {
-                        "field": "POD Name",
+                        "id": "POD Name",
                         "fieldType": "SingleSelectCascadingInput",
                         "cascadingField": "POD Category",
                         "placeholder": "Select an option",
@@ -217,7 +201,7 @@ const ChannelAnalyticsMetaData =[
         ]
     },
     {
-        "field": "Request Title",
+        "id": "Request Title",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "Enter your text here",
@@ -228,7 +212,7 @@ const ChannelAnalyticsMetaData =[
         "devopsName": "System.Title"
     },
     {
-        "field": "Please provide detailed requirements for this request.",
+        "id": "Please provide detailed requirements for this request.",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
@@ -240,7 +224,7 @@ const ChannelAnalyticsMetaData =[
         "devopsName": "System.Description"
     },
     {
-        "field": "What is the business impact if this work is not done?",
+        "id": "What is the business impact if this work is not done?",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What is the business impact if this work is not done?",
@@ -251,7 +235,7 @@ const ChannelAnalyticsMetaData =[
         "devopsName": "System.Description"
     },
     {
-        "field": "What business objective are you trying to achieve?",
+        "id": "What business objective are you trying to achieve?",
         "fieldType": "SingleLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What business objective are you trying to achieve?",
@@ -262,7 +246,7 @@ const ChannelAnalyticsMetaData =[
         "devopsName": "System.Description"
     },
     {
-        "field": "If this request is related to an existing report, please provide link to that report here",
+        "id": "If this request is related to an existing report, please provide link to that report here",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "If this request is related to an existing report, please provide link to that report here",
@@ -274,19 +258,19 @@ const ChannelAnalyticsMetaData =[
         "devopsName": "Custom.ReportRequestType"
     },
     {
-        "field": "Need By Date",
+        "id": "Need By Date",
         "fieldType": "DateInput",
         "label": "Need By Date",
         "className": "gdcGridCol gdcGridCol6",
         "placeholder": "Select the date",
-        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
         "value": "",
-        "required": true,
+        "required": false,
+        "helperText": "Provide the Need By date for the request",
         "errorMessage": "Field is required",
         "devopsName": "Custom.NeedByDate"
     },
     {
-        "field": "Please attach any supporting artifacts here",
+        "id": "Please attach any supporting artifacts here",
         "fieldType": "FileInput",
         "label": "Please attach any supporting artifacts here",
         "className": "gdcGridCol gdcGridCol12",
@@ -298,9 +282,10 @@ const ChannelAnalyticsMetaData =[
         "files": []
     }
 ];
+
 const DataServicesmetaData = [
     {
-        "field": "What type of request is this?",
+        "id": "What type of request is this?",
         "fieldType": "RadioButtonInput",
         "label": "What type of request is this?",
         "placeholder": "Select an option",
@@ -312,14 +297,14 @@ const DataServicesmetaData = [
         ],
         "value": "",
         "required": true,
-        "errorMessage": "Please choose request fieldType",
+        "errorMessage": "Please choose request field type",
         "devopsName": "Custom.WhatTypeOfRequestIsThis",
         "subFields": [
             {
                 "option": "Data Platform Development Request",
                 "fields": [
                     {
-                        "field": "Request Title",
+                        "id": "Request Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                         "placeholder": "Enter your text here",
@@ -331,11 +316,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Title"
                     },
                     {
-                        "field": "Objective",
+                        "id": "Objective",
                         "fieldType": "MultiLineTextInput",
                         "label": "Objective",
                         "placeholder": "Enter your text here",
-						"helperText": "Input what you are trying to accomplish. (e.g. As a GDC Analyst, I want to be able to  measure...)",
+                        "helperText": "Input what you are trying to accomplish. (e.g. As a GDC Analyst, I want to be able to  measure...)",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -343,11 +328,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Problem Statement",
+                        "id": "Problem Statement",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "Problem Statement",
-						"helperText": "Input how you are accomplishing this today. Do any workaround exist? What is stopping you form achieving your objective(s) today?",
+                        "helperText": "Input how you are accomplishing this today. Do any workaround exist? What is stopping you form achieving your objective(s) today?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -355,11 +340,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Business Value",
+                        "id": "Business Value",
                         "fieldType": "MultiLineTextInput",
-                        "label": "Busines Value",
+                        "label": "Business Value",
                         "placeholder": "Enter your text here",
-						"helperText": "<div>What is the business value of this request? Consider the impact on financial results and/or operational efficiency. Key value indicators to consider include:<ul><li>Improve process/operations</li><li>Improve spending decisions (media spend, social, campaign effectiveness, etc.)</li><li>Increase in revenue (conversion rate, # wins, funnel velocity, etc.)</li><li>Breadth and/or depth of improve analysis</li></ul></div>",
+                        "helperText": "<div>What is the Business value of this request? Consider the impact on financial results and/or operational efficiency. Key value indicators to consider include:<ul><li>Improve process/operations</li><li>Improve spending decisions (media spend, social, campaign effectiveness, etc.)</li><li>Increase in revenue (conversion rate, # wins, funnel velocity, etc.)</li><li>Breadth and/or depth of improve analysis</li></ul></div>",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -367,11 +352,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Use Cases",
+                        "id": "Use Cases",
                         "fieldType": "MultiLineTextInput",
                         "label": "Use Cases",
                         "placeholder": "Enter your text here",
-						"helperText": "What are the different ways that end users will use the data?",
+                        "helperText": "What are the different ways that end users will use the data?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -379,11 +364,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Desired Output",
+                        "id": "Desired Output",
                         "fieldType": "MultiLineTextInput",
                         "label": "Desired Output",
                         "placeholder": "Enter your text here",
-						"helperText": "Where do you expect to see this land? Data mart, cube, dashboard, etc. While we will do everything we can to meet user's needs, we reserve the right to make decisions that best meet the overall needs of the business vs. a specific user.",
+                        "helperText": "Where do you expect to see this land? Data mart, cube, dashboard, etc. While we will do everything we can to meet user's needs, we reserve the right to make decisions that best meet the overall needs of the business vs. a specific user.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -391,11 +376,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Business Rules",
+                        "id": "Business Rules",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Rules",
                         "placeholder": "Enter your text here",
-						"helperText": "Input metric definitions, business logic, etc.",
+                        "helperText": "Input metric definitions, business logic, etc.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -403,11 +388,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Success Criteria",
+                        "id": "Success Criteria",
                         "fieldType": "MultiLineTextInput",
                         "label": "Success Criteria",
                         "placeholder": "Enter your text here",
-						"helperText": "Input any success criteria for final sign off.",
+                        "helperText": "Input any success criteria for final sign off.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -415,11 +400,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Output Frequency",
+                        "id": "Output Frequency",
                         "fieldType": "MultiLineTextInput",
                         "label": "Output Frequency",
                         "placeholder": "Enter your text here",
-						"helperText": "Input how frequently this information needs to be refreshed. While we will do everything we can to meet user's needs, we reserve the right to make decisions that best meet the overall needs of the business vs. a specific user.",
+                        "helperText": "Input how frequently this information needs to be refreshed. While we will do everything we can to meet user's needs, we reserve the right to make decisions that best meet the overall needs of the business vs. a specific user.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -427,11 +412,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Data Definition",
+                        "id": "Data Definition",
                         "fieldType": "MultiLineTextInput",
                         "label": "Data Definition",
                         "placeholder": "Enter your text here",
-						"helperText": "If new fields are being created as a result of this request, please provide a definition for us to include in the data mart documentation.",
+                        "helperText": "If new fields are being created as a result of this request, please provide a definition for us to include in the data mart documentation.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -439,11 +424,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Request Maturity",
+                        "id": "Request Maturity",
                         "fieldType": "MultiLineTextInput",
                         "label": "Request Maturity",
                         "placeholder": "Enter your text here",
-						"helperText": "Clarify the level of maturity of the request. Has the business logic and/or metric definitions already been in use? Is there an incubation effort or proof of concept to refer to, or is there still uncertainty around this? Provide assumptions, limitations, and/or dependencies along with context here.",
+                        "helperText": "Clarify the level of maturity of the request. Has the business logic and/or metric definitions already been in use? Is there an incubation effort or proof of concept to refer to, or is there still uncertainty around this? Provide assumptions, limitations, and/or dependencies along with context here.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": false,
@@ -451,18 +436,19 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Need By Date",
+                        "id": "Need By Date",
                         "fieldType": "DateInput",
                         "label": "Need By Date",
                         "placeholder": "Select the date",
+                        "helperText": "Provide Need By date",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
-                        "required": true,
+                        "required": false,
                         "errorMessage": "Field is required",
                         "devopsName": "Custom.NeedByDate"
                     },
                     {
-                        "field": "Please provide attachments or screenshots to support your request",
+                        "id": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -471,7 +457,7 @@ const DataServicesmetaData = [
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments",
-                        "files":[]
+                        "files": []
                     }
                 ],
                 "active": false
@@ -480,7 +466,7 @@ const DataServicesmetaData = [
                 "option": "Support Needed",
                 "fields": [
                     {
-                        "field": "Is this request urgent?",
+                        "id": "Is this request urgent?",
                         "fieldType": "SwitchInput",
                         "label": "Is this request urgent?",
                         "placeholder": "",
@@ -496,8 +482,8 @@ const DataServicesmetaData = [
                         "checked": false,
                         "devopsName": "Custom.IsThisRequestUrgent"
                     },
-					{
-                        "field": "Issue Title",
+                    {
+                        "id": "Issue Title",
                         "fieldType": "SingleLineTextInput",
                         "label": "Issue Title",
                         "placeholder": "Enter your text here",
@@ -506,14 +492,18 @@ const DataServicesmetaData = [
                         "value": "",
                         "required": true,
                         "errorMessage": "Field is required",
+                        "hasDependency": true,
+                        "dependentField": "Is this request urgent?",
+                        "dependentFieldValue": true,
+                        "textToAppend": "URGENT | ",
                         "devopsName": "System.Title"
                     },
                     {
-                        "field": "Description of Issue",
+                        "id": "Description of Issue",
                         "fieldType": "MultiLineTextInput",
                         "label": "Description of Issue",
                         "placeholder": "Enter your text here",
-						"helperText": "Please describe the issue in as much detail as possible, steps to reproduce the issue, how/when you identified the issue and what steps have you tried to troubleshoot, including screenshots or artifacts like pivot or SQL query",
+                        "helperText": "Please describe the issue in as much detail as possible, steps to reproduce the issue, how/when you identified the issue and what steps have you tried to troubleshoot, including screenshots or artifacts like pivot or SQL query",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -521,11 +511,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Business Impact",
+                        "id": "Business Impact",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Impact",
                         "placeholder": "Enter your text here",
-						"helperText": "How has business been impacted from this issue? Is there a workaround or is it blocking your work?",
+                        "helperText": "How has business been impacted from this issue? Is there a workaround or is it blocking your work?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -533,11 +523,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Expected Results",
+                        "id": "Expected Results",
                         "fieldType": "MultiLineTextInput",
                         "label": "Expected Results",
                         "placeholder": "Enter your text here",
-						"helperText": "Please describe expected results to accept the fix for this issue, sample data would be helpful.",
+                        "helperText": "Please describe expected results to accept the fix for this issue, sample data would be helpful.",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -545,18 +535,19 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Need By Date",
+                        "id": "Need By Date",
                         "fieldType": "DateInput",
                         "label": "Need By Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
                         "value": "",
-                        "required": true,
+                        "required": false,
+                        "helperText": "Provide Need By date",
                         "errorMessage": "Field is required",
                         "devopsName": "Custom.NeedByDate"
                     },
                     {
-                        "field": "Please provide attachments or screenshots to support your request",
+                        "id": "Please provide attachments or screenshots to support your request",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -565,7 +556,7 @@ const DataServicesmetaData = [
                         "required": false,
                         "errorMessage": "",
                         "devopsName": "Attachments",
-                        "files":[]
+                        "files": []
                     }
                 ],
                 "active": false
@@ -573,9 +564,10 @@ const DataServicesmetaData = [
         ]
     }
 ];
-const MEI =[
+
+const MEI = [
     {
-        "field": "Request Title",
+        "id": "Request Title",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "Enter your text here",
@@ -586,7 +578,122 @@ const MEI =[
         "devopsName": "System.Title"
     },
     {
-        "field": "What type of request is this?",
+        "id": "Please provide detailed requirements for this request.",
+        "fieldType": "MultiLineTextInput",
+        "placeholder": "Enter your text here",
+        "label": "Please provide detailed requirements for this request.",
+        "className": "gdcGridCol gdcGridCol12",
+
+        "value": "",
+        "required": true,
+        "errorMessage": "Field is required",
+        "devopsName": "System.Description"
+    },
+    {
+        "id": "What is the business impact if this work is not done?",
+        "fieldType": "MultiLineTextInput",
+        "placeholder": "Enter your text here",
+        "label": "What is the business impact if this work is not done?",
+        "className": "gdcGridCol gdcGridCol12",
+        "value": "",
+        "required": true,
+        "errorMessage": "Field is required",
+        "devopsName": "System.Description"
+    },
+    {
+        "id": "What business objective are you trying to achieve?",
+        "fieldType": "SingleLineTextInput",
+        "placeholder": "Enter your text here",
+        "label": "What business objective are you trying to achieve?",
+        "className": "gdcGridCol gdcGridCol6",
+        "value": "",
+        "required": true,
+        "errorMessage": "Field is required",
+        "devopsName": "System.Description"
+    },
+    {
+        "id": "If this request is related to an existing report, please provide link to that report here",
+        "fieldType": "MultiLineTextInput",
+        "placeholder": "Enter your text here",
+        "label": "If this request is related to an existing report, please provide link to that report here",
+        "className": "gdcGridCol gdcGridCol12",
+        "value": "",
+        "required": false,
+        "helperText": "Provide links to relevant reports",
+        "errorMessage": "Field is required",
+        "devopsName": "Custom.ReportRequestType"
+    },
+    {
+        "id": "Need By Date",
+        "fieldType": "DateInput",
+        "label": "Need By Date",
+        "className": "gdcGridCol gdcGridCol6",
+        "placeholder": "Select the date",
+        "value": "",
+        "required": false,
+        "helperText": "This date will be used to help us prioritize your request and will not be automatically committed to",
+        "errorMessage": "Field is required",
+        "devopsName": "Custom.NeedByDate"
+    },
+    {
+        "id": "Please attach any supporting artifacts here",
+        "fieldType": "FileInput",
+        "label": "Please attach any supporting artifacts here",
+        "className": "gdcGridCol gdcGridCol12",
+        "value": "",
+        "placeholder": "Please attach any supporting artifacts here",
+        "required": false,
+        "errorMessage": "",
+        "devopsName": "Attachments",
+        "files": []
+    }
+];
+
+const TaregetingEnablementandBusinessHealth = [
+    {
+        "id": "What tools is your request for?",
+        "fieldType": "SingleSelectInput",
+        "label": "What tools is your request for?",
+        "placeholder": "Select an option",
+        "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
+        "options": [
+            {
+                "key": "AGT",
+                "text": "AGT"
+            },
+            {
+                "key": "AHR",
+                "text": "AHR"
+            },
+            {
+                "key": "BAT",
+                "text": "BAT"
+            },
+            {
+                "key": "BAPR",
+                "text": "BAPR"
+            }
+        ],
+        "value": "",
+        "required": true,
+        "errorMessage": "Please select area",
+        "devopsName": "System.AreaPath",
+        "helperText": "Are there other tools or options needed"
+    },
+    {
+        "id": "Request Title",
+        "fieldType": "SingleLineTextInput",
+        "label": "Request Title",
+        "placeholder": "Enter your text here",
+        "className": "gdcGridCol gdcGridCol12",
+        "value": "",
+        "required": true,
+        "helperText": "Please Enter the Title of your Request",
+        "errorMessage": "Field is required",
+        "devopsName": "System.Title"
+    },
+    {
+        "id": "What type of request is this?",
         "fieldType": "SingleSelectInput",
         "placeholder": "Select an option",
         "label": "What type of request is this?",
@@ -609,12 +716,12 @@ const MEI =[
             {
                 "option": "Report Request",
                 "fields": [
-                 
+
                     {
-                        "field": "What is the business impact if this work is not done?",
+                        "id": "What is the impact of doing this request versus not?",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
-                        "label": "What is the business impact if this work is not done?",
+                        "label": "What is the impact of doing this request versus not?",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "",
                         "required": true,
@@ -622,7 +729,7 @@ const MEI =[
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "What business objective are you trying to achieve?",
+                        "id": "What business objective are you trying to achieve?",
                         "fieldType": "SingleLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "What business objective are you trying to achieve?",
@@ -632,54 +739,31 @@ const MEI =[
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
+
                     {
-                        "field": "If this request is related to an existing report, please provide link to that report here",
-                        "fieldType": "SingleLineTextInput",
-                        "placeholder": "Enter your text here",
-                        "label": "If this request is related to an existing report, please provide link to that report here",
-                        "className": "gdcGridCol gdcGridCol6",
-                        "options": [
-                            {
-                                "key": "Enhance Existing Report",
-                                "text": "Enhance Existing Report"
-                            },
-                            {
-                                "key": "New Report Request",
-                                "text": "New Report Request"
-                            }
-                        ],
-                        "value": "",
-                        "required": false,
-                        "helperText": "Provide links to relevant reports",
-                        "errorMessage": "Field is required",
-                        "devopsName": "Custom.ReportRequestType"
-                    },
-                   
-                    {
-                        "field": "Need By Date",
+                        "id": "Requested Completion Date",
                         "fieldType": "DateInput",
-                        "label": "Need By Date",
+                        "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
-                        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
                         "value": "",
-                        "required": false,
+                        "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
-                      {
-                        "field": "Are there any other details or dependencies that the team should be aware of",
+                    {
+                        "id": "Are there any other details or dependencies that the team should be aware of",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "Are there any other details or dependencies that the team should be aware of",
                         "className": "gdcGridCol gdcGridCol12",
                         "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
                         "required": true,
-                        "helpertext":"Does your question pertain to an existing report we produce?",
+                        "helpertext": "Does your question pertain to an existing report we produce?",
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
-                    },   {
-                        "field": "Please provide detailed requirements for this request.",
+                    }, {
+                        "id": "Please provide detailed requirements for this request.",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "Please provide detailed requirements for this request.",
@@ -690,7 +774,7 @@ const MEI =[
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Please attach any supporting artifacts here",
+                        "id": "Please attach any supporting artifacts here",
                         "fieldType": "FileInput",
                         "label": "Please attach any supporting artifacts here",
                         "className": "gdcGridCol gdcGridCol12",
@@ -707,12 +791,12 @@ const MEI =[
                 "active": false
             },
 
-                    {
+            {
                 "option": "Ask an Expert",
                 "fields": [
-                 
+
                     {
-                        "field": "What is the business question you are trying to answer?",
+                        "id": "What is the business question you are trying to answer?",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "What is the business question you are trying to answer?",
@@ -723,31 +807,58 @@ const MEI =[
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Need By Date",
+                        "id": "What is the priority of your request?",
+                        "fieldType": "SingleSelectInput",
+                        "label": "What is the priority of your request?",
+                        "placeholder": "Select an option",
+                        "className": "gdcGridCol gdcGridCol6",
+                        "options": [
+                            {
+                                "key": "Priority 1: Urgent and important - must have ASAP",
+                                "text": "Priority 1: Urgent and important - must have ASAP",
+                                "color": "#ff5a5a"
+                            },
+                            {
+                                "key": "Priority 2: Not urgent but important - must have",
+                                "text": "Priority 2: Not urgent but important - must have",
+                                "color": "#faaa4c"
+                            },
+                            {
+                                "key": "Priority 3: Low priority - nice to have",
+                                "text": "Priority 3: Low priority - nice to have",
+                                "color": "#6ef1c2"
+                            }
+                        ],
+                        "value": "",
+                        "required": true,
+                        "errorMessage": "Priority is required",
+                        "devopsName": "Custom.RequestedPriority"
+                    },
+                    {
+                        "id": "Requested Completion Date",
                         "fieldType": "DateInput",
-                        "label": "Need By Date",
+                        "label": "Requested Completion Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
-                        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
                         "value": "",
-                        "required": false,
+                        "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
-                      {
-                        "field": "Are there any other details or dependencies that the team should be aware of",
+                    {
+                        "id": "Are there any other details or dependencies that the team should be aware of",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "Are there any other details or dependencies that the team should be aware of",
                         "className": "gdcGridCol gdcGridCol12",
-                        "helperText":"Does your question pertain to an existing report we produce?",
+                        "helperText": "Does your question pertain to an existing report we produce?",
                         "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
                         "required": true,
                         "errorMessage": "Field is required",
                         "devopsName": "System.Description"
                     },
                     {
-                        "field": "Please attach any supporting artifacts here",
+                        "id": "Please attach any supporting artifacts here",
                         "fieldType": "FileInput",
                         "label": "Please attach any supporting artifacts here",
                         "className": "gdcGridCol gdcGridCol12",
@@ -761,392 +872,127 @@ const MEI =[
 
                 ],
                 "active": false
-                }
+            }
         ]
     }
-    ];
-    const TaregetingEnablementandBusinessHealth = [
-        {
-            "field": "What tools is your request for?",
-            "fieldType": "SingleSelectInput",
-            "label": "What tools is your request for?",
-            "placeholder": "Select an option",
-            "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
-            "options": [
-                {
-                    "key": "AGT",
-                    "text": "AGT"
-                },
-                {
-                    "key": "AGR",
-                    "text": "AGR"
-                },
-                {
-                    "key": "BAT",
-                    "text": "BAT"
-                },
-                {
-                    "key": "BAPR",
-                    "text": "BAPR"
-                }
-            ],
-            "value": "",
-            "required": true,
-            "errorMessage": "Please select area",
-            "devopsName": "System.AreaPath",
-            "helperText": "Are there other tools or options needed"
-        },
-        {
-            "field": "Request Title",
-            "fieldType": "SingleLineTextInput",
-            "label": "Request Title",
-            "placeholder": "Enter your text here",
-            "className": "gdcGridCol gdcGridCol12",
-            "value": "",
-            "required": true,
-            "helperText": "Please Enter the Title of your Request",
-            "errorMessage": "Field is required",
-            "devopsName": "System.Title"
-        },
-        {
-            "field": "What type of request is this?",
-            "fieldType": "SingleSelectInput",
-            "placeholder": "Select an option",
-            "label": "What type of request is this?",
-            "className": "gdcGridCol gdcGridCol6 gdcBottomLine",
-            "options": [
-                {
-                    "key": "Report Request",
-                    "text": "Report Request"
-                },
-                {
-                    "key": "Ask an Expert",
-                    "text": "Ask an Expert"
-                }
-            ],
-            "value": "",
-            "required": true,
-            "errorMessage": "Request type is required",
-            "devopsName": "Custom.RequestType",
-            "subFields": [
-                {
-                    "option": "Report Request",
-                    "fields": [
-                     
-                        {
-                            "field": "What is the impact of doing this request versus not?",
-                            "fieldType": "MultiLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "What is the impact of doing this request versus not?",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                        {
-                            "field": "What business objective are you trying to achieve?",
-                            "fieldType": "SingleLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "What business objective are you trying to achieve?",
-                            "className": "gdcGridCol gdcGridCol6",
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                
-                        {
-                            "field": "Requested Completion Date",
-                            "fieldType": "DateInput",
-                            "label": "Requested Completion Date",
-                            "className": "gdcGridCol gdcGridCol6",
-                            "placeholder": "Select the date",
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                          {
-                            "field": "Are there any other details or dependencies that the team should be aware of",
-                            "fieldType": "MultiLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "Are there any other details or dependencies that the team should be aware of",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
-                            "required": true,
-                            "helpertext":"Does your question pertain to an existing report we produce?",
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },   {
-                            "field": "Please provide detailed requirements for this request.",
-                            "fieldType": "MultiLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "Please provide detailed requirements for this request.",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                        {
-                            "field": "Please attach any supporting artifacts here",
-                            "fieldType": "FileInput",
-                            "label": "Please attach any supporting artifacts here",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "",
-                            "placeholder": "Please attach any supporting artifacts here",
-                            "required": false,
-                            "errorMessage": "",
-                            "devopsName": "Attachments",
-                            "files": []
-                        }
-    
-    
-                    ],
-                    "active": false
-                },
-    
-                        {
-                    "option": "Ask an Expert",
-                    "fields": [
-                     
-                        {
-                            "field": "What is the business question you are trying to answer?",
-                            "fieldType": "MultiLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "What is the business question you are trying to answer?",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                        {
-                            "field": "What is the priority of your request?",
-                            "fieldType": "SingleSelectInput",
-                            "label": "What is the priority of your request?",
-                            "placeholder": "Select an option",
-                            "className": "gdcGridCol gdcGridCol6",
-                            "options": [
-                                {
-                                    "key": "Priority 1: Urgent and important - must have ASAP",
-                                    "text": "Priority 1: Urgent and important - must have ASAP",
-                                    "color": "#ff5a5a"
-                                },
-                                {
-                                    "key": "Priority 2: Not urgent but important - must have",
-                                    "text": "Priority 2: Not urgent but important - must have",
-                                    "color": "#faaa4c"
-                                },
-                                {
-                                    "key": "Priority 3: Low priority - nice to have",
-                                    "text": "Priority 3: Low priority - nice to have",
-                                    "color": "#6ef1c2"
-                                }
-                            ],
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Priority is required",
-                            "devopsName": "Custom.RequestedPriority"
-                        },
-                        {
-                            "field": "Requested Completion Date",
-                            "fieldType": "DateInput",
-                            "label": "Requested Completion Date",
-                            "className": "gdcGridCol gdcGridCol6",
-                            "placeholder": "Select the date",
-                            "value": "",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                          {
-                            "field": "Are there any other details or dependencies that the team should be aware of",
-                            "fieldType": "MultiLineTextInput",
-                            "placeholder": "Enter your text here",
-                            "label": "Are there any other details or dependencies that the team should be aware of",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "helperText":"Does your question pertain to an existing report we produce?",
-                            "value": "<b>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer)</b></br></br><b>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently?</b></br></br><b>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from.</b></br>",
-                            "required": true,
-                            "errorMessage": "Field is required",
-                            "devopsName": "System.Description"
-                        },
-                        {
-                            "field": "Please attach any supporting artifacts here",
-                            "fieldType": "FileInput",
-                            "label": "Please attach any supporting artifacts here",
-                            "className": "gdcGridCol gdcGridCol12",
-                            "value": "",
-                            "placeholder": "Please attach any supporting artifacts here",
-                            "required": false,
-                            "errorMessage": "",
-                            "devopsName": "Attachments",
-                            "files": []
-                        }
-    
-                    ],
-                    "active": false
-                    }
-            ]
-        }
-        ];
-        const BusinessIntelligencemetaData = [
-            {
-                "field": "Request Title",
-                "fieldType": "SingleLineTextInput",
-                "label": "Request Title",
-                "placeholder": "",
-                "helperText": "TextInput",
-                "className": "ms-Grid-col ms-sm6",
-                "value": "",
-                "required": true,
-                "errorMessage": "Title is required",
-                "devopsName": "System.Title"
-            },
-            {
-                "field": "Objective",
-                "fieldType": "MultiLineTextInput",
-                "label": "Objective",
-                "placeholder": "",
-                "helperText": "TextInput",
-                "className": "ms-Grid-col ms-sm12",
-                "value": "",
-                "required": false,
-                "errorMessage": "",
-                "devopsName": "System.Description"
-            },
-            {
-                "field": "Need By Date",
-                "fieldType": "DateInput",
-                "label": "Need By Date",
-                "placeholder": "Select the date",
-                "className": "ms-Grid-col ms-sm6",
-                "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
-                "value": "",
-                "required": false,
-                "errorMessage": "",
-                "devopsName": "System.Description"
-            }
-        ];
+];
 
-        const defaultMetaData = {
-            muCheckboxInput: {
-                fieldType: "MuCheckboxInput",
-                label: "muCheckboxInput",
-                disabled: false,
-                className: "fields",
-                readOnly: false,
-                values: null,
-                validation: "required"
+const defaultMetaData = {
+    muCheckboxInput: {
+        fieldType: "MuCheckboxInput",
+        label: "muCheckboxInput",
+        disabled: false,
+        className: "fields",
+        readOnly: false,
+        values: null,
+        validation: "required"
+    },
+    muDateInput: {
+        fieldType: "MuDateInput",
+        label: "muDateInput",
+        helperText: "muDateInput",
+        disabled: false,
+        className: "fields",
+        readOnly: false,
+        values: null,
+        validation: "required"
+    },
+    muDateTimeInput: {
+        fieldType: "MuDateTimeInput",
+        label: "muDateTimeInput",
+        className: "fields",
+        helperText: "muDateTimeInput",
+        values: null,
+    },
+    muMultipleSelectInput: {
+        fieldType: "MuMultipleSelectInput",
+        label: "muMultipleSelectInput",
+        placeholder: "",
+        className: "fields",
+        helperText: "Date of Birth",
+        values: [
+            {
+                label: "cricket",
+                value: "cricket"
             },
-            muDateInput: {
-                fieldType: "MuDateInput",
-                label: "muDateInput",
-                helperText: "muDateInput",
-                disabled: false,
-                className: "fields",
-                readOnly: false,
-                values: null,
-                validation: "required"
-            },
-            muDateTimeInput: {
-                fieldType: "MuDateTimeInput",
-                label: "muDateTimeInput",
-                className: "fields",
-                helperText: "muDateTimeInput",
-                values: null,
-            },
-            muMultipleSelectInput: {
-                fieldType: "MuMultipleSelectInput",
-                label: "muMultipleSelectInput",
-                placeholder: "",
-                className: "fields",
-                helperText: "Date of Birth",
-                values: [
-                    {
-                        label: "cricket",
-                        value: "cricket"
-                    },
-                    {
-                        label: "vollyball",
-                        value: "vollyball"
-                    }
-                ]
-            },
-            muNumberInput: {
-                fieldType: "MuNumberInput",
-                label: "muNumberInput",
-                placeholder: "",
-                className: "fields",
-                helperText: "muNumberInput",
-                values: null,
-                validation: "required|min:18",
-
-            },
-            muRadioInput: {
-                fieldType: "MuRadioInput",
-                label: "muRadioInput",
-                placeholder: "",
-                className: "fields",
-                values: [
-                    {
-                        label: "male",
-                        value: "male"
-                    },
-                    {
-                        label: "female",
-                        value: "female"
-                    }
-                ],
-            },
-            muSelectInput: {
-                fieldType: "MuSelectInput",
-                label: "muSelectInput",
-                placeholder: "",
-                className: "fields",
-                helperText: "radio",
-                values: [
-                    {
-                        label: "male",
-                        value: "male"
-                    },
-                    {
-                        label: "female",
-                        value: "female"
-                    }
-                ],
-                validation: "required"
-            },
-            muSwitchInput: {
-                fieldType: "MuSwitchInput",
-                label: "muSwitchInput",
-                placeholder: "",
-                className: "fields",
-                helperText: "MuSwitchInput",
-                values: null
-            },
-            muTextAreaInput: {
-                fieldType: "MuTextAreaInput",
-                label: "muTextAreaInput",
-                placeholder: "",
-                className: "fields",
-                helperText: "muTextAreaInput",
-                validation: "required"
-            },
-            muTextInput: {
-                fieldType: "MuTextInput",
-                label: "muTextInput",
-                placeholder: "",
-                helperText: "muTextInput",
-                className: "fields"
-            },
-            muTimeInput: {
-                fieldType: "MuTimeInput",
-                label: "muTimeInput",
-                placeholder: "",
-                helperText: "muTimeInput",
-                className: "fields"
+            {
+                label: "vollyball",
+                value: "vollyball"
             }
-        };
+        ]
+    },
+    muNumberInput: {
+        fieldType: "MuNumberInput",
+        label: "muNumberInput",
+        placeholder: "",
+        className: "fields",
+        helperText: "muNumberInput",
+        values: null,
+        validation: "required|min:18",
+
+    },
+    muRadioInput: {
+        fieldType: "MuRadioInput",
+        label: "muRadioInput",
+        placeholder: "",
+        className: "fields",
+        values: [
+            {
+                label: "male",
+                value: "male"
+            },
+            {
+                label: "female",
+                value: "female"
+            }
+        ],
+    },
+    muSelectInput: {
+        fieldType: "MuSelectInput",
+        label: "muSelectInput",
+        placeholder: "",
+        className: "fields",
+        helperText: "radio",
+        values: [
+            {
+                label: "male",
+                value: "male"
+            },
+            {
+                label: "female",
+                value: "female"
+            }
+        ],
+        validation: "required"
+    },
+    muSwitchInput: {
+        fieldType: "MuSwitchInput",
+        label: "muSwitchInput",
+        placeholder: "",
+        className: "fields",
+        helperText: "MuSwitchInput",
+        values: null
+    },
+    muTextAreaInput: {
+        fieldType: "MuTextAreaInput",
+        label: "muTextAreaInput",
+        placeholder: "",
+        className: "fields",
+        helperText: "muTextAreaInput",
+        validation: "required"
+    },
+    muTextInput: {
+        fieldType: "MuTextInput",
+        label: "muTextInput",
+        placeholder: "",
+        helperText: "muTextInput",
+        className: "fields"
+    },
+    muTimeInput: {
+        fieldType: "MuTimeInput",
+        label: "muTimeInput",
+        placeholder: "",
+        helperText: "muTimeInput",
+        className: "fields"
+    }
+};

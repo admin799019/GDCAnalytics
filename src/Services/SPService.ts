@@ -37,7 +37,7 @@ export class SPService implements ISPService {
 
         this._msGraphClientFactory = msGraphClientFactory;
     }
-    
+
     public async getAreasList(): Promise<any> {
         var data = await sp.web.lists.getByTitle('GDC Form JSON').items.select("Title").get();
         return data;
@@ -48,10 +48,7 @@ export class SPService implements ISPService {
         return data[0];
     }
     public async getEmailData(Area): Promise<any> {
-        console.log(Area);
         var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(`GDCEmailArea eq '${Area}'`).getAll();
-       console.log(data[0])
-       
         return data[0];
     }
 
@@ -72,35 +69,42 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail(emaildata1,title,date,area, emails, id) {
-        var url = OrganizationConfig.ProjectUrl + "/_workitems/edit/" + id;
+    public async sendEmail(emaildata, formData, emails, id) {
         let currentUser = await sp.web.currentUser();
         emails.push(currentUser.Email);
-        console.log(emaildata1)
-        let Bodystr=emaildata1.GDCEmailBody;
-        let newstr="";
-        Bodystr=Bodystr.replaceAll("&#123;"," ");
-        Bodystr=Bodystr.replaceAll("&#125;"," ");
 
-        console.log(Bodystr,"jj")
-        Bodystr=Bodystr.replace("System.Areapath",area);
-        Bodystr=Bodystr.replace("System.CreatedBy",currentUser.Title);
-        Bodystr=Bodystr.replace("System.Link",url);
-        Bodystr=Bodystr.replace("System.Title",title);
-        Bodystr=Bodystr.replace("System.NeedByDate",date);
-        Bodystr=Bodystr.replaceAll("{"," ");
-        Bodystr=Bodystr.replaceAll("}"," ");
-    for(let i=0;i<Bodystr.length;i++){
-        if(Bodystr[i]!='{' || Bodystr[i]!='}')
-        newstr+=Bodystr[i];
-    }
-        console.log(Bodystr,newstr)
-        console.log(emaildata1,"eamil data")
-    console.log(area,currentUser,"testing");
+        formData.push({ "id": "CreatedBy", "value": currentUser.Title });
+
+        let mailBodyStr = emaildata.GDCEmailBody;
+        let mailSubjectStr = emaildata.GDCEmailSubject;
+
+        var mailSubjectWords = mailSubjectStr != null || mailSubjectStr != undefined ? mailSubjectStr.split(' ') : [];
+        mailSubjectWords.map(w => {
+            const word = w.match("{{(.*)}}");
+            if (word != null) {
+                let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
+                mailSubjectStr = mailSubjectStr.replace(`${word[0]}`, data);
+            }
+        });
+
+        mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
+        mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
+
+        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
+        mailBodyWords.map(w => {
+            const word = w.match("{{(.*)}}");
+            if (word != null) {
+                let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
+                mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
+            }
+        });
+
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
-            Body:newstr,
-            Subject: emaildata1.GDCEmailSubject,
+            Body: mailBodyStr,
+            Subject: mailSubjectStr,
             To: emails,
         };
         sp.utility.sendEmail(emailProps).then((i) => {
