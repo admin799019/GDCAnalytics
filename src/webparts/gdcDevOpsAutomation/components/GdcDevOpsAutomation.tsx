@@ -145,7 +145,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public requiredHasValues: boolean = true;
   public DescriptionData = "";
   public AttachmentAPI: any = [];
-  public emaildata1;
   public panelRef;
   public dependentField: MetaDataType;
   public emailFormData = [];
@@ -470,12 +469,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
 
-            let emails = [];
             this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata => {
-              this.emaildata1 = emaildata;
-              emails[0] = emaildata.GDCEmailTo;
-              console.log(emaildata, this.emaildata1)
-              this.props.spService.sendEmail(emaildata, this.emailFormData, emails, data.id);
+              this.props.spService.sendEmail(emaildata, this.emailFormData);
               this.emailFormData = [];
             });
 
