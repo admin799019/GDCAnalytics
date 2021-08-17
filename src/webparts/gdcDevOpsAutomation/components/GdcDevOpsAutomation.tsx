@@ -463,7 +463,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata => {
               this.emaildata1 = emaildata;
               emails[0] = emaildata.GDCEmailTo;
-              console.log(emaildata,this.emaildata1)
+              console.log(emaildata, this.emaildata1)
               this.props.spService.sendEmail(emaildata, this.emailFormData, emails, data.id);
               this.emailFormData = [];
             });
@@ -586,7 +586,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-        console.log(jsonData,"ff")
+        console.log(jsonData, "ff")
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -595,7 +595,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           panelHasScroll: true,
           showErrorMessage: false,
         });
-        console.log(this.state.formFields,"state ff")
+        console.log(this.state.formFields, "state ff")
       }
       else {
         this.setState({
@@ -1027,20 +1027,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   </TooltipHost>
                   : ""}
               </Label>
-             <div key={ele.defaultValue}>
-              <ReactQuill
-                defaultValue={ele.defaultValue}
-                preserveWhitespace={true}
-                {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
-                placeholder={ele.placeholder}
-                className="gdcMultiLine"
-                onChange={(data, delta, source) => {
-                  if (source != "api") {
-                    this.handleChange(data, ele.id);
-                  }
-                }}
-                 />
-                 </div>
+              <div key={ele.defaultValue}>
+                <ReactQuill
+                  defaultValue={ele.defaultValue}
+                  preserveWhitespace={true}
+                  {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
+                  placeholder={ele.placeholder}
+                  className="gdcMultiLine"
+                  onChange={(data, delta, source) => {
+                    if (source != "api") {
+                      this.handleChange(data, ele.id);
+                    }
+                  }}
+                />
+              </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
