@@ -113,10 +113,15 @@ export interface IDevOpsProps {
   spService: ISPService;
   context: any;
 }
-function elog(ev, object) {
-  console.log(object.id + " - " + ev + ": " + object.value); 
-}
+function getObject(object)
+{
+//  alert(object);
+  console.log(object);
 
+  console.log(object.value);
+  return object.value;
+   // result 2019-01-03
+}
 export interface IDevOpsState {
   projects: [];
   text: any;
@@ -194,6 +199,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.addUserStory = this.addUserStory.bind(this);
     this.onFileDelete = this.onFileDelete.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
+    
   }
 
   public componentDidMount() {
@@ -988,6 +994,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               minDate={new Date(Date.now())}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
+              
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
