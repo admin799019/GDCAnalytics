@@ -409,11 +409,12 @@ console.log(APIData,"17aug");
 
         else {
          
-            pathPrefix = OrganizationConfig.ProjectName +  `\\` + this.state.Area.value;
+            pathPrefix = OrganizationConfig.ProjectName +  `\\` + this.state.Area.value +  `\\`;
           
        
-          console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
+          
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
+          console.log( APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
         }
 
         APIData.push({
@@ -1034,7 +1035,8 @@ console.log(APIData,"17aug");
                   if (source != "api") {
                     this.handleChange(data, ele.id);
                   }
-                }} />
+                }}
+                 />
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
