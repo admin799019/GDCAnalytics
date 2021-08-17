@@ -843,7 +843,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
                     return (<DefaultButton
                       text={area.text}
-                      className={this.state.selectedButton == area.text ? "selectedButton" : "headerButton"}
+                      className={this.state.selectedButton == area.text ? "gdcSelectedButton" : "gdcHeaderButton"}
                       onClick={e => this.updateFormFields(area.text)
                       }
                     />);

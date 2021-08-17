@@ -83,22 +83,23 @@
 
 .gdcGridCol6 {
   @include ms-sm6;
-  min-height: 105px;
+  min-height: 97px;
 }
 
 .gdcGridCol12 {
   @include ms-sm12;
-  min-height: 105px;
+  min-height: 97px;
 }
 
 /* Grid end */
 
 /* Text Field */
-.ms-TextField-fieldGroup::placeholder{
-  color:black;
-}
+
 .gdcTextField {
-  margin-top: 15px;
+  margin-top: 10px;
+  .ms-TextField-fieldGroup::placeholder{
+    color:black;
+  }
   .ms-Label{
     white-space: nowrap;
   }
@@ -127,7 +128,7 @@
    height:40px !important;
    line-height: 35px;
    font-size: 8px;
-   margin-top: 5px;
+   margin-top: 10px;
    color:black;
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
@@ -144,6 +145,7 @@
   margin-top:8px;
   .ms-Label{
     white-space: nowrap;
+    padding-bottom: 10px;
   }
   .ms-Label::after{
     padding-right: 0px;
@@ -206,14 +208,14 @@
     margin-top:2px;
   }
 }
-.black{ 
-  .ms-Toggle-background{
-    background: black;
-  }
-  .ms-Toggle-innerContainer{
-    margin-top:2px;
-  }
-}
+// .black{ 
+//   .ms-Toggle-background{
+//     background: black;
+//   }
+//   .ms-Toggle-innerContainer{
+//     margin-top:2px;
+//   }
+// }
 
 /* Switch Input end */
 
@@ -234,10 +236,11 @@
   .ms-BasePicker-text{
 height:40px;
   }
+  .ms-PeoplePicker{
+    margin-top:2px;
+  }
 }
-.ms-PeoplePicker{
-  margin-top:2px;
-}
+
 /* Date Input */
 .gdcDateInput::placeholder{
   color: black;
@@ -285,7 +288,7 @@ margin-top:0px;
 /* MultiLine */
 
 .gdcMultiLine {
-  margin-top: 2px;
+  margin-top: 5px;
   white-space: nowrap;
 }
 
@@ -294,7 +297,7 @@ margin-top:0px;
   display:inline-block;
   margin-top: 8px;
   width:100%;
-  min-height: 256px;
+  min-height: 192px;
   .ms-Label{
     white-space: nowrap;
   }
@@ -321,6 +324,7 @@ input[type="file"] {
 }
 .filepicker > p {
   font-weight:500;
+  margin-bottom: 10px;
 }
 .attachmentNames{
 font-size:12px;
@@ -361,7 +365,7 @@ font-size:12px;
   width: 100%;
   border-bottom: 1px solid #E5E5E5;
 }
-.headerButton:hover{
+.gdcHeaderButton:hover{
   background-color: #1D1D1D;
   color:white;
   border-color: white;
@@ -427,22 +431,22 @@ font-size:12px;
   .gdcNewButton {
     font-size: 18px;
   }
-.headerButton{
+.gdcHeaderButton{
   margin-right:14px;
   border-radius: 15px;
 }
-.selectedButton{
+.gdcSelectedButton{
   margin-right:14px;
   background-color: #1D1D1D;
   color:white;
   border-radius: 15px;
 }
-.headerButton::selection{
+.gdcHeaderButton::selection{
   background-color: #1D1D1D;
 }
 .questionTop{
   margin-top: 25px;
-  margin-bottom:25px;
+  margin-bottom:20px;
   font-weight: 500px;
 }
 
