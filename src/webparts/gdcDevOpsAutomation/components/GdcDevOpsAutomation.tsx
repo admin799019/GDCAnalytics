@@ -396,7 +396,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-console.log(APIData,"17aug");
+        console.log(APIData, "17aug");
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -408,10 +408,10 @@ console.log(APIData,"17aug");
         }
 
         else {
-         
-            pathPrefix = OrganizationConfig.ProjectName +  `\\` + this.state.Area.value;
-          
-       
+
+          pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value;
+
+
           console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
@@ -1025,7 +1025,7 @@ console.log(APIData,"17aug");
               </Label>
 
               <ReactQuill
-            value={ele.defaultValue}
+                defaultValue={ele.defaultValue}
                 preserveWhitespace={true}
                 {...ele.showError == true ? { className: "gdcMultiLine requiredred" } : { className: "gdcMultiLine" }}
                 placeholder={ele.placeholder}
