@@ -462,7 +462,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             let emails = [];
             this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata => {
               this.emaildata1 = emaildata;
-              emails[0] = this.emaildata1.GDCEmailTo;
+              emails[0] = emaildata.GDCEmailTo;
+              console.log(emaildata,this.emaildata1)
               this.props.spService.sendEmail(emaildata, this.emailFormData, emails, data.id);
               this.emailFormData = [];
             });
@@ -585,6 +586,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
+        console.log(jsonData,"ff")
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -593,6 +595,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           panelHasScroll: true,
           showErrorMessage: false,
         });
+        console.log(this.state.formFields,"state ff")
       }
       else {
         this.setState({
@@ -1006,8 +1009,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       case "MultiLineTextInput":
         var firstCall = true;
         return (
-          <div className="">
-            <div className={ele.className + " gdcColumnBlock"}>
+          <div className="" >
+            <div className={ele.className + " gdcColumnBlock"} >
               <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
                 {ele.helperText ?
                   <TooltipHost
@@ -1024,7 +1027,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   </TooltipHost>
                   : ""}
               </Label>
-
+             <div key={ele.defaultValue}>
               <ReactQuill
                 defaultValue={ele.defaultValue}
                 preserveWhitespace={true}
@@ -1036,7 +1039,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     this.handleChange(data, ele.id);
                   }
                 }}
-              />
+                 />
+                 </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
