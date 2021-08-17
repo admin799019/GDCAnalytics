@@ -69,10 +69,11 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail(emaildata, formData, emails, id) {
+    public async sendEmail(emaildata, formData) {
         let currentUser = await sp.web.currentUser();
-        emails.push(currentUser.Email);
-
+        // emails.push(currentUser.Email);
+        var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
+        var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
 
         let mailBodyStr = emaildata.GDCEmailBody;
@@ -105,7 +106,8 @@ export class SPService implements ISPService {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
             Body: mailBodyStr,
             Subject: mailSubjectStr,
-            To: emails,
+            To: to,
+            CC: cc
         };
         sp.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
