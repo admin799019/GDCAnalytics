@@ -396,7 +396,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-
+console.log(APIData,"17aug");
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -408,15 +408,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         else {
-          if (this.state.selectedButton == "Business Analytics and Insights") {
-            pathPrefix = OrganizationConfig.ProjectName + "\\Business Analytics and Insights\\";
-          }
-          else if (this.state.selectedButton == "Marketing Engagement and Innovation") {
-            pathPrefix = OrganizationConfig.ProjectName + "\\";
-          }
-          else if (this.state.selectedButton == "Targeting Enablement and Business Health") {
-            pathPrefix = OrganizationConfig.ProjectName + "\\Targeting Enablement and Business Health\\";
-          }
+         
+            pathPrefix = OrganizationConfig.ProjectName +  `\\` + this.state.Area.value;
+          
+       
           console.log(pathPrefix, APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
