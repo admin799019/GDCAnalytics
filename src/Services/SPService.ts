@@ -50,8 +50,8 @@ export class SPService implements ISPService {
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
         var filterStr = "";
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
-        filterStr = filterStr.concat(Area != "" ? `and GDCEmailArea eq '${Area}'` : "");
-        filterStr = filterStr.concat(PODCategory != "" ? `and GDCEmailPODCategory eq '${PODCategory}'` : "");
+        filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
+        filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
 
         var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
         return data[0];
