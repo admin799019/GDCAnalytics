@@ -45,6 +45,7 @@ interface MetaDataType {
   value: string;
   personName: string;
   required: boolean;
+  selectedKeys:string[];
   checked: boolean;
   errorMessage: string;
   devopsName: string;
@@ -114,10 +115,15 @@ export interface IDevOpsProps {
   spService: ISPService;
   context: any;
 }
-function elog(ev, object) {
-  console.log(object.id + " - " + ev + ": " + object.value);
-}
+function getObject(object)
+{
+//  alert(object);
+  console.log(object);
 
+  console.log(object.value);
+  return object.value;
+   // result 2019-01-03
+}
 export interface IDevOpsState {
   projects: [];
   text: any;
@@ -194,6 +200,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.addUserStory = this.addUserStory.bind(this);
     this.onFileDelete = this.onFileDelete.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
+    
   }
 
   public componentDidMount() {
@@ -237,6 +244,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
         }
 
+     
+
         if (field.fieldType == "SwitchInput") {
           field.checked = value == true ? true : false;
           field.value = value;
@@ -271,7 +280,28 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         else {
+          if(field.fieldType != "MultiSelectInput")
           field.value = value;
+        }
+        if(field.fieldType == "MultiSelectInput")
+        {
+          this.props.devOpsService.getLatestVer(835).then((data=>{
+            console.log(data)
+          }))
+          console.log("in msi append",value)
+          console.log("field select=>",field.selectedKeys);
+          if (value) {
+            field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
+          }
+          console.log(field.value)
+          field.value="";
+          field.selectedKeys.map((x)=>{
+            console.log(x as string,"x")
+            field.value+=x as string+";";
+          })
+          console.log(field.value,"multivalue",field.selectedKeys,"seectkey");
+          
+      
         }
 
         if (field.fieldType == "PeoplePickerInput") {
@@ -862,7 +892,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
                     return (<DefaultButton
                       text={area.text}
-                      className={this.state.selectedButton == area.text ? "selectedButton" : "headerButton"}
+                      className={this.state.selectedButton == area.text ? "gdcSelectedButton" : "gdcHeaderButton"}
                       onClick={e => this.updateFormFields(area.text)
                       }
                     />);
@@ -943,12 +973,48 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           </React.Fragment>
         );
+        case "MultiSelectInput":
+          return (
+            <React.Fragment>
+              <div className={ele.className}>
+                <Dropdown
+                  placeholder={ele.placeholder}
+                  label={ele.label}
+                  multiSelect
+                  //defaultSelectedKeys={['Priority 1', 'Priority 2']}
+                  className="gdcDropDown"
+                  title={ele.helperText}
+                  onRenderLabel={onWrapDefaultLabelRenderer}
+                  {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
+                  //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
+                 defaultSelectedKeys={ele.selectedKeys}
+                 selectedKeys={ele.selectedKeys}
+                  options={ele.options}
+                  {...ele.options[0].color != null || ele.options[0].color != undefined ?
+                    {
+                      onRenderOption: this.onRenderOption,
+                      onRenderTitle: this.onRenderTitle,
+                      onRenderPlaceholder: this.onRenderPlaceholder
+                    } : {}}
+                  onChange={(e, o) => this.handleChange(o, ele.id)}
+                  required={ele.required}
+                />
+                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              </div>
+              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+                : null
+              }
+            </React.Fragment>
+          );
       case "SingleSelectCascadingInput":
         var cascadingField = ele.cascadingField;
+ 
         var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
         var options = cascadingFieldValue != ""
           ? ele.options.filter(opt => opt.cascadingOption == cascadingFieldValue)
           : [];
+         
         return (
           <React.Fragment>
             <div className={ele.className}>
@@ -1008,6 +1074,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               minDate={new Date(Date.now())}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
+              
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
