@@ -44,6 +44,7 @@ interface MetaDataType {
   options: any;
   value: string;
   required: boolean;
+  selectedKeys:string[];
   checked: boolean;
   errorMessage: string;
   devopsName: string;
@@ -240,6 +241,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
             field.value = value;
           }
+        }
+
+        if(field.fieldType == "MultiSelectInput")
+        {
+          console.log("in msi append",value)
+          console.log("field select=>",field.selectedKeys);
+          if (value) {
+            field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
+          }
+      
         }
 
         if (field.fieldType == "SwitchInput") {
@@ -924,12 +935,48 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           </React.Fragment>
         );
+        case "MultiSelectInput":
+          return (
+            <React.Fragment>
+              <div className={ele.className}>
+                <Dropdown
+                  placeholder={ele.placeholder}
+                  label={ele.label}
+                  multiSelect
+                  //defaultSelectedKeys={['Priority 1', 'Priority 2']}
+                  className="gdcDropDown"
+                  title={ele.helperText}
+                  onRenderLabel={onWrapDefaultLabelRenderer}
+                  {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
+                  //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
+                 defaultSelectedKeys={ele.selectedKeys}
+                 selectedKeys={ele.selectedKeys}
+                  options={ele.options}
+                  {...ele.options[0].color != null || ele.options[0].color != undefined ?
+                    {
+                      onRenderOption: this.onRenderOption,
+                      onRenderTitle: this.onRenderTitle,
+                      onRenderPlaceholder: this.onRenderPlaceholder
+                    } : {}}
+                  onChange={(e, o) => this.handleChange(o, ele.id)}
+                  required={ele.required}
+                />
+                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+              </div>
+              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+                : null
+              }
+            </React.Fragment>
+          );
       case "SingleSelectCascadingInput":
         var cascadingField = ele.cascadingField;
+ 
         var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
         var options = cascadingFieldValue != ""
           ? ele.options.filter(opt => opt.cascadingOption == cascadingFieldValue)
           : [];
+         
         return (
           <React.Fragment>
             <div className={ele.className}>
