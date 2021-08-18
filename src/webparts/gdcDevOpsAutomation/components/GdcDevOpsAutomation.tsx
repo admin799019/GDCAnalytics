@@ -243,15 +243,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
         }
 
-        if(field.fieldType == "MultiSelectInput")
-        {
-          console.log("in msi append",value)
-          console.log("field select=>",field.selectedKeys);
-          if (value) {
-            field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
-          }
-      
-        }
+     
 
         if (field.fieldType == "SwitchInput") {
           field.checked = value == true ? true : false;
@@ -287,7 +279,28 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         else {
+          if(field.fieldType != "MultiSelectInput")
           field.value = value;
+        }
+        if(field.fieldType == "MultiSelectInput")
+        {
+          this.props.devOpsService.getLatestVer(835).then((data=>{
+            console.log(data)
+          }))
+          console.log("in msi append",value)
+          console.log("field select=>",field.selectedKeys);
+          if (value) {
+            field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
+          }
+          console.log(field.value)
+          field.value="";
+          field.selectedKeys.map((x)=>{
+            console.log(x as string,"x")
+            field.value+=x as string+";";
+          })
+          console.log(field.value,"multivalue",field.selectedKeys,"seectkey");
+          
+      
         }
 
         if (field.subFields != null && field.subFields.length > 0) {
