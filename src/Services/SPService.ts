@@ -25,26 +25,26 @@ export class SPService implements ISPService {
         this._pageContext = pageContext;
         const consoleListener = new ConsoleListener();
         Logger.subscribe(consoleListener);
-        // this._localPnPSetup = sp.configure({
-        //     headers: {
-        //         Accept: 'application/json; odata=nometadata',
-        //         //'User Agent': 'NONISV|Microsoft|22b26582-4ad7-4166-8450-a7b7471c5614|1.0',
-        //         'X-ClientTag': 'NONISV|Microsoft|22b26582-4ad7-4166-8450-a7b7471c5614|1.0',
-        //         'Clienttype': '22b26582-4ad7-4166-8450-a7b7471c5614',
-        //     },
-        //     mode: 'cors'
-        // }, this._pageContext.web.absoluteUrl);
+        this._localPnPSetup = sp.configure({
+            headers: {
+                Accept: 'application/json; odata=nometadata',
+                //'User Agent': 'NONISV|Microsoft|22b26582-4ad7-4166-8450-a7b7471c5614|1.0',
+                'X-ClientTag': 'NONISV|Microsoft|22b26582-4ad7-4166-8450-a7b7471c5614|1.0',
+                'Clienttype': '22b26582-4ad7-4166-8450-a7b7471c5614',
+            },
+            mode: 'cors'
+        }, this._pageContext.web.absoluteUrl);
 
         this._msGraphClientFactory = msGraphClientFactory;
     }
 
     public async getAreasList(): Promise<any> {
-        var data = await sp.web.lists.getByTitle('GDC Form JSON').items.select("Title").get();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.select("Title").get();
         return data;
     }
 
     public async getFormMetadata(type): Promise<any> {
-        var data = await sp.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
         return data[0];
     }
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
@@ -53,7 +53,7 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
 
-        var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
         return data[0];
     }
 
@@ -75,9 +75,12 @@ export class SPService implements ISPService {
     }
 
     public async sendEmail(emaildata, formData) {
-        let currentUser = await sp.web.currentUser();
+        let currentUser = await this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
+        to.forEach(async email => {
+            await this._localPnPSetup.web.ensureUser(email);
+        });
         var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
 
@@ -114,7 +117,7 @@ export class SPService implements ISPService {
             To: to,
             CC: cc
         };
-        sp.utility.sendEmail(emailProps).then((i) => {
+        this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);

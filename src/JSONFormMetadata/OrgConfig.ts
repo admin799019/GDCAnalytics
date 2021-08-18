@@ -12,4 +12,11 @@ const Test = {
     ProjectUrl: "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test",
 };
 
+const Prod = {
+    OrganizationName: "onegdcanalyticsdev",
+    OrganizationUrl: "https://dev.azure.com/onegdcanalyticsdev",
+    ProjectName: "Operational Framework Test",
+    ProjectUrl: "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework%20Test",
+};
+
 export const OrganizationConfig = Test;
