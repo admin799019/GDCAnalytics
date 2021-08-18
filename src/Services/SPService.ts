@@ -99,16 +99,18 @@ export class SPService implements ISPService {
 
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
-
+        console.log(formData,"form data");
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
+            console.log(word,"word")
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
                 let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
+        console.log(mailBodyStr,"mail body");
 
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',

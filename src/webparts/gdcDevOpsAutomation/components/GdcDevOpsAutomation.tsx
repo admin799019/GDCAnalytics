@@ -115,15 +115,6 @@ export interface IDevOpsProps {
   spService: ISPService;
   context: any;
 }
-function getObject(object)
-{
-//  alert(object);
-  console.log(object);
-
-  console.log(object.value);
-  return object.value;
-   // result 2019-01-03
-}
 export interface IDevOpsState {
   projects: [];
   text: any;
@@ -267,10 +258,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           }
           let imgsLenth = ele.querySelectorAll('img').length;
-          console.log("content added - ", contentAdded, " images - ", imgsLenth);
+         
           if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
-            console.log(field.showError, "showerror");
+           
           }
           field.value = value;
         }
@@ -285,21 +276,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         if(field.fieldType == "MultiSelectInput")
         {
-          this.props.devOpsService.getLatestVer(835).then((data=>{
-            console.log(data)
-          }))
-          console.log("in msi append",value)
-          console.log("field select=>",field.selectedKeys);
+          
           if (value) {
             field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
           }
-          console.log(field.value)
+         
           field.value="";
           field.selectedKeys.map((x)=>{
-            console.log(x as string,"x")
+           
             field.value+=x as string+";";
           })
-          console.log(field.value,"multivalue",field.selectedKeys,"seectkey");
+         
           
       
         }
@@ -410,7 +397,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       element.querySelectorAll('img').forEach((ele, i) => {
         ele.src = d[i];
       });
-      console.log("element - ", element);
+    
       // this.props.devOpsService.updatefeature(element.innerHTML);
       // return element.innerHTML;
       return element.body.innerHTML;
@@ -440,7 +427,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-        console.log(APIData, "17aug");
+     
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -454,7 +441,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
           Area = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
-          console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
+         
 
         }
 
@@ -507,8 +494,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             else if (this.emailFormData.filter(ed => ed.id == "Area") != null && this.emailFormData.filter(ed => ed.id == "Area").length > 0) {
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
-
+            
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
+           
               if (emaildata != null) {
                 this.props.spService.sendEmail(emaildata, this.emailFormData);
               }
@@ -569,6 +557,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     fields.forEach(f => {
       if (f.id == fieldName) {
         this.dependentField = f;
+       
         // return f;
       }
       else if (f.subFields != null && f.subFields.length > 0) {
@@ -588,8 +577,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
     for (let field of Fields) {
       if (field.hasDependency == true) {
+       
         this.getField(field.dependentField, this.state.formFields);
+       
         if (this.dependentField != undefined && this.dependentField != null && this.dependentField.id == field.dependentField && this.dependentField.value == field.dependentFieldValue) {
+     
           field.value = field.textToAppend.concat(field.value);
         }
       }
@@ -642,7 +634,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-        console.log(jsonData, "ff")
+    
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -651,7 +643,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           panelHasScroll: true,
           showErrorMessage: false,
         });
-        console.log(this.state.formFields, "state ff")
+       
       }
       else {
         this.setState({
@@ -756,7 +748,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               });
             count = count - 1;
             if (count == 0 && !richTextCallSent) {
-              console.log("files - ", this.AttachmentAPI);
+             
               this.UpdateRichTextFields();
               richTextCallSent = true;
             }
@@ -766,7 +758,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
 
     if ((count == 0 && !richTextCallSent) || (AttachmentFiles != null && AttachmentFiles.length == 0)) {
-      console.log("files - ", this.AttachmentAPI);
+     
       this.UpdateRichTextFields();
       richTextCallSent = true;
     }
@@ -1132,7 +1124,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     }
                   }}
                 />
-                {console.log(ele.showError, "ml")}
+               
               </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
