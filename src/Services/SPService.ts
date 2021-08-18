@@ -47,8 +47,8 @@ export class SPService implements ISPService {
         var data = await sp.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
         return data[0];
     }
-    public async getEmailData(Area): Promise<any> {
-        var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(`GDCEmailArea eq '${Area}'`).getAll();
+    public async getEmailData(Team, Area, PODCategory): Promise<any> {
+        var data = await sp.web.lists.getByTitle('Intake Form Notifications').items.filter(`GDCEmailTeam eq '${Team}' and GDCEmailArea eq '${Area}' and GDCEmailPODCategory eq '${PODCategory}'`).getAll();
         return data[0];
     }
 

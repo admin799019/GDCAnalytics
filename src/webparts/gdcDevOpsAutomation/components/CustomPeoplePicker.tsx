@@ -54,7 +54,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     itemLimit={1}
 
                     onChange={(si) => {
-                        si.length > 0 ? this.props.handlePeopleChange(si[0].secondaryText, this.props.pickerFieldName)
+                        si.length > 0 ? this.props.handlePeopleChange(si[0] , this.props.pickerFieldName)
                             : this.props.handlePeopleChange("", this.props.pickerFieldName);
                     }}
                 />

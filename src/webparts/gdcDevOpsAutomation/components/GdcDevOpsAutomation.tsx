@@ -43,6 +43,7 @@ interface MetaDataType {
   helperText: any;
   options: any;
   value: string;
+  personName: string;
   required: boolean;
   checked: boolean;
   errorMessage: string;
@@ -114,7 +115,7 @@ export interface IDevOpsProps {
   context: any;
 }
 function elog(ev, object) {
-  console.log(object.id + " - " + ev + ": " + object.value); 
+  console.log(object.id + " - " + ev + ": " + object.value);
 }
 
 export interface IDevOpsState {
@@ -260,7 +261,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           console.log("content added - ", contentAdded, " images - ", imgsLenth);
           if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
-            console.log(field.showError,"showerror");
+            console.log(field.showError, "showerror");
           }
           field.value = value;
         }
@@ -271,6 +272,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         else {
           field.value = value;
+        }
+
+        if (field.fieldType == "PeoplePickerInput") {
+          field.value = value.secondaryText;
+          field.personName = value.text;
         }
 
         if (field.subFields != null && field.subFields.length > 0) {
@@ -397,6 +403,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
 
     this.appendAPI(this.state.formFields, APIData).then(async dataReturned => {
+      let Team = "";
+      let Area = "";
+      let PODCategory = "";
+
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
@@ -410,15 +420,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "value": OrganizationConfig.ProjectName + `\\` + this.state.Area.value
             });
         }
-
         else {
-
           pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
-
-
-
+          Area = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
           console.log(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value);
+
+        }
+
+        Team = this.state.Area.value;
+
+        if (Area != "") {
+          this.dependentField = metaData[0];
+          this.getField("PODCategory", this.state.formFields);
+          PODCategory = this.dependentField != null ? this.dependentField.value : "";
         }
 
         APIData.push({
@@ -463,11 +478,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
 
-            this.props.spService.getEmailData(apiArea.slice(apiArea.lastIndexOf('\\') + 1,)).then(emaildata => {
-              this.props.spService.sendEmail(emaildata, this.emailFormData);
+            this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
+              if (emaildata != null) {
+                this.props.spService.sendEmail(emaildata, this.emailFormData);
+              }
               this.emailFormData = [];
             });
-
             this.state.Area.value = "";
           }
           else {
@@ -519,10 +535,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
   }
 
-  public getField(fieldName, fields) {
+  public getField(fieldName, fields): any {
     fields.forEach(f => {
       if (f.id == fieldName) {
         this.dependentField = f;
+        // return f;
       }
       else if (f.subFields != null && f.subFields.length > 0) {
         var sfj = f.subFields.filter(sf => sf.active == true);
@@ -534,6 +551,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public async appendAPI(Fields: MetaDataType[], APIData) {
+    const parser = new DOMParser();
     var requiredHasValues: boolean = true;
     var subFields;
     var mlt = [];
@@ -558,7 +576,15 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "value": field.value
         });
       }
-      this.emailFormData.push(field);
+
+      var emailField = _.cloneDeep(field);
+      if (emailField.fieldType == "MultiLineTextInput") {
+        emailField.value = parser.parseFromString(emailField.value, 'text/html').body.innerHTML;
+      }
+      if (emailField.fieldType == "PeoplePickerInput") {
+        emailField.value = emailField.personName;
+      }
+      this.emailFormData.push(emailField);
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -714,7 +740,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       this.UpdateRichTextFields();
       richTextCallSent = true;
     }
-
   }
 
   public getCascadingFieldValue(fieldName) {
@@ -1040,8 +1065,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     }
                   }}
                 />
-                {console.log(ele.showError,"ml")}
-           </div>
+                {console.log(ele.showError, "ml")}
+              </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
               </div>
