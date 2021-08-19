@@ -39,12 +39,12 @@ export class SPService implements ISPService {
     }
 
     public async getAreasList(): Promise<any> {
-        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.select("Title").get();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`IsActive eq 'Yes'`,).select("Title").get();
         return data;
     }
 
     public async getFormMetadata(type): Promise<any> {
-        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`).getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`,).getAll();
         return data[0];
     }
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
@@ -75,6 +75,7 @@ export class SPService implements ISPService {
     }
 
     public async sendEmail(emaildata, formData) {
+        console.log(formData,"formdata");
         let currentUser = await this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
@@ -99,13 +100,14 @@ export class SPService implements ISPService {
 
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
-        console.log(formData,"form data");
+    
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
+            
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string ||""): "";
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });

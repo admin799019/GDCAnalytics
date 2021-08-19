@@ -4,4 +4,5 @@ export interface ISPService {
     getOfficeUsers(name): Promise<any>;
     sendEmail(emaildata,formData);
     getAreasList() : Promise<any>;
+    sendEmailUsingPowerAutomate(emailFormData:any,emaildata:any):Promise<any>;
 }
