@@ -33,6 +33,7 @@ import CustomPeoplePicker from "./CustomPeoplePicker";
 import { elementContains } from 'office-ui-fabric-react';
 import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
 import { SPService } from '../../../Services/SPService';
+import { containsInvalidFileFolderChars } from '@pnp/sp';
 
 interface MetaDataType {
   id: string;
@@ -141,7 +142,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public panelRef;
   public dependentField: MetaDataType;
   public emailFormData = [];
-
+  public urls:any=[];
   public richTextFieldCalls: number = 0;
   public constructor(props) {
     super(props);
@@ -268,6 +269,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         if (field.fieldType == "FileInput") {
           field.files = field.files.concat(value);
+          console.log(field.files);
         }
 
         else {
@@ -459,7 +461,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
-
+console.log(this.AttachmentAPI,"beforecall")
+// this.emailFormData.push(this.AttachmentAPI);
+// this.AttachmentAPI.map((x)=>{
+// var url="<a href='"+x.value.url+"'>"+x.value.name
+//   //var x:any={id:"Attachments" ,value:}
+// })
+this.emailFormData.push({id:"Attachments",value:this.urls})
         APIData = [...APIData, ...this.AttachmentAPI];
 
         this.props.devOpsService.addfeature(APIData).then((data) => {
@@ -475,6 +483,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               panelHasScroll: false,
               selectedButton: ""
             });
+          
+            console.log(APIData,"18thaaug");
             this.AttachmentAPI = [];
             let apiArea: string = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
             setTimeout(function () {
@@ -494,12 +504,19 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             else if (this.emailFormData.filter(ed => ed.id == "Area") != null && this.emailFormData.filter(ed => ed.id == "Area").length > 0) {
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
-            
+
+           
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
            
               if (emaildata != null) {
-                this.props.spService.sendEmail(emaildata, this.emailFormData);
+                console.log(this.AttachmentAPI,"attachment api")
+               // this.props.spService.sendEmail(emaildata, this.emailFormData);
+               console.log(this.emailFormData,"emailformdata",emaildata,"emaildata");
+               this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData,emaildata).then((data)=>{
+                console.log("working")
+              })
               }
+
               this.emailFormData = [];
             });
             this.state.Area.value = "";
@@ -606,7 +623,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (emailField.fieldType == "PeoplePickerInput") {
         emailField.value = emailField.personName;
       }
+      if(field.devopsName != "Attachments"){
       this.emailFormData.push(emailField);
+      }
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
         subFields = field.subFields.filter(f => f.option == field.value)[0].fields;
@@ -734,6 +753,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           const blob = new Blob([byteArray]);
 
           this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+            var url="<a href='"+d+"'>"+file.name+"</a></b>";
+            console.log(url,"ahref");
+            this.urls.push(url);
             this.AttachmentAPI.push(
               {
                 "op": "add",
