@@ -46,7 +46,7 @@ interface MetaDataType {
   value: string;
   personName: string;
   required: boolean;
-  selectedKeys:string[];
+  selectedKeys: string[];
   checked: boolean;
   errorMessage: string;
   devopsName: string;
@@ -192,7 +192,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.addUserStory = this.addUserStory.bind(this);
     this.onFileDelete = this.onFileDelete.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
-    
   }
 
   public componentDidMount() {
@@ -236,8 +235,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
         }
 
-     
-
         if (field.fieldType == "SwitchInput") {
           field.checked = value == true ? true : false;
           field.value = value;
@@ -259,10 +256,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             }
           }
           let imgsLenth = ele.querySelectorAll('img').length;
-         
+
           if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
-           
+
           }
           field.value = value;
         }
@@ -273,24 +270,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
 
         else {
-          if(field.fieldType != "MultiSelectInput")
-          field.value = value;
+          if (field.fieldType != "MultiSelectInput")
+            field.value = value;
         }
-        if(field.fieldType == "MultiSelectInput")
-        {
-          
+        if (field.fieldType == "MultiSelectInput") {
           if (value) {
-            field.selectedKeys=(value.selected ? [...field.selectedKeys, value.key ] : field.selectedKeys.filter(key => key !== value.key))
+            field.selectedKeys = (value.selected ? [...field.selectedKeys, value.key] : field.selectedKeys.filter(key => key !== value.key));
           }
-         
-          field.value="";
-          field.selectedKeys.map((x)=>{
-           
-            field.value+=x as string+";";
-          })
-         
-          
-      
+          field.value = "";
+          field.selectedKeys.map((x) => {
+
+            field.value += x as string + ";";
+          });
         }
 
         if (field.fieldType == "PeoplePickerInput") {
@@ -399,9 +390,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       element.querySelectorAll('img').forEach((ele, i) => {
         ele.src = d[i];
       });
-    
-      // this.props.devOpsService.updatefeature(element.innerHTML);
-      // return element.innerHTML;
       return element.body.innerHTML;
     });
   }
@@ -429,7 +417,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-     
+
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -443,10 +431,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
           Area = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
-         
-
         }
-
         Team = this.state.Area.value;
 
         if (Area != "") {
@@ -505,9 +490,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
 
-           
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
-           
+
               if (emaildata != null) {
                 console.log(this.AttachmentAPI,"attachment api")
                // this.props.spService.sendEmail(emaildata, this.emailFormData);
@@ -539,7 +523,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
             }.bind(this), 5000);
             this.state.Area.value = "";
           }
-
         });
       }
       else {
@@ -574,7 +557,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
     fields.forEach(f => {
       if (f.id == fieldName) {
         this.dependentField = f;
-       
         // return f;
       }
       else if (f.subFields != null && f.subFields.length > 0) {
@@ -594,11 +576,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
 
     for (let field of Fields) {
       if (field.hasDependency == true) {
-       
         this.getField(field.dependentField, this.state.formFields);
-       
         if (this.dependentField != undefined && this.dependentField != null && this.dependentField.id == field.dependentField && this.dependentField.value == field.dependentFieldValue) {
-     
           field.value = field.textToAppend.concat(field.value);
         }
       }
@@ -653,7 +632,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-    
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -662,7 +640,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
           panelHasScroll: true,
           showErrorMessage: false,
         });
-       
       }
       else {
         this.setState({
@@ -770,7 +747,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               });
             count = count - 1;
             if (count == 0 && !richTextCallSent) {
-             
               this.UpdateRichTextFields();
               richTextCallSent = true;
             }
@@ -780,7 +756,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
     }
 
     if ((count == 0 && !richTextCallSent) || (AttachmentFiles != null && AttachmentFiles.length == 0)) {
-     
       this.UpdateRichTextFields();
       richTextCallSent = true;
     }
@@ -987,48 +962,47 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
             }
           </React.Fragment>
         );
-        case "MultiSelectInput":
-          return (
-            <React.Fragment>
-              <div className={ele.className}>
-                <Dropdown
-                  placeholder={ele.placeholder}
-                  label={ele.label}
-                  multiSelect
-                  //defaultSelectedKeys={['Priority 1', 'Priority 2']}
-                  className="gdcDropDown"
-                  title={ele.helperText}
-                  onRenderLabel={onWrapDefaultLabelRenderer}
-                  {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
-                  //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
-                 defaultSelectedKeys={ele.selectedKeys}
-                 selectedKeys={ele.selectedKeys}
-                  options={ele.options}
-                  {...ele.options[0].color != null || ele.options[0].color != undefined ?
-                    {
-                      onRenderOption: this.onRenderOption,
-                      onRenderTitle: this.onRenderTitle,
-                      onRenderPlaceholder: this.onRenderPlaceholder
-                    } : {}}
-                  onChange={(e, o) => this.handleChange(o, ele.id)}
-                  required={ele.required}
-                />
-                {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
-              </div>
-              {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
-                ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
-                : null
-              }
-            </React.Fragment>
-          );
+      case "MultiSelectInput":
+        return (
+          <React.Fragment>
+            <div className={ele.className}>
+              <Dropdown
+                placeholder={ele.placeholder}
+                label={ele.label}
+                multiSelect
+                //defaultSelectedKeys={['Priority 1', 'Priority 2']}
+                className="gdcDropDown"
+                title={ele.helperText}
+                onRenderLabel={onWrapDefaultLabelRenderer}
+                {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
+                //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
+                defaultSelectedKeys={ele.selectedKeys}
+                selectedKeys={ele.selectedKeys}
+                options={ele.options}
+                {...ele.options[0].color != null || ele.options[0].color != undefined ?
+                  {
+                    onRenderOption: this.onRenderOption,
+                    onRenderTitle: this.onRenderTitle,
+                    onRenderPlaceholder: this.onRenderPlaceholder
+                  } : {}}
+                onChange={(e, o) => this.handleChange(o, ele.id)}
+                required={ele.required}
+              />
+              {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
+            </div>
+            {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
+              ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
+              : null
+            }
+          </React.Fragment>
+        );
       case "SingleSelectCascadingInput":
         var cascadingField = ele.cascadingField;
- 
         var cascadingFieldValue = this.getCascadingFieldValue(cascadingField);
         var options = cascadingFieldValue != ""
           ? ele.options.filter(opt => opt.cascadingOption == cascadingFieldValue)
           : [];
-         
+
         return (
           <React.Fragment>
             <div className={ele.className}>
@@ -1088,7 +1062,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               minDate={new Date(Date.now())}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
-              
+
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
@@ -1146,7 +1120,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                     }
                   }}
                 />
-               
               </div>
               <div className="requireddiv">
                 {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
@@ -1157,21 +1130,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
       case "PeoplePickerInput":
         return (
           <div className={ele.className}>
-            {/* <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker"
-            personSelectionLimit={1}
-            groupName={""} // Leave this blank in case you want to filter from all users
-            showtooltip={true}
-            required={false}
-            disabled={false}
-            onChange={(items) => this.handleChange(items[0].secondaryText, ele.title)}
-            showHiddenInUI={false}
-            principalTypes={[PrincipalType.User]}
-            resolveDelay={1000} /> */}
             <div className="peoplepicker">
               <CustomPeoplePicker
-
                 required={ele.required} spService={this.props.spService} pickerFieldName={ele.id} handlePeopleChange={this.handleChange} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
