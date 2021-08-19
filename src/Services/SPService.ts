@@ -103,7 +103,6 @@ export class SPService implements ISPService {
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
-            console.log(word,"word")
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
                 let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
