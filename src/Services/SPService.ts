@@ -6,12 +6,12 @@ import "@pnp/sp/site-users/web";
 import { PageContext } from '@microsoft/sp-page-context';
 import { Logger, ConsoleListener } from '@pnp/logging';
 import { graph } from "@pnp/graph";
-import { IHttpClientOptions, HttpClientResponse, HttpClient } from '@microsoft/sp-http';  
+import { IHttpClientOptions, HttpClientResponse, HttpClient } from '@microsoft/sp-http';
 import "@pnp/graph/groups";
 import "@pnp/graph/users";
 import { MSGraphClientFactory } from '@microsoft/sp-http';
 import { IEmailProperties } from "@pnp/sp/sputilities";
-import { WebPartContext } from "@microsoft/sp-webpart-base";  
+import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ISPService } from "./ISPService";
 import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 
@@ -21,10 +21,10 @@ export class SPService implements ISPService {
     private _localPnPSetup: SPRest;
     private _searchParameter: string;
     private _msGraphClientFactory: MSGraphClientFactory;
-    private wpContext:WebPartContext;  
-    constructor(pageContext: PageContext, msGraphClientFactory: MSGraphClientFactory,wpContext:WebPartContext) {
+    private wpContext: WebPartContext;
+    constructor(pageContext: PageContext, msGraphClientFactory: MSGraphClientFactory, wpContext: WebPartContext) {
         this._pageContext = pageContext;
-        this.wpContext=wpContext;
+        this.wpContext = wpContext;
         const consoleListener = new ConsoleListener();
         Logger.subscribe(consoleListener);
         this._localPnPSetup = sp.configure({
@@ -77,7 +77,7 @@ export class SPService implements ISPService {
     }
 
     public async sendEmail(emaildata, formData) {
-        console.log(formData,"formdata");
+        console.log(formData, "formdata");
         let currentUser = await this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
@@ -102,18 +102,18 @@ export class SPService implements ISPService {
 
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
-    
+
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
-            
+
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string ||""): "";
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "") : "";
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
-        console.log(mailBodyStr,"mail body");
+        console.log(mailBodyStr, "mail body");
 
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
@@ -129,69 +129,58 @@ export class SPService implements ISPService {
         });
     }
 
-public  async sendEmailUsingPowerAutomate(formData,emaildata): Promise<HttpClientResponse> {  
-    const postURL = "https://prod-164.westus.logic.azure.com:443/workflows/6d316ee897dc48b5bd2d20095e3465ea/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TkgKbzWgrsTGiVUfVnck2fccUMhmqM8lynRAABcdFWc";  
-    console.log("hellofrompowerautomate");
- 
-    console.log(emaildata,"");emaildata
-    let currentUser = await this._localPnPSetup.web.currentUser();
-    // emails.push(currentUser.Email);
-    var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
-    to.forEach(async email => {
-        await this._localPnPSetup.web.ensureUser(email);
-    });
-    var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
-    formData.push({ "id": "CreatedBy", "value": currentUser.Title });
+    public async sendEmailUsingPowerAutomate(formData, emaildata): Promise<HttpClientResponse> {
+        const postURL = "https://prod-164.westus.logic.azure.com:443/workflows/6d316ee897dc48b5bd2d20095e3465ea/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TkgKbzWgrsTGiVUfVnck2fccUMhmqM8lynRAABcdFWc";
 
-    let mailBodyStr = emaildata.GDCEmailBody;
-    let mailSubjectStr = emaildata.GDCEmailSubject;
+        let currentUser = await this._localPnPSetup.web.currentUser();
+        formData.push({ "id": "CreatedBy", "value": currentUser.Title });
 
-    var mailSubjectWords = mailSubjectStr != null || mailSubjectStr != undefined ? mailSubjectStr.split(' ') : [];
-    mailSubjectWords.map(w => {
-        const word = w.match("{{(.*)}}");
-        if (word != null) {
-            let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-            let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
-            mailSubjectStr = mailSubjectStr.replace(`${word[0]}`, data);
-        }
-    });
+        let mailBodyStr = emaildata.GDCEmailBody;
+        let mailSubjectStr = emaildata.GDCEmailSubject;
 
-    mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
-    mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
+        var mailSubjectWords = mailSubjectStr != null || mailSubjectStr != undefined ? mailSubjectStr.split(' ') : [];
+        mailSubjectWords.map(w => {
+            const word = w.match("{{(.*)}}");
+            if (word != null) {
+                let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
+                mailSubjectStr = mailSubjectStr.replace(`${word[0]}`, data);
+            }
+        });
 
-    var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
-    mailBodyWords.map(w => {
-        const word = w.match("{{(.*)}}");
-        
-        if (word != null) {
-            let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-            let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string ||""): "";
-            mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
-        }
-    });
-    const requestHeaders: Headers = new Headers();  
-    requestHeaders.append('Content-type', 'application/json');  
-    
-    const body: string = JSON.stringify({  
-        'emailaddress': emaildata.GDCEmailTo,  
-        'emailSubject': mailSubjectStr,  
-        'emailBody': mailBodyStr,  
-      });  
-      console.log(body,"body")
-    const httpClientOptions: IHttpClientOptions = {  
-      body: body,  
-      headers: requestHeaders  
-    };  
-  
-    console.log("Sending Email");  
-    
-    return this.wpContext.httpClient.post(  
-      postURL,  
-      HttpClient.configurations.v1,  
-      httpClientOptions)  
-      .then((response: HttpClientResponse): Promise<HttpClientResponse> => {  
-        console.log("Email sent.");  
-        return response.json();  
-      });  
-  }  
+        mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
+        mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
+
+        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
+        mailBodyWords.map(w => {
+            const word = w.match("{{(.*)}}");
+            if (word != null) {
+                let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "") : "";
+                mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
+            }
+        });
+        const requestHeaders: Headers = new Headers();
+        requestHeaders.append('Content-type', 'application/json');
+
+        const body: string = JSON.stringify({
+            'emailTo': emaildata.GDCEmailTo,
+            'emailCc': emaildata.GDCEmailCc,
+            'emailSubject': mailSubjectStr,
+            'emailBody': mailBodyStr
+        });
+        const httpClientOptions: IHttpClientOptions = {
+            body: body,
+            headers: requestHeaders
+        };
+
+        return this.wpContext.httpClient.post(
+            postURL,
+            HttpClient.configurations.v1,
+            httpClientOptions)
+            .then((response: HttpClientResponse): Promise<HttpClientResponse> => {
+                console.log("Email sent.");
+                return response.json();
+            });
+    }
 }
