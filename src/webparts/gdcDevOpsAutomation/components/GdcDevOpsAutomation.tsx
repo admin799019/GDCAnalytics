@@ -1149,6 +1149,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                 <input type="file"
                   id="file-upload"
                   multiple
+                  max={20000000000000}
                   nv-file-select
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
