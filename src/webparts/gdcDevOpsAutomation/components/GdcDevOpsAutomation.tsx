@@ -1155,7 +1155,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
               </div>
-            
+              <p className="filenote">Accepts only less than 50mb </p>
               <div className="attachmentNames">{
                 ele.files.map((n: any) => {
                   return (
