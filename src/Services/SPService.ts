@@ -164,14 +164,14 @@ export class SPService implements ISPService {
         });
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json');
-
+        
         const body: string = JSON.stringify({
             'emailTo': emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo : "",
             'emailCc': emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : "",
             'emailSubject': mailSubjectStr,
             'emailBody': mailBodyStr
         });
-        const httpClientOptions: IHttpClientOptions = {
+         const httpClientOptions: IHttpClientOptions = {
             body: body,
             headers: requestHeaders
         };

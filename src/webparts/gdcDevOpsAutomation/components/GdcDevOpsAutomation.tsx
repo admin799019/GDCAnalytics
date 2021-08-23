@@ -1138,6 +1138,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 <input type="file"
                   id="file-upload"
                   multiple
+                  max-size={2000000}
+                  
                   nv-file-select
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
@@ -1151,7 +1153,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     </div>
                   );
                 })}</div>
+               
             </div>
+            
           </React.Fragment>
         );
     }
