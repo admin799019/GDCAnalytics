@@ -1149,11 +1149,13 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                 <input type="file"
                   id="file-upload"
                   multiple
-                  max={20000000000000}
+                  max-size={2000000}
+                  
                   nv-file-select
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
               </div>
+            
               <div className="attachmentNames">{
                 ele.files.map((n: any) => {
                   return (
@@ -1162,7 +1164,9 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                     </div>
                   );
                 })}</div>
+               
             </div>
+            
           </React.Fragment>
         );
     }
