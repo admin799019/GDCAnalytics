@@ -4,7 +4,7 @@ import CustomStyles from './GdcDevOpsAutomation.module.scss';
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { DatePicker } from '@fluentui/react';
+import { DatePicker, IDatePickerStyles, IDatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
@@ -100,7 +100,7 @@ const onWrapDefaultLabelRenderer = (
             <Icon iconName="Info"
               style={iconStyle}
               // title={props.name || props.title}
-              className="tooltip" ariaLabel="value required" />
+              className="gdctooltip" ariaLabel="value required" />
           </TooltipHost>
           : ""}
       </Stack>
@@ -142,7 +142,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public panelRef;
   public dependentField: MetaDataType;
   public emailFormData = [];
-  public urls:any=[];
+  public urls: any = "";
   public richTextFieldCalls: number = 0;
   public constructor(props) {
     super(props);
@@ -259,14 +259,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
           if (contentAdded == false && imgsLenth == 0 && field.required == true) {
             field.showError = true;
-
           }
           field.value = value;
         }
 
         if (field.fieldType == "FileInput") {
           field.files = field.files.concat(value);
-          console.log(field.files);
         }
 
         else {
@@ -279,7 +277,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           }
           field.value = "";
           field.selectedKeys.map((x) => {
-
             field.value += x as string + ";";
           });
         }
@@ -446,13 +443,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.DescriptionData
         });
-console.log(this.AttachmentAPI,"beforecall")
-// this.emailFormData.push(this.AttachmentAPI);
-// this.AttachmentAPI.map((x)=>{
-// var url="<a href='"+x.value.url+"'>"+x.value.name
-//   //var x:any={id:"Attachments" ,value:}
-// })
-this.emailFormData.push({id:"Attachments",value:this.urls})
+
+        this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
 
         this.props.devOpsService.addfeature(APIData).then((data) => {
@@ -468,8 +460,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               panelHasScroll: false,
               selectedButton: ""
             });
-          
-            console.log(APIData,"18thaaug");
+
             this.AttachmentAPI = [];
             let apiArea: string = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
             setTimeout(function () {
@@ -493,14 +484,9 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
 
               if (emaildata != null) {
-                console.log(this.AttachmentAPI,"attachment api")
-               // this.props.spService.sendEmail(emaildata, this.emailFormData);
-               console.log(this.emailFormData,"emailformdata",emaildata,"emaildata");
-               this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData,emaildata).then((data)=>{
-                console.log("working")
-              })
+                // this.props.spService.sendEmail(emaildata, this.emailFormData);
+                this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData, emaildata);
               }
-
               this.emailFormData = [];
             });
             this.state.Area.value = "";
@@ -532,6 +518,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
           disableSubmitButton: false,
           showErrorMessage: true
         });
+        this.emailFormData = [];
       }
     });
   }
@@ -602,8 +589,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
       if (emailField.fieldType == "PeoplePickerInput") {
         emailField.value = emailField.personName;
       }
-      if(field.devopsName != "Attachments"){
-      this.emailFormData.push(emailField);
+      if (field.devopsName != "Attachments") {
+        this.emailFormData.push(emailField);
       }
 
       if (field.subFields != null && field.subFields.length > 0 && field.subFields.filter(f => f.option == field.value).length > 0) {
@@ -715,6 +702,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
     });
 
     if (AttachmentFiles != null && AttachmentFiles.length > 0) {
+      this.urls = "";
       AttachmentFiles.map((file: any) => {
         count = count + 1;
         let reader = new FileReader();
@@ -730,9 +718,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
           const blob = new Blob([byteArray]);
 
           this.props.devOpsService.uploadImage(blob, file.name).then(d => {
-            var url="<a href='"+d+"'>"+file.name+"</a></b>";
-            console.log(url,"ahref");
-            this.urls.push(url);
+            var url = "<a href='" + d + "'>" + file.name + "</a></br>";
+            this.urls = this.urls.concat(url);
             this.AttachmentAPI.push(
               {
                 "op": "add",
@@ -876,9 +863,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               <div className="gdcGridCol gdcGridCol12 questionHeader">
                 <p className="questionTop">What team is your request for?</p>
                 {
-
                   this.state.Area.options.map(area => {
-
                     return (<DefaultButton
                       text={area.text}
                       className={this.state.selectedButton == area.text ? "gdcSelectedButton" : "gdcHeaderButton"}
@@ -916,13 +901,19 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <TextField label={ele.label}
+              <TextField
+                label={ele.label}
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.id)}
                 {...ele.showError == true ? { className: "gdcTextField requiredreddrop" } : { className: "gdcTextField" }}
                 //className="gdcTextField"
                 placeholder={ele.placeholder}
-                value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
+                value={ele.value}
+                // name={ele.helperText}
+                required={ele.required}
+                onRenderLabel={onWrapDefaultLabelRenderer}
+                ariaLabel=""
+              />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
@@ -1046,23 +1037,28 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                 tooltipProps={{
                   onRenderContent: () => (ReactHtmlParser(ele.helperText))
                 }}
-                //  {...ele.helperTextList ? 
-                // {onRenderContent:
-                //content={ele.helperText}
                 styles={hostStyles}
-              > <Icon iconName="Info" style={iconStyle} className="tooltip" ariaLabel="value required" />
+              > <Icon iconName="Info" style={iconStyle} className="gdctooltip" ariaLabel="value required" />
               </TooltipHost>
               : <div></div>}
             <DatePicker
-              allowTextInput
-              //onBlur={elog('blur',this)}
+              // allowTextInput
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date"
               minDate={new Date(Date.now())}
+              value={ele.value != "" && ele.value != null && ele.value != undefined ? new Date(ele.value) : undefined}
+              tabIndex={0}
+              styles={{
+                icon: { display: 'none' }
+              }}
               {...ele.showError == true ? { className: "requiredreddrop" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
-
+              textField={{
+                onRenderSuffix: true ? () => <div><Icon iconName="Cancel" ariaLabel="clear" onClick={(e) => this.handleChange("", ele.id)} /></div> : null,
+                styles: { suffix: { padding: "0 4px", cursor: 'pointer' } },
+                onRenderPrefix: true ? () => <Icon iconName="Calendar" ariaLabel="clear" /> : null
+              }}
             />
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
@@ -1077,10 +1073,8 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                 onChange={(e, c) => this.handleChange(c, ele.id)}
                 checked={ele.checked}
-
               />
             </div>
-
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
               ? ele.subFields.filter(fi => fi.option == ele.value)[0].fields.map(se => this.renderFields(se))
               : null
@@ -1088,7 +1082,6 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
           </React.Fragment>
         );
       case "MultiLineTextInput":
-        var firstCall = true;
         return (
           <div className="" >
             <div className={ele.className + " gdcColumnBlock"} >
@@ -1096,15 +1089,11 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                 {ele.helperText ?
                   <TooltipHost
                     tooltipProps={{
-                      // onRenderContent :() => (<div>{ele.helperText}<ul><li>test</li></ul></div>)
                       onRenderContent: () => (ReactHtmlParser(ele.helperText))
                     }}
-                    //  {...ele.helperTextList ? 
-                    // {onRenderContent:
-                    // content={tooltipcontent}
                     styles={hostStyles}
                   >
-                    <Icon iconName="Info" className="tooltip" style={iconStyle} ariaLabel="value required" />
+                    <Icon iconName="Info" className="gdctooltip" style={iconStyle} ariaLabel="value required" />
                   </TooltipHost>
                   : ""}
               </Label>
@@ -1153,6 +1142,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
               </div>
+              <p className="gdcFileNote">Accepts files up to 50mb</p>
               <div className="attachmentNames">{
                 ele.files.map((n: any) => {
                   return (

@@ -7,7 +7,7 @@
     border-right: 1px solid rgb(168,0,0) !important;
     border-top: 1px solid rgb(168,0,0) !important;
   }
-.tooltip{
+.gdctooltip{
   cursor:pointer;
   margin-left: 2px;
   .rootHovered {
@@ -358,6 +358,13 @@ font-size:12px;
   }
 }
 
+.gdcFileNote{
+  font-style: italic;
+  font-size: 11px;
+  color:gray;
+  margin-top: 0px;
+}
+
 /* File Picker End */
 
 
@@ -679,8 +686,6 @@ font-size:12px;
   margin-top: 0px;
 }
 }
-.notworking{
-  font-style: italic;
-}
+
 /* Panel End */
 
