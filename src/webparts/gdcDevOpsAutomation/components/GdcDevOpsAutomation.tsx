@@ -107,6 +107,7 @@ const onWrapDefaultLabelRenderer = (
     </>
   );
 };
+
 const handleClick = event => {
   const { target = {} } = event || {};
   target.value = "";
@@ -916,13 +917,20 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <TextField label={ele.label}
+            <Label  className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+           
+              <TextField 
+              //label={ele.label}
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.id)}
                 {...ele.showError == true ? { className: "gdcTextField requiredreddrop" } : { className: "gdcTextField" }}
-                //className="gdcTextField"
                 placeholder={ele.placeholder}
-                value={ele.value} name={ele.helperText} required={ele.required} onRenderLabel={onWrapDefaultLabelRenderer} />
+                value={ele.value}
+                 name={ele.helperText} 
+               ariaLabel="something"
+                //required={ele.required} 
+               // onRenderLabel={onWrapDefaultTextLabelRenderer} 
+               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
@@ -935,12 +943,13 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
         return (
           <React.Fragment>
             <div className={ele.className}>
+            <Label   className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
-                label={ele.label}
+               // label={ele.label}
                 className="gdcDropDown"
                 title={ele.helperText}
-                onRenderLabel={onWrapDefaultLabelRenderer}
+                //onRenderLabel={onWrapDefaultLabelRenderer}
                 {...ele.showError == true ? { className: "gdcDropDown requiredreddrop" } : { className: "gdcDropDown" }}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
@@ -952,7 +961,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
                     onRenderPlaceholder: this.onRenderPlaceholder
                   } : {}}
                 onChange={(e, o) => this.handleChange(o.key, ele.id)}
-                required={ele.required}
+               // required={ele.required}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -966,9 +975,11 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
         return (
           <React.Fragment>
             <div className={ele.className}>
+    
               <Dropdown
                 placeholder={ele.placeholder}
                 label={ele.label}
+                ariaLabel="something"
                 multiSelect
                 //defaultSelectedKeys={['Priority 1', 'Priority 2']}
                 className="gdcDropDown"
@@ -1092,7 +1103,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
         return (
           <div className="" >
             <div className={ele.className + " gdcColumnBlock"} >
-              <Label>{ele.label + " "} {ele.required ? <span className="gdcStar">* </span> : ""}
+            <Label  className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
                 {ele.helperText ?
                   <TooltipHost
                     tooltipProps={{

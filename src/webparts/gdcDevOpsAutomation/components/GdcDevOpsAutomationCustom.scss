@@ -141,6 +141,18 @@
    color:black;
  }
 }
+.textfieldlabel{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 5px 0px 0px 0px;
+  //display: inline;
+  white-space: nowrap;
+  //pointer-events:none;
+}
+.textfieldlabel:hover{
+overflow: visible; 
+white-space: nowrap;
+}
 
 /* Text Field End */
 
