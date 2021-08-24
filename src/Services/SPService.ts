@@ -130,7 +130,7 @@ export class SPService implements ISPService {
     }
 
     public async sendEmailUsingPowerAutomate(formData, emaildata): Promise<HttpClientResponse> {
-        const postURL = "https://prod-164.westus.logic.azure.com:443/workflows/6d316ee897dc48b5bd2d20095e3465ea/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TkgKbzWgrsTGiVUfVnck2fccUMhmqM8lynRAABcdFWc";
+        const postURL = OrganizationConfig.FlowUrl;
 
         let currentUser = await this._localPnPSetup.web.currentUser();
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
@@ -151,12 +151,14 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
-        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
+        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "") : "";
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0
+                    ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "")
+                    : "";
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
@@ -164,8 +166,8 @@ export class SPService implements ISPService {
         requestHeaders.append('Content-type', 'application/json');
         
         const body: string = JSON.stringify({
-            'emailTo': emaildata.GDCEmailTo,
-            'emailCc': emaildata.GDCEmailCc,
+            'emailTo': emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo : "",
+            'emailCc': emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : "",
             'emailSubject': mailSubjectStr,
             'emailBody': mailBodyStr
         });
@@ -180,7 +182,7 @@ export class SPService implements ISPService {
             HttpClient.configurations.v1,
             httpClientOptions)
             .then((response: HttpClientResponse): Promise<HttpClientResponse> => {
-                console.log("Email sent.");
+                console.log("Email sent.", response);
                 return response.json();
             });
     }

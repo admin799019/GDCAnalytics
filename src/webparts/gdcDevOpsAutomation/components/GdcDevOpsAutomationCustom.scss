@@ -7,7 +7,7 @@
     border-right: 1px solid rgb(168,0,0) !important;
     border-top: 1px solid rgb(168,0,0) !important;
   }
-.tooltip{
+.gdctooltip{
   cursor:pointer;
   margin-left: 2px;
   .rootHovered {
@@ -43,8 +43,9 @@
   
 }
 .ql-snow .ql-tooltip {
-  left: 300px !important;
-  top: -50px !important;
+  height: 40px;
+  left: 320px !important;
+  top: -51px !important;
 }
 
 .ql-editor {
@@ -225,14 +226,14 @@ white-space: nowrap;
     margin-top:2px;
   }
 }
-// .black{ 
-//   .ms-Toggle-background{
-//     background: black;
-//   }
-//   .ms-Toggle-innerContainer{
-//     margin-top:2px;
-//   }
-// }
+.gdcToggleBlack{ 
+  .ms-Toggle-background{
+    background: black;
+  }
+  .ms-Toggle-innerContainer{
+    margin-top:2px;
+  }
+}
 
 /* Switch Input end */
 
@@ -377,6 +378,13 @@ font-size:12px;
     transform: rotateZ(45deg);
     color: #1D1D1D
   }
+}
+
+.gdcFileNote{
+  font-style: italic;
+  font-size: 11px;
+  color:gray;
+  margin-top: 0px;
 }
 
 /* File Picker End */
@@ -700,8 +708,6 @@ font-size:12px;
   margin-top: 0px;
 }
 }
-.notworking{
-  font-style: italic;
-}
+
 /* Panel End */
 
