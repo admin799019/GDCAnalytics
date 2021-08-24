@@ -519,6 +519,7 @@ this.emailFormData.push({id:"Attachments",value:this.urls})
               selectedButton: ""
             });
             this.AttachmentAPI = [];
+            this.emailFormData = [];
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
