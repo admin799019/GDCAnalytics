@@ -3,7 +3,7 @@ const Demo = {
     OrganizationUrl: "https://dev.azure.com/onegdcanalyticsdev",
     ProjectName: "Operational Framework",
     ProjectUrl: "https://dev.azure.com/onegdcanalyticsdev/Operational%20Framework",
-    FlowUrl:"https://prod-163.westus.logic.azure.com:443/workflows/5b68ab609dfc482cae7c9d401862ed91/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cdFdYn2vBWysiKn8xNqfFL8cO8sSxlKbFRkLiYnX8us"
+    FlowUrl:"https://prod-08.westus.logic.azure.com:443/workflows/91c0deef17a340d0995c7d23363ef673/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2iS29H79Emm_Vb69cRSkC78uIvLSkI2J9TRjhGbhl2A"
 };
 
 const Test = {

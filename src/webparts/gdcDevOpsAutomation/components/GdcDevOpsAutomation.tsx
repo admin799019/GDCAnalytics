@@ -1068,7 +1068,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <React.Fragment>
             <div className={ele.className}>
               <Toggle
-                {...ele.checked ? { className: "gdcSwitchInput black" } : { className: "gdcSwitchInput" }}
+                {...ele.checked ? { className: "gdcSwitchInput gdcToggleBlack" } : { className: "gdcSwitchInput" }}
                 //className="gdcSwitchInput"
                 label={ele.label} onText={ele.options.onText} offText={ele.options.offText}
                 onChange={(e, c) => this.handleChange(c, ele.id)}
