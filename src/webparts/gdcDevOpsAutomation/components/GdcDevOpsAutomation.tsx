@@ -1138,7 +1138,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             <div className={ele.className + " gdcfilepicker"}>
               <p> {ele.placeholder}</p>
               <div className="gdcfileInput" >
-                <Label htmlFor="file-upload" className="custom-file-upload">
+                <Label htmlFor="file-upload" className="gdccustom-file-upload">
                   <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
                 <input type="file"
