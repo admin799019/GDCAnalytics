@@ -209,7 +209,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       formFields: stateValues,
     });
   }
-
+//update state json form with values entere in field
   public appendValues(stateValues, value: any, name) {
     const parser = new DOMParser();
     var subFieldsObject;
@@ -302,7 +302,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
     return stateValues;
   }
-
+//update json form value for any toggle change field
   public handleToggleChange(value: any, name) {
     var stateValues = this.state.formFields;
     stateValues.map((f) => {
@@ -315,7 +315,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       formFields: stateValues
     });
   }
-
+//for calling UpdateRichText and multiline text content into richcontent
   public async UpdateRichTextFields(): Promise<any> {
     var fields = _.cloneDeep(this.state.formFields);
 
@@ -362,7 +362,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       this.addUserStory();
     }
   }
-
+//converting multiline text content into richcontent for images and sql queries
   public async UpdateRichText(data): Promise<any> {
     const parser = new DOMParser();
     let element = parser.parseFromString(data, 'text/html');
@@ -391,7 +391,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       return element.body.innerHTML;
     });
   }
-
+//for creating of user story work item inazure in this  (first we check that all required fields have value,append values for description  )
   public addUserStory() {
     var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
@@ -448,7 +448,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
 
-        this.props.devOpsService.addfeature(APIData).then((data) => {
+        this.props.devOpsService.adduserstory(APIData).then((data) => {
           if (data.id != null) {
             this.setState({
               formFields: metaData,
@@ -481,7 +481,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             else if (this.emailFormData.filter(ed => ed.id == "Area") != null && this.emailFormData.filter(ed => ed.id == "Area").length > 0) {
               this.emailFormData.filter(ed => ed.id == "Area")[0].value = APIData.filter(a => a.path == "/fields/System.AreaPath")[0].value;
             }
-
+//getting email format and data from sp list in site
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
 
               if (emaildata != null) {
@@ -524,12 +524,12 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       }
     });
   }
-
+//creating a user story
   public async submitForm(addorupdate: string) {
     this.DescriptionData = "";
     this.AttachFiles();
   }
-
+//for handling changes in multiselect dropdown 
   public onMultiSelectChange = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
     if (item) {
       var x: any = this.state.multiSelectedKeys;
@@ -541,7 +541,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
     this.handleChange(this.state.multiSelectedKeys, "RequestedPriority");
   }
-
+//for getting dependent field name and type for URGENT
   public getField(fieldName, fields): any {
     fields.forEach(f => {
       if (f.id == fieldName) {
@@ -556,7 +556,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       }
     });
   }
-
+//composing data to feed api for request of work item creation
   public async appendAPI(Fields: MetaDataType[], APIData) {
     const parser = new DOMParser();
     var requiredHasValues: boolean = true;
@@ -615,7 +615,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     }
     return { "APIData": APIData, "Fields": Fields, "requiredHasValues": requiredHasValues };
   }
-
+//getting the form fields according to area choosed from sp list of jsons 
   public updateFormFields(option) {
     this.state.Area.value = option;
     this.props.spService.getFormMetadata(option).then((data) => {
@@ -642,7 +642,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       }
     });
   }
-
+//for uploading attachments inazure 
   public onFileUpload(e, name) {
     e.preventDefault();
     var files: any = [];
@@ -655,7 +655,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       formFields: stateValues
     });
   }
-
+//deleting the uploaded file in azure devops
   public onFileDelete(name) {
     var AttachmentJson;
     this.state.formFields.map(f => {
@@ -682,7 +682,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
     return;
   }
-
+//attach files in azure of workitem
   public async AttachFiles(): Promise<any> {
     let count: number = 0;
     var richTextCallSent: boolean = false;
@@ -749,7 +749,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       richTextCallSent = true;
     }
   }
-
+//getting cascadind field value if there's a cascading field
   public getCascadingFieldValue(fieldName) {
     var value = "";
     this.state.formFields.map(f => {
@@ -768,7 +768,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
     return value;
   }
-
+//for rendering form eader and custom styles 
   public onRenderNavigationContent(props, defaultRender) {
     return (
       <React.Fragment>
@@ -798,7 +798,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </React.Fragment>
     );
   }
-
+// for rendering custom options looks in dropdown
   private onRenderOption(option: any): JSX.Element {
     return (
       <div>
@@ -821,7 +821,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       </div>
     );
   }
-
+//for custom rendering dropdown placeholder
   public onRenderPlaceholder = (props: IDropdownProps): JSX.Element => {
     return (
       <div className="dropdownExample-placeholder">
@@ -909,7 +909,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               //label={ele.label}
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.id)}
-                {...ele.showError == true ? { className: "gdcTextField gdrequiredreddropdown" } : { className: "gdcTextField" }}
+                {...ele.showError == true ? { className: "gdcTextField gdcrequiredreddropdown" } : { className: "gdcTextField" }}
                 placeholder={ele.placeholder}
                 value={ele.value}
                  name={ele.helperText} 
