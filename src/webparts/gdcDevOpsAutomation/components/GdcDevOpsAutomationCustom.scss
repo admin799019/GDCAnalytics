@@ -1,6 +1,6 @@
 @import '~office-ui-fabric-react/dist/sass/_References.scss';
 
-.requiredred{
+.gdcrequiredred{
   //border:1px solid red;
   .ql-toolbar.ql-snow {
   border-left: 1px solid rgb(168,0,0) !important;
@@ -22,7 +22,7 @@
   }
  
 }
-.requiredreddrop{
+.gdcrequiredreddropdown{
   .ms-Dropdown-title{
   border:1px solid rgb(168,0,0)  !important;
   }
@@ -142,7 +142,7 @@
    color:black;
  }
 }
-.textfieldlabel{
+.gdctextfieldlabel{
   text-overflow: ellipsis;
   overflow: hidden;
   padding: 5px 0px 0px 0px;
@@ -150,7 +150,7 @@
   white-space: nowrap;
   //pointer-events:none;
 }
-.textfieldlabel:hover{
+.gdctextfieldlabel:hover{
 overflow: visible; 
 white-space: nowrap;
 }
@@ -249,7 +249,7 @@ white-space: nowrap;
 
 
 
-.peoplepicker{
+.gdcpeoplepicker{
   margin-top:8px;
   .ms-BasePicker-text{
 height:40px;
@@ -324,18 +324,10 @@ margin-top:0px;
     white-space: nowrap;
   }
 }
-.filenote{
-  font-style: italic;
-  font-size: 10px;
-  color:gray;
-}
+
 /* MultiLine End */
 
 /* File Picker */
-
-.errorclosebutton{
-  position:relative;
-}
 input[type="file"] {
   display: none;
 }
@@ -344,18 +336,18 @@ input[type="file"] {
   cursor: pointer;
 }
 
-.filepicker {
+.gdcfilepicker {
   margin-top: 8px;
 
 }
-.filepicker > p {
+.gdcfilepicker > p {
   font-weight:500;
   margin-bottom: 10px;
 }
-.attachmentNames{
+.gdcattachmentNames{
 font-size:12px;
 }
-.attachmentNames > .gdcAttachmentsname{
+.gdcattachmentNames > .gdcAttachmentsname{
   font-size:12px;
   display: block;
   margin-top:4px;
@@ -367,7 +359,7 @@ font-size:12px;
     padding-left: 5px;
 }
 
-.fileInput {
+.gdcfileInput {
   cursor: pointer;
   // color: #036c70;
   background: rgba(3,108,112,.06);
@@ -408,7 +400,7 @@ font-size:12px;
 //   color:white;
 //   border-color: white;
 // }
-.questionHeader{
+.gdcquestionHeader{
   font-weight: 500;
 }
   .gdcAddButton,.gdcAddButton:hover {
@@ -477,7 +469,7 @@ font-size:12px;
 .gdcHeaderButton::selection{
   background-color: #1D1D1D;
 }
-.questionTop{
+.gdcquestionTop{
   margin-top: 25px;
   margin-bottom:20px;
   font-weight: 500px;
@@ -526,7 +518,7 @@ font-size:12px;
   .gdcerror {
     color: rgb(168,0,0);
   }
-.requireddiv{
+.gdcrequireddiv{
   height:20px;
 }
   .gdcStar {
