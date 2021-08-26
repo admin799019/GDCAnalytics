@@ -8,7 +8,7 @@ import { DatePicker, IDatePickerStyles, IDatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
-//import Logo from './../GDCLogo.jsx';
+//import Logo from './GDC.svg';
 import ReactHtmlParser from 'react-html-parser';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
@@ -485,8 +485,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             this.props.spService.getEmailData(Team, Area, PODCategory).then(emaildata => {
 
               if (emaildata != null) {
-                // this.props.spService.sendEmail(emaildata, this.emailFormData);
-                this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData, emaildata);
+                this.props.spService.sendEmail(emaildata, this.emailFormData);
+                //this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData, emaildata);
               }
               this.emailFormData = [];
             });
@@ -773,9 +773,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return (
       <React.Fragment>
         <div className={this.state.panelHasScroll ? "gdcScrollPanelHeader" : "gdcPanelHeader"}>
-          {/* <Logo /> */}
-          {/* <div id="gdclogoId"></div> */}
-          {/* <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" /> */}
+    {/* <Logo />  */}
+      <div id="gdclogoId"></div>  
+        <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" />
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div>
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses1" : "gdcPanelHeaderEllipses1"}></div>
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses2" : "gdcPanelHeaderEllipses2"}></div>

@@ -108,7 +108,7 @@ return people;
     }
 
     public async sendEmail(emaildata, formData) {
-        console.log(formData, "formdata");
+        console.log(formData, "formdata in sp email service");
         let currentUser = await this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
@@ -117,7 +117,11 @@ return people;
         });
         var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
-
+        cc.forEach(element => {
+            sp.web.ensureUser(element).then((data)=>{
+                
+            })  
+        });
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
@@ -144,7 +148,9 @@ return people;
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
-        console.log(mailBodyStr, "mail body");
+        
+      
+
 
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
