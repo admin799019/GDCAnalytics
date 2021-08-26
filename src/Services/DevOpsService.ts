@@ -9,7 +9,7 @@ export class DevOpsService implements IDevOpsService {
     public static readonly serviceKey: ServiceKey<IDevOpsService> = ServiceKey.create<IDevOpsService>('SPFx:DevOpsService', DevOpsService);
     private _aadHttpClientFactory: AadHttpClientFactory;
     private _spHttpClient: SPHttpClient;
-    
+
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
@@ -30,7 +30,7 @@ export class DevOpsService implements IDevOpsService {
                 });
         });
     }
-    public adduserstory(data): Promise<any> {
+    public addUserStory(data): Promise<any> {
         // const body: string = JSON.stringify([
         //     {
         //         "op": "add",
@@ -85,7 +85,7 @@ export class DevOpsService implements IDevOpsService {
                 });
         });
     }
-  
+
 
     public async uploadImage(base64content, fileName): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
@@ -113,10 +113,6 @@ export class DevOpsService implements IDevOpsService {
         });
         // let promise = new Promise((resolve,reject));
     }
-
-  
-
-    
 
     public getTeamDetails(team: string): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
