@@ -4,7 +4,7 @@
   "https": true,
   "serveConfigurations": {
     "default": {
-      "pageUrl": "https://mcompany5.sharepoint.com/sites/GDC"
+      "pageUrl": "https://m365x799019.sharepoint.com/sites/GEPAnalyticsTest"
     }
   },
   "initialPage": "https://localhost:5432/workbench",

@@ -1159,9 +1159,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     </div>
                   );
                 })}</div>
-
             </div>
-
           </React.Fragment>
         );
     }
