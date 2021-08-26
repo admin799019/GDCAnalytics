@@ -56,8 +56,13 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
-
-        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        // var data1 = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        // console.log(data1[0]);
+        
+        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
+      
+        //data1[0].persontomaill=data[0].persontoemail;
+        console.log(data[0])
         return data[0];
     }
 
@@ -107,21 +112,32 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public async sendEmail(emaildata, formData) {
-        console.log(formData, "formdata in sp email service");
-        let currentUser = await this._localPnPSetup.web.currentUser();
+    public  sendEmail(emaildata, formData) {
+        console.log(formData, "formdata in sp email service",emaildata);
+        let currentUser =  this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
-        var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
-        to.forEach(async email => {
-            await this._localPnPSetup.web.ensureUser(email)
-            .then(d => { console.log(d) }).catch(e => { console.log("error To ", e) });
+        console.log(currentUser,"current user");
+        var people:any=emaildata.GDCEmailTo;
+        var to:any=[];
+        people.forEach(email => {
+          to.push(email.Title)
+          
         });
-        var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
-        formData.push({ "id": "CreatedBy", "value": currentUser.Title });
-        cc.forEach(async element => {
-            await this._localPnPSetup.web.ensureUser(element)
-            .then(d => { console.log(d) }).catch(e => { console.log("error cc ", e) });
-        });
+        // await cc.forEach(element => {
+        //     this._localPnPSetup.web.ensureUser(element);     
+        
+        // });
+        //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
+       var people:any=emaildata.GDCEmailCc !=null ? emaildata.GDCEmailCc : [];
+     var cc:any=[];
+        formData.push({ "id": "CreatedBy", "value": currentUser });
+    //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
+    //   console.log(people)
+     people.forEach(element => {
+       console.log(element);
+            cc.push(element.Title)       
+      });
+      console.log(to,"to",cc,"cc")
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
@@ -148,7 +164,8 @@ export class SPService implements ISPService {
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
-
+        
+      
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
             Body: mailBodyStr,
@@ -156,7 +173,7 @@ export class SPService implements ISPService {
             To: to,
             CC: cc
         };
-        this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
+         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);
