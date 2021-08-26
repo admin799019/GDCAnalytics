@@ -210,6 +210,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     });
   }
 
+
+  // updates the state json with values enetered in the form
   public appendValues(stateValues, value: any, name) {
     const parser = new DOMParser();
     var subFieldsObject;
@@ -903,20 +905,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-            <Label  className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
-           
-              <TextField 
-              //label={ele.label}
+              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+
+              <TextField
+                //label={ele.label}
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.id)}
                 {...ele.showError == true ? { className: "gdcTextField gdrequiredreddropdown" } : { className: "gdcTextField" }}
                 placeholder={ele.placeholder}
                 value={ele.value}
-                 name={ele.helperText} 
-               ariaLabel="something"
-                //required={ele.required} 
-               // onRenderLabel={onWrapDefaultTextLabelRenderer} 
-               />
+                name={ele.helperText}
+                ariaLabel="something"
+              //required={ele.required} 
+              // onRenderLabel={onWrapDefaultTextLabelRenderer} 
+              />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
             {(ele.subFields != null) && (ele.subFields.length > 0) && (ele.subFields.filter(fi => fi.option == ele.value).length > 0)
@@ -929,10 +931,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-            <Label   className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
-               // label={ele.label}
+                // label={ele.label}
                 className="gdcDropDown"
                 title={ele.helperText}
                 //onRenderLabel={onWrapDefaultLabelRenderer}
@@ -947,7 +949,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     onRenderPlaceholder: this.onRenderPlaceholder
                   } : {}}
                 onChange={(e, o) => this.handleChange(o.key, ele.id)}
-               // required={ele.required}
+              // required={ele.required}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
@@ -961,7 +963,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-    
+
               <Dropdown
                 placeholder={ele.placeholder}
                 label={ele.label}
@@ -1091,7 +1093,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className="" >
             <div className={ele.className + " gdcColumnBlock"} >
-            <Label  className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
+              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
                 {ele.helperText ?
                   <TooltipHost
                     tooltipProps={{
@@ -1145,7 +1147,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   id="file-upload"
                   multiple
                   max-size={2000000}
-                  
                   nv-file-select
                   onClick={handleClick}
                   onChange={e => this.onFileUpload(e, ele.id)} />
@@ -1159,9 +1160,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                     </div>
                   );
                 })}</div>
-               
+
             </div>
-            
+
           </React.Fragment>
         );
     }

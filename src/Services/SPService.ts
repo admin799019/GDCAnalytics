@@ -171,7 +171,6 @@ export class SPService implements ISPService {
             'emailSubject': mailSubjectStr,
             'emailBody': mailBodyStr
         });
-        console.log(body,"body")
          const httpClientOptions: IHttpClientOptions = {
             body: body,
             headers: requestHeaders

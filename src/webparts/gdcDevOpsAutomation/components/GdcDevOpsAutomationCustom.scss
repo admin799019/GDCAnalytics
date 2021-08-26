@@ -14,12 +14,12 @@
     background-color: black
   }
 }
-  .ql-container.ql-snow {
+.ql-container.ql-snow {
   border-top: 0;
   border-left: 1px solid rgb(168,0,0) !important;
   border-right: 1px solid rgb(168,0,0) !important;
   border-bottom: 1px solid rgb(168,0,0) !important;
-  }
+}
  
 }
 .gdcrequiredreddropdown{
@@ -38,10 +38,9 @@
   color:black;
 }
 .quill > .ql-container > .ql-editor.ql-blank{
-
-  margin-left:-7px;
-  
+  margin-left:-7px;  
 }
+
 .ql-snow .ql-tooltip {
   height: 40px;
   left: 320px !important;
@@ -60,8 +59,7 @@
     border-left: 1px solid #838383;
     border-right:1px solid #838383;
   //  border-top : 1px !important;
-  //margin: 15px 0px;
-    
+  //margin: 15px 0px;    
   }
 
   .ql-toolbar.ql-snow {
@@ -675,31 +673,31 @@ font-size:12px;
 .gdcPanel {
   .commands  {
   margin-top: 0px;
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background:#c8c6c4
-; 
-  border-radius:10px;
-  height:10%;
-}
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#c8c6c4
+  ; 
+    border-radius:10px;
+    height:10%;
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
-.ms-Panel-commands {
-  margin-top: 0px;
-}
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  .ms-Panel-commands {
+    margin-top: 0px;
+  }
 }
 
 /* Panel End */
