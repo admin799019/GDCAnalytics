@@ -56,11 +56,13 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
-
-        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc,persontomail/Title").expand("persontomail").getAll();
-        var data1 = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        // var data1 = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        // console.log(data1[0]);
+        
+        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
+      
         //data1[0].persontomaill=data[0].persontoemail;
-        console.log(data1[0],data[0])
+        console.log(data[0])
         return data[0];
     }
 
@@ -115,9 +117,10 @@ return people;
         let currentUser =  this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         console.log(currentUser,"current user");
-        var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
-        to.forEach(email => {
-          this._localPnPSetup.web.ensureUser(email);
+        var people:any=emaildata.GDCEmailTo;
+        var to:any=[];
+        people.forEach(email => {
+          to.push(email.Title)
           
         });
         // await cc.forEach(element => {
@@ -125,9 +128,8 @@ return people;
         
         // });
         //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
-       var people:any=emaildata.persontomail;
+       var people:any=emaildata.GDCEmailCc !=null ? emaildata.GDCEmailCc : [];
      var cc:any=[];
-     console.log(people)
         formData.push({ "id": "CreatedBy", "value": currentUser });
     //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
     //   console.log(people)
@@ -135,6 +137,7 @@ return people;
        console.log(element);
             cc.push(element.Title)       
       });
+      console.log(to,"to",cc,"cc")
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
