@@ -114,13 +114,13 @@ return people;
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
         to.forEach(async email => {
             await this._localPnPSetup.web.ensureUser(email);
+           
         });
         var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
         cc.forEach(element => {
-            sp.web.ensureUser(element).then((data)=>{
-                
-            })  
+             this._localPnPSetup.web.ensureUser(element);     
+        
         });
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
