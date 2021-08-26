@@ -9,6 +9,8 @@ import { graph } from "@pnp/graph";
 import { IHttpClientOptions, HttpClientResponse, HttpClient } from '@microsoft/sp-http';
 import "@pnp/graph/groups";
 import "@pnp/graph/users";
+import {ISearchResult, SearchQueryBuilder } from '@pnp/sp/presets/all';
+import '@pnp/sp/search';
 import { MSGraphClientFactory } from '@microsoft/sp-http';
 import { IEmailProperties } from "@pnp/sp/sputilities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
@@ -70,23 +72,56 @@ export class SPService implements ISPService {
             .top(10);
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
-        return await resultQuery.get();
-
+let people:any;
+await sp.web.siteUsers.select("Email","UserPrincipalName","Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`) .get().then((responseAfterFilterChanges)=>  { 
+    console.log(responseAfterFilterChanges,"rafc")
+ people=responseAfterFilterChanges;
+    //return await responseAfterFilterChanges;
+});
+return people;
+//         //return await resultQuery.get();
+//       sp.web.siteUsers().then((data)=>{
+//         console.log(data) 
+//     //data.filter(x => x.LoginName.lastIndexOf(name,17)=== 0)
+//     let people:any;
+//     data.forEach(element => {
+//       if(element.LoginName.lastIndexOf(name,17)=== 0)  
+//       {
+//           console.log("insideif");
+//           people.push({displayName:element.Title,mail:element.Email})
+//       }
+//     });
+//    //console.log(data[0].LoginName.lastIndexOf(name,17)=== 0)
+//     console.log(people,"data")
+//           return(people);
+    
+    //  await console.log(resultQuery.get(),"result query")
+    //     //const q = SearchQueryBuilder(`${name}*`)
+    //     //sp.profiles
+    //     //console.log(q,"q")
+    //     sp.web.siteUsers().then((data)=>{
+    //         console.log(data,"pnp");
+    //         return data;
+    //     })
         // const allUsers = await graph.users();
         // return allUsers;
     }
 
     public async sendEmail(emaildata, formData) {
-        console.log(formData, "formdata");
+        console.log(formData, "formdata in sp email service");
         let currentUser = await this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
         to.forEach(async email => {
             await this._localPnPSetup.web.ensureUser(email);
+           
         });
         var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
         formData.push({ "id": "CreatedBy", "value": currentUser.Title });
-
+        cc.forEach(element => {
+             this._localPnPSetup.web.ensureUser(element);     
+        
+        });
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
@@ -113,7 +148,9 @@ export class SPService implements ISPService {
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
-        console.log(mailBodyStr, "mail body");
+        
+      
+
 
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',

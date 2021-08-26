@@ -1,11 +1,7 @@
 export interface IDevOpsService {
     getProjects1(): Promise<any>;
-    addfeature(data): Promise<any>;
-    updatefeature(text: any): any;
+    adduserstory(data): Promise<any>;
     uploadImage(base64content, fileName): Promise<any>;
-    FilterWorkItems(): Promise<any>;
-    SearchWorkItems(): Promise<any>;
-    getLatestVer(id):Promise<any>;
     addAttachment(data,id): any;
     getTeamDetails(team: string): Promise<any>;
 }
