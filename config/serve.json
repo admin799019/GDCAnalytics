@@ -4,7 +4,7 @@
   "https": true,
   "serveConfigurations": {
     "default": {
-      "pageUrl": "https://m365x799019.sharepoint.com/sites/GEPAnalyticsTest/SitePages/Intake-Form.aspx"
+      "pageUrl": "https://mcompany5.sharepoint.com/sites/GDC"
     }
   },
   "initialPage": "https://localhost:5432/workbench",
