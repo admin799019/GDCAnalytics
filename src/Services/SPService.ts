@@ -57,7 +57,10 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
 
-        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc,persontomail/Title").expand("persontomail").getAll();
+        var data1 = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
+        //data1[0].persontomaill=data[0].persontoemail;
+        console.log(data1[0],data[0])
         return data[0];
     }
 
@@ -107,21 +110,31 @@ return people;
         // return allUsers;
     }
 
-    public async sendEmail(emaildata, formData) {
-        console.log(formData, "formdata in sp email service");
-        let currentUser = await this._localPnPSetup.web.currentUser();
+    public  sendEmail(emaildata, formData) {
+        console.log(formData, "formdata in sp email service",emaildata);
+        let currentUser =  this._localPnPSetup.web.currentUser();
         // emails.push(currentUser.Email);
+        console.log(currentUser,"current user");
         var to = emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo.split(';') : [];
-        to.forEach(async email => {
-            await this._localPnPSetup.web.ensureUser(email);
-           
+        to.forEach(email => {
+          this._localPnPSetup.web.ensureUser(email);
+          
         });
-        var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
-        formData.push({ "id": "CreatedBy", "value": currentUser.Title });
-        cc.forEach(element => {
-             this._localPnPSetup.web.ensureUser(element);     
+        // await cc.forEach(element => {
+        //     this._localPnPSetup.web.ensureUser(element);     
         
-        });
+        // });
+        //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
+       var people:any=emaildata.persontomail;
+     var cc:any=[];
+     console.log(people)
+        formData.push({ "id": "CreatedBy", "value": currentUser });
+    //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
+    //   console.log(people)
+     people.forEach(element => {
+       console.log(element);
+            cc.push(element.Title)       
+      });
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
@@ -150,8 +163,6 @@ return people;
         });
         
       
-
-
         var emailProps: IEmailProperties = {
             //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
             Body: mailBodyStr,
@@ -159,7 +170,7 @@ return people;
             To: to,
             CC: cc
         };
-        this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
+         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);

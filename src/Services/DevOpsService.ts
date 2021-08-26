@@ -19,7 +19,7 @@ export class DevOpsService implements IDevOpsService {
 
     public async getProjects1(): Promise<any> {
 
-        await this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+        await this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
             client.get(OrganizationConfig.OrganizationUrl + `/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
                 .then((response: HttpClientResponse) => {
                     console.log(["Try1", response]);
@@ -49,7 +49,7 @@ export class DevOpsService implements IDevOpsService {
                 body: body,
                 headers: requestHeaders
             };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+            this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
                 client.post(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         console.log(["Try1", response]);
@@ -75,7 +75,7 @@ export class DevOpsService implements IDevOpsService {
             headers: requestHeaders,
             method: 'PATCH'
         };
-        this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+        this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
             client.fetch(OrganizationConfig.ProjectUrl + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
@@ -97,7 +97,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders,
 
             };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+            this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
                 client.post(OrganizationConfig.OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
 
@@ -122,7 +122,7 @@ export class DevOpsService implements IDevOpsService {
             const httpClientOptions: IHttpClientOptions = {
                 headers: requestHeaders,
             };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
+            this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
                 client.get(OrganizationConfig.OrganizationUrl + "/_apis/projects/" + OrganizationConfig.ProjectName + "/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         return response.json();
