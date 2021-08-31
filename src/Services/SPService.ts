@@ -78,7 +78,7 @@ export class SPService implements ISPService {
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
         let people: any;
-        await sp.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+        await   this._localPnPSetup.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
             console.log(responseAfterFilterChanges, "rafc")
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
@@ -112,31 +112,40 @@ export class SPService implements ISPService {
         // return allUsers;
     }
 
-    public  sendEmail(emaildata, formData) {
+    public async sendEmail(emaildata, formData) {
         console.log(formData, "formdata in sp email service",emaildata);
-        let currentUser =  this._localPnPSetup.web.currentUser();
+      
         // emails.push(currentUser.Email);
-        console.log(currentUser,"current user");
+        //console.log(currentUser,"current user");
         var people:any=emaildata.GDCEmailTo;
         var to:any=[];
         people.forEach(email => {
           to.push(email.Title)
           
         });
+       // console.log(currentUser,"current usser");
         // await cc.forEach(element => {
         //     this._localPnPSetup.web.ensureUser(element);     
         
         // });
+        var cc:any=[];
+        let currentUser = await  this._localPnPSetup.web.currentUser()
+        await this._localPnPSetup.web.currentUser().then((data)=>{
+            console.log(data,"current user");
+            cc.push(data.Title);
+            formData.push({ "id": "CreatedBy", "value":data.Title });
+        });
         //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
        var people:any=emaildata.GDCEmailCc !=null ? emaildata.GDCEmailCc : [];
-     var cc:any=[];
-        formData.push({ "id": "CreatedBy", "value": currentUser });
+     
+        
     //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
     //   console.log(people)
      people.forEach(element => {
        console.log(element);
             cc.push(element.Title)       
       });
+    
       console.log(to,"to",cc,"cc")
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
@@ -154,7 +163,7 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
-        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
+        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
 
@@ -203,8 +212,10 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
+       console.log(mailBodyWords,"mbw")
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
+            console.log(word,"wordd")
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
                 let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0

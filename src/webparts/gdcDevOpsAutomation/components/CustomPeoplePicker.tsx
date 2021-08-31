@@ -2,21 +2,28 @@ import * as React from "react";
 import { IPersonaProps } from '@fluentui/react/lib/Persona';
 import { IBasePickerSuggestionsProps, NormalPeoplePicker } from '@fluentui/react/lib/Pickers';
 import { Label } from '@fluentui/react/lib/Label';
-
+import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import { ISPService } from '../../../Services/ISPService';
-
-
+import ReactHtmlParser from 'react-html-parser';
+import { Icon } from '@fluentui/react/lib/Icon';
 interface ICustomPeoplePickerProps {
     spService: ISPService;
     pickerFieldName: string;
     handlePeopleChange: any;
     required: boolean;
+    helperText:string;
 }
 
 interface ICustomPeoplePickerState {
     selectedPeople: IPersonaProps[];
 }
+const iconStyle =
+{
+  cursor: 'pointer',
+  marginLeft: '2px',
+};
 
+const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
 const suggestionProps: IBasePickerSuggestionsProps = {
     suggestionsHeaderText: 'Suggested People',
     mostRecentlyUsedHeaderText: 'Suggested Contacts',
@@ -39,7 +46,16 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
     public render(): JSX.Element {
         return (
             <div>
-                <Label>{this.props.pickerFieldName} {this.props.required ? <span className="gdcStar">*</span> : ""}</Label>
+                <Label>{this.props.pickerFieldName} {this.props.required ? <span className="gdcStar">*</span> : ""} {this.props.helperText ?
+                  <TooltipHost
+                    tooltipProps={{
+                      onRenderContent: () => (ReactHtmlParser(this.props.helperText))
+                    }}
+                    styles={hostStyles}
+                  >
+                    <Icon iconName="Info" className="gdctooltip" style={iconStyle} ariaLabel="value required" />
+                  </TooltipHost>
+                  : ""}</Label>
                 <NormalPeoplePicker
                     onResolveSuggestions={(t) => this.onFilterChanged(t)}
                     pickerSuggestionsProps={suggestionProps}
