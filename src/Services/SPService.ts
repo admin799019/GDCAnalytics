@@ -9,7 +9,7 @@ import { graph } from "@pnp/graph";
 import { IHttpClientOptions, HttpClientResponse, HttpClient } from '@microsoft/sp-http';
 import "@pnp/graph/groups";
 import "@pnp/graph/users";
-import {ISearchResult, SearchQueryBuilder } from '@pnp/sp/presets/all';
+import { ISearchResult, SearchQueryBuilder } from '@pnp/sp/presets/all';
 import '@pnp/sp/search';
 import { MSGraphClientFactory } from '@microsoft/sp-http';
 import { IEmailProperties } from "@pnp/sp/sputilities";
@@ -77,37 +77,37 @@ export class SPService implements ISPService {
             .top(10);
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
-let people:any;
-await sp.web.siteUsers.select("Email","UserPrincipalName","Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`) .get().then((responseAfterFilterChanges)=>  { 
-    console.log(responseAfterFilterChanges,"rafc")
- people=responseAfterFilterChanges;
-    //return await responseAfterFilterChanges;
-});
-return people;
-//         //return await resultQuery.get();
-//       sp.web.siteUsers().then((data)=>{
-//         console.log(data) 
-//     //data.filter(x => x.LoginName.lastIndexOf(name,17)=== 0)
-//     let people:any;
-//     data.forEach(element => {
-//       if(element.LoginName.lastIndexOf(name,17)=== 0)  
-//       {
-//           console.log("insideif");
-//           people.push({displayName:element.Title,mail:element.Email})
-//       }
-//     });
-//    //console.log(data[0].LoginName.lastIndexOf(name,17)=== 0)
-//     console.log(people,"data")
-//           return(people);
-    
-    //  await console.log(resultQuery.get(),"result query")
-    //     //const q = SearchQueryBuilder(`${name}*`)
-    //     //sp.profiles
-    //     //console.log(q,"q")
-    //     sp.web.siteUsers().then((data)=>{
-    //         console.log(data,"pnp");
-    //         return data;
-    //     })
+        let people: any;
+        await sp.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+            console.log(responseAfterFilterChanges, "rafc")
+            people = responseAfterFilterChanges;
+            //return await responseAfterFilterChanges;
+        });
+        return people;
+        //         //return await resultQuery.get();
+        //       sp.web.siteUsers().then((data)=>{
+        //         console.log(data) 
+        //     //data.filter(x => x.LoginName.lastIndexOf(name,17)=== 0)
+        //     let people:any;
+        //     data.forEach(element => {
+        //       if(element.LoginName.lastIndexOf(name,17)=== 0)  
+        //       {
+        //           console.log("insideif");
+        //           people.push({displayName:element.Title,mail:element.Email})
+        //       }
+        //     });
+        //    //console.log(data[0].LoginName.lastIndexOf(name,17)=== 0)
+        //     console.log(people,"data")
+        //           return(people);
+
+        //  await console.log(resultQuery.get(),"result query")
+        //     //const q = SearchQueryBuilder(`${name}*`)
+        //     //sp.profiles
+        //     //console.log(q,"q")
+        //     sp.web.siteUsers().then((data)=>{
+        //         console.log(data,"pnp");
+        //         return data;
+        //     })
         // const allUsers = await graph.users();
         // return allUsers;
     }
@@ -224,14 +224,14 @@ return people;
         });
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json');
-        
+
         const body: string = JSON.stringify({
             'emailTo': emaildata.GDCEmailTo != null ? emaildata.GDCEmailTo : "",
             'emailCc': emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : "",
             'emailSubject': mailSubjectStr,
             'emailBody': mailBodyStr
         });
-         const httpClientOptions: IHttpClientOptions = {
+        const httpClientOptions: IHttpClientOptions = {
             body: body,
             headers: requestHeaders
         };
