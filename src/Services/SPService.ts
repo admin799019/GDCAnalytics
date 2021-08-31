@@ -112,31 +112,40 @@ return people;
         // return allUsers;
     }
 
-    public  sendEmail(emaildata, formData) {
+    public async sendEmail(emaildata, formData) {
         console.log(formData, "formdata in sp email service",emaildata);
-        let currentUser =  this._localPnPSetup.web.currentUser();
+      
         // emails.push(currentUser.Email);
-        console.log(currentUser,"current user");
+        //console.log(currentUser,"current user");
         var people:any=emaildata.GDCEmailTo;
         var to:any=[];
         people.forEach(email => {
           to.push(email.Title)
           
         });
+       // console.log(currentUser,"current usser");
         // await cc.forEach(element => {
         //     this._localPnPSetup.web.ensureUser(element);     
         
         // });
+        var cc:any=[];
+        let currentUser = await  this._localPnPSetup.web.currentUser()
+        await this._localPnPSetup.web.currentUser().then((data)=>{
+            console.log(data,"current user");
+            cc.push(data.Title);
+            formData.push({ "id": "CreatedBy", "value":data.Title });
+        });
         //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
        var people:any=emaildata.GDCEmailCc !=null ? emaildata.GDCEmailCc : [];
-     var cc:any=[];
-        formData.push({ "id": "CreatedBy", "value": currentUser });
+     
+        
     //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
     //   console.log(people)
      people.forEach(element => {
        console.log(element);
             cc.push(element.Title)       
       });
+    
       console.log(to,"to",cc,"cc")
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
