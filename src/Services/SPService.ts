@@ -163,7 +163,7 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#123;", "{");
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
-        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split(' ') : [];
+        var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
 
@@ -212,8 +212,10 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
+       console.log(mailBodyWords,"mbw")
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
+            console.log(word,"wordd")
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
                 let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0
