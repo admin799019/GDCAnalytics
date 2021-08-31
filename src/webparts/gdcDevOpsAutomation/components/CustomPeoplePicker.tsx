@@ -45,7 +45,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     pickerSuggestionsProps={suggestionProps}
                     className={'ms-PeoplePicker'}
                     key={'normal'}
-                    
+
                     selectionAriaLabel={'Selected contacts'}
                     removeButtonAriaLabel={'Remove'}
                     onInputChange={(i) => this.onInputChange(i)}
@@ -54,7 +54,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     itemLimit={1}
 
                     onChange={(si) => {
-                        si.length > 0 ? this.props.handlePeopleChange(si[0] , this.props.pickerFieldName)
+                        si.length > 0 ? this.props.handlePeopleChange(si[0], this.props.pickerFieldName)
                             : this.props.handlePeopleChange("", this.props.pickerFieldName);
                     }}
                 />
@@ -67,13 +67,10 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
     ): IPersonaProps[] | Promise<IPersonaProps[]> {
         var filteredPersonas: IPersonaProps[];
         if (filterText && filterText.length >= 3) {
-         this.props.spService.getOfficeUsers(filterText).then((data) => {
-                console.log("users", data);
+            this.props.spService.getOfficeUsers(filterText).then((data) => {
                 filteredPersonas = data.map((v, i) => {
-                    console.log(i,"i")
                     return { Key: i, text: v.Title, secondaryText: v.Email };
                 });
-                console.log(filteredPersonas,"fp")
                 return data;
             });
             return new Promise<IPersonaProps[]>((resolve, reject) => setTimeout(() => resolve(filteredPersonas), 2000));

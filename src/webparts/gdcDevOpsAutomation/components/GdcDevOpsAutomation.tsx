@@ -8,7 +8,6 @@ import { DatePicker, IDatePickerStyles, IDatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
-//import Logo from './GDC.svg';
 import ReactHtmlParser from 'react-html-parser';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
@@ -786,15 +785,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return value;
   }
 
-  //for rendering form eader and custom styles 
+  //for rendering form panel header 
   public onRenderNavigationContent(props, defaultRender) {
     return (
       <React.Fragment>
         <div className={this.state.panelHasScroll ? "gdcScrollPanelHeader" : "gdcPanelHeader"}>
-          {/* <Logo />  */}
-          <div id="gdclogoId"></div>
-          <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" />
-          <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div>
+          <img className={this.state.panelHasScroll ? "gdcLogoNormal" : "gdcLogoExpanded"} src="/sites/GEPAnalyticsTest/SiteAssets/Layer 1.svg" alt="GDC Intake Form" />
+          {/* <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div> */}
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses1" : "gdcPanelHeaderEllipses1"}></div>
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses2" : "gdcPanelHeaderEllipses2"}></div>
 
@@ -851,7 +848,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     );
   }
 
-  
+
   public render(): JSX.Element {
     return (
       <div className="gdcBorder ">
@@ -982,7 +979,6 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-
               <Dropdown
                 placeholder={ele.placeholder}
                 label={ele.label}
