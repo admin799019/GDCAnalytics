@@ -78,7 +78,7 @@ export class SPService implements ISPService {
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
         let people: any;
-        await sp.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+        await   this._localPnPSetup.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
             console.log(responseAfterFilterChanges, "rafc")
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;

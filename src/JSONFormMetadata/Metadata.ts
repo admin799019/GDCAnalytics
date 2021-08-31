@@ -2,9 +2,9 @@ export const metaData = [];
 
 const BusinessAnalyticsMetaData = [
     {
-        "id": "What area of Business Analytics & Insights is your request for?",
+        "id": "Area",
         "fieldType": "SingleSelectInput",
-        "label": "What area of Business Analytics & Insights is the request for?",
+        "label": "What area of Business Analytics & Insights is your request for?",
         "placeholder": "Select an option",
         "className": "gdcGridCol gdcGridCol6 gdcFieldSeperateRow",
         "options": [
@@ -33,8 +33,8 @@ const BusinessAnalyticsMetaData = [
                 "text": "Lead Flow Analytics"
             },
             {
-                "key": "Digital Cloud Acquisition Analytics",
-                "text": "Digital Cloud Acquisition Analytics"
+                "key": "Demand Response",
+                "text": "Demand Response"
             },
             {
                 "key": "Acct Based Marketing Analytics",
@@ -50,6 +50,7 @@ const BusinessAnalyticsMetaData = [
             }
         ],
         "value": "",
+        "helperText":"If unsure, select Business Analytics & Insights",
         "required": true,
         "errorMessage": "Please select area",
         "devopsName": "System.AreaPath",
@@ -58,7 +59,7 @@ const BusinessAnalyticsMetaData = [
                 "option": "Relationship Marketing Analytics",
                 "fields": [
                     {
-                        "id": "POD Category",
+                        "id": "PODCategory",
                         "fieldType": "SingleSelectInput",
                         "label": "POD Category",
                         "placeholder": "Select an option",
@@ -87,9 +88,9 @@ const BusinessAnalyticsMetaData = [
                         "devopsName": "Custom.RMPODCategory"
                     },
                     {
-                        "id": "POD Name",
+                        "id": "PODName",
                         "fieldType": "SingleSelectCascadingInput",
-                        "cascadingField": "POD Category",
+                        "cascadingField": "PODCategory",
                         "placeholder": "Select an option",
                         "label": "POD Name",
                         "options": [
@@ -201,7 +202,7 @@ const BusinessAnalyticsMetaData = [
         ]
     },
     {
-        "id": "Request Title",
+        "id": "RequestTitle",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "Enter your text here",
@@ -212,7 +213,7 @@ const BusinessAnalyticsMetaData = [
         "devopsName": "System.Title"
     },
     {
-        "id": "Please provide detailed requirements for this request.",
+        "id": "DetailedRequirements",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
@@ -224,7 +225,7 @@ const BusinessAnalyticsMetaData = [
         "devopsName": "System.Description"
     },
     {
-        "id": "What is the business impact if this work is not done?",
+        "id": "BusinessImpact",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What is the business impact if this work is not done?",
@@ -235,7 +236,7 @@ const BusinessAnalyticsMetaData = [
         "devopsName": "System.Description"
     },
     {
-        "id": "What business objective are you trying to achieve?",
+        "id": "BusinessObjective",
         "fieldType": "SingleLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What business objective are you trying to achieve?",
@@ -246,10 +247,10 @@ const BusinessAnalyticsMetaData = [
         "devopsName": "System.Description"
     },
     {
-        "id": "If this request is related to an existing report, please provide link to that report here",
+        "id": "Related Report Link(s)",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
-        "label": "If this request is related to an existing report, please provide link to that report here",
+        "label": "If this request is related to an existing report, please provide link to that report here.",
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": false,
@@ -258,19 +259,19 @@ const BusinessAnalyticsMetaData = [
         "devopsName": "Custom.ReportRequestType"
     },
     {
-        "id": "Need By Date",
+        "id": "NeedByDate",
         "fieldType": "DateInput",
         "label": "Need By Date",
         "className": "gdcGridCol gdcGridCol6",
         "placeholder": "Select the date",
         "value": "",
         "required": false,
-        "helperText": "Provide the Need By date for the request",
+        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
         "errorMessage": "Field is required",
         "devopsName": "Custom.NeedByDate"
     },
     {
-        "id": "Please attach any supporting artifacts here",
+        "id": "Attachments",
         "fieldType": "FileInput",
         "label": "Please attach any supporting artifacts here",
         "className": "gdcGridCol gdcGridCol12",
@@ -567,7 +568,7 @@ const DataServicesmetaData = [
 
 const MEI = [
     {
-        "id": "Request Title",
+        "id": "RequestTitle",
         "fieldType": "SingleLineTextInput",
         "label": "Request Title",
         "placeholder": "Enter your text here",
@@ -578,30 +579,31 @@ const MEI = [
         "devopsName": "System.Title"
     },
     {
-        "id": "Please provide detailed requirements for this request.",
+        "id": "DetailedRequirements",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
+		"defaultValue": "<p><strong>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer) </strong></p><p></br></p><p></br></p><p><strong>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently? </strong></p><p></br></p><p></br></p><p><strong>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from. </strong></p><p></br></p><p></br></p><p><strong>What is the reach or surface area of this request? (How many people might consume this information/report) </strong></p><p></br></p><p></br></p><p><strong>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly </strong></p><p></br></p><p></br></p>",
         "className": "gdcGridCol gdcGridCol12",
-
         "value": "",
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
     },
     {
-        "id": "What is the business impact if this work is not done?",
+        "id": "BusinessImpact",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What is the business impact if this work is not done?",
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
+
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
     },
     {
-        "id": "What business objective are you trying to achieve?",
+        "id": "BusinessObjective",
         "fieldType": "SingleLineTextInput",
         "placeholder": "Enter your text here",
         "label": "What business objective are you trying to achieve?",
@@ -612,10 +614,10 @@ const MEI = [
         "devopsName": "System.Description"
     },
     {
-        "id": "If this request is related to an existing report, please provide link to that report here",
+        "id": "Related Report Link(s)",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
-        "label": "If this request is related to an existing report, please provide link to that report here",
+        "label": "If this request is related to an existing report, please provide link to that report here.",
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": false,
@@ -624,7 +626,7 @@ const MEI = [
         "devopsName": "Custom.ReportRequestType"
     },
     {
-        "id": "Need By Date",
+        "id": "NeedByDate",
         "fieldType": "DateInput",
         "label": "Need By Date",
         "className": "gdcGridCol gdcGridCol6",
@@ -636,7 +638,7 @@ const MEI = [
         "devopsName": "Custom.NeedByDate"
     },
     {
-        "id": "Please attach any supporting artifacts here",
+        "id": "Attachments",
         "fieldType": "FileInput",
         "label": "Please attach any supporting artifacts here",
         "className": "gdcGridCol gdcGridCol12",

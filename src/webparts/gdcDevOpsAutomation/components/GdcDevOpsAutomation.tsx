@@ -924,7 +924,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
 
               <TextField
                 //label={ele.label}
@@ -950,7 +950,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
+            tooltipProps={{
+              onRenderContent: () => (ReactHtmlParser(ele.helperText))
+            }}
+            // content={props.name || props.title}
+            styles={hostStyles}
+          >
+            <Icon iconName="Info"
+              style={iconStyle}
+              // title={props.name || props.title}
+              className="gdctooltip"  />
+          </TooltipHost>:""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
                 // label={ele.label}
@@ -1112,7 +1123,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <div className="" >
             <div className={ele.className + " gdcColumnBlock"} >
-              <Label className="textfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}
                 {ele.helperText ?
                   <TooltipHost
                     tooltipProps={{
