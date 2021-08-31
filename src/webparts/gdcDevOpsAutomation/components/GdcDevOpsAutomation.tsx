@@ -924,7 +924,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
+            tooltipProps={{
+              onRenderContent: () => (ReactHtmlParser(ele.helperText))
+            }}
+            // content={props.name || props.title}
+            styles={hostStyles}
+          >
+            <Icon iconName="Info"
+              style={iconStyle}
+              // title={props.name || props.title}
+              className="gdctooltip"  />
+          </TooltipHost>:""}</Label>
 
               <TextField
                 //label={ele.label}
@@ -993,16 +1004,27 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-
+            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
+            tooltipProps={{
+              onRenderContent: () => (ReactHtmlParser(ele.helperText))
+            }}
+            // content={props.name || props.title}
+            styles={hostStyles}
+          >
+            <Icon iconName="Info"
+              style={iconStyle}
+              // title={props.name || props.title}
+              className="gdctooltip"  />
+          </TooltipHost>:""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
-                label={ele.label}
+                //label={ele.label}
                 ariaLabel="something"
                 multiSelect
                 //defaultSelectedKeys={['Priority 1', 'Priority 2']}
                 className="gdcDropDown"
                 title={ele.helperText}
-                onRenderLabel={onWrapDefaultLabelRenderer}
+                // onRenderLabel={onWrapDefaultLabelRenderer}
                 {...ele.showError == true ? { className: "gdcDropDown gdcrequiredreddropdown" } : { className: "gdcDropDown" }}
                 //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
                 defaultSelectedKeys={ele.selectedKeys}
