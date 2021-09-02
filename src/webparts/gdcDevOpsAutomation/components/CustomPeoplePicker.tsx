@@ -78,18 +78,38 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         );
     }
 
-    public onFilterChanged(
+    public  onFilterChanged(
         filterText: string
     ): IPersonaProps[] | Promise<IPersonaProps[]> {
         var filteredPersonas: IPersonaProps[];
         if (filterText && filterText.length >= 3) {
          this.props.spService.getOfficeUsers(filterText).then((data) => {
-                console.log("users", data);
-                filteredPersonas = data.map((v, i) => {
-                    console.log(i,"i")
-                    return { Key: i, text: v.Title, secondaryText: v.Email };
-                });
-                console.log(filteredPersonas,"fp")
+               var tempdata:any; 
+            console.log("users", data);
+            if(data.length==0)
+            {
+                this.props.spService.getOfficeUsersAlt(filterText).then((data) => { 
+                    console.log(data,"altofficecall")
+                    filteredPersonas = data.map((v, i) => {
+                        console.log(i,"i")
+                        return { Key: i, text: v.Title, secondaryText: v.Email };
+                    });
+                    console.log(filteredPersonas,"fp")
+                    } )
+            }
+         else{
+            filteredPersonas = data.map((v, i) => {
+                console.log(i,"i")
+                return { Key: i, text: v.Title, secondaryText: v.Email };
+            });
+            console.log(filteredPersonas,"fp")
+         }
+            
+                // filteredPersonas = data.map((v, i) => {
+                //     console.log(i,"i")
+                //     return { Key: i, text: v.Title, secondaryText: v.Email };
+                // });
+                // console.log(filteredPersonas,"fp")
                 return data;
             });
             return new Promise<IPersonaProps[]>((resolve, reject) => setTimeout(() => resolve(filteredPersonas), 2000));

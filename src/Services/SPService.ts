@@ -65,7 +65,26 @@ export class SPService implements ISPService {
         console.log(data[0])
         return data[0];
     }
+    public async getOfficeUsersAlt(name): Promise<any> {
+        const graphClient = await this._msGraphClientFactory.getClient();
 
+        let resultQuery = graphClient
+            .api('/users')
+            .version("v1.0")
+            .header("ConsistencyLevel", "eventual")
+            .count(true)
+            .top(10);
+
+        resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
+        let people: any;
+    
+        await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+            console.log(responseAfterFilterChanges, "rafcalt")
+            people = responseAfterFilterChanges;
+            //return await responseAfterFilterChanges;
+        });
+        return people;
+    }
     public async getOfficeUsers(name): Promise<any> {
         const graphClient = await this._msGraphClientFactory.getClient();
 
@@ -78,7 +97,8 @@ export class SPService implements ISPService {
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
         let people: any;
-        await   this._localPnPSetup.web.siteUsers.select("Email", "UserPrincipalName", "Title").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+    
+        await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',Title)`).get().then((responseAfterFilterChanges) => {
             console.log(responseAfterFilterChanges, "rafc")
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
