@@ -78,15 +78,34 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         );
     }
 
-    public onFilterChanged(
+    public  onFilterChanged(
         filterText: string
     ): IPersonaProps[] | Promise<IPersonaProps[]> {
         var filteredPersonas: IPersonaProps[];
         if (filterText && filterText.length >= 3) {
-            this.props.spService.getOfficeUsers(filterText).then((data) => {
-                filteredPersonas = data.map((v, i) => {
-                    return { Key: i, text: v.Title, secondaryText: v.Email };
-                });
+         this.props.spService.getOfficeUsers(filterText).then((data) => {
+               var tempdata:any; 
+        
+            if(data.length==0)
+            {
+                this.props.spService.getOfficeUsersAlt(filterText).then((data) => { 
+                   
+                    filteredPersonas = data.map((v, i) => {
+                        console.log(i,"i")
+                        return { Key: i, text: v.Title, secondaryText: v.Email };
+                    });
+                   
+                    } )
+            }
+         else{
+            filteredPersonas = data.map((v, i) => {
+              
+                return { Key: i, text: v.Title, secondaryText: v.Email };
+            });
+           
+         }
+            
+              
                 return data;
             });
             return new Promise<IPersonaProps[]>((resolve, reject) => setTimeout(() => resolve(filteredPersonas), 2000));
