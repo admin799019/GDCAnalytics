@@ -492,35 +492,6 @@ font-size:12px;
 /* logo end */
 
 
-
-
-
-
-.gdcOuterWidth12{
-  @include ms-sm12
-  } 
-  .gdcFieldWidth12{
-    @include ms-sm12;
-  }
-  .gdcFieldWidth6{
-    @include ms-sm6;
-    margin-top:25px;
-  }
-  .gdcOuterWidth6{
-    @include ms-sm6;
-    // display: inline-block;
-    // margin-right: 5%;  
-    } 
-   .gdcColumn6 {
-    min-height: 80px !important;
-   margin-top: 25px;
-    @include ms-Grid-col;
-    @include ms-sm6;
-    padding-left: 0px;
-    // width:41%;
-    float: none !important;
-    display: inline-block;
-  }
   .gdcerror {
     color: rgb(168,0,0);
   }
@@ -607,6 +578,7 @@ font-size:12px;
  // max-height: 300px;
 
 }
+
 .gdcScrollPanelHeader {
   background: #1D1D1D;
   color: white;
@@ -616,6 +588,7 @@ font-size:12px;
   //transition-duration: 5s;
 	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
+
 @keyframes reduce {
   from {
       height: 300px;
@@ -624,18 +597,21 @@ font-size:12px;
       height: 100px;
   }
 }
+
 .gdcPanelHeaderText {
   padding: 180px 0px 10px 20px;
   float: left;
   font-size: 40px;
   
 }
+
 .gdcScrollPanelHeaderText {
   padding: 56px 0px 10px 40px;
   float: left;
   font-size: 24px;
   
 }
+
 .gdcPanelCloseButton {
   padding: 25px;
   float: right;
@@ -658,6 +634,7 @@ font-size:12px;
     text-decoration: none !important;
   }
 }
+
 .gdcScrollPanelCloseButton{
   padding: 20px 25px 25px 25px;
   float: right;
@@ -675,7 +652,7 @@ font-size:12px;
       padding-right: 5px;
       vertical-align: middle;
     }
-}
+  }
 }
 
 .gdcPanel {
