@@ -61,7 +61,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     pickerSuggestionsProps={suggestionProps}
                     className={'ms-PeoplePicker'}
                     key={'normal'}
-                    
+
                     selectionAriaLabel={'Selected contacts'}
                     removeButtonAriaLabel={'Remove'}
                     onInputChange={(i) => this.onInputChange(i)}
@@ -70,7 +70,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     itemLimit={1}
 
                     onChange={(si) => {
-                        si.length > 0 ? this.props.handlePeopleChange(si[0] , this.props.pickerFieldName)
+                        si.length > 0 ? this.props.handlePeopleChange(si[0], this.props.pickerFieldName)
                             : this.props.handlePeopleChange("", this.props.pickerFieldName);
                     }}
                 />

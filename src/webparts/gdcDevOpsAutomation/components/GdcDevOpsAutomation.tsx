@@ -8,7 +8,6 @@ import { DatePicker, IDatePickerStyles, IDatePicker } from '@fluentui/react';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
-//import Logo from './GDC.svg';
 import ReactHtmlParser from 'react-html-parser';
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
@@ -786,15 +785,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return value;
   }
 
-  //for rendering form eader and custom styles 
+  //for rendering form panel header 
   public onRenderNavigationContent(props, defaultRender) {
     return (
       <React.Fragment>
         <div className={this.state.panelHasScroll ? "gdcScrollPanelHeader" : "gdcPanelHeader"}>
-          {/* <Logo />  */}
-          <div id="gdclogoId"></div>
-          <img src="https://m365x799019.sharepoint.com/:u:/s/GEPAnalyticsTest/ETT3OS8K81lHitMeA61_ElQBmlAHsdliUFoh5W5gnz7eZg?e=YrzMLQ" alt="My Happy SVG" />
-          <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div>
+          <img className={this.state.panelHasScroll ? "gdcLogoNormal" : "gdcLogoExpanded"} src="/sites/GEPAnalyticsTest/SiteAssets/Layer 1.svg" alt="GDC Intake Form" />
+          {/* <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div> */}
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses1" : "gdcPanelHeaderEllipses1"}></div>
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses2" : "gdcPanelHeaderEllipses2"}></div>
 
@@ -851,7 +848,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     );
   }
 
-  
+
   public render(): JSX.Element {
     return (
       <div className="gdcBorder ">
@@ -924,18 +921,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
-            tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(ele.helperText))
-            }}
-            // content={props.name || props.title}
-            styles={hostStyles}
-          >
-            <Icon iconName="Info"
-              style={iconStyle}
-              // title={props.name || props.title}
-              className="gdctooltip"  />
-          </TooltipHost>:""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
 
               <TextField
                 //label={ele.label}
@@ -961,18 +958,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
-            tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(ele.helperText))
-            }}
-            // content={props.name || props.title}
-            styles={hostStyles}
-          >
-            <Icon iconName="Info"
-              style={iconStyle}
-              // title={props.name || props.title}
-              className="gdctooltip"  />
-          </TooltipHost>:""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
                 // label={ele.label}
@@ -1004,18 +1001,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
-            tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(ele.helperText))
-            }}
-            // content={props.name || props.title}
-            styles={hostStyles}
-          >
-            <Icon iconName="Info"
-              style={iconStyle}
-              // title={props.name || props.title}
-              className="gdctooltip"  />
-          </TooltipHost>:""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
                 //label={ele.label}
@@ -1057,18 +1054,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
-            tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(ele.helperText))
-            }}
-            // content={props.name || props.title}
-            styles={hostStyles}
-          >
-            <Icon iconName="Info"
-              style={iconStyle}
-              // title={props.name || props.title}
-              className="gdctooltip"  />
-          </TooltipHost>:""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
               <Dropdown
                 placeholder={ele.placeholder}
                 //label={ele.label}
@@ -1139,18 +1136,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className}>
-            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ ele.helperText  ? <TooltipHost
-            tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(ele.helperText))
-            }}
-            // content={props.name || props.title}
-            styles={hostStyles}
-          >
-            <Icon iconName="Info"
-              style={iconStyle}
-              // title={props.name || props.title}
-              className="gdctooltip"  />
-          </TooltipHost>:""}</Label>
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
               <Toggle
                 {...ele.checked ? { className: "gdcSwitchInput gdcToggleBlack" } : { className: "gdcSwitchInput" }}
                 //className="gdcSwitchInput"
@@ -1206,7 +1203,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className={ele.className}>
             <div className="gdcpeoplepicker">
               <CustomPeoplePicker
-               helperText={ele.helperText} required={ele.required} spService={this.props.spService} pickerFieldName={ele.id} handlePeopleChange={this.handleChange} />
+                helperText={ele.helperText} required={ele.required} spService={this.props.spService} pickerFieldName={ele.id} handlePeopleChange={this.handleChange} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>

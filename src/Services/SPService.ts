@@ -56,13 +56,8 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
-        // var data1 = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).getAll();
-        // console.log(data1[0]);
         
         var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
-      
-        //data1[0].persontomaill=data[0].persontoemail;
-        console.log(data[0])
         return data[0];
     }
     public async getOfficeUsersAlt(name): Promise<any> {
@@ -104,69 +99,26 @@ export class SPService implements ISPService {
             //return await responseAfterFilterChanges;
         });
         return people;
-        //         //return await resultQuery.get();
-        //       sp.web.siteUsers().then((data)=>{
-        //         console.log(data) 
-        //     //data.filter(x => x.LoginName.lastIndexOf(name,17)=== 0)
-        //     let people:any;
-        //     data.forEach(element => {
-        //       if(element.LoginName.lastIndexOf(name,17)=== 0)  
-        //       {
-        //           console.log("insideif");
-        //           people.push({displayName:element.Title,mail:element.Email})
-        //       }
-        //     });
-        //    //console.log(data[0].LoginName.lastIndexOf(name,17)=== 0)
-        //     console.log(people,"data")
-        //           return(people);
-
-        //  await console.log(resultQuery.get(),"result query")
-        //     //const q = SearchQueryBuilder(`${name}*`)
-        //     //sp.profiles
-        //     //console.log(q,"q")
-        //     sp.web.siteUsers().then((data)=>{
-        //         console.log(data,"pnp");
-        //         return data;
-        //     })
-        // const allUsers = await graph.users();
-        // return allUsers;
     }
 
     public async sendEmail(emaildata, formData) {
-        console.log(formData, "formdata in sp email service",emaildata);
-      
-        // emails.push(currentUser.Email);
-        //console.log(currentUser,"current user");
-        var people:any=emaildata.GDCEmailTo;
-        var to:any=[];
+        var people: any = emaildata.GDCEmailTo;
+        var to: any = [];
         people.forEach(email => {
-          to.push(email.Title)
-          
+            to.push(email.Title);
         });
-       // console.log(currentUser,"current usser");
-        // await cc.forEach(element => {
-        //     this._localPnPSetup.web.ensureUser(element);     
-        
-        // });
-        var cc:any=[];
-        let currentUser = await  this._localPnPSetup.web.currentUser()
-        await this._localPnPSetup.web.currentUser().then((data)=>{
-            console.log(data,"current user");
+        var cc: any = [];
+        // let currentUser = await  this._localPnPSetup.web.currentUser()
+        await this._localPnPSetup.web.currentUser().then((data) => {
             cc.push(data.Title);
-            formData.push({ "id": "CreatedBy", "value":data.Title });
+            formData.push({ "id": "CreatedBy", "value": data.Title });
         });
-        //var cc = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc.split(';') : [];
-       var people:any=emaildata.GDCEmailCc !=null ? emaildata.GDCEmailCc : [];
-     
-        
-    //   var people=emaildata.persontomailId !=null?emaildata.persontomailId:[];
-    //   console.log(people)
-     people.forEach(element => {
-       console.log(element);
-            cc.push(element.Title)       
-      });
-    
-      console.log(to,"to",cc,"cc")
+        var peopleCc: any = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : [];
+
+        peopleCc.forEach(element => {
+            cc.push(element.Title);
+        });
+
         let mailBodyStr = emaildata.GDCEmailBody;
         let mailSubjectStr = emaildata.GDCEmailSubject;
 
@@ -193,16 +145,14 @@ export class SPService implements ISPService {
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });
-        
-      
+
         var emailProps: IEmailProperties = {
-            //Body: '<br></br>An intake request has been submitted to the<b> '+area+'</b> backlog by <b>'+currentUser.Title+'.</b> Use the link below to view the full user story and begin triage and prioritization.<br></br> <ul><li><a href= "' + url + '">link to User Story</a></li><li><b>Request Title : </b>'+title+'</li><li><b>Need By Date : </b>'+date+'</li>',
             Body: mailBodyStr,
             Subject: mailSubjectStr,
             To: to,
             CC: cc
         };
-         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
+        this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
         }).catch((i) => {
             console.log("email not sent", i);
@@ -232,10 +182,8 @@ export class SPService implements ISPService {
         mailBodyStr = mailBodyStr.replaceAll("&#125;", "}");
 
         var mailBodyWords = mailBodyStr !== null || mailBodyStr != undefined ? mailBodyStr.split('&#160;').join(' ').split('<').join(' <').split(' ') : [];
-       console.log(mailBodyWords,"mbw")
         mailBodyWords.map(w => {
             const word = w.match("{{(.*)}}");
-            console.log(word,"wordd")
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
                 let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0

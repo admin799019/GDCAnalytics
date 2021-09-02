@@ -475,11 +475,19 @@ font-size:12px;
 
 /* logo */
 
-#gdclogoId {
-  background-image: url(GDC.svg);
+.gdcLogoExpanded {
+  padding: 130px 0px 10px 30px;
+  width: 470px;
+  height: 130px;
+  float: left;
 }
 
-
+.gdcLogoNormal {
+  padding: 0px 0px 0px 30px;
+  width: 300px;
+  height: 90px;
+  float: left;
+}
 
 /* logo end */
 

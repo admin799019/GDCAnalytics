@@ -31,14 +31,6 @@ export class DevOpsService implements IDevOpsService {
         });
     }
     public addUserStory(data): Promise<any> {
-        // const body: string = JSON.stringify([
-        //     {
-        //         "op": "add",
-        //         "path": "/fields/System.Title",
-        //         "from": null,
-        //         "value": data
-        //     }
-        // ]);
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
@@ -52,11 +44,10 @@ export class DevOpsService implements IDevOpsService {
             this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
                 client.post(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
-                        console.log(["Try1", response]);
                         return response.json();
                     })
                     .then((datar: any): void => {
-                        console.log(["Try1", datar]);
+                        console.log(["Add User Story response", datar]);
                         resolve(datar);
                     });
             });
@@ -65,7 +56,6 @@ export class DevOpsService implements IDevOpsService {
 
     public addAttachment(data, id): any {
         const body: string = JSON.stringify(data);
-        console.log(body);
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json-patch+json');
         //requestHeaders.append('method', 'PATCH');
@@ -81,7 +71,7 @@ export class DevOpsService implements IDevOpsService {
                     return response.json();
                 })
                 .then((projects: any): void => {
-                    console.log(["Relate Attachment Try", projects]);
+                    console.log(["Relate Attachment response", projects]);
                 });
         });
     }
@@ -104,7 +94,7 @@ export class DevOpsService implements IDevOpsService {
                         return response.json();
 
                     }).then((res: any): void => {
-                        console.log(["upload attchment"], res.url);
+                        console.log(["upload attchment response"], res.url);
                         resolve(res.url);
                         // return promise;
                     });
@@ -128,7 +118,7 @@ export class DevOpsService implements IDevOpsService {
                         return response.json();
                     })
                     .then((teams: any): void => {
-                        console.log(["get Team details Try", teams]);
+                        console.log(["get Team details response", teams]);
                         resolve(teams);
                     });
             });

@@ -18,10 +18,11 @@ const Test = {
 
 const Prod = {
     OrganizationName: "Veena0200",
-    OrganizationUrl: "https://dev.azure.com/Veena0200",
-    ProjectName: "Teams App",
-    ProjectUrl: "https://dev.azure.com/Veena0200/Teams%20App",
-    FlowUrl: ""
+    OrganizationUrl: "https://dev.azure.com/OneGDCAnalyticsDeploymentTest",
+    ProjectName: "Operational Framework",
+    ProjectUrl: "https://dev.azure.com/OneGDCAnalyticsDeploymentTest/Operational%20Framework",
+    FlowUrl: "",
+    DevOpsID:"499b84ac-1321-427f-aa17-267ca6975798"
 };
 
 export const OrganizationConfig = Test;
