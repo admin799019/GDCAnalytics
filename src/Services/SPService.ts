@@ -74,7 +74,7 @@ export class SPService implements ISPService {
         let people: any;
     
         await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
-            console.log(responseAfterFilterChanges, "rafcalt")
+          
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
         });
@@ -94,7 +94,7 @@ export class SPService implements ISPService {
         let people: any;
     
         await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',Title)`).get().then((responseAfterFilterChanges) => {
-            console.log(responseAfterFilterChanges, "rafc")
+          
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
         });
