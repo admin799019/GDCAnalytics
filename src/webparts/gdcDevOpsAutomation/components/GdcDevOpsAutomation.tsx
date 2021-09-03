@@ -33,38 +33,7 @@ import { elementContains } from 'office-ui-fabric-react';
 import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
 import { SPService } from '../../../Services/SPService';
 import { containsInvalidFileFolderChars } from '@pnp/sp';
-
-interface MetaDataType {
-  id: string;
-  fieldType: string;
-  label: string;
-  placeholder: string;
-  className: string;
-  helperText: any;
-  options: any;
-  value: string;
-  personName: string;
-  required: boolean;
-  selectedKeys: string[];
-  checked: boolean;
-  errorMessage: string;
-  devopsName: string;
-  showError: boolean;
-  subFields: Array<subFieldsObjectType>;
-  cascadingField: string;
-  files: any;
-  defaultValue: string;
-  hasDependency: boolean;
-  dependentField: string;
-  dependentFieldValue: any;
-  textToAppend: string;
-}
-
-interface subFieldsObjectType {
-  option: string;
-  fields: Array<MetaDataType>;
-  active: boolean;
-}
+import { MetaDataType } from "./JSONInterface";
 
 const iconStyle =
 {
@@ -938,7 +907,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 //label={ele.label}
                 autoComplete="off"
                 onChange={(e, value) => this.handleChange(value, ele.id)}
-                {...ele.showError == true ? { className: "gdcTextField gdcrequiredreddropdown" } : { className: "gdcTextField" }}
+                {...ele.showError == true ? { className: "gdcTextField gdcrequiredred" } : { className: "gdcTextField" }}
                 placeholder={ele.placeholder}
                 value={ele.value}
                 name={ele.helperText}
@@ -976,7 +945,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 className="gdcDropDown"
                 title={ele.helperText}
                 //onRenderLabel={onWrapDefaultLabelRenderer}
-                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredreddropdown" } : { className: "gdcDropDown" }}
+                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredred" } : { className: "gdcDropDown" }}
                 defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
 
                 options={ele.options}
@@ -1022,7 +991,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 className="gdcDropDown"
                 title={ele.helperText}
                 // onRenderLabel={onWrapDefaultLabelRenderer}
-                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredreddropdown" } : { className: "gdcDropDown" }}
+                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredred" } : { className: "gdcDropDown" }}
                 //defaultSelectedKey={ele.options.filter(e => e.key == ele.value).length > 0 ? ele.options.filter(e => e.key == ele.value)[0].key : -1}
                 defaultSelectedKeys={ele.selectedKeys}
                 selectedKeys={ele.selectedKeys}
@@ -1070,7 +1039,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 placeholder={ele.placeholder}
                 //label={ele.label}
                 options={options}
-                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredreddropdown" } : { className: "gdcDropDown" }}
+                {...ele.showError == true ? { className: "gdcDropDown gdcrequiredred" } : { className: "gdcDropDown" }}
                 //className="gdcDropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.id)}
                 required={ele.required}
@@ -1121,7 +1090,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               styles={{
                 icon: { display: 'none' }
               }}
-              {...ele.showError == true ? { className: "gdcrequiredreddropdown" } : { className: "" }}
+              {...ele.showError == true ? { className: "gdcrequiredred" } : { className: "" }}
               onSelectDate={(e) => this.handleChange(e.toLocaleDateString(), ele.id)}
               textField={{
                 onRenderSuffix: true ? () => <div><Icon iconName="Cancel" ariaLabel="clear" onClick={(e) => this.handleChange("", ele.id)} /></div> : null,
@@ -1203,7 +1172,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           <div className={ele.className}>
             <div className="gdcpeoplepicker">
               <CustomPeoplePicker
-                helperText={ele.helperText} required={ele.required} spService={this.props.spService} pickerFieldName={ele.id} handlePeopleChange={this.handleChange} />
+                spService={this.props.spService} pickerField={ele} handlePeopleChange={this.handleChange} />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
             </div>
           </div>
