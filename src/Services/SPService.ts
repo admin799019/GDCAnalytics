@@ -56,7 +56,7 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
-        
+
         var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
         return data[0];
     }
@@ -72,9 +72,9 @@ export class SPService implements ISPService {
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
         let people: any;
-    
-        await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
-          
+
+        await this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
+
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
         });
@@ -92,9 +92,9 @@ export class SPService implements ISPService {
 
         resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
         let people: any;
-    
-        await   this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',Title)`).get().then((responseAfterFilterChanges) => {
-          
+
+        await this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',Title)`).get().then((responseAfterFilterChanges) => {
+
             people = responseAfterFilterChanges;
             //return await responseAfterFilterChanges;
         });
@@ -127,7 +127,8 @@ export class SPService implements ISPService {
             const word = w.match("{{(.*)}}");
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 && formData.filter(d => d.id == wordWithoutBraces)[0].value != null
+                    ? formData.filter(d => d.id == wordWithoutBraces)[0].value : "";
                 mailSubjectStr = mailSubjectStr.replace(`${word[0]}`, data);
             }
         });
@@ -141,7 +142,9 @@ export class SPService implements ISPService {
 
             if (word != null) {
                 let wordWithoutBraces = word[0].slice(2, word[0].length - 2);
-                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "") : "";
+                let data = formData.filter(d => d.id == wordWithoutBraces) != null && formData.filter(d => d.id == wordWithoutBraces).length > 0 && formData.filter(d => d.id == wordWithoutBraces)[0].value != null
+                    ? (formData.filter(d => d.id == wordWithoutBraces)[0].value || formData.filter(d => d.id == wordWithoutBraces)[0].value.url as string || "")
+                    : "";
                 mailBodyStr = mailBodyStr.replace(`${word[0]}`, data);
             }
         });

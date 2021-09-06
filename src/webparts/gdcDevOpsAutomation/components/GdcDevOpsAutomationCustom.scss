@@ -7,29 +7,33 @@
     border-right: 1px solid rgb(168,0,0) !important;
     border-top: 1px solid rgb(168,0,0) !important;
   }
-.gdctooltip{
-  cursor:pointer;
-  margin-left: 2px;
-  .rootHovered {
-    background-color: black
+  .gdctooltip{
+    cursor:pointer;
+    margin-left: 2px;
+    .rootHovered {
+      background-color: black
+    }
   }
+  .ql-container.ql-snow {
+    border-top: 0;
+    border-left: 1px solid rgb(168,0,0) !important;
+    border-right: 1px solid rgb(168,0,0) !important;
+    border-bottom: 1px solid rgb(168,0,0) !important;
+  } 
 }
-.ql-container.ql-snow {
-  border-top: 0;
-  border-left: 1px solid rgb(168,0,0) !important;
-  border-right: 1px solid rgb(168,0,0) !important;
-  border-bottom: 1px solid rgb(168,0,0) !important;
-}
- 
-}
-.gdcrequiredreddropdown{
+
+.gdcrequiredred{
   .ms-Dropdown-title{
   border:1px solid rgb(168,0,0)  !important;
   }
   .ms-TextField-fieldGroup{
     border:1px solid rgb(168,0,0)  !important;
   }
+  .ms-BasePicker-text{
+    border:1px solid rgb(168,0,0)  !important;
+  }
 }
+
 /* react quill toolbar */
 .quill > .ql-container > .ql-editor.ql-blank::before{
   font-style: normal;
@@ -48,27 +52,24 @@
 }
 
 .ql-editor {
-    min-height: 150px;
-  }
-  .ql-editor.ql-blank:before {
-    left:8px;
-    color:black;
-  }
-  .ql-container.ql-snow {
-    border-bottom: 1px solid #838383;
-    border-left: 1px solid #838383;
-    border-right:1px solid #838383;
-  //  border-top : 1px !important;
-  //margin: 15px 0px;    
-  }
+  min-height: 150px;
+}
+.ql-editor.ql-blank:before {
+  left:8px;
+  color:black;
+}
+.ql-container.ql-snow {
+  border-bottom: 1px solid #838383;
+  border-left: 1px solid #838383;
+  border-right:1px solid #838383;
+}
 
-  .ql-toolbar.ql-snow {
-    border: 1px solid #838383 !important;
-   
-    .ql-clean{
-      display: none;
-    }
-    //display: none;
+.ql-toolbar.ql-snow {
+  border: 1px solid #838383 !important;
+  
+  .ql-clean{
+    display: none;
+  }
 }
 
 /* react quill toolbar end */
@@ -87,12 +88,12 @@
 
 .gdcGridCol6 {
   @include ms-sm6;
-  min-height: 97px;
+  min-height: 110px;
 }
 
 .gdcGridCol12 {
   @include ms-sm12;
-  min-height: 97px;
+  min-height: 110px;
 }
 
 /* Grid end */
@@ -149,8 +150,8 @@
   //pointer-events:none;
 }
 .gdctextfieldlabel:hover{
-overflow: visible; 
-white-space: nowrap;
+  overflow: visible; 
+  white-space: nowrap;
 }
 
 /* Text Field End */
@@ -236,35 +237,37 @@ white-space: nowrap;
 /* Switch Input end */
 
 .gdcMessage {
-.ms-MessageBar{
-  position: fixed;
-    top: 60px;
-    width: 370px;
-    right: 5px;
-
+  .ms-MessageBar{
+    position: fixed;
+      top: 60px;
+      width: 370px;
+      right: 5px;
+  }
 }
-}
-
-
 
 .gdcpeoplepicker{
   margin-top:8px;
   .ms-BasePicker-text{
-height:40px;
-align-content: center;
+    height:40px;
+    align-content: center;
   }
   .ms-PeoplePicker{
     margin-top:5px;
   }
   .ms-BasePicker-input{
-  font-weight: 500;
-}
+    font-weight: 400;
+  }
+  .ms-BasePicker-input::placeholder{
+    color: black;
+  }
 }
 
 /* Date Input */
+
 .gdcDateInput::placeholder{
   color: black;
 }
+
 .gdcDateInput {
   display: inline-block;
   .ms-Label{
@@ -295,7 +298,7 @@ align-content: center;
   .ms-TextField-field {
     color: black;
     .statusMessage{
-margin-top:0px;
+      margin-top:0px;
     }
   }
   .ms-TextField-field::placeholder {
@@ -329,6 +332,7 @@ margin-top:0px;
 input[type="file"] {
   display: none;
 }
+
 .gdccustom-file-upload {
   border: none;
   cursor: pointer;
@@ -342,9 +346,11 @@ input[type="file"] {
   font-weight:500;
   margin-bottom: 10px;
 }
+
 .gdcattachmentNames{
-font-size:12px;
+  font-size:12px;
 }
+
 .gdcattachmentNames > .gdcAttachmentsname{
   font-size:12px;
   display: block;
@@ -393,50 +399,46 @@ font-size:12px;
   color:white;
   border-color: white;
 }
-// .ms-Button:hover{
-//   background-color: #17787b;
-//   color:white;
-//   border-color: white;
-// }
+
 .gdcquestionHeader{
   font-weight: 500;
 }
-  .gdcAddButton,.gdcAddButton:hover {
-    //float: right;
-   margin-top:20px;
-      // Our button
-      text-decoration: none;
-      height: 32px;
-  
-      // Primary Button
-      min-width: 80px;
-      background-color: #1D1D1D;
-      border-color: $ms-color-themePrimary;
-      color:white;
-  
-      // Basic Button
-      outline: transparent;
-      position: relative;
-      font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-      -webkit-font-smoothing: antialiased;
-      font-size: $ms-font-size-m;
-      font-weight: $ms-font-weight-regular;
-      border-width: 0;
-      text-align: center;
-      cursor: pointer;
-      display: inline-block;
-      padding: 0 8px;
-  
-      .label {
-        font-weight: $ms-font-weight-semibold;
-        font-size: $ms-font-size-m;
-        height: 32px;
-        line-height: 32px;
-        margin: 0 4px;
-        vertical-align: top;
-        display: inline-block;
-      }
+.gdcAddButton,.gdcAddButton:hover {
+  //float: right;
+  margin-top:20px;
+  // Our button
+  text-decoration: none;
+  height: 32px;
+
+  // Primary Button
+  min-width: 80px;
+  background-color: #1D1D1D;
+  border-color: $ms-color-themePrimary;
+  color:white;
+
+  // Basic Button
+  outline: transparent;
+  position: relative;
+  font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: $ms-font-size-m;
+  font-weight: $ms-font-weight-regular;
+  border-width: 0;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 8px;
+
+  .label {
+    font-weight: $ms-font-weight-semibold;
+    font-size: $ms-font-size-m;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 4px;
+    vertical-align: top;
+    display: inline-block;
   }
+}
 
   .gdcAddButton:disabled {
     background-color: rgba(8, 8, 8, 0.3);
@@ -492,64 +494,35 @@ font-size:12px;
 /* logo end */
 
 
-
-
-
-
-.gdcOuterWidth12{
-  @include ms-sm12
-  } 
-  .gdcFieldWidth12{
-    @include ms-sm12;
-  }
-  .gdcFieldWidth6{
-    @include ms-sm6;
-    margin-top:25px;
-  }
-  .gdcOuterWidth6{
-    @include ms-sm6;
-    // display: inline-block;
-    // margin-right: 5%;  
-    } 
-   .gdcColumn6 {
-    min-height: 80px !important;
-   margin-top: 25px;
-    @include ms-Grid-col;
-    @include ms-sm6;
-    padding-left: 0px;
-    // width:41%;
-    float: none !important;
-    display: inline-block;
-  }
-  .gdcerror {
-    color: rgb(168,0,0);
-  }
+.gdcerror {
+  color: rgb(168,0,0);
+}
 .gdcrequireddiv{
   height:20px;
 }
-  .gdcStar {
-    color: rgb(168,0,0);
-  }
+.gdcStar {
+  color: rgb(168,0,0);
+}
 
-  .gdcPaddingBottom15 {
-    padding-bottom: 15px;
-  }
+.gdcPaddingBottom15 {
+  padding-bottom: 15px;
+}
 
-  .gdcDisplayNone {
-    display: none;
-  }
+.gdcDisplayNone {
+  display: none;
+}
 
-  .gdcBorder {
-    font-family: Segoe UI;
-  }
+.gdcBorder {
+  font-family: Segoe UI;
+}
 
-  .gdcMessage {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 99;
-    padding: 5px;
-  }
+.gdcMessage {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  padding: 5px;
+}
   
 
 /* GDC Panel */
@@ -607,6 +580,7 @@ font-size:12px;
  // max-height: 300px;
 
 }
+
 .gdcScrollPanelHeader {
   background: #1D1D1D;
   color: white;
@@ -616,6 +590,7 @@ font-size:12px;
   //transition-duration: 5s;
 	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
+
 @keyframes reduce {
   from {
       height: 300px;
@@ -624,18 +599,21 @@ font-size:12px;
       height: 100px;
   }
 }
+
 .gdcPanelHeaderText {
   padding: 180px 0px 10px 20px;
   float: left;
   font-size: 40px;
   
 }
+
 .gdcScrollPanelHeaderText {
   padding: 56px 0px 10px 40px;
   float: left;
   font-size: 24px;
   
 }
+
 .gdcPanelCloseButton {
   padding: 25px;
   float: right;
@@ -658,6 +636,7 @@ font-size:12px;
     text-decoration: none !important;
   }
 }
+
 .gdcScrollPanelCloseButton{
   padding: 20px 25px 25px 25px;
   float: right;
@@ -675,7 +654,7 @@ font-size:12px;
       padding-right: 5px;
       vertical-align: middle;
     }
-}
+  }
 }
 
 .gdcPanel {
