@@ -86,13 +86,10 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         var filteredPersonas: IPersonaProps[];
         if (filterText && filterText.length >= 3) {
             this.props.spService.getOfficeUsers(filterText).then((data) => {
-                var tempdata: any;
-
                 if (data.length == 0) {
-                    this.props.spService.getOfficeUsersAlt(filterText).then((data) => {
-
-                        filteredPersonas = data.map((v, i) => {
-                            console.log(i, "i")
+                    this.props.spService.getOfficeUsersAlt(filterText).then((dataFromEmail) => {
+                        filteredPersonas = dataFromEmail.map((v, i) => {
+                            console.log(i, "i");
                             return { Key: i, text: v.Title, secondaryText: v.Email };
                         });
                     });

@@ -759,7 +759,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     return (
       <React.Fragment>
         <div className={this.state.panelHasScroll ? "gdcScrollPanelHeader" : "gdcPanelHeader"}>
-          <img className={this.state.panelHasScroll ? "gdcLogoNormal" : "gdcLogoExpanded"} src="/sites/GEPAnalyticsTest/SiteAssets/Layer 1.svg" alt="GDC Intake Form" />
+          <img className={this.state.panelHasScroll ? "gdcLogoNormal" : "gdcLogoExpanded"} src={OrganizationConfig.SharePointSiteUrl + "/SiteAssets/GDCIntakeForm/GDCIntakeFormLogo.svg"} alt="GDC Intake Form" />
           {/* <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderText" : "gdcPanelHeaderText"}> GDC Intake Form </div> */}
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses1" : "gdcPanelHeaderEllipses1"}></div>
           <div className={this.state.panelHasScroll ? "gdcScrollPanelHeaderEllipses2" : "gdcPanelHeaderEllipses2"}></div>

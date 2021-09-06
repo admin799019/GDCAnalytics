@@ -29,8 +29,8 @@ const BusinessAnalyticsMetaData = [
                 "text": "Events and Skilling Analytics"
             },
             {
-                "key": "Lead Flow Analytics",
-                "text": "Lead Flow Analytics"
+                "key": "Lead Funnel Health",
+                "text": "Lead Funnel Health"
             },
             {
                 "key": "Demand Response",
@@ -50,7 +50,7 @@ const BusinessAnalyticsMetaData = [
             }
         ],
         "value": "",
-        "helperText":"If unsure, select Business Analytics & Insights",
+        "helperText": "If unsure, select Business Analytics & Insights",
         "required": true,
         "errorMessage": "Please select area",
         "devopsName": "System.AreaPath",
@@ -244,7 +244,8 @@ const BusinessAnalyticsMetaData = [
         "value": "",
         "required": true,
         "errorMessage": "Field is required",
-        "devopsName": "System.Description"
+        "devopsName": "System.Description",
+        "helperText": "Add business objective test"
     },
     {
         "id": "Related Report Link(s)",
@@ -266,7 +267,7 @@ const BusinessAnalyticsMetaData = [
         "placeholder": "Select the date",
         "value": "",
         "required": false,
-        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
+        "helperText": "This date will be used to help us prioritize your request and will not be automatically committed to",
         "errorMessage": "Field is required",
         "devopsName": "Custom.NeedByDate"
     },
@@ -286,7 +287,7 @@ const BusinessAnalyticsMetaData = [
 
 const DataServicesmetaData = [
     {
-        "id": "What type of request is this?",
+        "id": "RequestType",
         "fieldType": "RadioButtonInput",
         "label": "What type of request is this?",
         "placeholder": "Select an option",
@@ -305,7 +306,7 @@ const DataServicesmetaData = [
                 "option": "Data Platform Development Request",
                 "fields": [
                     {
-                        "id": "Request Title",
+                        "id": "RequestTitle",
                         "fieldType": "SingleLineTextInput",
                         "label": "Request Title",
                         "placeholder": "Enter your text here",
@@ -329,7 +330,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Problem Statement",
+                        "id": "ProblemStatement",
                         "fieldType": "MultiLineTextInput",
                         "placeholder": "Enter your text here",
                         "label": "Problem Statement",
@@ -341,7 +342,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Business Value",
+                        "id": "BusinessValue",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Value",
                         "placeholder": "Enter your text here",
@@ -353,7 +354,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Use Cases",
+                        "id": "UseCases",
                         "fieldType": "MultiLineTextInput",
                         "label": "Use Cases",
                         "placeholder": "Enter your text here",
@@ -365,7 +366,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Desired Output",
+                        "id": "DesiredOutput",
                         "fieldType": "MultiLineTextInput",
                         "label": "Desired Output",
                         "placeholder": "Enter your text here",
@@ -377,7 +378,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Business Rules",
+                        "id": "BusinessRules",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Rules",
                         "placeholder": "Enter your text here",
@@ -389,7 +390,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Success Criteria",
+                        "id": "SuccessCriteria",
                         "fieldType": "MultiLineTextInput",
                         "label": "Success Criteria",
                         "placeholder": "Enter your text here",
@@ -398,10 +399,10 @@ const DataServicesmetaData = [
                         "value": "",
                         "required": false,
                         "errorMessage": "Field is required",
-                        "devopsName": "System.Description"
+                        "devopsName": "Microsoft.VSTS.Common.AcceptanceCriteria"
                     },
                     {
-                        "id": "Output Frequency",
+                        "id": "OutputFrequency",
                         "fieldType": "MultiLineTextInput",
                         "label": "Output Frequency",
                         "placeholder": "Enter your text here",
@@ -413,7 +414,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Data Definition",
+                        "id": "DataDefinition",
                         "fieldType": "MultiLineTextInput",
                         "label": "Data Definition",
                         "placeholder": "Enter your text here",
@@ -425,7 +426,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Request Maturity",
+                        "id": "RequestMaturity",
                         "fieldType": "MultiLineTextInput",
                         "label": "Request Maturity",
                         "placeholder": "Enter your text here",
@@ -437,11 +438,11 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Need By Date",
+                        "id": "NeedByDate",
                         "fieldType": "DateInput",
                         "label": "Need By Date",
                         "placeholder": "Select the date",
-                        "helperText": "Provide Need By date",
+                        "helperText": "This date will be used to help us prioritize your request and will not be automatically committed to",
                         "className": "gdcGridCol gdcGridCol6",
                         "value": "",
                         "required": false,
@@ -449,7 +450,7 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.NeedByDate"
                     },
                     {
-                        "id": "Please provide attachments or screenshots to support your request",
+                        "id": "Attachments",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -467,7 +468,7 @@ const DataServicesmetaData = [
                 "option": "Support Needed",
                 "fields": [
                     {
-                        "id": "Is this request urgent?",
+                        "id": "RequestUrgent",
                         "fieldType": "SwitchInput",
                         "label": "Is this request urgent?",
                         "placeholder": "",
@@ -484,7 +485,7 @@ const DataServicesmetaData = [
                         "devopsName": "Custom.IsThisRequestUrgent"
                     },
                     {
-                        "id": "Issue Title",
+                        "id": "RequestTitle",
                         "fieldType": "SingleLineTextInput",
                         "label": "Issue Title",
                         "placeholder": "Enter your text here",
@@ -494,13 +495,13 @@ const DataServicesmetaData = [
                         "required": true,
                         "errorMessage": "Field is required",
                         "hasDependency": true,
-                        "dependentField": "Is this request urgent?",
+                        "dependentField": "RequestUrgent",
                         "dependentFieldValue": true,
                         "textToAppend": "URGENT | ",
                         "devopsName": "System.Title"
                     },
                     {
-                        "id": "Description of Issue",
+                        "id": "DescriptionOfIssue",
                         "fieldType": "MultiLineTextInput",
                         "label": "Description of Issue",
                         "placeholder": "Enter your text here",
@@ -512,7 +513,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Business Impact",
+                        "id": "BusinessImpact",
                         "fieldType": "MultiLineTextInput",
                         "label": "Business Impact",
                         "placeholder": "Enter your text here",
@@ -524,7 +525,7 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Expected Results",
+                        "id": "ExpectedResults",
                         "fieldType": "MultiLineTextInput",
                         "label": "Expected Results",
                         "placeholder": "Enter your text here",
@@ -536,19 +537,19 @@ const DataServicesmetaData = [
                         "devopsName": "System.Description"
                     },
                     {
-                        "id": "Need By Date",
+                        "id": "NeedByDate",
                         "fieldType": "DateInput",
                         "label": "Need By Date",
                         "className": "gdcGridCol gdcGridCol6",
                         "placeholder": "Select the date",
                         "value": "",
                         "required": false,
-                        "helperText": "Provide Need By date",
+                        "helperText": "This date will be used to help us prioritize your request and will not be automatically committed to",
                         "errorMessage": "Field is required",
                         "devopsName": "Custom.NeedByDate"
                     },
                     {
-                        "id": "Please provide attachments or screenshots to support your request",
+                        "id": "Attachments",
                         "fieldType": "FileInput",
                         "label": "Please provide attachments or screenshots to support your request",
                         "className": "gdcGridCol gdcGridCol12",
@@ -583,7 +584,7 @@ const MEI = [
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
-		"defaultValue": "<p><strong>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer) </strong></p><p></br></p><p></br></p><p><strong>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently? </strong></p><p></br></p><p></br></p><p><strong>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from. </strong></p><p></br></p><p></br></p><p><strong>What is the reach or surface area of this request? (How many people might consume this information/report) </strong></p><p></br></p><p></br></p><p><strong>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly </strong></p><p></br></p><p></br></p>",
+        "defaultValue": "<p><strong>Help us understand how we may help you accomplish what you're trying to do. Briefly explain your primary and/or secondary business objectives or current problems your facing  (e.g. Primarily drive customer adds. Secondarily understand ACR) </strong></p><p></br></p><p></br></p><p><strong>How will you use the output of this work to better drive or understand the above? </strong></p><p></br></p><p></br></p><p><strong>How many users does this request affect? (myself, my area/subsidiary or all users) </strong></p><p></br></p><p></br></p><p><strong>What is the scope of the impact of your request? </strong></p><p></br></p><p></br></p>",
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
         "required": true,
@@ -597,24 +598,12 @@ const MEI = [
         "label": "What is the business impact if this work is not done?",
         "className": "gdcGridCol gdcGridCol12",
         "value": "",
-
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
     },
     {
-        "id": "BusinessObjective",
-        "fieldType": "SingleLineTextInput",
-        "placeholder": "Enter your text here",
-        "label": "What business objective are you trying to achieve?",
-        "className": "gdcGridCol gdcGridCol6",
-        "value": "",
-        "required": true,
-        "errorMessage": "Field is required",
-        "devopsName": "System.Description"
-    },
-    {
-        "id": "Related Report Link(s)",
+        "id": "ReportRequestType",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "If this request is related to an existing report, please provide link to that report here.",
@@ -693,19 +682,19 @@ const TaregetingEnablementandBusinessHealth = [
         "errorMessage": "Field is required",
         "devopsName": "System.Title"
     },
-	{
+    {
         "id": "DetailedRequirements",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
         "label": "Please provide detailed requirements for this request.",
         "className": "gdcGridCol gdcGridCol12",
-        "defaultValue": "<p><strong>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer) </strong></p><p></br></p><p></br></p><p><strong>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently? </strong></p><p></br></p><p></br></p><p><strong>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from. </strong></p><p></br></p><p></br></p><p><strong>What is the reach or surface area of this request? (How many people might consume this information/report) </strong></p><p></br></p><p></br></p><p><strong>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly </strong></p><p></br></p><p></br></p>",
-		"value" : "",
+        "defaultValue": "<p><strong>Please supply the business/strategic question(s) you are seeking to answer with this request. (what questions are you trying to answer) </strong></p><p></br></p><p></br></p><p><strong>Objective: What will the output of this analysis, metrics, or report enable you to do/understand better or differently? </strong></p><p></br></p><p></br></p><p><strong>Hypothesis: If applicable, please provide a hypothesis statement to ground the analytics exploration and help provide the analyst with a point to work from. </strong></p><p></br></p><p></br></p><p><strong>How many users does this request affect? (myself, my area/subsidiary or all users) </strong></p><p></br></p><p></br></p><p><strong>What do we need to consider to support this request: data (fields, dimensions); time horizon (e.g. last 6, 12, or 18 months; trailing 12 months); what is the frequency you need this available for: 1x, weekly, monthly, quarterly </strong></p><p></br></p><p></br></p>",
+        "value": "",
         "required": true,
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
     },
-	{
+    {
         "id": "BusinessImpact",
         "fieldType": "MultiLineTextInput",
         "placeholder": "Enter your text here",
@@ -716,7 +705,7 @@ const TaregetingEnablementandBusinessHealth = [
         "errorMessage": "Field is required",
         "devopsName": "System.Description"
     },
-	{
+    {
         "id": "BusinessObjective",
         "fieldType": "SingleLineTextInput",
         "placeholder": "Enter your text here",
@@ -747,7 +736,7 @@ const TaregetingEnablementandBusinessHealth = [
         "placeholder": "Select the date",
         "value": "",
         "required": false,
-        "helperText":"This date will be used to help us prioritize your request and will not be automatically committed to",
+        "helperText": "This date will be used to help us prioritize your request and will not be automatically committed to",
         "errorMessage": "Field is required",
         "devopsName": "Custom.NeedByDate"
     },

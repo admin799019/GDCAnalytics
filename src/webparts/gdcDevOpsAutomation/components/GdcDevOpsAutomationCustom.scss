@@ -11,7 +11,7 @@
     cursor:pointer;
     margin-left: 2px;
     .rootHovered {
-      background-color: black
+      background-color: black;
     }
   }
   .ql-container.ql-snow {
@@ -88,12 +88,12 @@
 
 .gdcGridCol6 {
   @include ms-sm6;
-  min-height: 110px;
+  min-height: 96px;
 }
 
 .gdcGridCol12 {
   @include ms-sm12;
-  min-height: 110px;
+  min-height: 100px;
 }
 
 /* Grid end */
@@ -101,7 +101,7 @@
 /* Text Field */
 
 .gdcTextField {
-  margin-top: 10px;
+  margin-top: 4px;
   .ms-TextField-fieldGroup::placeholder{
     color:black;
   }
@@ -133,7 +133,7 @@
    height:40px !important;
    line-height: 35px;
    font-size: 8px;
-   margin-top: 10px;
+   margin-top: 4px;
    color:black;
    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
@@ -246,13 +246,13 @@
 }
 
 .gdcpeoplepicker{
-  margin-top:8px;
+  // margin-top:8px;
   .ms-BasePicker-text{
     height:40px;
     align-content: center;
   }
   .ms-PeoplePicker{
-    margin-top:5px;
+    // margin-top:5px;
   }
   .ms-BasePicker-input{
     font-weight: 400;
@@ -271,7 +271,7 @@
 .gdcDateInput {
   display: inline-block;
   .ms-Label{
-    margin-top: 8px;
+    // margin-top: 8px;
     margin-right: 2px;
     white-space: nowrap;
     display: inline-block;
@@ -279,9 +279,10 @@
   white-space: nowrap;
   .ms-TextField > span {
     margin-top:0px;
+    display: none;
   } 
   .ms-DatePicker {
-    margin-top: 5px;
+    // margin-top: 5px;
     color:black;
     .statusMessage{
       margin-top:0px;
@@ -315,7 +316,8 @@
   white-space: nowrap;
 }
 
-.gdcColumnBlock{//Multiline field
+//Multiline field
+.gdcColumnBlock{
   white-space: nowrap;
   display:inline-block;
   margin-top: 8px;
@@ -498,7 +500,7 @@ input[type="file"] {
   color: rgb(168,0,0);
 }
 .gdcrequireddiv{
-  height:20px;
+  height:30px;
 }
 .gdcStar {
   color: rgb(168,0,0);

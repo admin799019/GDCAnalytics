@@ -43,12 +43,12 @@ export class SPService implements ISPService {
     }
 
     public async getAreasList(): Promise<any> {
-        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`IsActive eq 'Yes'`,).select("Title").get();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form JSON').items.filter(`IsActive eq 'Yes'`,).select("Title").get();
         return data;
     }
 
     public async getFormMetadata(type): Promise<any> {
-        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Form JSON').items.filter(`Title eq '${type}'`,).getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form JSON').items.filter(`Title eq '${type}'`,).getAll();
         return data[0];
     }
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
@@ -57,7 +57,7 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
 
-        var data = await this._localPnPSetup.web.lists.getByTitle('Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
         return data[0];
     }
     public async getOfficeUsersAlt(name): Promise<any> {
