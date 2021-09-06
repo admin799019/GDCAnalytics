@@ -1042,7 +1042,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 {...ele.showError == true ? { className: "gdcDropDown gdcrequiredred" } : { className: "gdcDropDown" }}
                 //className="gdcDropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.id)}
-                required={ele.required}
+                
               //styles={dropdownStyles}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
