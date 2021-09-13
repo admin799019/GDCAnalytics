@@ -104,7 +104,8 @@ export interface IDevOpsState {
   AreaButtons: any;
   Area: any;
   devopsinstanceurl:string;
-
+  OrganizationUrl:string;
+  devopsProjectname:string;
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -149,7 +150,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "options": tempVar,
         "value": ""
       },
-      devopsinstanceurl:""
+      devopsinstanceurl:"",
+      OrganizationUrl:"",
+      devopsProjectname:""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -359,7 +362,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
 
-        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png"));
+        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png",this.state.OrganizationUrl));
       }
     });
     return Promise.all(imageCalls).then((d) => {
@@ -401,11 +404,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "op": "add",
               "path": "/fields/System.AreaPath",
               "from": null,
-              "value": OrganizationConfig.ProjectName + `\\` + this.state.Area.value
+              "value": this.state.devopsProjectname + `\\` + this.state.Area.value
             });
         }
         else {
-          pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
+          pathPrefix = this.state.devopsProjectname + `\\` + this.state.Area.value + `\\`;
           Area = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
@@ -426,7 +429,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
-
+console.log(APIData,"APIDATA")
         this.props.devOpsService.addUserStory(APIData,this.state.devopsinstanceurl).then((data) => {
           if (data.id != null) {
             this.setState({
@@ -609,7 +612,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-        console.log(jsonData,"jsondata")
+        console.log(jsonData,"jsondata");
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -617,7 +620,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
-          devopsinstanceurl:data.DevOpsInstanceUrl
+          devopsinstanceurl:data.DevOpsInstanceUrl,
+          devopsProjectname:data.DevOpsProjectName,
+          OrganizationUrl:data.DevOpsOrganizationUrl
         });
       }
       else {
@@ -712,7 +717,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           const byteArray = new Uint8Array(byteNumbers);
           const blob = new Blob([byteArray]);
 
-          this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+          this.props.devOpsService.uploadImage(blob, file.name,this.state.OrganizationUrl).then(d => {
             var url = "<a href='" + d + "'>" + file.name + "</a></br>";
             this.urls = this.urls.concat(url);
             this.AttachmentAPI.push(
