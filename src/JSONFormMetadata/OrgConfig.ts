@@ -21,7 +21,7 @@ const Test = {
 };
 
 const Prod = {
-    OrganizationName: "Veena0200",
+    OrganizationName: "OneGDCAnalyticsDeploymentTest",
     OrganizationUrl: "https://dev.azure.com/OneGDCAnalyticsDeploymentTest",
     ProjectName: "Operational Framework",
     ProjectUrl: "https://dev.azure.com/OneGDCAnalyticsDeploymentTest/Operational%20Framework",
@@ -31,4 +31,4 @@ const Prod = {
     SharePointSiteName: "GDCAnalytics"
 };
 
-export const OrganizationConfig = Test;
+export const OrganizationConfig = Prod;
