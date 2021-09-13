@@ -31,4 +31,4 @@ const Prod = {
     SharePointSiteName: "GDCAnalytics"
 };
 
-export const OrganizationConfig = Demo;
+export const OrganizationConfig = Test;

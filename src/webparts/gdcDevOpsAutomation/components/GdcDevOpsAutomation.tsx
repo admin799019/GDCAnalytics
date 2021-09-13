@@ -465,6 +465,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 //this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData, emaildata);
               }
               this.emailFormData = [];
+              this.urls="";
             });
             this.state.Area.value = "";
           }
@@ -482,6 +483,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             });
             this.AttachmentAPI = [];
             this.emailFormData = [];
+            this.urls="";
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
@@ -497,6 +499,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           showErrorMessage: true
         });
         this.emailFormData = [];
+        this.AttachmentAPI = [];
+        this.urls="";
       }
     });
   }
