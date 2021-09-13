@@ -30,7 +30,7 @@ export class DevOpsService implements IDevOpsService {
                 });
         });
     }
-    public addUserStory(data): Promise<any> {
+    public addUserStory(data,devopsprojecturl): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
@@ -42,7 +42,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-                client.post(OrganizationConfig.ProjectUrl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(devopsprojecturl+ "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         return response.json();
                     })
@@ -54,7 +54,7 @@ export class DevOpsService implements IDevOpsService {
         });
     }
 
-    public addAttachment(data, id): any {
+    public addAttachment(data, id,devopsprojecturl): any {
         const body: string = JSON.stringify(data);
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json-patch+json');
@@ -66,7 +66,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-            client.fetch(OrganizationConfig.ProjectUrl + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(devopsprojecturl+ "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
