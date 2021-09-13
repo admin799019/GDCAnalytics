@@ -58,9 +58,10 @@ export class SPService implements ISPService {
         filterStr = filterStr.concat(Area != "" ? ` and GDCEmailArea eq '${Area}'` : "");
         filterStr = filterStr.concat(PODCategory != "" ? ` and GDCEmailPODCategory eq '${PODCategory}'` : "");
 
-        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/Title,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/Title").expand("GDCEmailTo,GDCEmailCc").getAll();
+        var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form Notifications').items.filter(filterStr).select("Title,GDCEmailTo/EMail,GDCEmailTeam,GDCEmailSubject,GDCEmailPODCategory,GDCEmailArea,GDCEmailBody,GDCEmailCc/EMail").expand("GDCEmailTo,GDCEmailCc").getAll();
         return data[0];
     }
+
     public async getOfficeUsersAlt(name): Promise<any> {
         const graphClient = await this._msGraphClientFactory.getClient();
 
@@ -106,18 +107,24 @@ export class SPService implements ISPService {
         var people: any = emaildata.GDCEmailTo;
         var to: any = [];
         people.forEach(email => {
-            to.push(email.Title);
+            to.push(email.EMail);
         });
-        var cc: any = [];
-        // let currentUser = await  this._localPnPSetup.web.currentUser()
-        await this._localPnPSetup.web.currentUser().then((data) => {
-            cc.push(data.Title);
-            formData.push({ "id": "CreatedBy", "value": data.Title });
-        });
-        var peopleCc: any = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : [];
 
+        var peopleCc: any = emaildata.GDCEmailCc != null ? emaildata.GDCEmailCc : [];
+        var cc: any = [];
         peopleCc.forEach(element => {
-            cc.push(element.Title);
+            cc.push(element.EMail);
+        });
+
+        await this._localPnPSetup.web.currentUser().then((data) => {
+            let currentUserInTO = to.filter(t => t == data.Email);
+            let currentUserInCC = cc.filter(t => t == data.Email);
+            console.log("to", currentUserInTO, "cc", currentUserInCC);
+
+            if (currentUserInTO.length == 0 && currentUserInCC.length == 0) {
+                cc.push(data.Email);
+            }
+            formData.push({ "id": "CreatedBy", "value": data.Title });
         });
 
         let mailBodyStr = emaildata.GDCEmailBody;
