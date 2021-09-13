@@ -606,6 +606,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
+        console.log(jsonData,"jsondata")
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -613,6 +614,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
+          
         });
       }
       else {
