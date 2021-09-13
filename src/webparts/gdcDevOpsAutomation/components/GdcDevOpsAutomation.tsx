@@ -103,6 +103,8 @@ export interface IDevOpsState {
   panelHasScroll: boolean;
   AreaButtons: any;
   Area: any;
+  devopsinstanceurl:string;
+
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -146,7 +148,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "className": "fields",
         "options": tempVar,
         "value": ""
-      }
+      },
+      devopsinstanceurl:""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -424,7 +427,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
 
-        this.props.devOpsService.addUserStory(APIData).then((data) => {
+        this.props.devOpsService.addUserStory(APIData,this.state.devopsinstanceurl).then((data) => {
           if (data.id != null) {
             this.setState({
               formFields: metaData,
@@ -444,7 +447,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               this.setState({ showMessage: false });
             }.bind(this), 5000);
 
-            let url = { "id": "Link", "value": "<a href='" + OrganizationConfig.ProjectUrl + "/_workitems/edit/" + data.id + "'>Link</a>" };
+            let url = { "id": "Link", "value": "<a href='" + this.state.devopsinstanceurl + "/_workitems/edit/" + data.id + "'>Link</a>" };
             this.emailFormData.push(url);
 
             let id = { "id": "Id", "value": data.id };
@@ -614,7 +617,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
-          
+          devopsinstanceurl:data.DevOpsInstanceUrl
         });
       }
       else {
