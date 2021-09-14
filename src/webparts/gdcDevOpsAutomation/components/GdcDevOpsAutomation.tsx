@@ -1195,8 +1195,23 @@ console.log(APIData,"APIDATA")
         return (
           <React.Fragment>
             <div className={ele.className + " gdcfilepicker"}>
-              <p> {ele.placeholder}</p>
+            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
+              
               <div className="gdcfileInput" >
+             
+
+
                 <Label htmlFor="file-upload" className="gdccustom-file-upload">
                   <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
