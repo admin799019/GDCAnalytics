@@ -49,6 +49,7 @@ export class SPService implements ISPService {
 
     public async getFormMetadata(type): Promise<any> {
         var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form JSON').items.filter(`Title eq '${type}'`,).getAll();
+       console.log(data,"data from metadata")
         return data[0];
     }
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
@@ -161,6 +162,7 @@ export class SPService implements ISPService {
             Subject: mailSubjectStr,
             To: to,
             CC: cc
+            
         };
         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);

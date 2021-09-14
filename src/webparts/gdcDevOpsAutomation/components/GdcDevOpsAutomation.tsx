@@ -103,6 +103,9 @@ export interface IDevOpsState {
   panelHasScroll: boolean;
   AreaButtons: any;
   Area: any;
+  devopsinstanceurl:string;
+  OrganizationUrl:string;
+  devopsProjectname:string;
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -146,7 +149,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "className": "fields",
         "options": tempVar,
         "value": ""
-      }
+      },
+      devopsinstanceurl:"",
+      OrganizationUrl:"",
+      devopsProjectname:""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -358,7 +364,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
 
-        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png"));
+        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png",this.state.OrganizationUrl));
       }
     });
     return Promise.all(imageCalls).then((d) => {
@@ -400,11 +406,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               "op": "add",
               "path": "/fields/System.AreaPath",
               "from": null,
-              "value": OrganizationConfig.ProjectName + `\\` + this.state.Area.value
+              "value": this.state.devopsProjectname + `\\` + this.state.Area.value
             });
         }
         else {
-          pathPrefix = OrganizationConfig.ProjectName + `\\` + this.state.Area.value + `\\`;
+          pathPrefix = this.state.devopsProjectname + `\\` + this.state.Area.value + `\\`;
           Area = APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value;
           APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value = (pathPrefix.concat(APIData.filter(d => d.path == "/fields/System.AreaPath")[0].value));
         }
@@ -425,8 +431,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
-
-        this.props.devOpsService.addUserStory(APIData).then((data) => {
+console.log(APIData,"APIDATA")
+        this.props.devOpsService.addUserStory(APIData,this.state.devopsinstanceurl).then((data) => {
           if (data.id != null) {
             this.setState({
               formFields: metaData,
@@ -446,7 +452,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
               this.setState({ showMessage: false });
             }.bind(this), 5000);
 
-            let url = { "id": "Link", "value": "<a href='" + OrganizationConfig.ProjectUrl + "/_workitems/edit/" + data.id + "'>Link</a>" };
+            let url = { "id": "Link", "value": "<a href='" + this.state.devopsinstanceurl + "/_workitems/edit/" + data.id + "'>Link</a>" };
             this.emailFormData.push(url);
 
             let id = { "id": "Id", "value": data.id };
@@ -608,6 +614,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
+        console.log(jsonData,"jsondata");
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -615,6 +622,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
+          devopsinstanceurl:data.DevOpsInstanceUrl,
+          devopsProjectname:data.DevOpsProjectName,
+          OrganizationUrl:data.DevOpsOrganizationUrl
         });
       }
       else {
@@ -709,7 +719,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           const byteArray = new Uint8Array(byteNumbers);
           const blob = new Blob([byteArray]);
 
-          this.props.devOpsService.uploadImage(blob, file.name).then(d => {
+          this.props.devOpsService.uploadImage(blob, file.name,this.state.OrganizationUrl).then(d => {
             var url = "<a href='" + d + "'>" + file.name + "</a></br>";
             this.urls = this.urls.concat(url);
             this.AttachmentAPI.push(
@@ -1187,8 +1197,23 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         return (
           <React.Fragment>
             <div className={ele.className + " gdcfilepicker"}>
-              <p> {ele.placeholder}</p>
+            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+                tooltipProps={{
+                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                }}
+                // content={props.name || props.title}
+                styles={hostStyles}
+              >
+                <Icon iconName="Info"
+                  style={iconStyle}
+                  // title={props.name || props.title}
+                  className="gdctooltip" />
+              </TooltipHost> : ""}</Label>
+              
               <div className="gdcfileInput" >
+             
+
+
                 <Label htmlFor="file-upload" className="gdccustom-file-upload">
                   <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
