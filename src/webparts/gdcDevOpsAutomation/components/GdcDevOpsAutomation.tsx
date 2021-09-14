@@ -246,7 +246,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         if (field.fieldType == "MultiSelectInput") {
           if (value) {
-            field.selectedKeys = (value.selected ? [...field.selectedKeys, value.key] : field.selectedKeys.filter(key => key !== value.key));
+            field.selectedKeys = (value.selected && field.selectedKeys != undefined
+              ? [...field.selectedKeys, value.key]
+              : value.selected ? [value.key] : field.selectedKeys.filter(key => key !== value.key));
           }
           field.value = "";
           field.selectedKeys.map((x) => {
@@ -465,7 +467,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 //this.props.spService.sendEmailUsingPowerAutomate(this.emailFormData, emaildata);
               }
               this.emailFormData = [];
-              this.urls="";
+              this.urls = "";
             });
             this.state.Area.value = "";
           }
@@ -483,7 +485,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
             });
             this.AttachmentAPI = [];
             this.emailFormData = [];
-            this.urls="";
+            this.urls = "";
             setTimeout(function () {
               this.setState({ showMessage: false });
             }.bind(this), 5000);
@@ -500,7 +502,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         });
         this.emailFormData = [];
         this.AttachmentAPI = [];
-        this.urls="";
+        this.urls = "";
       }
     });
   }
@@ -1046,7 +1048,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                 {...ele.showError == true ? { className: "gdcDropDown gdcrequiredred" } : { className: "gdcDropDown" }}
                 //className="gdcDropDown"
                 onChange={(e, o) => this.handleChange(o.key, ele.id)}
-                
+
               //styles={dropdownStyles}
               />
               {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}

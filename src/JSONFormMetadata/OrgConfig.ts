@@ -20,7 +20,7 @@ const Test = {
     SharePointSiteName: "GDCAnalytics"
 };
 
-const Prod = {
+const ProdTest = {
     OrganizationName: "OneGDCAnalyticsDeploymentTest",
     OrganizationUrl: "https://dev.azure.com/OneGDCAnalyticsDeploymentTest",
     ProjectName: "Operational Framework",
@@ -31,4 +31,15 @@ const Prod = {
     SharePointSiteName: "GDCAnalytics"
 };
 
-export const OrganizationConfig = Prod;
+const Prod = {
+    OrganizationName: "onegdc",
+    OrganizationUrl: "https://onegdc.visualstudio.com/",
+    ProjectName: "OneGDC Analytics",
+    ProjectUrl: "https://onegdc.visualstudio.com/OneGDC%20Analytics",
+    FlowUrl: "",
+    DevOpsID:"499b84ac-1321-427f-aa17-267ca6975798",
+    SharePointSiteUrl: "https://microsoft.sharepoint.com/teams/GDCAnalyticsCentral",
+    SharePointSiteName: "GDCAnalyticsCentral"
+};
+
+export const OrganizationConfig = Test;
