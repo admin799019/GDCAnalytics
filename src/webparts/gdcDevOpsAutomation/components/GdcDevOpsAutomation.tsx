@@ -431,7 +431,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
-console.log(APIData,"APIDATA")
+console.log(APIData,"APIDATA");
         this.props.devOpsService.addUserStory(APIData,this.state.devopsinstanceurl).then((data) => {
           if (data.id != null) {
             this.setState({
