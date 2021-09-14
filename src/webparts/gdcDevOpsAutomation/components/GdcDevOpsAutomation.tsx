@@ -1209,11 +1209,8 @@ console.log(APIData,"APIDATA")
                   // title={props.name || props.title}
                   className="gdctooltip" />
               </TooltipHost> : ""}</Label>
-              
+
               <div className="gdcfileInput" >
-             
-
-
                 <Label htmlFor="file-upload" className="gdccustom-file-upload">
                   <Icon iconName="Attach" style={iconStyle} className="gdcAttachIcon" /> Add attachment
                 </Label>
