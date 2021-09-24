@@ -9,6 +9,7 @@ import { Toggle } from '@fluentui/react/lib/Toggle';
 import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import * as _ from 'lodash';
 import ReactHtmlParser from 'react-html-parser';
+import DOMPurify from "dompurify";
 import { Label } from '@fluentui/react/lib/Label';
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import { Icon } from '@fluentui/react/lib/Icon';
@@ -60,7 +61,7 @@ const onWrapDefaultLabelRenderer = (
         {(props.name != "" && props.name != undefined) || (props.title != "" && props.title != undefined) ?
           <TooltipHost
             tooltipProps={{
-              onRenderContent: () => (ReactHtmlParser(props.name != "" ? props.name : props.title))
+              onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(props.name != "" ? props.name : props.title)))
             }}
             // content={props.name || props.title}
             styles={hostStyles}
@@ -103,9 +104,10 @@ export interface IDevOpsState {
   panelHasScroll: boolean;
   AreaButtons: any;
   Area: any;
-  devopsinstanceurl:string;
+  DevOpsProjectUrl:string;
   OrganizationUrl:string;
   devopsProjectname:string;
+  
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -119,15 +121,22 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public emailFormData = [];
   public urls: any = "";
   public richTextFieldCalls: number = 0;
-  public constructor(props) {
+ public  constructor(props) {
     super(props);
     this.panelRef = React.createRef();
-    let tempVar: any = [];
-    this.props.spService.getAreasList().then((data) => {
-      data.map((x) => {
-        tempVar.push({ key: x.Title, text: x.Title });
-      });
-    });
+    let tempVar: any = [{key: "Business Analytics and Insights",
+    text: "Business Analytics and Insights"
+    },{key: "Data Services",
+    text: "Data Services"},{key: "Marketing Engagement and Innovation",
+    text: "Marketing Engagement and Innovation"
+    },{key: "Targeting Enablement and Business Health",
+    text: "Targeting Enablement and Business Health"}];
+    // this.props.spService.getAreasList().then((data) => {
+    //   data.map((x) => {
+    //    tempVar.push({ key: x.Title, text: x.Title });
+    //   });
+    //   console.log(tempVar,"tpvar")
+    // });
     this.state = {
       projects: [],
       text: "",
@@ -150,7 +159,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "options": tempVar,
         "value": ""
       },
-      devopsinstanceurl:"",
+      DevOpsProjectUrl:"",
       OrganizationUrl:"",
       devopsProjectname:""
     };
@@ -174,14 +183,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public componentDidMount() {
     var projects: [];
+    
     this.setState({
       projects: projects
     });
+    console.log(this.state.Area,"arreaaa");
   }
 
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, value, name);
+    
     this.setState({
       formFields: stateValues,
     });
@@ -432,7 +444,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
 console.log(APIData,"APIDATA");
-        this.props.devOpsService.addUserStory(APIData,this.state.devopsinstanceurl).then((data) => {
+        this.props.devOpsService.addUserStory(APIData,this.state.DevOpsProjectUrl).then((data) => {
           if (data.id != null) {
             this.setState({
               formFields: metaData,
@@ -452,7 +464,7 @@ console.log(APIData,"APIDATA");
               this.setState({ showMessage: false });
             }.bind(this), 5000);
 
-            let url = { "id": "Link", "value": "<a href='" + this.state.devopsinstanceurl + "/_workitems/edit/" + data.id + "'>Link</a>" };
+            let url = { "id": "Link", "value": "<a href='" + this.state.DevOpsProjectUrl + "/_workitems/edit/" + data.id + "'>Link</a>" };
             this.emailFormData.push(url);
 
             let id = { "id": "Id", "value": data.id };
@@ -622,7 +634,7 @@ console.log(APIData,"APIDATA");
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
-          devopsinstanceurl:data.DevOpsInstanceUrl,
+          DevOpsProjectUrl:data.DevOpsProjectUrl,
           devopsProjectname:data.DevOpsProjectName,
           OrganizationUrl:data.DevOpsOrganizationUrl
         });
@@ -786,15 +798,7 @@ console.log(APIData,"APIDATA");
             </Link>
           </div>
         </div>
-        {this.state.showErrorMessage
-          ? <MessageBar
-            messageBarType={MessageBarType.error}
-            isMultiline={false}
-            dismissButtonAriaLabel="Close"
-            onDismiss={(e) => this.setState({ showErrorMessage: false })}
-          >Please complete the required fields.
-          </MessageBar>
-          : <div></div>}
+        
       </React.Fragment>
     );
   }
@@ -835,9 +839,21 @@ console.log(APIData,"APIDATA");
 
 
   public render(): JSX.Element {
+    console.log(this.state.Area,"arrreeeee");
     return (
       <div className="gdcBorder ">
+        {this.state.showErrorMessage
+          ? <MessageBar
+          className="messageBarTop"
+            messageBarType={MessageBarType.error}
+            isMultiline={false}
+            dismissButtonAriaLabel="Close"
+            onDismiss={(e) => this.setState({ showErrorMessage: false })}
+          >Please complete the required fields.
+          </MessageBar>
+          : <div></div>}
         <div className="gdcMessage">
+
           {this.state.showMessage
             ?
             <MessageBar
@@ -849,27 +865,19 @@ console.log(APIData,"APIDATA");
             : <div></div>
           }
         </div>
-        <div>
-          <Link onClick={(e) => { this.setState({ openPanel: true }); }} className="gdcNewButton" underline>
-            New Intake Form
-          </Link>
-        </div>
-        <Panel
-          headerText="GDC Intake Form"
-          isOpen={this.state.openPanel}
-          type={PanelType.extraLarge}
-          componentRef={this.panelRef}
-          onRenderHeader={this.onRenderNavigationContent}
-          hasCloseButton={false}
-          className="gdcPanel"
-        >
+        
+      
           <div className="gdcGrid"  >
             <div className="gdcGridRow gdcPaddingBottom15">
               <div className="gdcGridCol gdcGridCol12 gdcquestionHeader">
                 <p className="gdcquestionTop">What team is your request for?</p>
-                {
+               
+                 {
+                 
                   this.state.Area.options.map(area => {
-                    return (<DefaultButton
+                    console.log(this.state.Area.options,"rendering buttons");
+                    return (
+                    <DefaultButton
                       text={area.text}
                       className={this.state.selectedButton == area.text ? "gdcSelectedButton" : "gdcHeaderButton"}
                       onClick={e => this.updateFormFields(area.text)
@@ -895,7 +903,8 @@ console.log(APIData,"APIDATA");
               </div>
             </div>
           </div>
-        </Panel>
+       
+
       </div>
     );
   }
@@ -908,7 +917,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
@@ -945,7 +954,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
@@ -988,7 +997,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
@@ -1041,7 +1050,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
@@ -1083,13 +1092,14 @@ console.log(APIData,"APIDATA");
           </React.Fragment>
         );
       case "DateInput":
+       
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
             {ele.helperText != null && ele.helperText != ""
               ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 styles={hostStyles}
               > <Icon iconName="Info" style={iconStyle} className="gdctooltip" ariaLabel="value required" />
@@ -1100,7 +1110,7 @@ console.log(APIData,"APIDATA");
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date"
-              minDate={new Date(Date.now())}
+              minDate={ ele.allowPastDates== true ? new Date(1960,1,1):  new Date(Date.now())}
               value={ele.value != "" && ele.value != null && ele.value != undefined ? new Date(ele.value) : undefined}
               tabIndex={0}
               styles={{
@@ -1114,6 +1124,7 @@ console.log(APIData,"APIDATA");
                 onRenderPrefix: true ? () => <Icon iconName="Calendar" ariaLabel="clear" /> : null
               }}
             />
+            
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
         );
@@ -1123,7 +1134,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
@@ -1156,7 +1167,7 @@ console.log(APIData,"APIDATA");
                 {ele.helperText ?
                   <TooltipHost
                     tooltipProps={{
-                      onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                      onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                     }}
                     styles={hostStyles}
                   >
@@ -1199,7 +1210,7 @@ console.log(APIData,"APIDATA");
             <div className={ele.className + " gdcfilepicker"}>
             <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  onRenderContent: () => (ReactHtmlParser(ele.helperText))
+                  onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}

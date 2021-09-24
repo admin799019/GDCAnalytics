@@ -22,6 +22,7 @@ export interface MetaDataType {
     dependentField: string;
     dependentFieldValue: any;
     textToAppend: string;
+    allowPastDates:boolean;
   }
   
   export interface subFieldsObjectType {

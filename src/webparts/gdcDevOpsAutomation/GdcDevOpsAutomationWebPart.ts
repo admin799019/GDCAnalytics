@@ -44,7 +44,7 @@ export default class GdcDevOpsAutomationWebPart extends BaseClientSideWebPart<IG
     const serviceScope = this.context.serviceScope;
     this.devOpsService = serviceScope.consume(DevOpsService.serviceKey);
     // return Promise.resolve();
-    this.spService = new SPService(this.context.pageContext, this.context.msGraphClientFactory,this.context);
+    this.spService = new SPService(this.context.pageContext,this.context);
 
     return super.onInit().then(_ => {
       sp.setup({

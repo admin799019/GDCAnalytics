@@ -81,7 +81,9 @@
 .gdcGridRow {
   @include ms-Grid-row;
 }
-
+.gdcFieldSeperateRow {
+  margin-right: 20px;
+}
 .gdcGridCol {
   @include ms-Grid-col;
 }
@@ -235,7 +237,10 @@
 }
 
 /* Switch Input end */
-
+.messageBarTop{
+  position: fixed;
+  z-index: 1;
+}
 .gdcMessage {
   .ms-MessageBar{
     position: fixed;
@@ -399,6 +404,7 @@ input[type="file"] {
   background-color: #1D1D1D;
   color:white;
   border-color: white;
+ 
 }
 
 .gdcquestionHeader{
@@ -460,6 +466,7 @@ input[type="file"] {
 .gdcHeaderButton{
   margin-right:14px;
   border-radius: 15px;
+  margin-bottom: 10px;
 }
 .gdcSelectedButton{
   margin-right:14px;
