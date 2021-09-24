@@ -1,6 +1,5 @@
 import * as React from 'react';
-import styles from './GdcDevOpsAutomation.module.scss';
-import CustomStyles from './GdcDevOpsAutomation.module.scss';
+
 import { TextField, ITextFieldProps } from '@fluentui/react/lib/TextField';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
