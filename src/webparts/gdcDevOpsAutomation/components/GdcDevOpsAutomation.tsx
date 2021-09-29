@@ -103,10 +103,10 @@ export interface IDevOpsState {
   panelHasScroll: boolean;
   AreaButtons: any;
   Area: any;
-  DevOpsProjectUrl:string;
-  OrganizationUrl:string;
-  devopsProjectname:string;
-  
+  DevOpsProjectUrl: string;
+  OrganizationUrl: string;
+  devopsProjectname: string;
+
 }
 
 const iconStyles = { marginRight: '8px' };
@@ -120,22 +120,28 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public emailFormData = [];
   public urls: any = "";
   public richTextFieldCalls: number = 0;
- public  constructor(props) {
+  public constructor(props) {
     super(props);
     this.panelRef = React.createRef();
-    let tempVar: any = [{key: "Business Analytics and Insights",
-    text: "Business Analytics and Insights"
-    },{key: "Data Services",
-    text: "Data Services"},{key: "Marketing Engagement and Innovation",
-    text: "Marketing Engagement and Innovation"
-    },{key: "Targeting Enablement and Business Health",
-    text: "Targeting Enablement and Business Health"}];
-    // this.props.spService.getAreasList().then((data) => {
-    //   data.map((x) => {
-    //    tempVar.push({ key: x.Title, text: x.Title });
-    //   });
-    //   console.log(tempVar,"tpvar")
-    // });
+    let tempVar: any = [
+      {
+        key: "Business Analytics and Insights",
+        text: "Business Analytics and Insights"
+      },
+      {
+        key: "Data Services",
+        text: "Data Services"
+      },
+      {
+        key: "Marketing Engagement and Innovation",
+        text: "Marketing Engagement and Innovation"
+      },
+      {
+        key: "Targeting Enablement and Business Health",
+        text: "Targeting Enablement and Business Health"
+      }
+    ];
+    
     this.state = {
       projects: [],
       text: "",
@@ -158,9 +164,9 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         "options": tempVar,
         "value": ""
       },
-      DevOpsProjectUrl:"",
-      OrganizationUrl:"",
-      devopsProjectname:""
+      DevOpsProjectUrl: "",
+      OrganizationUrl: "",
+      devopsProjectname: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -182,17 +188,17 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
   public componentDidMount() {
     var projects: [];
-    
+
     this.setState({
       projects: projects
     });
-    console.log(this.state.Area,"arreaaa");
+    console.log(this.state.Area, "arreaaa");
   }
 
   public handleChange(value: any, name) {
     var stateValues = _.cloneDeep(this.state.formFields);
     stateValues = this.appendValues(stateValues, value, name);
-    
+
     this.setState({
       formFields: stateValues,
     });
@@ -375,7 +381,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
 
-        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png",this.state.OrganizationUrl));
+        imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png", this.state.OrganizationUrl));
       }
     });
     return Promise.all(imageCalls).then((d) => {
@@ -442,8 +448,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
 
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData = [...APIData, ...this.AttachmentAPI];
-console.log(APIData,"APIDATA");
-        this.props.devOpsService.addUserStory(APIData,this.state.DevOpsProjectUrl).then((data) => {
+        console.log(APIData, "APIDATA");
+        this.props.devOpsService.addUserStory(APIData, this.state.DevOpsProjectUrl).then((data) => {
           if (data.id != null) {
             this.setState({
               formFields: metaData,
@@ -625,7 +631,7 @@ console.log(APIData,"APIDATA");
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-        console.log(jsonData,"jsondata");
+        console.log(jsonData, "jsondata");
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -633,9 +639,9 @@ console.log(APIData,"APIDATA");
           selectedButton: option,
           panelHasScroll: true,
           showErrorMessage: false,
-          DevOpsProjectUrl:data.DevOpsProjectUrl,
-          devopsProjectname:data.DevOpsProjectName,
-          OrganizationUrl:data.DevOpsOrganizationUrl
+          DevOpsProjectUrl: data.DevOpsProjectUrl,
+          devopsProjectname: data.DevOpsProjectName,
+          OrganizationUrl: data.DevOpsOrganizationUrl
         });
       }
       else {
@@ -730,7 +736,7 @@ console.log(APIData,"APIDATA");
           const byteArray = new Uint8Array(byteNumbers);
           const blob = new Blob([byteArray]);
 
-          this.props.devOpsService.uploadImage(blob, file.name,this.state.OrganizationUrl).then(d => {
+          this.props.devOpsService.uploadImage(blob, file.name, this.state.OrganizationUrl).then(d => {
             var url = "<a href='" + d + "'>" + file.name + "</a></br>";
             this.urls = this.urls.concat(url);
             this.AttachmentAPI.push(
@@ -797,7 +803,7 @@ console.log(APIData,"APIDATA");
             </Link>
           </div>
         </div>
-        
+
       </React.Fragment>
     );
   }
@@ -838,12 +844,11 @@ console.log(APIData,"APIDATA");
 
 
   public render(): JSX.Element {
-    console.log(this.state.Area,"arrreeeee");
     return (
       <div className="gdcBorder ">
         {this.state.showErrorMessage
           ? <MessageBar
-          className="messageBarTop"
+            className="messageBarTop"
             messageBarType={MessageBarType.error}
             isMultiline={false}
             dismissButtonAriaLabel="Close"
@@ -864,45 +869,44 @@ console.log(APIData,"APIDATA");
             : <div></div>
           }
         </div>
-        
-      
-          <div className="gdcGrid"  >
-            <div className="gdcGridRow gdcPaddingBottom15">
-              <div className="gdcGridCol gdcGridCol12 gdcquestionHeader">
-                <p className="gdcquestionTop">What team is your request for?</p>
-               
-                 {
-                 
-                  this.state.Area.options.map(area => {
-                    console.log(this.state.Area.options,"rendering buttons");
-                    return (
+
+
+        <div className="gdcGrid"  >
+          <div className="gdcGridRow gdcPaddingBottom15">
+            <div className="gdcGridCol gdcGridCol12 gdcquestionHeader">
+              <p className="gdcquestionTop">What team is your request for?</p>
+
+              {
+
+                this.state.Area.options.map(area => {
+                  return (
                     <DefaultButton
                       text={area.text}
                       className={this.state.selectedButton == area.text ? "gdcSelectedButton" : "gdcHeaderButton"}
                       onClick={e => this.updateFormFields(area.text)
                       }
                     />);
-                  })
-                }
-              </div>
-            </div>
-            <div className="gdcGridRow">
-              {
-                this.state.formFields.map((ele) => {
-                  return this.renderFields(ele);
                 })
               }
-              <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
-                <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
-                  onClick={(e) => {
-                    this.setState({ disableSubmitButton: true, showErrorMessage: false });
-                    this.requiredHasValues = true; this.submitForm("add");
-                  }} />
-                {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
-              </div>
             </div>
           </div>
-       
+          <div className="gdcGridRow">
+            {
+              this.state.formFields.map((ele) => {
+                return this.renderFields(ele);
+              })
+            }
+            <div className={this.state.showAddButton ? "gdcGridCol gdcGridCol12 " : "gdcGridCol gdcGridCol12 gdcDisplayNone "}>
+              <PrimaryButton text="Submit" disabled={this.state.disableSubmitButton} className="gdcAddButton"
+                onClick={(e) => {
+                  this.setState({ disableSubmitButton: true, showErrorMessage: false });
+                  this.requiredHasValues = true; this.submitForm("add");
+                }} />
+              {/* <PrimaryButton text="Update" onClick={() => this.submitForm("update")} /> */}
+            </div>
+          </div>
+        </div>
+
 
       </div>
     );
@@ -1091,7 +1095,7 @@ console.log(APIData,"APIDATA");
           </React.Fragment>
         );
       case "DateInput":
-       
+
         return (
           <div className={ele.className + " gdcDateInput"}>
             <Label>{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}</Label>
@@ -1109,7 +1113,7 @@ console.log(APIData,"APIDATA");
               isMonthPickerVisible={false} showMonthPickerAsOverlay={true}
               placeholder={ele.placeholder}
               ariaLabel="Select a date"
-              minDate={ ele.allowPastDates== true ? new Date(1960,1,1):  new Date(Date.now())}
+              minDate={ele.allowPastDates == true ? new Date(1960, 1, 1) : new Date(Date.now())}
               value={ele.value != "" && ele.value != null && ele.value != undefined ? new Date(ele.value) : undefined}
               tabIndex={0}
               styles={{
@@ -1123,7 +1127,7 @@ console.log(APIData,"APIDATA");
                 onRenderPrefix: true ? () => <Icon iconName="Calendar" ariaLabel="clear" /> : null
               }}
             />
-            
+
             {ele.showError == true ? <div className="gdcerror">{ele.errorMessage}</div> : <div></div>}
           </div>
         );
@@ -1207,7 +1211,7 @@ console.log(APIData,"APIDATA");
         return (
           <React.Fragment>
             <div className={ele.className + " gdcfilepicker"}>
-            <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
+              <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
                   onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}

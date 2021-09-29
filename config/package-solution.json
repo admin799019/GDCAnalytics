@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "gdc-dev-ops-automation-client-side-solution",
+    "name": "GdcIntakeForm",
     "id": "22b26582-4ad7-4166-8450-a7b7471c5614",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,

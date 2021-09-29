@@ -1,6 +1,5 @@
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOptions } from "@microsoft/sp-http";
-import { SPHttpClient } from "@microsoft/sp-http";
 import { IDevOpsService } from "./IDevOpsService";
 import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 
@@ -8,29 +7,14 @@ export class DevOpsService implements IDevOpsService {
 
     public static readonly serviceKey: ServiceKey<IDevOpsService> = ServiceKey.create<IDevOpsService>('SPFx:DevOpsService', DevOpsService);
     private _aadHttpClientFactory: AadHttpClientFactory;
-    private _spHttpClient: SPHttpClient;
 
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
-            this._spHttpClient = serviceScope.consume(SPHttpClient.serviceKey);
         });
     }
 
-    // public async getProjects1(): Promise<any> {
-
-    //     await this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-    //         client.get(OrganizationConfig.OrganizationUrl + `/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
-    //             .then((response: HttpClientResponse) => {
-    //                 console.log(["Try1", response]);
-    //                 return response.json();
-    //             })
-    //             .then((projects: any): void => {
-    //                 console.log(["Try1", projects]);
-    //             });
-    //     });
-    // }
-    public addUserStory(data,devopsprojecturl): Promise<any> {
+    public addUserStory(data, devopsprojecturl): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
@@ -42,7 +26,7 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders
             };
             this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-                client.post(devopsprojecturl+ "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+                client.post(devopsprojecturl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
                         return response.json();
                     })
@@ -54,7 +38,7 @@ export class DevOpsService implements IDevOpsService {
         });
     }
 
-    public addAttachment(data, id,devopsprojecturl): any {
+    public addAttachment(data, id, devopsprojecturl): any {
         const body: string = JSON.stringify(data);
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json-patch+json');
@@ -66,7 +50,7 @@ export class DevOpsService implements IDevOpsService {
             method: 'PATCH'
         };
         this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-            client.fetch(devopsprojecturl+ "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            client.fetch(devopsprojecturl + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
@@ -77,7 +61,7 @@ export class DevOpsService implements IDevOpsService {
     }
 
 
-    public async uploadImage(base64content, fileName,OrganizationUrl): Promise<any> {
+    public async uploadImage(base64content, fileName, OrganizationUrl): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const requestHeaders: Headers = new Headers();
             requestHeaders.append('Content-Type', 'application/octet-stream');
@@ -104,25 +88,4 @@ export class DevOpsService implements IDevOpsService {
         // let promise = new Promise((resolve,reject));
     }
 
-//     public getTeamDetails(team: string): Promise<any> {
-//         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
-//             const requestHeaders: Headers = new Headers();
-//             requestHeaders.append('Content-type', 'application/json-patch+json');
-
-//             const httpClientOptions: IHttpClientOptions = {
-//                 headers: requestHeaders,
-//             };
-//             this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
-//                 client.get(OrganizationConfig.OrganizationUrl + "/_apis/projects/" + OrganizationConfig.ProjectName + "/teams/" + team + "/members?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
-//                     .then((response: HttpClientResponse) => {
-//                         return response.json();
-//                     })
-//                     .then((teams: any): void => {
-//                         console.log(["get Team details response", teams]);
-//                         resolve(teams);
-//                     });
-//             });
-
-//         });
-//     }
- }
+}

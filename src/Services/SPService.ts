@@ -5,11 +5,9 @@ import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
 import { PageContext } from '@microsoft/sp-page-context';
 import { Logger, ConsoleListener } from '@pnp/logging';
-import { graph } from "@pnp/graph";
-import { IHttpClientOptions, HttpClientResponse, HttpClient } from '@microsoft/sp-http';
+
 import "@pnp/graph/groups";
 import "@pnp/graph/users";
-import { ISearchResult, SearchQueryBuilder } from '@pnp/sp/presets/all';
 import '@pnp/sp/search';
 
 import { IEmailProperties } from "@pnp/sp/sputilities";
@@ -19,9 +17,7 @@ import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
 
 export class SPService implements ISPService {
     private _pageContext: PageContext;
-    //private sp:sp.web;
     private _localPnPSetup: SPRest;
-    private _searchParameter: string;
 
     private wpContext: WebPartContext;
     constructor(pageContext: PageContext, wpContext: WebPartContext) {
@@ -38,8 +34,6 @@ export class SPService implements ISPService {
             },
             mode: 'cors'
         }, this._pageContext.web.absoluteUrl);
-
-       
     }
 
     public async getAreasList(): Promise<any> {
@@ -49,9 +43,10 @@ export class SPService implements ISPService {
 
     public async getFormMetadata(type): Promise<any> {
         var data = await this._localPnPSetup.web.lists.getByTitle('GDC Intake Form JSON').items.filter(`Title eq '${type}'`,).getAll();
-       console.log(data,"data from metadata");
+        console.log(data, "data from metadata");
         return data[0];
     }
+
     public async getEmailData(Team, Area, PODCategory): Promise<any> {
         var filterStr = "";
         filterStr = filterStr.concat(Team != "" ? `GDCEmailTeam eq '${Team}'` : "");
@@ -63,33 +58,18 @@ export class SPService implements ISPService {
     }
 
     public async getOfficeUsersAlt(name): Promise<any> {
-       
-
-        // let resultQuery = graphClient
-        //     .api('/users')
-        //     .version("v1.0")
-        //     .header("ConsistencyLevel", "eventual")
-        //     .count(true)
-        //     .top(10);
-
-        // resultQuery = resultQuery.query({ $search: `"displayName:${name}"` });
-         let people: any;
+        let people: any;
 
         await this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',UserPrincipalName)`).get().then((responseAfterFilterChanges) => {
-
             people = responseAfterFilterChanges;
-            //return await responseAfterFilterChanges;
         });
         return people;
     }
     public async getOfficeUsers(name): Promise<any> {
-        
         let people: any;
 
         await this._localPnPSetup.web.siteUsers.select("*").filter(`substringof('${encodeURIComponent(name)}',Title)`).get().then((responseAfterFilterChanges) => {
-
             people = responseAfterFilterChanges;
-            //return await responseAfterFilterChanges;
         });
         return people;
     }
@@ -153,7 +133,6 @@ export class SPService implements ISPService {
             Subject: mailSubjectStr,
             To: to,
             CC: cc
-            
         };
         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
