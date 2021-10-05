@@ -241,14 +241,14 @@
   position: fixed;
   z-index: 1;
 }
-.gdcMessage {
-  .ms-MessageBar{
-    position: fixed;
-      top: 60px;
-      width: 370px;
-      right: 5px;
-  }
-}
+// .gdcMessage {
+//   // .ms-MessageBar{
+//   //   position: fixed;
+//   //     top: 60px;
+//   //     width: 370px;
+//   //     right: 5px;
+//   // }
+//}
 
 .gdcpeoplepicker{
   // margin-top:8px;
@@ -526,7 +526,7 @@ input[type="file"] {
 
 .gdcMessage {
   position: fixed;
-  top: 0;
+  top: -10px;
   right: 0;
   z-index: 99;
   padding: 5px;

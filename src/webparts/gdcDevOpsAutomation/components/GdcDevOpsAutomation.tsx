@@ -380,7 +380,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
-
+        
         imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png", this.state.OrganizationUrl));
       }
     });
@@ -451,6 +451,13 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": "true"
         });
+        APIData.push({
+          "op": "add",
+          "path": "/fields/Custom.IntakeFormRequester",
+          "from": null,
+          "value": "CameronW@M365x799019.OnMicrosoft.com"
+        });
+       
         this.emailFormData.push({ id: "Attachments", value: this.urls });
 
         APIData = [...APIData, ...this.AttachmentAPI];
