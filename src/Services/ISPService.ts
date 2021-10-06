@@ -5,5 +5,5 @@ export interface ISPService {
     getOfficeUsersAlt(name): Promise<any>;
     sendEmail(emaildata,formData);
     getAreasList() : Promise<any>;
-   
+   getCurrentUser():Promise<any>;
 }

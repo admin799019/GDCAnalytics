@@ -119,6 +119,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public dependentField: MetaDataType;
   public emailFormData = [];
   public urls: any = "";
+  public currentuser:any;
   public richTextFieldCalls: number = 0;
   public constructor(props) {
     super(props);
@@ -192,7 +193,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     this.setState({
       projects: projects
     });
-    console.log(this.state.Area, "arreaaa");
+   
   }
 
   public handleChange(value: any, name) {
@@ -397,7 +398,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
     var teamDetails: any;
-
+   
+    
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
@@ -416,7 +418,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-
+        
+      
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -438,7 +441,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           this.getField("PODCategory", this.state.formFields);
           PODCategory = this.dependentField != null ? this.dependentField.value : "";
         }
-
+      
         APIData.push({
           "op": "add",
           "path": "/fields/System.Description",
@@ -451,15 +454,18 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": "true"
         });
+      
+        
+      
+       
+        this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData.push({
           "op": "add",
           "path": "/fields/Custom.IntakeFormRequester",
           "from": null,
-          "value": "CameronW@M365x799019.OnMicrosoft.com"
+          "value": this.currentuser
         });
-       
-        this.emailFormData.push({ id: "Attachments", value: this.urls });
-
+   
         APIData = [...APIData, ...this.AttachmentAPI];
         console.log(APIData, "APIDATA");
         this.props.devOpsService.addUserStory(APIData, this.state.DevOpsProjectUrl).then((data) => {
@@ -641,10 +647,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   //getting the form fields according to area choosed from sp list of jsons 
   public updateFormFields(option) {
     this.state.Area.value = option;
+    this.props.spService.getCurrentUser().then((data)=>{
+     
+     this.currentuser=data;
+    
+    
+    });
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-        console.log(jsonData, "jsondata");
+      
         this.setState({
           formFields: jsonData,
           showMessage: false,

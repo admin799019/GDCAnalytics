@@ -73,6 +73,14 @@ export class SPService implements ISPService {
         });
         return people;
     }
+    public async getCurrentUser(): Promise<any> {
+        let user:any;
+    await this._localPnPSetup.web.currentUser().then((data) => {
+     
+        user=data.Title;
+    } );
+        return user;
+     }
 
     public async sendEmail(emaildata, formData) {
         var people: any = emaildata.GDCEmailTo;
