@@ -40,7 +40,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
     public constructor(props) {
         super(props);
         this.state = {
-            selectedPeople: []
+            // selectedPeople: []
         };
     }
 
