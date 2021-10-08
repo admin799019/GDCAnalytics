@@ -8,6 +8,7 @@ import {
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { sp } from "@pnp/sp/presets/all";
 import { graph } from "@pnp/graph";
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 
@@ -16,6 +17,7 @@ import { initializeIcons } from '@fluentui/font-icons-mdl2';
 
 import styles from './components/GdcDevOpsAutomation.module.scss';
 
+import { OrganizationConfig, OrganizationConfiguration } from './../../JSONFormMetadata/OrgConfig';
 import * as strings from 'GdcDevOpsAutomationWebPartStrings';
 import GdcDevOpsAutomation from './components/GdcDevOpsAutomation';
 import { IGdcDevOpsAutomationProps } from './components/IGdcDevOpsAutomationProps';
@@ -23,6 +25,7 @@ import { IDevOpsService } from '../../Services/IDevOpsService';
 import { DevOpsService } from '../../Services/DevOpsService';
 import { ISPService } from '../../Services/ISPService';
 import { SPService } from '../../Services/SPService';
+import AppInsights from './../../ApplicationInsights/ApplicationInsights';
 
 
 initializeIcons();
@@ -43,8 +46,9 @@ export default class GdcDevOpsAutomationWebPart extends BaseClientSideWebPart<IG
   public onInit(): Promise<void> {
     const serviceScope = this.context.serviceScope;
     this.devOpsService = serviceScope.consume(DevOpsService.serviceKey);
-    // return Promise.resolve();
-    this.spService = new SPService(this.context.pageContext,this.context);
+    this.spService = new SPService(this.context.pageContext, this.context);
+
+    AppInsights.InitializeAppInsights(OrganizationConfig.instrumentationKey);
 
     return super.onInit().then(_ => {
       sp.setup({
@@ -53,8 +57,9 @@ export default class GdcDevOpsAutomationWebPart extends BaseClientSideWebPart<IG
       graph.setup({
         spfxContext: this.context
       });
+      OrganizationConfiguration.setOrg(this.context.pageContext.site.absoluteUrl);
     });
-    
+
   }
 
   public render(): void {
@@ -62,7 +67,7 @@ export default class GdcDevOpsAutomationWebPart extends BaseClientSideWebPart<IG
       GdcDevOpsAutomation,
       {
         devOpsService: this.devOpsService,
-        spService : this.spService,
+        spService: this.spService,
         context: this.context
       }
     );

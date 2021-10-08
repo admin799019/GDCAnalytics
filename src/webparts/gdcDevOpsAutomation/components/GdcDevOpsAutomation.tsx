@@ -30,7 +30,7 @@ import { metaData } from '../../../JSONFormMetadata/Metadata';
 
 import CustomPeoplePicker from "./CustomPeoplePicker";
 import { elementContains } from 'office-ui-fabric-react';
-import { OrganizationConfig } from '../../../JSONFormMetadata/OrgConfig';
+import { OrganizationConfig, OrganizationConfiguration } from '../../../JSONFormMetadata/OrgConfig';
 import { SPService } from '../../../Services/SPService';
 import { containsInvalidFileFolderChars } from '@pnp/sp';
 import { MetaDataType } from "./JSONInterface";
@@ -142,7 +142,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         text: "Targeting Enablement and Business Health"
       }
     ];
-    
+
+    OrganizationConfiguration.setOrg(this.props.context.pageContext.site.absoluteUrl);
     this.state = {
       //projects: [],
       //text: "",
