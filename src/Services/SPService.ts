@@ -14,6 +14,7 @@ import { IEmailProperties } from "@pnp/sp/sputilities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ISPService } from "./ISPService";
 import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
+import AppInsights from "../ApplicationInsights/ApplicationInsights";
 
 export class SPService implements ISPService {
     private _pageContext: PageContext;
@@ -144,8 +145,14 @@ export class SPService implements ISPService {
         };
         this._localPnPSetup.utility.sendEmail(emailProps).then((i) => {
             console.log("email sent", i);
-        }).catch((i) => {
-            console.log("email not sent", i);
+        }).catch((ex) => {
+                AppInsights.trackException(ex, {
+                    UserId: "",
+                    Module: "SPService.ts",
+                    APIUrl: "Send Email",
+                    Method: "Send Email"
+                });
+            console.log("email not sent", ex);
         });
     }
 

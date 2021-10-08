@@ -2,6 +2,7 @@ import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOptions } from "@microsoft/sp-http";
 import { IDevOpsService } from "./IDevOpsService";
 import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
+import AppInsights from "./../ApplicationInsights/ApplicationInsights";
 
 export class DevOpsService implements IDevOpsService {
 
@@ -31,8 +32,15 @@ export class DevOpsService implements IDevOpsService {
                         return response.json();
                     })
                     .then((datar: any): void => {
-                        console.log(["Add User Story response", datar]);
+                        console.log(["Add User Story response", datar, " site", OrganizationConfig.SharePointSiteUrl]);
                         resolve(datar);
+                    }).catch((ex: any) => {
+                        AppInsights.trackException(ex, {
+                            UserId: "",
+                            Module: "DevOpsService.ts",
+                            APIUrl: devopsprojecturl + "/_apis/wit/workItems/$USER STORY?api-version=6.0",
+                            Method: "Add User Story"
+                        });
                     });
             });
         });
@@ -56,6 +64,13 @@ export class DevOpsService implements IDevOpsService {
                 })
                 .then((projects: any): void => {
                     console.log(["Relate Attachment response", projects]);
+                }).catch((ex: any) => {
+                    AppInsights.trackException(ex, {
+                        UserId: "",
+                        Module: "DevOpsService.ts",
+                        APIUrl: devopsprojecturl + "/_apis/wit/workitems/" + id + "?api-version=6.0",
+                        Method: "Add Attachment"
+                    });
                 });
         });
     }
@@ -74,13 +89,18 @@ export class DevOpsService implements IDevOpsService {
             this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
                 client.post(OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
-
                         return response.json();
-
                     }).then((res: any): void => {
                         console.log(["upload attchment response"], res.url);
                         resolve(res.url);
                         // return promise;
+                    }).catch((ex: any) => {
+                        AppInsights.trackException(ex, {
+                            UserId: "",
+                            Module: "DevOpsService.ts",
+                            APIUrl: OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1",
+                            Method: "Upload Image"
+                        });
                     });
             });
 
