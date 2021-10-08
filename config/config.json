@@ -13,7 +13,6 @@
   },
   "externals": {},
   "localizedResources": {
-    "GdcDevOpsAutomationWebPartStrings": "lib/webparts/gdcDevOpsAutomation/loc/{locale}.js",
-    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+    "GdcDevOpsAutomationWebPartStrings": "lib/webparts/gdcDevOpsAutomation/loc/{locale}.js"
   }
 }

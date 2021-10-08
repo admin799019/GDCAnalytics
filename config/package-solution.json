@@ -1,24 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "gdc-dev-ops-automation-client-side-solution",
+    "name": "GdcIntakeForm",
     "id": "22b26582-4ad7-4166-8450-a7b7471c5614",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "skipFeatureDeployment": true,
-    "isDomainIsolated": false,
+    "skipFeatureDeployment": false,
+    "isDomainIsolated": true,
     "webApiPermissionRequests": [
       {
         "resource": "Azure DevOps",
         "scope": "user_impersonation"
-      },
-      {
-        "resource": "Windows Azure Active Directory",
-        "scope": "User.Read"
-      },
-      {
-        "resource": "Microsoft Graph",
-        "scope": "User.Read.All"
       }
     ]
   },

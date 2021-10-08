@@ -1,22 +1,33 @@
 import * as React from "react";
 import { IPersonaProps } from '@fluentui/react/lib/Persona';
-import { IBasePickerSuggestionsProps, NormalPeoplePicker } from '@fluentui/react/lib/Pickers';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker, IInputProps } from '@fluentui/react/lib/Pickers';
 import { Label } from '@fluentui/react/lib/Label';
-
+import { TooltipHost, ITooltipHostStyles, ITooltipProps } from '@fluentui/react/lib/Tooltip';
 import { ISPService } from '../../../Services/ISPService';
+import ReactHtmlParser from 'react-html-parser';
+import { Icon } from '@fluentui/react/lib/Icon';
+
+import { MetaDataType } from "./JSONInterface";
 
 
 interface ICustomPeoplePickerProps {
     spService: ISPService;
-    pickerFieldName: string;
+    pickerField: MetaDataType;
     handlePeopleChange: any;
-    required: boolean;
 }
 
 interface ICustomPeoplePickerState {
-    // selectedPeople: IPersonaProps[];
-}
 
+    // selectedPeople: IPersonaProps[];
+
+}
+const iconStyle =
+{
+    cursor: 'pointer',
+    marginLeft: '2px',
+};
+
+const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
 const suggestionProps: IBasePickerSuggestionsProps = {
     suggestionsHeaderText: 'Suggested People',
     mostRecentlyUsedHeaderText: 'Suggested Contacts',
@@ -30,7 +41,6 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 export default class CustomPeoplePicker extends React.Component<ICustomPeoplePickerProps, ICustomPeoplePickerState> {
     public constructor(props) {
         super(props);
-
         this.state = {
             // selectedPeople: []
         };
@@ -39,11 +49,23 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
     public render(): JSX.Element {
         return (
             <div>
-                <Label>{this.props.pickerFieldName} {this.props.required ? <span className="gdcStar">*</span> : ""}</Label>
+                <Label>{this.props.pickerField.label} {this.props.pickerField.required ? <span className="gdcStar">*</span> : ""} {this.props.pickerField.helperText ?
+                    <TooltipHost
+                        tooltipProps={{
+                            onRenderContent: () => (ReactHtmlParser(this.props.pickerField.helperText))
+                        }}
+                        styles={hostStyles}
+                    >
+                        <Icon iconName="Info" className="gdctooltip" style={iconStyle} ariaLabel="value required" />
+                    </TooltipHost>
+                    : ""}</Label>
                 <NormalPeoplePicker
                     onResolveSuggestions={(t) => this.onFilterChanged(t)}
                     pickerSuggestionsProps={suggestionProps}
-                    className={'ms-PeoplePicker'}
+                    inputProps={
+                        { placeholder: this.props.pickerField.placeholder }
+                    }
+                    className={this.props.pickerField.showError ? 'ms-PeoplePicker gdcrequiredred' : 'ms-PeoplePicker'}
                     key={'normal'}
                     selectionAriaLabel={'Selected contacts'}
                     removeButtonAriaLabel={'Remove'}
@@ -51,10 +73,9 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
                     resolveDelay={300}
                     disabled={false}
                     itemLimit={1}
-
                     onChange={(si) => {
-                        si.length > 0 ? this.props.handlePeopleChange(si[0].secondaryText, this.props.pickerFieldName)
-                            : this.props.handlePeopleChange("", this.props.pickerFieldName);
+                        si.length > 0 ? this.props.handlePeopleChange(si[0], this.props.pickerField.id)
+                            : this.props.handlePeopleChange("", this.props.pickerField.id);
                     }}
                 />
             </div>
@@ -67,11 +88,20 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         var filteredPersonas: IPersonaProps[];
         if (filterText && filterText.length >= 3) {
             this.props.spService.getOfficeUsers(filterText).then((data) => {
-                console.log("users", data);
-                filteredPersonas = data.value.map((v, i) => {
-                    return { Key: i, text: v.displayName, secondaryText: v.mail };
-                });
-                return filteredPersonas;
+                if (data.length == 0) {
+                    this.props.spService.getOfficeUsersAlt(filterText).then((dataFromEmail) => {
+                        filteredPersonas = dataFromEmail.map((v, i) => {
+                            console.log(i, "i");
+                            return { Key: i, text: v.Title, secondaryText: v.Email };
+                        });
+                    });
+                }
+                else {
+                    filteredPersonas = data.map((v, i) => {
+                        return { Key: i, text: v.Title, secondaryText: v.Email };
+                    });
+                }
+                return data;
             });
             return new Promise<IPersonaProps[]>((resolve, reject) => setTimeout(() => resolve(filteredPersonas), 2000));
         } else {
@@ -93,7 +123,6 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         if (emailAddress && emailAddress[0]) {
             return emailAddress[0].substring(1, emailAddress[0].length - 1);
         }
-
         return input;
     }
 }
