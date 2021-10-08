@@ -7,7 +7,7 @@
     margin: 0px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   }
-
+  
   .row {
     @include ms-Grid-row;
     @include ms-fontColor-white;
@@ -22,7 +22,12 @@
     @include ms-xlPush2;
     @include ms-lgPush1;
   }
-
+  .gdctooltip{
+    cursor:pointer;
+    .rootHovered {
+      background-color: black
+    }
+  }
   .title {
     @include ms-font-xl;
     @include ms-fontColor-white;
@@ -38,8 +43,13 @@
     @include ms-fontColor-white;
   }
 
-  .gdcColumn12 {
-    min-height: 192px !important;
+  
+  .gdcColumn6 {
+    @include ms-Grid-col;
+    @include ms-sm6;
+    @include ms-lg6;
+    @include ms-xl4;
+    // width:40%;
   }
 
   .button {
@@ -49,7 +59,7 @@
 
     // Primary Button
     min-width: 80px;
-    background-color: $ms-color-themePrimary;
+    background-color: #1D1D1D;
     border-color: $ms-color-themePrimary;
     color: $ms-color-white;
 

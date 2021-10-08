@@ -1,0 +1,699 @@
+@import '~office-ui-fabric-react/dist/sass/_References.scss';
+
+.gdcrequiredred{
+  //border:1px solid red;
+  .ql-toolbar.ql-snow {
+  border-left: 1px solid rgb(168,0,0) !important;
+    border-right: 1px solid rgb(168,0,0) !important;
+    border-top: 1px solid rgb(168,0,0) !important;
+  }
+  .gdctooltip{
+    cursor:pointer;
+    margin-left: 2px;
+    .rootHovered {
+      background-color: black;
+    }
+  }
+  .ql-container.ql-snow {
+    border-top: 0;
+    border-left: 1px solid rgb(168,0,0) !important;
+    border-right: 1px solid rgb(168,0,0) !important;
+    border-bottom: 1px solid rgb(168,0,0) !important;
+  } 
+}
+
+.gdcrequiredred{
+  .ms-Dropdown-title{
+  border:1px solid rgb(168,0,0)  !important;
+  }
+  .ms-TextField-fieldGroup{
+    border:1px solid rgb(168,0,0)  !important;
+  }
+  .ms-BasePicker-text{
+    border:1px solid rgb(168,0,0)  !important;
+  }
+}
+
+/* react quill toolbar */
+.quill > .ql-container > .ql-editor.ql-blank::before{
+  font-style: normal;
+  padding:0px;
+  margin:0px ;
+  color:black;
+}
+.quill > .ql-container > .ql-editor.ql-blank{
+  margin-left:-7px;  
+}
+
+.ql-snow .ql-tooltip {
+  height: 40px;
+  left: 320px !important;
+  top: -51px !important;
+}
+
+.ql-editor {
+  min-height: 150px;
+}
+.ql-editor.ql-blank:before {
+  left:8px;
+  color:black;
+}
+.ql-container.ql-snow {
+  border-bottom: 1px solid #838383;
+  border-left: 1px solid #838383;
+  border-right:1px solid #838383;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #838383 !important;
+  
+  .ql-clean{
+    display: none;
+  }
+}
+
+/* react quill toolbar end */
+
+/* Grid */
+.gdcGrid {
+  @include ms-Grid;
+}
+.gdcGridRow {
+  @include ms-Grid-row;
+}
+.gdcFieldSeperateRow {
+  margin-right: 20px;
+}
+.gdcGridCol {
+  @include ms-Grid-col;
+}
+
+.gdcGridCol6 {
+  @include ms-sm6;
+  min-height: 96px;
+}
+
+.gdcGridCol12 {
+  @include ms-sm12;
+  min-height: 100px;
+}
+
+/* Grid end */
+
+/* Text Field */
+
+.gdcTextField {
+  margin-top: 4px;
+  .ms-TextField-fieldGroup::placeholder{
+    color:black;
+  }
+  .ms-Label{
+    white-space: nowrap;
+  }
+  .ms-Stack{
+    max-width: max-content;
+  
+  }
+  .questionspan{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+    .ms-Label{
+      display: inline;
+    }
+   
+  }
+  .questionspan:hover{
+    overflow: visible; 
+    white-space: normal;
+  }
+
+  .ms-Label::after{
+    padding-right:0px;
+  }
+ .ms-TextField-fieldGroup{
+   height:40px !important;
+   line-height: 35px;
+   font-size: 8px;
+   margin-top: 4px;
+   color:black;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ }
+ ::placeholder{
+   color:black;
+ }
+}
+.gdctextfieldlabel{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 5px 0px 0px 0px;
+  //display: inline;
+  white-space: nowrap;
+  //pointer-events:none;
+}
+.gdctextfieldlabel:hover{
+  overflow: visible; 
+  white-space: nowrap;
+}
+
+/* Text Field End */
+
+/* DropDown */
+
+.gdcDropDown{
+  margin-top:7px;
+  .ms-Label{
+    white-space: nowrap;
+    padding-bottom: 10px;
+  }
+  .ms-Label::after{
+    padding-right: 0px;
+  }
+  .ms-Dropdown-caretDownWrapper{
+    line-height: 37px;
+  }
+  .ms-Dropdown {
+    margin-top:2px;
+  }  
+  .ms-Dropdown-container {
+    line-height: 45px;
+    font-weight: 500;
+    color: black;
+    margin: 0px;
+    
+  }
+  .ms-Dropdown-title {
+    height:40px;
+    font-size: 14px;
+    color:black;
+    line-height: 36px;
+    padding: 0px 28px 0px 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    vertical-align: middle;
+  }    
+}
+
+/* DropDown End */
+
+/* Radio Button */
+
+.gdcRadioButton {
+  margin-top: 2px;
+  white-space: nowrap;
+  .ms-ChoiceFieldGroup-flexContainer{
+    display: "flex"
+  }
+  .ms-ChoiceField-wrapper{
+    margin-right:25px;
+    font-weight: 500;
+   font-size: 14px;
+  }
+  .ms-ChoiceField-field::after{
+    border-color: black;
+    background: black;
+  }
+}
+
+/* Radio Button End */
+
+/*SwitchInput*/
+
+.gdcSwitchInput{
+  margin-top:8px;
+  // .ms-Toggle-background:focus{
+  //   background:white;
+  // }
+  .ms-Toggle-innerContainer{
+    margin-top:2px;
+  }
+}
+.gdcToggleBlack{ 
+  .ms-Toggle-background{
+    background: black;
+  }
+  .ms-Toggle-innerContainer{
+    margin-top:2px;
+  }
+}
+
+/* Switch Input end */
+.messageBarTop{
+  position: fixed;
+  z-index: 1;
+}
+// .gdcMessage {
+//   // .ms-MessageBar{
+//   //   position: fixed;
+//   //     top: 60px;
+//   //     width: 370px;
+//   //     right: 5px;
+//   // }
+//}
+
+.gdcpeoplepicker{
+  // margin-top:8px;
+  .ms-BasePicker-text{
+    height:40px;
+    align-content: center;
+  }
+ 
+  .ms-BasePicker-input{
+    font-weight: 400;
+  }
+  .ms-BasePicker-input::placeholder{
+    color: black;
+  }
+}
+
+/* Date Input */
+
+.gdcDateInput::placeholder{
+  color: black;
+}
+
+.gdcDateInput {
+  display: inline-block;
+  .ms-Label{
+    // margin-top: 8px;
+    margin-right: 2px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  white-space: nowrap;
+  .ms-TextField > span {
+    margin-top:0px;
+    display: none;
+  } 
+  .ms-DatePicker {
+    // margin-top: 5px;
+    color:black;
+    .statusMessage{
+      margin-top:0px;
+          }
+  }
+  .ms-TextField-fieldGroup {
+    color:black;
+    height:40px;
+    i {
+      margin-top: 2px;
+    }
+   
+  }
+  .ms-TextField-field {
+    color: black;
+    .statusMessage{
+      margin-top:0px;
+    }
+  }
+  .ms-TextField-field::placeholder {
+    color: black;
+  }
+}
+
+/* Date Input End */
+
+/* MultiLine */
+
+.gdcMultiLine {
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+//Multiline field
+.gdcColumnBlock{
+  white-space: nowrap;
+  display:inline-block;
+  margin-top: 8px;
+  width:100%;
+  min-height: 192px;
+  .ms-Label{
+    white-space: nowrap;
+  }
+}
+
+/* MultiLine End */
+
+/* File Picker */
+input[type="file"] {
+  display: none;
+}
+
+.gdccustom-file-upload {
+  border: none;
+  cursor: pointer;
+}
+
+.gdcfilepicker {
+  margin-top: 8px;
+
+}
+.gdcfilepicker > p {
+  font-weight:500;
+  margin-bottom: 10px;
+}
+
+.gdcattachmentNames{
+  font-size:12px;
+}
+
+.gdcattachmentNames > .gdcAttachmentsname{
+  font-size:12px;
+  display: block;
+  margin-top:4px;
+}
+
+.gdcAttachmentsname > i {
+  cursor: pointer;
+  vertical-align: bottom;
+    padding-left: 5px;
+}
+
+.gdcfileInput {
+  cursor: pointer;
+  // color: #036c70;
+  margin-top:5px;
+  background: rgba(3,108,112,.06);
+  width: 200px;
+  padding: 5px;
+  .gdcAttachIcon {
+    padding-right: 3px;
+    transform: rotateZ(45deg);
+    color: #1D1D1D
+  }
+}
+
+.gdcFileNote{
+  font-style: italic;
+  font-size: 11px;
+  color:gray;
+  margin-top: 0px;
+}
+
+/* File Picker End */
+
+
+.gdcFieldSeperateRow {
+  margin-right: 20px;
+}
+
+.gdcBottomLine {
+  width: 100%;
+  border-bottom: 1px solid #E5E5E5;
+}
+.gdcHeaderButton:hover{
+  background-color: #1D1D1D;
+  color:white;
+  border-color: white;
+ 
+}
+
+.gdcquestionHeader{
+  font-weight: 500;
+}
+.gdcAddButton,.gdcAddButton:hover {
+  //float: right;
+  margin-top:20px;
+  // Our button
+  text-decoration: none;
+  height: 32px;
+
+  // Primary Button
+  min-width: 80px;
+  background-color: #1D1D1D;
+  border-color: $ms-color-themePrimary;
+  color:white;
+
+  // Basic Button
+  outline: transparent;
+  position: relative;
+  font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: $ms-font-size-m;
+  font-weight: $ms-font-weight-regular;
+  border-width: 0;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 8px;
+
+  .label {
+    font-weight: $ms-font-weight-semibold;
+    font-size: $ms-font-size-m;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 4px;
+    vertical-align: top;
+    display: inline-block;
+  }
+}
+
+  .gdcAddButton:disabled {
+    background-color: rgba(8, 8, 8, 0.3);
+  }
+  .gdcAddButton:disabled:hover {
+    background-color: rgba(8, 8, 8, 0.3);
+  }
+
+  .gdcAddButton:hover {
+    background-color: #1D1D1D;
+    border-color: white;
+      color:white;
+  }
+
+  .gdcNewButton {
+    font-size: 18px;
+  }
+.gdcHeaderButton{
+  margin-right:14px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+.gdcSelectedButton{
+  margin-right:14px;
+  background-color: #1D1D1D;
+  color:white;
+  border-radius: 15px;
+}
+.gdcHeaderButton::selection{
+  background-color: #1D1D1D;
+}
+.gdcquestionTop{
+  margin-top: 25px;
+  margin-bottom:20px;
+  font-weight: 500px;
+}
+
+/* logo */
+
+.gdcLogoExpanded {
+  padding: 130px 0px 10px 30px;
+  width: 470px;
+  height: 130px;
+  float: left;
+}
+
+.gdcLogoNormal {
+  padding: 0px 0px 0px 30px;
+  width: 300px;
+  height: 90px;
+  float: left;
+}
+
+/* logo end */
+
+
+.gdcerror {
+  color: rgb(168,0,0);
+}
+.gdcrequireddiv{
+  height:30px;
+}
+.gdcStar {
+  color: rgb(168,0,0);
+}
+
+.gdcPaddingBottom15 {
+  padding-bottom: 15px;
+}
+
+.gdcDisplayNone {
+  display: none;
+}
+
+.gdcBorder {
+  font-family: Segoe UI;
+}
+
+.gdcMessage {
+  position: fixed;
+  top: -10px;
+  right: 0;
+  z-index: 99;
+  padding: 5px;
+}
+  
+
+/* GDC Panel */
+
+.gdcPanelHeaderEllipses1
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: -125px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .gdcScrollPanelHeaderEllipses1
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: -125px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .gdcPanelHeaderEllipses2
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 1px;
+    top: 100px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .gdcScrollPanelHeaderEllipses2
+  {
+    float: right;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 1px;
+    top: 25px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+.gdcPanelHeader {
+  background: #1D1D1D;
+  color: white;
+  font-family: Segoe UI;
+ // max-height: 300px;
+
+}
+
+.gdcScrollPanelHeader {
+  background: #1D1D1D;
+  color: white;
+  font-family: Segoe UI;
+ // max-height:100px;
+ animation:  reduce 0.5s cubic-bezier(0, 1, 0.5, 1) backwards;
+  //transition-duration: 5s;
+	//transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+@keyframes reduce {
+  from {
+      height: 300px;
+  }
+  to {
+      height: 100px;
+  }
+}
+
+.gdcPanelHeaderText {
+  padding: 180px 0px 10px 20px;
+  float: left;
+  font-size: 40px;
+  
+}
+
+.gdcScrollPanelHeaderText {
+  padding: 56px 0px 10px 40px;
+  float: left;
+  font-size: 24px;
+  
+}
+
+.gdcPanelCloseButton {
+  padding: 25px;
+  float: right;
+  color: #fff;
+  position: fixed;
+  right: 20px;
+  font-size: 12px;
+  .ms-Link {
+    color: white;
+    vertical-align: middle;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
+    padding: 5px;
+    .gdcCloseIcon {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+  }
+  .ms-Link:hover {
+    text-decoration: none !important;
+  }
+}
+
+.gdcScrollPanelCloseButton{
+  padding: 20px 25px 25px 25px;
+  float: right;
+  color: #fff;
+  position: fixed;
+  right: 20px;
+  font-size: 12px;
+  .ms-Link {
+    color: white;
+    vertical-align: middle;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
+    padding: 5px;
+    .gdcCloseIcon {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.gdcPanel {
+  .commands  {
+  margin-top: 0px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#c8c6c4
+  ; 
+    border-radius:10px;
+    height:10%;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  .ms-Panel-commands {
+    margin-top: 0px;
+  }
+}
+
+/* Panel End */
+

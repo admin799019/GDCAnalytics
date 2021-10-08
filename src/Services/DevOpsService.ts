@@ -1,45 +1,21 @@
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { AadHttpClientFactory, AadHttpClient, HttpClientResponse, IHttpClientOptions } from "@microsoft/sp-http";
-import { SPHttpClient } from "@microsoft/sp-http";
 import { IDevOpsService } from "./IDevOpsService";
+import { OrganizationConfig } from "../JSONFormMetadata/OrgConfig";
+import AppInsights from "./../ApplicationInsights/ApplicationInsights";
 
 export class DevOpsService implements IDevOpsService {
 
     public static readonly serviceKey: ServiceKey<IDevOpsService> = ServiceKey.create<IDevOpsService>('SPFx:DevOpsService', DevOpsService);
-
     private _aadHttpClientFactory: AadHttpClientFactory;
-    private _spHttpClient: SPHttpClient;
 
     constructor(serviceScope: ServiceScope) {
         serviceScope.whenFinished(() => {
             this._aadHttpClientFactory = serviceScope.consume(AadHttpClientFactory.serviceKey);
-            this._spHttpClient = serviceScope.consume(SPHttpClient.serviceKey);
         });
     }
 
-    public async getProjects1(): Promise<any> {
-
-        await this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.get(`https://dev.azure.com/Veena0200/_apis/projects?api-version=6.0`, AadHttpClient.configurations.v1)
-                .then((response: HttpClientResponse) => {
-                    console.log(["Try1", response]);
-                    return response.json();
-                })
-                .then((projects: any): void => {
-                    console.log(["Try1", projects]);
-                });
-        });
-    }
-
-    public addfeature(data): Promise<any> {
-        // const body: string = JSON.stringify([
-        //     {
-        //         "op": "add",
-        //         "path": "/fields/System.Title",
-        //         "from": null,
-        //         "value": data
-        //     }
-        // ]);
+    public addUserStory(data, devopsprojecturl): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const body: string = JSON.stringify(data);
 
@@ -50,24 +26,28 @@ export class DevOpsService implements IDevOpsService {
                 body: body,
                 headers: requestHeaders
             };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/Veena0200/test%20proj/_apis/wit/workItems/$L1 Objective?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+            this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
+                client.post(devopsprojecturl + "/_apis/wit/workItems/$USER STORY?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
-                        console.log(["Try1", response]);
                         return response.json();
                     })
                     .then((datar: any): void => {
-                        console.log(["Try1", datar]);
+                        console.log(["Add User Story response", datar, " site", OrganizationConfig.SharePointSiteUrl]);
                         resolve(datar);
+                    }).catch((ex: any) => {
+                        AppInsights.trackException(ex, {
+                            UserId: "",
+                            Module: "DevOpsService.ts",
+                            APIUrl: devopsprojecturl + "/_apis/wit/workItems/$USER STORY?api-version=6.0",
+                            Method: "Add User Story"
+                        });
                     });
             });
         });
-
     }
 
-    public updatefeature(data): any {
+    public addAttachment(data, id, devopsprojecturl): any {
         const body: string = JSON.stringify(data);
-
         const requestHeaders: Headers = new Headers();
         requestHeaders.append('Content-type', 'application/json-patch+json');
         //requestHeaders.append('method', 'PATCH');
@@ -77,18 +57,26 @@ export class DevOpsService implements IDevOpsService {
             headers: requestHeaders,
             method: 'PATCH'
         };
-        this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-            client.fetch("https://dev.azure.com/Veena0200/test%20proj/_apis/wit/workItems/170?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
+        this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
+            client.fetch(devopsprojecturl + "/_apis/wit/workitems/" + id + "?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
                 .then((response: HttpClientResponse) => {
                     return response.json();
                 })
                 .then((projects: any): void => {
-                    console.log(["update Try", projects]);
+                    console.log(["Relate Attachment response", projects]);
+                }).catch((ex: any) => {
+                    AppInsights.trackException(ex, {
+                        UserId: "",
+                        Module: "DevOpsService.ts",
+                        APIUrl: devopsprojecturl + "/_apis/wit/workitems/" + id + "?api-version=6.0",
+                        Method: "Add Attachment"
+                    });
                 });
         });
     }
 
-    public async uploadImage(base64content, fileName): Promise<any> {
+
+    public async uploadImage(base64content, fileName, OrganizationUrl): Promise<any> {
         return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
             const requestHeaders: Headers = new Headers();
             requestHeaders.append('Content-Type', 'application/octet-stream');
@@ -98,16 +86,21 @@ export class DevOpsService implements IDevOpsService {
                 headers: requestHeaders,
 
             };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/Veena0200/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
+            this._aadHttpClientFactory.getClient(OrganizationConfig.DevOpsID).then((client: AadHttpClient) => {
+                client.post(OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1", AadHttpClient.configurations.v1, httpClientOptions)
                     .then((response: HttpClientResponse) => {
-
                         return response.json();
-
                     }).then((res: any): void => {
-                        console.log(["upload attchment"], res.url);
+                        console.log(["upload attchment response"], res.url);
                         resolve(res.url);
                         // return promise;
+                    }).catch((ex: any) => {
+                        AppInsights.trackException(ex, {
+                            UserId: "",
+                            Module: "DevOpsService.ts",
+                            APIUrl: OrganizationUrl + "/_apis/wit/attachments?fileName=" + fileName + "&api-version=5.1",
+                            Method: "Upload Image"
+                        });
                     });
             });
 
@@ -115,92 +108,4 @@ export class DevOpsService implements IDevOpsService {
         // let promise = new Promise((resolve,reject));
     }
 
-    public async SearchWorkItems(): Promise<any> {
-        const body: string = JSON.stringify({
-            "searchText": "test",
-            "$skip": 0,
-            "$top": 1,
-            "filters": {
-                "System.TeamProject": [
-                    "test proj"
-                ],
-                //   "System.AreaPath": [
-                //     "GDC Business Intelligence"
-                //   ],
-                "System.WorkItemType": [
-                    "L1 Objective"
-                ]
-                //   "System.Created By": [
-                //     "Veena Garre <veena@mcompany5.onmicrosoft.com>"
-                //   ]
-            },
-            "$orderBy": [
-                {
-                    "field": "system.id",
-                    "sortOrder": "ASC"
-                }
-            ]
-            // "includeFacets": true
-        });
-        return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
-            // const body: string = JSON.stringify(body);
-
-            const requestHeaders: Headers = new Headers();
-            requestHeaders.append('Content-type', 'application/json');
-
-            const httpClientOptions: IHttpClientOptions = {
-                body: body,
-                headers: requestHeaders
-            };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://almsearch.dev.azure.com/Veena0200/_apis/search/workitemsearchresults?api-version=6.0-preview.1", AadHttpClient.configurations.v1, httpClientOptions)
-                    .then((response: HttpClientResponse) => {
-                        // console.log(["search Try1", response]);
-                        return response.json();
-                    })
-                    .then((datar: any): void => {
-                        console.log(["search Try1", datar]);
-                        resolve(datar);
-                    });
-            });
-        });
-    }
-
-    public async FilterWorkItems(): Promise<any> {
-        const body: string = JSON.stringify({
-            "query": "Select [System.Id], [System.Title], [System.State] From WorkItems Where [System.WorkItemType] = 'L1 Objective' "
-        });
-        return new Promise<any>((resolve: (response: any) => void, reject: (response: any) => void): void => {
-
-            const requestHeaders: Headers = new Headers();
-            requestHeaders.append('Content-type', 'application/json');
-
-            const httpClientOptions: IHttpClientOptions = {
-                body: body,
-                headers: requestHeaders
-            };
-            this._aadHttpClientFactory.getClient("499b84ac-1321-427f-aa17-267ca6975798").then((client: AadHttpClient) => {
-                client.post("https://dev.azure.com/Veena0200/test proj/_apis/wit/wiql?api-version=6.0", AadHttpClient.configurations.v1, httpClientOptions)
-                    .then((response: HttpClientResponse) => {
-                        console.log(["Filter Try1", response]);
-                        return response.json();
-                    })
-                    .then((datar: any): void => {
-                        console.log(["Filter Try1", datar]);
-                        client.get("https://dev.azure.com/Veena0200/test proj/_apis/wit/workItems/269/updates?api-version=6.0", AadHttpClient.configurations.v1)
-                            .then((responser: HttpClientResponse) => {
-                                console.log(["updates Try1", responser]);
-                                return responser.json();
-                            })
-                            .then((datarr: any): void => {
-                                let value = datarr.value[0].fields;
-                                let td = "System.Title";
-                                let v = value[td];
-                                console.log(["updates Try1", value]);
-                                resolve(datarr);
-                            });
-                    });
-            });
-        });
-    }
 }
