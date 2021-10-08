@@ -88,8 +88,8 @@ export interface IDevOpsProps {
 }
 
 export interface IDevOpsState {
-  projects: [];
-  text: any;
+  //projects: [];
+  //text: any;
   formData: any;
   formFields: MetaDataType[];
   formSuccessMessage: string;
@@ -144,8 +144,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     ];
     
     this.state = {
-      projects: [],
-      text: "",
+      //projects: [],
+      //text: "",
       formData: [],
       formFields: metaData,
       formSuccessMessage: "",
@@ -188,11 +188,11 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   }
 
   public componentDidMount() {
-    var projects: [];
+    // var projects: [];
 
-    this.setState({
-      projects: projects
-    });
+    // this.setState({
+    //   projects: projects
+    // });
    
   }
 
@@ -940,16 +940,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public renderFields(ele: MetaDataType) {
     switch (ele.fieldType) {
       case "SingleLineTextInput":
+     
         return (
+          
           <React.Fragment>
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
+                  
                   onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
               >
+                                
                 <Icon iconName="Info"
                   style={iconStyle}
                   // title={props.name || props.title}
@@ -1211,6 +1215,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   placeholder={ele.placeholder}
                   onChange={(data, delta, source) => {
                     if (source != "api") {
+                  // DOMPurify.sanitize(data)
                       this.handleChange(data, ele.id);
                     }
                   }}
