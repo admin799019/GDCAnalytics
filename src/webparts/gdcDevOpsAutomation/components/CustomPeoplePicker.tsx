@@ -14,7 +14,7 @@ interface ICustomPeoplePickerProps {
 }
 
 interface ICustomPeoplePickerState {
-    selectedPeople: IPersonaProps[];
+    // selectedPeople: IPersonaProps[];
 }
 
 const suggestionProps: IBasePickerSuggestionsProps = {
@@ -32,7 +32,7 @@ export default class CustomPeoplePicker extends React.Component<ICustomPeoplePic
         super(props);
 
         this.state = {
-            selectedPeople: []
+            // selectedPeople: []
         };
     }
 
