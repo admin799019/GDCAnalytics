@@ -119,7 +119,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public dependentField: MetaDataType;
   public emailFormData = [];
   public urls: any = "";
-  public currentuser:any;
+  public currentuser: any;
   public richTextFieldCalls: number = 0;
   public constructor(props) {
     super(props);
@@ -194,7 +194,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     // this.setState({
     //   projects: projects
     // });
-   
+
   }
 
   public handleChange(value: any, name) {
@@ -382,7 +382,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
         }
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
-        
+
         imageCalls.push(this.props.devOpsService.uploadImage(blob, "image.png", this.state.OrganizationUrl));
       }
     });
@@ -399,8 +399,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
     var APIData = _.cloneDeep(this.state.formData);
     var parentFieldsRequiredHasValues: boolean = true;
     var teamDetails: any;
-   
-    
+
+
     if (this.state.formFields.filter(fv => fv.required == true && (fv.value == "" || fv.value == "<p><br></p>")).length > 0) {
       var stateCopy = [...this.state.formFields];
       stateCopy.map(scv => {
@@ -419,8 +419,8 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
       if (this.requiredHasValues && parentFieldsRequiredHasValues) {
         APIData = dataReturned.APIData;
         let pathPrefix;
-        
-      
+
+
         if (APIData.filter(d => d.path == "/fields/System.AreaPath").length == 0) {
           APIData.push(
             {
@@ -442,7 +442,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           this.getField("PODCategory", this.state.formFields);
           PODCategory = this.dependentField != null ? this.dependentField.value : "";
         }
-      
+
         APIData.push({
           "op": "add",
           "path": "/fields/System.Description",
@@ -455,10 +455,10 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": "true"
         });
-      
-        
-      
-       
+
+
+
+
         this.emailFormData.push({ id: "Attachments", value: this.urls });
         APIData.push({
           "op": "add",
@@ -466,7 +466,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
           "from": null,
           "value": this.currentuser
         });
-   
+
         APIData = [...APIData, ...this.AttachmentAPI];
         console.log(APIData, "APIDATA");
         this.props.devOpsService.addUserStory(APIData, this.state.DevOpsProjectUrl).then((data) => {
@@ -648,16 +648,16 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   //getting the form fields according to area choosed from sp list of jsons 
   public updateFormFields(option) {
     this.state.Area.value = option;
-    this.props.spService.getCurrentUser().then((data)=>{
-     
-     this.currentuser=data;
-    
-    
+    this.props.spService.getCurrentUser().then((data) => {
+
+      this.currentuser = data;
+
+
     });
     this.props.spService.getFormMetadata(option).then((data) => {
       if (data != null) {
         var jsonData = JSON.parse(data.JSON);
-      
+
         this.setState({
           formFields: jsonData,
           showMessage: false,
@@ -941,20 +941,20 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
   public renderFields(ele: MetaDataType) {
     switch (ele.fieldType) {
       case "SingleLineTextInput":
-     
+
         return (
-          
+
           <React.Fragment>
             <div className={ele.className}>
               <Label className="gdctextfieldlabel">{ele.label} {ele.required ? <span className="gdcStar">*</span> : ""}{ele.helperText ? <TooltipHost
                 tooltipProps={{
-                  
+
                   onRenderContent: () => (ReactHtmlParser(DOMPurify.sanitize(ele.helperText)))
                 }}
                 // content={props.name || props.title}
                 styles={hostStyles}
               >
-                                
+
                 <Icon iconName="Info"
                   style={iconStyle}
                   // title={props.name || props.title}
@@ -1216,7 +1216,7 @@ export default class GdcDevOpsAutomation extends React.Component<IDevOpsProps, I
                   placeholder={ele.placeholder}
                   onChange={(data, delta, source) => {
                     if (source != "api") {
-                  // DOMPurify.sanitize(data)
+                      // DOMPurify.sanitize(data)
                       this.handleChange(data, ele.id);
                     }
                   }}
