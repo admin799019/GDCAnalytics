@@ -17,7 +17,7 @@ interface ICustomPeoplePickerProps {
 }
 
 interface ICustomPeoplePickerState {
-    selectedPeople: IPersonaProps[];
+    //selectedPeople: IPersonaProps[];
 }
 const iconStyle =
 {
